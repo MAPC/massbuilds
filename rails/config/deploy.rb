@@ -2,7 +2,7 @@
 lock "~> 3.10.0"
 
 set :application, "massbuilds"
-set :repo_url, "git@egithub.com:MAPC/massbuilds.git"
+set :repo_url, "git@gihtub.com:MAPC/massbuilds.git"
 
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
