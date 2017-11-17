@@ -38,6 +38,9 @@ GEM
       activemodel (= 5.1.4)
       activesupport (= 5.1.4)
       arel (~> 8.0)
+    activerecord-postgis-adapter (5.0.3)
+      activerecord (~> 5.1)
+      rgeo-activerecord (~> 5.1)
     activesupport (5.1.4)
       concurrent-ruby (~> 1.0, >= 1.0.2)
       i18n (~> 0.7)
@@ -181,6 +184,10 @@ GEM
     rb-fsevent (0.10.2)
     rb-inotify (0.9.10)
       ffi (>= 0.5.0, < 2)
+    rgeo (0.6.0)
+    rgeo-activerecord (5.1.1)
+      activerecord (~> 5.0)
+      rgeo (~> 0.3)
     rspec (3.7.0)
       rspec-core (~> 3.7.0)
       rspec-expectations (~> 3.7.0)
@@ -252,6 +259,7 @@ PLATFORMS
 
 DEPENDENCIES
   active_model_serializers (~> 0.10.0)
+  activerecord-postgis-adapter
   capistrano (~> 3.6)
   capistrano-bundler
   capistrano-passenger

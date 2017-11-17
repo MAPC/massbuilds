@@ -1,0 +1,133 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Developments</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Creator</th>
+      <th>Rdv</th>
+      <th>Asofright</th>
+      <th>Ovr55</th>
+      <th>Clusteros</th>
+      <th>Phased</th>
+      <th>Stalled</th>
+      <th>Name</th>
+      <th>Status</th>
+      <th>Desc</th>
+      <th>Project url</th>
+      <th>Mapc notes</th>
+      <th>Tagline</th>
+      <th>Address</th>
+      <th>State</th>
+      <th>Zip code</th>
+      <th>Height</th>
+      <th>Stories</th>
+      <th>Year compl</th>
+      <th>Prjarea</th>
+      <th>Singfamhu</th>
+      <th>Twnhsmmult</th>
+      <th>Lgmultifam</th>
+      <th>Tothu</th>
+      <th>Gqpop</th>
+      <th>Rptdemp</th>
+      <th>Emploss</th>
+      <th>Estemp</th>
+      <th>Commsf</th>
+      <th>Hotelrms</th>
+      <th>Onsitepark</th>
+      <th>Total cost</th>
+      <th>Team membership count</th>
+      <th>Cancelled</th>
+      <th>Private</th>
+      <th>Fa ret</th>
+      <th>Fa ofcmd</th>
+      <th>Fa indmf</th>
+      <th>Fa whs</th>
+      <th>Fa rnd</th>
+      <th>Fa edinst</th>
+      <th>Fa other</th>
+      <th>Fa hotel</th>
+      <th>Other rate</th>
+      <th>Affordable</th>
+      <th>Latitude</th>
+      <th>Longitude</th>
+      <th>Parcel</th>
+      <th>Mixed use</th>
+      <th>Point</th>
+      <th>Programs</th>
+      <th>Forty b</th>
+      <th>Residential</th>
+      <th>Commercial</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @developments.each do |development| %>
+      <tr>
+        <td><%= development.creator_id %></td>
+        <td><%= development.rdv %></td>
+        <td><%= development.asofright %></td>
+        <td><%= development.ovr55 %></td>
+        <td><%= development.clusteros %></td>
+        <td><%= development.phased %></td>
+        <td><%= development.stalled %></td>
+        <td><%= development.name %></td>
+        <td><%= development.status %></td>
+        <td><%= development.desc %></td>
+        <td><%= development.project_url %></td>
+        <td><%= development.mapc_notes %></td>
+        <td><%= development.tagline %></td>
+        <td><%= development.address %></td>
+        <td><%= development.state %></td>
+        <td><%= development.zip_code %></td>
+        <td><%= development.height %></td>
+        <td><%= development.stories %></td>
+        <td><%= development.year_compl %></td>
+        <td><%= development.prjarea %></td>
+        <td><%= development.singfamhu %></td>
+        <td><%= development.twnhsmmult %></td>
+        <td><%= development.lgmultifam %></td>
+        <td><%= development.tothu %></td>
+        <td><%= development.gqpop %></td>
+        <td><%= development.rptdemp %></td>
+        <td><%= development.emploss %></td>
+        <td><%= development.estemp %></td>
+        <td><%= development.commsf %></td>
+        <td><%= development.hotelrms %></td>
+        <td><%= development.onsitepark %></td>
+        <td><%= development.total_cost %></td>
+        <td><%= development.team_membership_count %></td>
+        <td><%= development.cancelled %></td>
+        <td><%= development.private %></td>
+        <td><%= development.fa_ret %></td>
+        <td><%= development.fa_ofcmd %></td>
+        <td><%= development.fa_indmf %></td>
+        <td><%= development.fa_whs %></td>
+        <td><%= development.fa_rnd %></td>
+        <td><%= development.fa_edinst %></td>
+        <td><%= development.fa_other %></td>
+        <td><%= development.fa_hotel %></td>
+        <td><%= development.other_rate %></td>
+        <td><%= development.affordable %></td>
+        <td><%= development.latitude %></td>
+        <td><%= development.longitude %></td>
+        <td><%= development.parcel_id %></td>
+        <td><%= development.mixed_use %></td>
+        <td><%= development.point %></td>
+        <td><%= development.programs %></td>
+        <td><%= development.forty_b %></td>
+        <td><%= development.residential %></td>
+        <td><%= development.commercial %></td>
+        <td><%= link_to 'Show', development %></td>
+        <td><%= link_to 'Edit', edit_development_path(development) %></td>
+        <td><%= link_to 'Destroy', development, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Development', new_development_path %>
