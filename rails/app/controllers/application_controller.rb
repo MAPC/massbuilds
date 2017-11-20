@@ -1,9 +1,6 @@
 class ApplicationController < ActionController::Base
-  protect_from_forgery with: :exception
+  include Pundit
   before_action :authenticate_user_from_token!
-
-  # Enter the normal Devise authentication path,
-  # using the token authenticated user if available
   before_action :authenticate_user!
 
   private
