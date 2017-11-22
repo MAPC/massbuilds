@@ -1,6 +1,7 @@
 class SessionsController < Devise::SessionsController
   respond_to :html, :json
   def create
+    skip_authorization
     super do |user|
       if request.format.json?
         data = {
@@ -10,5 +11,10 @@ class SessionsController < Devise::SessionsController
         render json: data, status: 201 and return
       end
     end
+  end
+
+  def new
+    skip_authorization
+    super
   end
 end

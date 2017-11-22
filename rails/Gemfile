@@ -17,6 +17,7 @@ gem 'activerecord-postgis-adapter'
 gem 'devise'
 gem 'rack-cors', :require => 'rack/cors'
 gem 'pundit'
+gem 'pg_search'
 
 group :development, :test do
   gem 'pry-byebug'

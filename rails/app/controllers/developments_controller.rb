@@ -1,9 +1,14 @@
 class DevelopmentsController < ApplicationController
   before_action :set_development, only: [:show, :edit, :update, :destroy]
+  skip_before_action :authenticate_user!, only: [:index]
 
   # GET /developments
   def index
-    @developments = Development.all
+    @developments = if params[:term]
+                      Development.search_by_name(params[:term])
+                    else
+                      Development.all
+                    end
     authorize @developments
   end
 

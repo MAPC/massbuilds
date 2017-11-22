@@ -1,5 +1,10 @@
 <h1>Developments</h1>
 
+<%= form_tag developments_path, method: :get do %>
+  <%= text_field_tag 'term', params[:term], placeholder: "Enter development name" %>
+  <%= submit_tag 'Search' %>
+<% end %>
+
 <table>
   <thead>
     <tr>
