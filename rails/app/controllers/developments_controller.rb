@@ -4,24 +4,29 @@ class DevelopmentsController < ApplicationController
   # GET /developments
   def index
     @developments = Development.all
+    authorize @developments
   end
 
   # GET /developments/1
   def show
+    authorize @development
   end
 
   # GET /developments/new
   def new
     @development = Development.new
+    authorize @development
   end
 
   # GET /developments/1/edit
   def edit
+    authorize @development
   end
 
   # POST /developments
   def create
     @development = Development.new(development_params)
+    authorize @development
 
     if @development.save
       redirect_to @development, notice: 'Development was successfully created.'
@@ -32,6 +37,7 @@ class DevelopmentsController < ApplicationController
 
   # PATCH/PUT /developments/1
   def update
+    authorize @development
     if @development.update(development_params)
       redirect_to @development, notice: 'Development was successfully updated.'
     else
@@ -41,6 +47,7 @@ class DevelopmentsController < ApplicationController
 
   # DELETE /developments/1
   def destroy
+    authorize @development
     @development.destroy
     redirect_to developments_url, notice: 'Development was successfully destroyed.'
   end

@@ -2,6 +2,8 @@ class ApplicationController < ActionController::Base
   include Pundit
   before_action :authenticate_user_from_token!
   before_action :authenticate_user!
+  after_action :verify_authorized
+  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
   private
 
@@ -14,5 +16,9 @@ class ApplicationController < ActionController::Base
         sign_in user, store: false
       end
     end
+  end
+
+  def user_not_authorized
+    head :unauthorized
   end
 end
