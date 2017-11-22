@@ -10,11 +10,19 @@ class DevelopmentsController < ApplicationController
                       Development.all
                     end
     authorize @developments
+    respond_to do |format|
+      format.jsonapi { render jsonapi: @developments }
+      format.html
+    end
   end
 
   # GET /developments/1
   def show
     authorize @development
+    respond_to do |format|
+      format.jsonapi { render jsonapi: @development }
+      format.html
+    end
   end
 
   # GET /developments/new
@@ -34,9 +42,12 @@ class DevelopmentsController < ApplicationController
     authorize @development
 
     if @development.save
-      redirect_to @development, notice: 'Development was successfully created.'
+      respond_to do |format|
+        format.jsonapi { head :created }
+        format.html { redirect_to @development, notice: 'Development was successfully created.' }
+      end
     else
-      render :new
+      head :bad_request
     end
   end
 
@@ -46,7 +57,7 @@ class DevelopmentsController < ApplicationController
     if @development.update(development_params)
       redirect_to @development, notice: 'Development was successfully updated.'
     else
-      render :edit
+      head :bad_request
     end
   end
 
@@ -65,6 +76,9 @@ class DevelopmentsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def development_params
-      params.require(:development).permit(:creator_id, :rdv, :asofright, :ovr55, :clusteros, :phased, :stalled, :name, :status, :desc, :project_url, :mapc_notes, :tagline, :address, :state, :zip_code, :height, :stories, :year_compl, :prjarea, :singfamhu, :twnhsmmult, :lgmultifam, :tothu, :gqpop, :rptdemp, :emploss, :estemp, :commsf, :hotelrms, :onsitepark, :total_cost, :team_membership_count, :cancelled, :private, :fa_ret, :fa_ofcmd, :fa_indmf, :fa_whs, :fa_rnd, :fa_edinst, :fa_other, :fa_hotel, :other_rate, :affordable, :latitude, :longitude, :parcel_id, :mixed_use, :point, :programs, :forty_b, :residential, :commercial)
+      respond_to do |format|
+        format.jsonapi { ActiveModelSerializers::Deserialization.jsonapi_parse(params, only: [:creator_id, :rdv, :asofright, :ovr55, :clusteros, :phased, :stalled, :name, :status, :desc, :project_url, :mapc_notes, :tagline, :address, :state, :zip_code, :height, :stories, :year_compl, :prjarea, :singfamhu, :twnhsmmult, :lgmultifam, :tothu, :gqpop, :rptdemp, :emploss, :estemp, :commsf, :hotelrms, :onsitepark, :total_cost, :team_membership_count, :cancelled, :private, :fa_ret, :fa_ofcmd, :fa_indmf, :fa_whs, :fa_rnd, :fa_edinst, :fa_other, :fa_hotel, :other_rate, :affordable, :latitude, :longitude, :parcel_id, :mixed_use, :point, :programs, :forty_b, :residential, :commercial]) }
+        format.html { params.require(:development).permit(:creator_id, :rdv, :asofright, :ovr55, :clusteros, :phased, :stalled, :name, :status, :desc, :project_url, :mapc_notes, :tagline, :address, :state, :zip_code, :height, :stories, :year_compl, :prjarea, :singfamhu, :twnhsmmult, :lgmultifam, :tothu, :gqpop, :rptdemp, :emploss, :estemp, :commsf, :hotelrms, :onsitepark, :total_cost, :team_membership_count, :cancelled, :private, :fa_ret, :fa_ofcmd, :fa_indmf, :fa_whs, :fa_rnd, :fa_edinst, :fa_other, :fa_hotel, :other_rate, :affordable, :latitude, :longitude, :parcel_id, :mixed_use, :point, :programs, :forty_b, :residential, :commercial) }
+      end
     end
 end
