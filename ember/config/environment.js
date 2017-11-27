@@ -21,15 +21,22 @@ module.exports = function(environment) {
     APP: {
       // Here you can pass flags/options to your application instance
       // when it is created
-    }
+    },
+    contentSecurityPolicy: {
+      'connect-src': '*',
+    },
+    'ember-simple-auth': {
+      routeAfterAuthentication: 'dashboard',
+      routeIfAlreadyAuthenticated: 'dashboard',
+    },
   };
 
   if (environment === 'development') {
-    // ENV.APP.LOG_RESOLVER = true;
-    // ENV.APP.LOG_ACTIVE_GENERATION = true;
-    // ENV.APP.LOG_TRANSITIONS = true;
-    // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
-    // ENV.APP.LOG_VIEW_LOOKUPS = true;
+    ENV['host'] = 'http://localhost:3000';
+  }
+
+  if (environment === 'production') {
+    ENV['host'] = 'http://api.massbuilds.com';
   }
 
   if (environment === 'test') {
@@ -41,10 +48,6 @@ module.exports = function(environment) {
     ENV.APP.LOG_VIEW_LOOKUPS = false;
 
     ENV.APP.rootElement = '#ember-testing';
-  }
-
-  if (environment === 'production') {
-    // here you can enable a production-specific feature
   }
 
   return ENV;
