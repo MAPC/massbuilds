@@ -75,6 +75,13 @@ ActiveRecord::Schema.define(version: 20171117210007) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "ma_municipalities", primary_key: "gid", id: :serial, force: :cascade do |t|
+    t.integer "muni_id"
+    t.string "municipal", limit: 35
+    t.geometry "geom", limit: {:srid=>26986, :type=>"multi_polygon"}
+    t.index ["geom"], name: "ma_municipalities_geom_idx", using: :gist
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
