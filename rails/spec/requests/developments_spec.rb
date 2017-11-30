@@ -47,6 +47,25 @@ RSpec.describe "Developments", type: :request do
       expect(response).to have_http_status(:success)
       expect(response.header['Content-Type']).to include('application/vnd.api+json')
     end
+
+    it "can search for developments by name" do
+      FactoryBot.create(:development)
+      FactoryBot.create(:development, name: "MAPC")
+      get developments_path, params: { term: 'Seaport' }, headers: jsonapi_session
+      expect(response.body).to include('Seaport')
+    end
+
+    it "can search for developments by street address" do
+      FactoryBot.create(:development)
+      get developments_path, params: { term: '123 Main Street' }, headers: jsonapi_session
+      expect(response.body).to include('123 Main Street')
+    end
+
+    it "can search for developments by municipality name" do
+      FactoryBot.create(:development)
+      get developments_path, params: { term: 'Boston' }, headers: jsonapi_session
+      expect(response.body).to include('Boston')
+    end
   end
 
   describe "POST /developments" do

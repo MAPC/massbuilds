@@ -5,7 +5,7 @@ class DevelopmentsController < ApplicationController
   # GET /developments
   def index
     @developments = if params[:term]
-                      Development.search_by_name(params[:term])
+                      Development.search_by_name_and_location(params[:term])
                     else
                       Development.all
                     end
