@@ -81,7 +81,6 @@ ActiveRecord::Schema.define(version: 20171129181217) do
     t.string "municipal", limit: 35
     t.geometry "geom", limit: {:srid=>26986, :type=>"multi_polygon"}
     t.index ["geom"], name: "ma_municipalities_geom_idx", using: :gist
-    t.index ["geom"], name: "ma_municipalities_geom_idx1", using: :gist
   end
 
   create_table "users", force: :cascade do |t|

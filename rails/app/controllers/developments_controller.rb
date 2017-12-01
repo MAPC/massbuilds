@@ -4,12 +4,12 @@ class DevelopmentsController < ApplicationController
 
   # GET /developments
   def index
+    authorize Development
     @developments = if params[:term]
                       Development.search_by_name_and_location(params[:term])
                     else
                       Development.all
                     end
-    authorize @developments
     respond_to do |format|
       format.jsonapi { render jsonapi: @developments }
       format.html
