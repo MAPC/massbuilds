@@ -66,6 +66,19 @@ RSpec.describe "Developments", type: :request do
       get developments_path, params: { term: 'Boston' }, headers: jsonapi_session
       expect(response.body).to include('Boston')
     end
+
+    it "can search for developments by hotel rooms" do
+      FactoryBot.create(:development)
+      get developments_path, params: { hotelrms: 1 }, headers: jsonapi_session
+      expect(response.body).to include('Boston')
+    end
+
+    it "can export developments as a CSV" do
+      FactoryBot.create(:development)
+      get '/developments.csv', params: { term: 'Boston' }, headers: jsonapi_session
+      expect(response.content_type).to eq('text/csv')
+      expect(response.body).to include('Seaport')
+    end
   end
 
   describe "POST /developments" do
