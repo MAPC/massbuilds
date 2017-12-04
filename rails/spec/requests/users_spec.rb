@@ -67,26 +67,26 @@ RSpec.describe "Users", type: :request do
 
   describe "PATCH /users" do
     it "lets a user update their own registration" do
-      user = FactoryBot.create(:user, email: 'test1@mapc.org', role: 'user')
+      user = FactoryBot.create(:user, role: 'user')
       user_session = { Authorization: "Token token=#{user.authentication_token}, email=#{user.email}" }
       patch "/users/#{user.id}", params: valid_jsonapi_params_2, headers: user_session.merge(jsonapi_session)
       expect(response).to have_http_status(:ok)
     end
 
     it "lets an administrator update a users registration" do
-      user = FactoryBot.create(:user, email: 'test2@mapc.org')
+      user = FactoryBot.create(:user)
       patch "/users/#{user.id}", params: valid_jsonapi_params_2, headers: admin_session.merge(jsonapi_session)
       expect(response).to have_http_status(:ok)
     end
 
     it "lets an administrator change a user role" do
-      user = FactoryBot.create(:user, email: 'test3@mapc.org')
+      user = FactoryBot.create(:user)
       patch "/users/#{user.id}", params: valid_jsonapi_params_role, headers: admin_session.merge(jsonapi_session)
       expect(response).to have_http_status(:ok)
     end
 
     it "does not let a user change their own role" do
-      user = FactoryBot.create(:user, email: 'test4@mapc.org', role: 'user')
+      user = FactoryBot.create(:user, role: 'user')
       user_session = { Authorization: "Token token=#{user.authentication_token}, email=#{user.email}" }
       patch "/users/#{user.id}", params: valid_jsonapi_params_role, headers: user_session.merge(jsonapi_session)
       expect(response).to have_http_status(:unauthorized)
@@ -95,20 +95,20 @@ RSpec.describe "Users", type: :request do
 
   describe "DELETE /users" do
     it "lets a user delete their own account" do
-      user = FactoryBot.create(:user, email: 'test8@mapc.org', role: 'user')
+      user = FactoryBot.create(:user, role: 'user')
       user_session = { Authorization: "Token token=#{user.authentication_token}, email=#{user.email}" }
       delete "/users/#{user.id}", headers: user_session.merge(jsonapi_session)
       expect(response).to have_http_status(:ok)
     end
 
     it "lets an administrator delete a user account" do
-      user = FactoryBot.create(:user, email: 'test6@mapc.org')
+      user = FactoryBot.create(:user)
       delete "/users/#{user.id}", headers: admin_session.merge(jsonapi_session)
       expect(response).to have_http_status(:ok)
     end
 
     it "does not let a user delete another user account" do
-      user = FactoryBot.create(:user, email: 'test7@mapc.org', role: 'user')
+      user = FactoryBot.create(:user, role: 'user')
       delete "/users/#{user.id}", headers: user_session.merge(jsonapi_session)
       expect(response).to have_http_status(:unauthorized)
     end
