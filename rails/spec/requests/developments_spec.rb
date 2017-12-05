@@ -82,11 +82,6 @@ RSpec.describe "Developments", type: :request do
   end
 
   describe "POST /developments" do
-    it "works as an admin" do
-      post developments_path, params: valid_params, headers: admin_session
-      expect(response).to have_http_status(:found)
-    end
-
     it "works as an admin via JSONAPI" do
       post developments_path, params: valid_jsonapi_params, headers: admin_session.merge(jsonapi_session)
       expect(response).to have_http_status(:success)
@@ -94,7 +89,7 @@ RSpec.describe "Developments", type: :request do
     end
 
     it "does not work as a user" do
-      post developments_path, params: valid_params, headers: user_session
+      post developments_path, params: valid_jsonapi_params, headers: user_session.merge(jsonapi_session)
       expect(response).to have_http_status(:unauthorized)
     end
   end
@@ -102,13 +97,13 @@ RSpec.describe "Developments", type: :request do
   describe "PUT /developments/:id" do
     it "works as an admin" do
       development = FactoryBot.create(:development)
-      put "/developments/#{development.id}", params: valid_params, headers: admin_session
+      put "/developments/#{development.id}", params: valid_jsonapi_params, headers: admin_session.merge(jsonapi_session)
       expect(response).to have_http_status(:found)
     end
 
     it "does not work as a user" do
       development = FactoryBot.create(:development)
-      put "/developments/#{development.id}", params: valid_params, headers: user_session
+      put "/developments/#{development.id}", params: valid_jsonapi_params, headers: user_session.merge(jsonapi_session)
       expect(response).to have_http_status(:unauthorized)
     end
   end
@@ -116,13 +111,13 @@ RSpec.describe "Developments", type: :request do
   describe "DELETE /developments/:id" do
     it "works as an admin" do
       development = FactoryBot.create(:development)
-      delete "/developments/#{development.id}", headers: admin_session
-      expect(response).to have_http_status(:found)
+      delete "/developments/#{development.id}", headers: admin_session.merge(jsonapi_session)
+      expect(response).to have_http_status(:no_content)
     end
 
     it "does not work as a user" do
       development = FactoryBot.create(:development)
-      delete "/developments/#{development.id}", headers: user_session
+      delete "/developments/#{development.id}", headers: user_session.merge(jsonapi_session)
       expect(response).to have_http_status(:unauthorized)
     end
   end

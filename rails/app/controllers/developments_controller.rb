@@ -60,15 +60,24 @@ class DevelopmentsController < ApplicationController
     if @development.update(development_params)
       redirect_to @development, notice: 'Development was successfully updated.'
     else
-      head :bad_request
+      respond_to do |format|
+        format.jsonapi { head :bad_request }
+      end
     end
   end
 
   # DELETE /developments/1
   def destroy
     authorize @development
-    @development.destroy
-    redirect_to developments_url, notice: 'Development was successfully destroyed.'
+    if @development.destroy
+      respond_to do |format|
+        format.jsonapi { head :no_content }
+      end
+    else
+      respond_to do |format|
+        format.jsonapi { head :bad_request }
+      end
+    end
   end
 
   private
