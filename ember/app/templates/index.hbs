@@ -1,0 +1,16 @@
+<section class='route index'>
+  <div class="left-panel-layer">
+  </div>
+
+  <div class="map-layer">
+    {{#leaflet-map lat=map.lat lng=map.lng zoom=map.zoom as |layers|}}
+      {{tile-layer url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
+
+      {{#each map.data as |datum|}}
+      {{/each}}
+    {{/leaflet-map}}
+  </div>
+
+  <div class="right-panel-layer">
+  </div>
+</section>
