@@ -1,0 +1,15 @@
+.ember-view.leaflet-container {
+
+  .leaflet-control-container {
+    position: absolute;
+    bottom: 0;
+
+    .leaflet-top {
+      top: initial;
+      bottom: 15px;
+    }
+
+    .leaflet-left { left: 10px; }
+  }
+
+}
