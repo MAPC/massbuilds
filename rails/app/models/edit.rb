@@ -6,6 +6,10 @@ class Edit < ApplicationRecord
   private
 
   def update_development
-    development.update(proposed_changes)
+    if development
+      development.update(proposed_changes)
+    else
+      Development.create(proposed_changes)
+    end
   end
 end

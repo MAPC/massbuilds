@@ -11,6 +11,15 @@ RSpec.describe Edit, type: :model do
     expect(development.hotelrms).to eq(2)
   end
 
+  it "creates a new development when approved if one does not exist" do
+    edit = FactoryBot.create(:edit)
+    edit.update(approved: true)
+    development = Development.last
+    expect(development.state).to eq('CT')
+    expect(development.tagline).to eq('new tagline')
+    expect(development.hotelrms).to eq(2)
+  end
+
   it "does not update the development when not approved" do
     development = FactoryBot.create(:development)
     edit = FactoryBot.create(:edit, development: development)
