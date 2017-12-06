@@ -4,7 +4,6 @@ RSpec.describe "developments/index", type: :view do
   before(:each) do
     assign(:developments, [
       Development.create!(
-        :creator_id => 2,
         :rdv => false,
         :asofright => false,
         :ovr55 => false,
@@ -60,7 +59,6 @@ RSpec.describe "developments/index", type: :view do
         :commercial => false
       ),
       Development.create!(
-        :creator_id => 2,
         :rdv => false,
         :asofright => false,
         :ovr55 => false,
@@ -120,7 +118,6 @@ RSpec.describe "developments/index", type: :view do
 
   it "renders a list of developments" do
     render
-    assert_select "tr>td", :text => 2.to_s, :count => 2
     assert_select "tr>td", :text => false.to_s, :count => 24
     assert_select "tr>td", :text => "Name".to_s, :count => 2
     assert_select "tr>td", :text => "Status".to_s, :count => 2
@@ -159,7 +156,7 @@ RSpec.describe "developments/index", type: :view do
     assert_select "tr>td", :text => 29.5.to_s, :count => 2
     assert_select "tr>td", :text => "9.99".to_s, :count => 4
     assert_select "tr>td", :text => "Parcel".to_s, :count => 2
-    assert_select "tr>td", :text => "".to_s, :count => 2
+    assert_select "tr>td", :text => "".to_s, :count => 4
     assert_select "tr>td", :text => "Programs".to_s, :count => 2
   end
 end

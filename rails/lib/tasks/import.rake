@@ -74,6 +74,24 @@ namespace :import do
     end
   end
 
+  desc 'Import previous user data'
+  task user_data: :environment do
+    csv_text = File.read(Rails.root.join('lib', 'import', 'users.csv'))
+    csv = CSV.parse(csv_text, headers: true, encoding: 'ISO-8859-1')
+    csv.each do |row|
+      user = User.create!(
+        id: row['id'],
+        email: row['email'],
+        password: 'temporary_password',
+        sign_in_count: row['sign_in_count'],
+        created_at: row['created_at'],
+        first_name: row['first_name'],
+        last_name: row['last_name']
+        )
+      user.update_attribute(:encrypted_password, row['encrypted_password'])
+    end
+  end
+
   private
 
   def find_municipality(development)

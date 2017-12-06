@@ -3,7 +3,6 @@ require 'rails_helper'
 RSpec.describe "developments/edit", type: :view do
   before(:each) do
     @development = assign(:development, Development.create!(
-      :creator_id => 1,
       :rdv => false,
       :asofright => false,
       :ovr55 => false,
