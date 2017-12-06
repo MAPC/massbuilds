@@ -1,0 +1,80 @@
+.component.share-buttons {
+
+  $drawer_width: 240px;
+  $toggle_width: 45px;
+  $border_width: 1px;
+
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+  z-index: 50;
+
+  button { 
+    height: $toggle_width; 
+
+    background: $color_bg-light;
+    border: 0;
+    border-radius: 0;
+
+    outline: none;
+    transition: background .15s;
+
+    &:hover { 
+      background: $color_bg-light--active; 
+
+      transition: background .15s; 
+    }
+
+    > img { 
+      @extend ._vertical-center;    
+
+      margin: 0 auto;
+    }
+  }
+
+  .share-buttons-wrapper {
+    width: $toggle_width + ($border_width * 2);
+
+    overflow: hidden;
+    border-radius: 5px;
+    transition: width .2s;
+
+    border: $border_width solid $color_bg-medium;
+
+    &.active {
+      width: $drawer_width + ($border_width * 2.5); 
+
+      transition: width .2s;
+
+      .toggler { 
+        background: lighten($color_bg-medium, 5); 
+
+        transition: none;
+      }
+    }
+  }
+
+  .toggler {
+    float: right;
+    z-index: 1; 
+
+    width: $toggle_width;
+  }
+
+  .share-drawer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+
+    width: $drawer_width - $toggle_width;
+
+    button { border-right: $border_width solid $color_bg-medium; }
+  }
+
+  .share-button {
+    flex: 1 0 25%; 
+
+    > img { width: 40%; }
+  }
+}
