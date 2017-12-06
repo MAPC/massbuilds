@@ -7,13 +7,13 @@ FactoryBot.define do
     clusteros false
     phased false
     stalled false
-    name "MyString"
+    name "Seaport"
     status "MyString"
     desc "MyText"
     project_url "MyString"
     mapc_notes "MyText"
     tagline "MyString"
-    address "MyString"
+    address "123 Main Street"
     state "MyString"
     zip_code "MyString"
     height 1
@@ -54,5 +54,6 @@ FactoryBot.define do
     forty_b false
     residential false
     commercial false
+    municipality "Boston"
   end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171117210007) do
+ActiveRecord::Schema.define(version: 20171129181217) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -66,13 +66,14 @@ ActiveRecord::Schema.define(version: 20171117210007) do
     t.decimal "longitude"
     t.string "parcel_id"
     t.boolean "mixed_use"
-    t.geometry "point", limit: {:srid=>0, :type=>"st_point"}
+    t.geometry "point", limit: {:srid=>4326, :type=>"st_point"}
     t.string "programs"
     t.boolean "forty_b"
     t.boolean "residential"
     t.boolean "commercial"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "municipality"
   end
 
   create_table "ma_municipalities", primary_key: "gid", id: :serial, force: :cascade do |t|

@@ -4,14 +4,17 @@ class DevelopmentsController < ApplicationController
 
   # GET /developments
   def index
+    authorize Development
     @developments = if params[:term]
-                      Development.search_by_name(params[:term])
+                      Development.search_by_name_and_location(params[:term])
+                    elsif params
+                      Development.where(filtered_params)
                     else
                       Development.all
                     end
-    authorize @developments
     respond_to do |format|
       format.jsonapi { render jsonapi: @developments }
+      format.csv { send_data @developments.to_csv, filename: "developments-#{Date.today}.csv" }
       format.html
     end
   end
@@ -57,21 +60,34 @@ class DevelopmentsController < ApplicationController
     if @development.update(development_params)
       redirect_to @development, notice: 'Development was successfully updated.'
     else
-      head :bad_request
+      respond_to do |format|
+        format.jsonapi { head :bad_request }
+      end
     end
   end
 
   # DELETE /developments/1
   def destroy
     authorize @development
-    @development.destroy
-    redirect_to developments_url, notice: 'Development was successfully destroyed.'
+    if @development.destroy
+      respond_to do |format|
+        format.jsonapi { head :no_content }
+      end
+    else
+      respond_to do |format|
+        format.jsonapi { head :bad_request }
+      end
+    end
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_development
       @development = Development.find(params[:id])
+    end
+
+    def filtered_params
+      params.permit(:creator_id, :rdv, :asofright, :ovr55, :clusteros, :phased, :stalled, :name, :status, :desc, :project_url, :mapc_notes, :tagline, :address, :state, :zip_code, :height, :stories, :year_compl, :prjarea, :singfamhu, :twnhsmmult, :lgmultifam, :tothu, :gqpop, :rptdemp, :emploss, :estemp, :commsf, :hotelrms, :onsitepark, :total_cost, :team_membership_count, :cancelled, :private, :fa_ret, :fa_ofcmd, :fa_indmf, :fa_whs, :fa_rnd, :fa_edinst, :fa_other, :fa_hotel, :other_rate, :affordable, :latitude, :longitude, :parcel_id, :mixed_use, :point, :programs, :forty_b, :residential, :commercial)
     end
 
     # Only allow a trusted parameter "white list" through.

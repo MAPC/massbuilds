@@ -64,4 +64,27 @@ namespace :import do
       )
     end
   end
+
+  desc 'Import previous development data'
+  task development_municipalities: :environment do
+    Development.where(municipality: nil).each do |development|
+      municipality = find_municipality(development)
+      next if municipality.blank?
+      development.update(municipality: municipality[0]['municipal'])
+    end
+  end
+
+  private
+
+  def find_municipality(development)
+    municipality_query = <<~SQL
+      SELECT municipal
+      FROM
+        (SELECT municipal, ST_TRANSFORM(ma_municipalities.geom, 4326) as geom FROM ma_municipalities) municipality,
+        (SELECT id, name, point FROM developments) development
+        WHERE ST_Intersects(development.point, municipality.geom)
+        AND id = #{development.id};
+    SQL
+    ActiveRecord::Base.connection.exec_query(municipality_query).to_hash
+  end
 end
