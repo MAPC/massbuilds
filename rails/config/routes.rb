@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :edits
   devise_for :users, controllers: { sessions: 'sessions' }, path_prefix: 'my'
   resources :users
   resources :developments

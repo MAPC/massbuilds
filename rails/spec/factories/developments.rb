@@ -14,7 +14,7 @@ FactoryBot.define do
     mapc_notes "MyText"
     tagline "MyString"
     address "123 Main Street"
-    state "MyString"
+    state "MA"
     zip_code "MyString"
     height 1
     stories 1

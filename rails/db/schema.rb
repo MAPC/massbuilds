@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171129181217) do
+ActiveRecord::Schema.define(version: 20171205215641) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -76,11 +76,23 @@ ActiveRecord::Schema.define(version: 20171129181217) do
     t.string "municipality"
   end
 
+  create_table "edits", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "development_id"
+    t.json "proposed_changes"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "approved", default: false
+    t.index ["development_id"], name: "index_edits_on_development_id"
+    t.index ["user_id"], name: "index_edits_on_user_id"
+  end
+
   create_table "ma_municipalities", primary_key: "gid", id: :serial, force: :cascade do |t|
     t.integer "muni_id"
     t.string "municipal", limit: 35
     t.geometry "geom", limit: {:srid=>26986, :type=>"multi_polygon"}
     t.index ["geom"], name: "ma_municipalities_geom_idx", using: :gist
+    t.index ["geom"], name: "ma_municipalities_geom_idx1", using: :gist
   end
 
   create_table "users", force: :cascade do |t|
@@ -102,4 +114,6 @@ ActiveRecord::Schema.define(version: 20171129181217) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "edits", "developments"
+  add_foreign_key "edits", "users"
 end
