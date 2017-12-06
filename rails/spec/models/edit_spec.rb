@@ -11,7 +11,7 @@ RSpec.describe Edit, type: :model do
     expect(development.hotelrms).to eq(2)
   end
 
-  it "does not update the development when not approved"
+  it "does not update the development when not approved" do
     development = FactoryBot.create(:development)
     edit = FactoryBot.create(:edit, development: development)
     edit.update(approved: false)
