@@ -5,6 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable
   enum role: [:admin, :verified, :researcher, :user]
   before_save :ensure_authentication_token
+  has_many :edits
 
   private
   def ensure_authentication_token
