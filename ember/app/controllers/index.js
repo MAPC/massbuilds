@@ -5,4 +5,9 @@ export default class extends Controller {
 
   @service map
 
+  constructor() {
+    super();
+
+    this.searchPlaceholder = 'Search by Town/City, Developer, Address...'
+  }
 }
