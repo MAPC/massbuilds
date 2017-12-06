@@ -1,4 +1,7 @@
-{{input class="search-input" value=searchQuery placeholder=placeholder}}
+<div class="search-input-wrapper">
+  <img src="{{rootURL}}assets/images/search.svg" class="search-icon">
+  {{input class="search-input" value=searchQuery placeholder=placeholder}}
+</div>
 
 <ul class="search-list">
   {{#each searchList as |item|}}

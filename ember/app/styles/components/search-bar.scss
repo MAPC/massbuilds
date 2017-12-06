@@ -1,15 +1,23 @@
 .component.search-bar {
 
-  position: absolute;
-  top: 5vh;
-  left: 6%;
-  z-index: 100;
+  .search-icon {
+    @extend ._vertical-center;
+    top: 48%;
+    left: 10px;
+    z-index: 1;
+
+    width: 15px;
+
+    opacity: .5;
+  }
 
   input.search-input {
-    min-width: 275px;
+    min-width: 320px;
     padding: 8px 12px; 
+    padding-left: 32px;
 
     color: $color_font-medium;
+    font-size: 14px;
 
     border: 1px solid $color_bg-medium;
     border-radius: 5px;
