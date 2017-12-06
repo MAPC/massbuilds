@@ -19,7 +19,7 @@
     outline: none;
     transition: background .15s;
 
-    &:hover { 
+    &:not(.toggler):hover { 
       background: $color_bg-light--active; 
 
       transition: background .15s; 
@@ -29,6 +29,7 @@
       @extend ._vertical-center;    
 
       margin: 0 auto;
+      opacity: .7;
     }
   }
 
@@ -37,20 +38,22 @@
 
     overflow: hidden;
     border-radius: 5px;
-    transition: width .2s;
 
-    border: $border_width solid $color_bg-medium;
+    border: $border_width solid $color_brand-primary;
+    transition: $transition_border, width .2s;
+
+    &:hover {
+      border-color: $color_brand-primary--active;
+
+      transition: $transition_border, width .2s;
+    }
 
     &.active {
       width: $drawer_width + ($border_width * 2.5); 
 
       transition: width .2s;
 
-      .toggler { 
-        background: lighten($color_bg-medium, 5); 
-
-        transition: none;
-      }
+      .toggler { background: lighten($color_bg-medium, 5); }
     }
   }
 
@@ -74,6 +77,7 @@
 
   .share-button {
     flex: 1 0 25%; 
+    font-weight: 200;
 
     > img { width: 40%; }
   }

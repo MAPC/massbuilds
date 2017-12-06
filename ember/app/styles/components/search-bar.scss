@@ -19,10 +19,17 @@
     color: $color_font-medium;
     font-size: 14px;
 
-    border: 1px solid $color_bg-medium;
+    border: 1px solid $color_brand-primary;
     border-radius: 5px;
 
     outline: none;
+    transition: $transition_border;
+
+    &:focus, &:active {
+      border-color: $color_brand-primary--active; 
+
+      transition: $transition_border;
+    }
   }
 
 }

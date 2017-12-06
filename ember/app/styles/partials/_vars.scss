@@ -1,4 +1,8 @@
+$color_mod: aqua;
+
 $color_brand-primary: #3c5875;
+
+$color_brand-primary--active: mix($color_mod, $color_brand-primary, 50);
 
 $color_bg-light: #FFFFFF;
 $color_bg-medium: #CCCCCC;
@@ -11,3 +15,5 @@ $color_font-medium: #777;
 $color_font-dark: #091F2F;
 
 $font_family-primary: 'Nunito', Helvetica, sans-serif;
+
+$transition_border: border-color .25s;
