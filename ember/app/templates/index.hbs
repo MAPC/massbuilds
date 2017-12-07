@@ -17,7 +17,7 @@
 
   <!--/ floating components -->
 
-  <div class="left-panel-layer {{if showingLeftPanel 'active'}}">
+  <div class="panel-layer left-panel-layer {{if showingLeftPanel 'active'}}">
     {{filter-panel model=filters}}
   </div>
 
@@ -30,6 +30,6 @@
     {{/leaflet-map}}
   </div>
 
-  <div class="right-panel-layer">
+  <div class="panel-layer right-panel-layer {{if showingRightPanel 'active'}}">
   </div>
 </section>

@@ -15,6 +15,8 @@ export default class extends Controller {
     this.searchPlaceholder = 'Search by Town/City, Developer, Address...';
 
     this.showingFilters = false;
+    this.showingMenu = false;
+
     this.activeFilters = [];
   }
 
@@ -26,6 +28,13 @@ export default class extends Controller {
     const showingFilters = this.get('showingFilters');
 
     return showingFilters;
+  }
+
+  @computed('showingMenu')
+  get showingRightPanel() {
+    const showingMenu = this.get('showingMenu');
+
+    return showingMenu;
   }
 
   @action
