@@ -1,7 +1,7 @@
 require 'csv'
 class Development < ApplicationRecord
   has_many :edits
-  belongs_to :user, foreign_key: 'creator_id'
+  belongs_to :user
   include PgSearch
   pg_search_scope :search_by_name_and_location, against: [:name, :municipality, :address], using: { tsearch: { any_word: true } }
   validates :name, presence: true
