@@ -1,7 +1,8 @@
 import Controller from '@ember/controller';
 import { action } from 'ember-decorators/object';
 import { service } from 'ember-decorators/service';
-import filters from 'massbuilds/utils/filters';
+import { gt } from 'ember-decorators/object/computed';
+//import filters from 'massbuilds/utils/filters';
 
 
 export default class extends Controller {
@@ -12,15 +13,23 @@ export default class extends Controller {
     super();
 
     this.searchPlaceholder = 'Search by Town/City, Developer, Address...';
-    console.log(filters);
 
     this.showingFilters = false;
+    this.activeFilters = [];
+  }
+
+
+  @gt('activeFilters', 0) filtering
+
+  @action
+  toggleFilters() {
+    this.toggleProperty('showingFilters');
   }
 
 
   @action
-  toggleFilters() {
-    this.toggleProperty('showingProperties');
+  clearFilters() {
+    this.set('activeFilters', []);
   }
 
 }

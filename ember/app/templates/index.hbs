@@ -2,6 +2,14 @@
 
   <!-- floating components -->
   <div class="search-wrapper">
+    <div class="filter-actions">
+      <button onclick={{action toggleFilters}} class="filter-toggler {{if showingFilters 'active'}} {{if filtering 'filtering'}}">
+        <img src="{{rootURL}}assets/images/filter.svg">
+      </button>
+      <button onclick={{action clearFilters}} class="clear-filters {{unless filtering 'disabled'}}">
+        X
+      </button>
+    </div>
     {{search-bar placeholder=searchPlaceholder}}
   </div>
 

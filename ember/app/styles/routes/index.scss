@@ -8,6 +8,71 @@
     top: 5vh;
     left: 4%;
     z-index: 50;
+    display: flex;
+  }
+
+  .filter-actions {
+    display: flex;
+    flex-direction: column;
+
+    height: 37px;
+    
+    button {
+      flex: 1 1 50%;
+
+      font-size: 11px;
+      text-align: center;
+
+      background: mix($color_brand-primary, $color_bg-light, 15); 
+      border-color: $color_brand-primary;
+      border-right: 0;
+      border-radius: 0;
+
+      transition: $transition_border;
+
+      &.clear-filters {
+        background: $color_bg-medium; 
+      }
+
+      &.filter-toggler {
+        border-bottom: 0;
+
+        &.active { 
+          background: mix($color_brand-primary, $color_bg-light, 25);
+          border-color: $color_brand-primary--active;
+
+          & + button { border-top-color: $color_brand-primary--active; }
+        }
+      }
+
+      &.disabled {
+        color: $color_bg-medium; 
+
+        background: $color_bg-light--active; 
+        border-color: $color_bg-medium;
+        border-top-color: $color_brand-primary;
+        cursor: initial;
+      }
+
+      &:first-of-type { border-radius: 5px 0 0 0; }
+      &:nth-of-type(2) { border-radius: 0 0 0 5px; }
+
+      &:not(.disabled):hover {
+        border-color: $color_brand-primary--active; 
+
+        transition: $transition_border;
+
+        & + button { border-top-color: $color_brand-primary--active; }
+      }
+
+      img {
+        @extend ._vertical-center;
+        
+        max-width: 90%; 
+        max-height: 70%;
+        margin: 0 auto;
+      }
+    } 
   }
 
   .map-layer {
