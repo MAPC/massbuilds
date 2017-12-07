@@ -1,5 +1,5 @@
 import Controller from '@ember/controller';
-import { action } from 'ember-decorators/object';
+import { action, computed } from 'ember-decorators/object';
 import { service } from 'ember-decorators/service';
 import { gt } from 'ember-decorators/object/computed';
 //import filters from 'massbuilds/utils/filters';
@@ -20,6 +20,13 @@ export default class extends Controller {
 
 
   @gt('activeFilters', 0) filtering
+
+  @computed('showingFilters')
+  get showingLeftPanel() {
+    const showingFilters = this.get('showingFilters');
+
+    return showingFilters;
+  }
 
   @action
   toggleFilters() {

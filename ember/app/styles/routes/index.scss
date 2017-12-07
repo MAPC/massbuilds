@@ -75,6 +75,25 @@
     } 
   }
 
+  .left-panel-layer {
+    left: -100%;
+    z-index: 25;
+
+    height: 100vh;
+    width: 32%;
+
+    background: $color_bg-light;
+    border-right: 1px solid $color_brand-primary;
+
+    transition: left .5s ease-in;
+
+    &.active {
+      left: 0%; 
+
+      transition: left .5s;
+    }
+  }
+
   .map-layer {
     position: fixed;
     top: 0;
