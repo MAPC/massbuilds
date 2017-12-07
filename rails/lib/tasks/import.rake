@@ -6,7 +6,7 @@ namespace :import do
     csv = CSV.parse(csv_text, headers: true, encoding: 'ISO-8859-1')
     csv.each_with_index do |row, index|
       Development.create(
-        creator_id: row["creator_id"],
+        user_id: row["creator_id"],
         rdv: row["rdv"],
         asofright: row["asofright"],
         ovr55: row["ovr55"],

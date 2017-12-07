@@ -10,14 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171206192335) do
+ActiveRecord::Schema.define(version: 20171207190652) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "postgis"
 
   create_table "developments", force: :cascade do |t|
-    t.integer "creator_id"
+    t.integer "user_id"
     t.boolean "rdv"
     t.boolean "asofright"
     t.boolean "ovr55"
@@ -116,7 +116,7 @@ ActiveRecord::Schema.define(version: 20171206192335) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "developments", "users", column: "creator_id"
+  add_foreign_key "developments", "users"
   add_foreign_key "edits", "developments"
   add_foreign_key "edits", "users"
 end

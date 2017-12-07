@@ -9,7 +9,7 @@ class Edit < ApplicationRecord
     if development
       development.update(proposed_changes)
     else
-      proposed_changes.merge(creator_id: user.id)
+      proposed_changes.merge(user_id: user.id)
       Development.create(proposed_changes)
     end
   end
