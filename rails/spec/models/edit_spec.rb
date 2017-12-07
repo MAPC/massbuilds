@@ -12,8 +12,10 @@ RSpec.describe Edit, type: :model do
   end
 
   it "creates a new development when approved if one does not exist" do
-    edit = FactoryBot.create(:edit)
-    edit.update(approved: true)
+    edit1 = FactoryBot.create(:edit)
+    user = FactoryBot.create(:user)
+    edit1.update(user: user)
+    edit1.update(approved: true)
     development = Development.last
     expect(development.state).to eq('CT')
     expect(development.tagline).to eq('new tagline')

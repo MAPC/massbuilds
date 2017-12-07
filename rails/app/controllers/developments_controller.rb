@@ -43,6 +43,7 @@ class DevelopmentsController < ApplicationController
   def create
     @development = Development.new(development_params)
     authorize @development
+    @development.user = current_user
 
     if @development.save
       respond_to do |format|

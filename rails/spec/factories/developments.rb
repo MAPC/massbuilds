@@ -1,6 +1,5 @@
 FactoryBot.define do
   factory :development do
-    creator_id 1
     rdv false
     asofright false
     ovr55 false

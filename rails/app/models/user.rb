@@ -6,6 +6,7 @@ class User < ApplicationRecord
   enum role: [:admin, :verified, :researcher, :user]
   before_save :ensure_authentication_token
   has_many :edits
+  has_many :developments
 
   private
   def ensure_authentication_token
