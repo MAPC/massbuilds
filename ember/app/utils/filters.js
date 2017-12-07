@@ -1,3 +1,4 @@
+/*
 import Development from 'massbuilds/models/development';
 
 
@@ -17,3 +18,4 @@ filterNames.forEach(filter => {
 });
 
 export default filters;
+*/

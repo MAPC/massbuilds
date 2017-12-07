@@ -1,7 +1,7 @@
 import Controller from '@ember/controller';
-import { action } from 'ember/decorators/object';
+import { action } from 'ember-decorators/object';
 import { service } from 'ember-decorators/service';
-import filters from 'massbuilds/utils/filters';
+//import filters from 'massbuilds/utils/filters';
 
 
 export default class extends Controller {
@@ -21,4 +21,5 @@ export default class extends Controller {
   toggleFilters() {
     this.toggleProperty('showingProperties');
   }
+
 }
