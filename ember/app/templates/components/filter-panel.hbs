@@ -1,9 +1,13 @@
-<div class="component filter-panel">
+<ul class="filter-group-list">
+  {{#each filterGroups as |group|}}
+    <li class="{{if group.active 'active'}} {{if (eq group.title viewing) 'viewing'}}" onclick={{action 'view' group}}>{{group.title}}</li>
+  {{/each}}
+</ul>
 
-  {{#if (eq filter 'developer')}}
+<div class='filters'>
+  {{#if (eq currentGroup 'Developer')}} 
 
   {{else}}
     
   {{/if}}
-
 </div>

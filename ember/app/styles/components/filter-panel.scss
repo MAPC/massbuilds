@@ -1,0 +1,51 @@
+.component.filter-panel {
+  display: flex;
+
+  width: 100%;
+
+  border-top: 1px solid $color_brand-primary;
+
+  .filter-group-list {
+    margin: 0;
+    padding: 0; 
+
+    li {
+      padding: 8px;
+      padding-left: 25px;
+
+      font-size: 14px;
+
+      border: 0 solid $color_bg-medium;
+      border-right-width: 1px;
+      border-bottom-width: 1px;
+
+      cursor: pointer;
+
+      &:hover {
+        color: $color_brand-primary--active;
+      }
+
+      &:last-of-type { border-bottom-width: 0; }
+
+      &.viewing { border-right-width: 0; }
+
+      &.active {
+        &:before {
+          @extend ._vertical-center;
+          $size: 7px;
+
+          content: '';
+          left: $size;
+          display: block;
+
+          width: $size;
+          height: $size;
+
+          background: $color_brand-primary;
+          border-radius: 50%;
+        }
+      }
+    }
+  }
+
+}

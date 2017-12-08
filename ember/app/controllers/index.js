@@ -17,7 +17,7 @@ export default class extends Controller {
     this.showingFilters = true;
     this.showingMenu = false;
 
-    this.activeFilters = [];
+    this.activeFilters = [filters.affordable];
   }
 
 
