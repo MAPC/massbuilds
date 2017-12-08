@@ -6,6 +6,7 @@ namespace :import do
     csv = CSV.parse(csv_text, headers: true, encoding: 'ISO-8859-1')
     csv.each_with_index do |row, index|
       Development.create(
+        id: row['id'],
         user_id: row["creator_id"],
         rdv: row["rdv"],
         asofright: row["asofright"],
@@ -89,6 +90,19 @@ namespace :import do
         last_name: row['last_name']
         )
       user.update_attribute(:encrypted_password, row['encrypted_password'])
+    end
+  end
+
+  desc 'Import developer names'
+  task developer_name_data: :environment do
+    # SELECT development_id, organizations.name
+    # FROM development_team_memberships
+    # INNER JOIN organizations
+    # ON development_team_memberships.organization_id = organizations.id;
+    csv_text = File.read(Rails.root.join('lib', 'import', 'developer_names.csv'))
+    csv = CSV.parse(csv_text, headers: true, encoding: 'ISO-8859-1')
+    csv.each do |row|
+      Development.find(row['development_id']).update(developer_name: row['name'])
     end
   end
 
