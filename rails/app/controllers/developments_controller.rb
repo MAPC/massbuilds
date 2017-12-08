@@ -7,13 +7,16 @@ class DevelopmentsController < ApplicationController
     authorize Development
     @developments = if params[:term]
                       Development.search_by_name_and_location(params[:term])
-                    elsif params
-                      Development.where(filtered_params)
+                    elsif params[:minLat] && params[:minLng] && params[:maxLat] && params[:maxLng]
+                      Development.where("point && ST_MakeEnvelope(?, ?, ?, ?, 4326) ", params[:minLng], params[:minLat], params[:maxLng], params[:maxLat])
                     else
-                      Development.all
+                      Development.where(filtered_params)
                     end
     respond_to do |format|
-      format.jsonapi { render jsonapi: @developments }
+      format.jsonapi do
+        scope = 'trunc' if params[:trunc]
+        render jsonapi: @developments, scope: scope
+      end
       format.csv { send_data @developments.to_csv, filename: "developments-#{Date.today}.csv" }
       format.html
     end

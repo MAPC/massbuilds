@@ -28,24 +28,42 @@ RSpec.describe "Developments", type: :request do
 
   describe "GET /developments" do
     it "works as an admin" do
-      get developments_path, headers: admin_session
+      get developments_path, headers: admin_session.merge(jsonapi_session)
       expect(response).to have_http_status(:success)
     end
 
     it "works as a user" do
-      get developments_path, headers: user_session
+      get developments_path, headers: user_session.merge(jsonapi_session)
       expect(response).to have_http_status(:success)
     end
 
     it "works without logging in" do
-      get developments_path
+      get developments_path, headers: jsonapi_session
       expect(response).to have_http_status(:success)
     end
 
-    it "works with JSONAPI" do
-      get developments_path, headers: user_session.merge(jsonapi_session)
-      expect(response).to have_http_status(:success)
-      expect(response.header['Content-Type']).to include('application/vnd.api+json')
+    it "returns only truncated data when using trunc param" do
+      FactoryBot.create(:development)
+      get developments_path, params: { trunc: true }, headers: jsonapi_session
+      parsed_body = JSON.parse(response.body)
+      expect(parsed_body['data'][0]['attributes']['name']).to eq('Seaport')
+      expect(parsed_body['data'][0]['attributes']['status']).to eq('MyString')
+      expect(parsed_body['data'][0]['attributes']['longitude']).to eq(-71.3940804)
+      expect(parsed_body['data'][0]['attributes']['latitude']).to eq(42.1845218)
+    end
+
+    it "returns results within the bounding box" do
+      FactoryBot.create(:development)
+      get developments_path, params: { minLng: '-75', minLat: '0', maxLng: '0', maxLat: '45' }, headers: jsonapi_session
+      parsed_body = JSON.parse(response.body)
+      expect(parsed_body['data'][0]['attributes']['name']).to eq('Seaport')
+    end
+
+    it "does not return results outside the bounding box" do
+      FactoryBot.create(:development)
+      get developments_path, params: { minLng: '-5', minLat: '0', maxLng: '0', maxLat: '5' }, headers: jsonapi_session
+      parsed_body = JSON.parse(response.body)
+      expect(parsed_body['data'][0]).to be_nil
     end
 
     it "can search for developments by name" do
