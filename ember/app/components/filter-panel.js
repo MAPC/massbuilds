@@ -14,7 +14,6 @@ export default class extends Component {
     this.activeModels = [];
   }
 
-
   @computed('filters')
   get filterGroups() {
     const filters = this.get('activeFilters');
@@ -33,10 +32,8 @@ export default class extends Component {
                       return { title, active };
                     });
 
-    
     return [...discrete, ...metric];
   }
-
 
   @action
   view(group) {
