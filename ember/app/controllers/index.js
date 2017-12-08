@@ -14,7 +14,7 @@ export default class extends Controller {
 
     this.searchPlaceholder = 'Search by Town/City, Developer, Address...';
 
-    this.showingFilters = true;
+    this.showingFilters = false;
     this.showingMenu = false;
 
     this.activeFilters = [filters.affordable];

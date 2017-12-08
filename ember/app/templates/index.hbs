@@ -23,9 +23,14 @@
 
   <div class="map-layer">
     {{#leaflet-map lat=map.lat lng=map.lng zoom=map.zoom as |layers|}}
-      {{tile-layer url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
+      {{layers.tile url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
 
-      {{#each map.data as |datum|}}
+      {{#each model.truncDevelopments as |datum|}}
+        {{layers.circle 
+          lat=datum.latitude 
+          lng=datum.longitude
+          radius=1.2
+        }} 
       {{/each}}
     {{/leaflet-map}}
   </div>
