@@ -15,6 +15,13 @@ module.exports = function(defaults) {
         'images/marker-shadow.png',
       ],
     },
+
+    babel: {
+      loose: true, 
+      plugins: [
+        'transform-object-rest-spread',
+      ]
+    }
   });
 
   // Use `app.import` to add additional libraries to the generated

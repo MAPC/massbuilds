@@ -22,7 +22,6 @@ export default class extends Component {
     let items = this.get('items');
 
     if (searchQuery.length >= 2) {
-      console.log(searchQuery);
     }
 
     return items;
