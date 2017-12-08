@@ -44,11 +44,9 @@ FactoryBot.define do
     fa_hotel 1.5
     other_rate 1.5
     affordable 1.5
-    latitude "9.99"
-    longitude "9.99"
     parcel_id "MyString"
     mixed_use false
-    point ""
+    point "POINT(-71.3940804 42.1845218)"
     programs "MyString"
     forty_b false
     residential false
