@@ -13,28 +13,39 @@ export default class extends Component {
 
   @computed('activeFilters')
   get filterGroups() {
-    const filters = this.get('activeFilters');
+    const activeFilters = this.get('activeFilters');
 
-    const discrete = ['Developer', 'Town/City'].map(title => {
+    const discrete = ['Developer', 'Town/City'].map(name => {
                         let active = false; 
 
-                        return { title, active, type: 'discrete' };
+                        return { name, active, type: 'discrete' };
                       });
 
-    const metric = Object.keys(metricGroups).map(title => {
-                      let active = metricGroups[title]
+    const metric = Object.keys(metricGroups).map(name => {
+                      let active = metricGroups[name]
                                    .map(subgroup => subgroup.metrics)
-                                   .any(metrics => filters.any(filter => metrics.indexOf(filter.col) !== -1));
+                                   .any(metrics => activeFilters.any(filter => metrics.indexOf(filter.col) !== -1));
 
-                      return { title, active, type: 'metric' };
+                      return { name, active, type: 'metric' };
                     });
 
     return [...discrete, ...metric];
   }
 
-  @computed('filterGroups')
+  @computed('viewing', 'activeFilters')
+  get selectedValues() {
+    const viewing = this.get('viewing');
+    const activeFilters = this.get('activeFilters');
+
+    const result =  activeFilters.filter(_filter => _filter.name === viewing.name)[0].value;
+
+    console.log(result);
+
+    return result;
+  }
+
   get viewing() {
-    return this.get('filterGroups')[0];
+    return this.get('filterGroups')[1];
   }
 
   set viewing(group) {

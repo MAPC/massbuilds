@@ -18,6 +18,7 @@ export default Model.extend({
   parcelId: attr('string'),
   programs: attr('string'),
   municipality: attr('string'),
+  developerName: attr('string'),
 
   height: attr('number'),
   stories: attr('number'),

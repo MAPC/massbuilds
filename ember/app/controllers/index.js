@@ -12,14 +12,26 @@ export default class extends Controller {
   constructor() {
     super();
 
+    this.queryParams = ['filterBy']
+    this.filterBy = {};
+
     this.searchPlaceholder = 'Search by Town/City, Developer, Address...';
 
-    this.showingFilters = false;
+    this.showingFilters = true;
     this.showingMenu = false;
-
-    this.activeFilters = [filters.affordable];
   }
 
+  @computed('filterBy')
+  get activeFilters() {
+    const filter = JSON.parse(this.get('filterBy'));
+
+    return Object.keys(filter).map(filterTitle => {
+      let found = filters[filterTitle];
+      found.value = filter[filterTitle];
+
+      return found;
+    });
+  }
 
   @gt('activeFilters', 0) filtering
 

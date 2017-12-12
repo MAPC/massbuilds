@@ -1,3 +1,40 @@
-<div class="component subpanel discrete-filter">
-  {{model.title}}
+<div class="subviews">
+  <button onclick={{action changeView 'selected'}} class="{{if (eq view 'selected') 'active'}}">
+    <img src="{{rootURL}}assets/images/check-square.svg">
+  </button>
+  <button onclick={{action changeView 'search'}} class="{{if (eq view 'search') 'active'}}">
+    <img src="{{rootURL}}assets/images/search.svg">
+  </button>
 </div>
+
+{{#if (eq view 'selected')}}
+  <div class="subview discrete-selected">
+    <ul> 
+      {{#each selectedValues as |value|}}
+        <li>
+          {{value}}
+
+          <div class="discrete-value-actions">
+            <button onclick={{action deselect value}}>X</button>
+          </div>
+        </li>
+      {{/each}}
+    </ul>
+  </div>
+{{else}}
+  <div class="subview">
+    {{input value=searchQuery placeholder=placeholder}}
+
+    <ul class="discrete-value-list">
+      {{#each filteredValues as |value|}} 
+        <li>
+          {{value}}
+
+          <div class="discrete-valute-actions">
+            <button onclick={{action select value}}>+</button>
+          </div>
+        </li>
+      {{/each}}
+    </ul>
+  </div>
+{{/if}}

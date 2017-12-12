@@ -1,0 +1,65 @@
+.component.subpanel.discrete-filter {
+
+  $height: 36px;
+  $border_width: 3px;
+
+  width: 100%;
+   
+  .subviews {
+    display: flex;
+
+    width: 100%;
+    height: $height;
+
+    button {
+      flex: 1 0 50%; 
+
+      height: $height;
+
+      border: 0;
+      border-bottom: 1px solid $color_bg-medium;
+
+      transform: translateZ(0);
+      transition: border-width .2s, height .2s;
+
+      &:first-of-type { border-right: 1px solid $color_bg-medium; }
+
+      &.active {
+        height: $height + $border_width;
+        border-bottom: $border_width solid $color_brand-primary; 
+
+        transition: border-width .2s, height .2s;
+      }
+
+      img {
+        @extend ._vertical-center;
+
+        height: 15px; 
+        margin: 0 auto;
+      }
+    }
+  }
+
+  .subview {
+    input {
+      width: 100%; 
+      padding: 4px 10px;
+
+      font-size: 12px;
+
+      background: none;
+      border: 0;
+      height: $height;
+      border-bottom: 1px solid $color_bg-medium;
+
+      outline: none;
+    } 
+  }
+
+  .discrete-value-list {
+    height: 60vh; 
+
+    overflow-y: scroll;
+  }
+
+}

@@ -9,6 +9,7 @@ $color_bg-medium: #CCCCCC;
 $color_bg-dark: #091F2F;
 
 $color_bg-light--active: mix(black, $color_bg-light, 5);
+$color_bg-light--accent: $color_bg-light--active;
 
 $color_font-light: #FFFFFF;
 $color_font-medium: #777;
