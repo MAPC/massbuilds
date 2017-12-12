@@ -12,5 +12,6 @@ class Edit < ApplicationRecord
       proposed_changes.merge(user_id: user.id)
       Development.create(proposed_changes)
     end
+    UserMailer.edit_approved_email(self)
   end
 end
