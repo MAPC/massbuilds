@@ -52,5 +52,6 @@ FactoryBot.define do
     residential false
     commercial false
     municipality "Boston"
+    developer_name "Gilbane"
   end
 end

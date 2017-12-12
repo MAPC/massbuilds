@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171207190652) do
+ActiveRecord::Schema.define(version: 20171208210422) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -74,6 +74,7 @@ ActiveRecord::Schema.define(version: 20171207190652) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "municipality"
+    t.string "developer_name"
   end
 
   create_table "edits", force: :cascade do |t|
@@ -93,6 +94,7 @@ ActiveRecord::Schema.define(version: 20171207190652) do
     t.geometry "geom", limit: {:srid=>26986, :type=>"multi_polygon"}
     t.index ["geom"], name: "ma_municipalities_geom_idx", using: :gist
     t.index ["geom"], name: "ma_municipalities_geom_idx1", using: :gist
+    t.index ["geom"], name: "ma_municipalities_geom_idx2", using: :gist
   end
 
   create_table "users", force: :cascade do |t|

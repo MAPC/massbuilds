@@ -50,6 +50,7 @@ RSpec.describe "Developments", type: :request do
       expect(parsed_body['data'][0]['attributes']['status']).to eq('MyString')
       expect(parsed_body['data'][0]['attributes']['longitude']).to eq(-71.3940804)
       expect(parsed_body['data'][0]['attributes']['latitude']).to eq(42.1845218)
+      expect(parsed_body['data'][0]['attributes']['developer_name']).to eq('Gilbane')
     end
 
     it "returns results within the bounding box" do
