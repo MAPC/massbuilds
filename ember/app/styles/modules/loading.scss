@@ -1,0 +1,39 @@
+section.loading {
+
+  height: 100vh;
+  width: 100%;
+  background: $color_brand-primary;
+
+  .loading-text {
+    @extend ._vertical-center; 
+    top: 40%;
+    display: inline-block;
+
+    margin: 0 auto;
+
+    color: $color_font-light;
+    font-size: 30px;
+    font-weight: 400;
+    text-align: center;
+
+    h1 {
+      margin-top: 0;
+      margin-bottom: 50px;
+      font-size: 80px;
+    }
+
+    .spinning-box {
+      @extend ._spinner;
+      $size: 25px;
+
+      display: inline-block;
+
+      width: $size;
+      height: $size;
+      margin-right: $size;
+
+      border: 1px solid $color_bg-light;
+    }
+  }
+
+}

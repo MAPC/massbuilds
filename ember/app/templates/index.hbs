@@ -14,7 +14,6 @@
   </div>
 
   {{share-buttons model=model}}
-
   <!--/ floating components -->
 
   <div class="panel-layer left-panel-layer {{if showingLeftPanel 'active'}}">
@@ -29,6 +28,7 @@
         {{layers.circle 
           lat=datum.latitude 
           lng=datum.longitude
+          color='#3c5875'
           radius=1.2
         }} 
       {{/each}}
