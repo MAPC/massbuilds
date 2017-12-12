@@ -1,13 +1,13 @@
 <ul class="filter-group-list">
   {{#each filterGroups as |group|}}
-    <li class="{{if group.active 'active'}} {{if (eq group.title viewing) 'viewing'}}" onclick={{action 'view' group}}>{{group.title}}</li>
+    <li class="{{if group.active 'active'}} {{if (eq group.title viewing.title) 'viewing'}}" onclick={{action 'view' group}}>{{group.title}}</li>
   {{/each}}
 </ul>
 
 <div class='filters'>
-  {{#if (eq currentGroup 'Developer')}} 
-
+  {{#if (eq viewing.type 'discrete')}} 
+    {{discrete-filter-subpanel model=viewing}}
   {{else}}
-    
+    {{metric-filter-subpanel model=viewing}} 
   {{/if}}
 </div>
