@@ -3,7 +3,7 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
-  enum role: [:admin, :verified, :researcher, :user]
+  enum role: [:admin, :verified, :municipal, :user]
   before_save :ensure_authentication_token
   has_many :edits
   has_many :developments
