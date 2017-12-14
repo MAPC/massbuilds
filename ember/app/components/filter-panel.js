@@ -45,10 +45,11 @@ export default class extends Component {
 
     if (activeFilters.length > 0) {
       const viewing = this.get('viewing');
-      const found = activeFilters.filter(_filter => _filter.name === viewing.name)[0];
+      const found = activeFilters.filter(_filter => _filter.name === viewing.name);
       
       if (found) {
-        result = found.value;
+        console.log(found);
+        result = (found.length === 1) ? found.value : found;
       }
     }
 

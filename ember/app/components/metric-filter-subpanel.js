@@ -1,18 +1,29 @@
 import Component from '@ember/component';
 import { computed, action } from 'ember-decorators/object';
-import { metricGroups } from 'massbuilds/utils/filters';
+import filters, { metricGroups } from 'massbuilds/utils/filters';
 
 
 export default class extends Component {
 
   constructor() {
     super();
-    console.log(this.get('subgroups'));
   }
 
-  @computed('viewing.name')
+  @computed('viewing.name', 'activeFilters')
   get subgroups() {
-    return metricGroups[this.get('viewing.name')];
+    const subgroups = metricGroups[this.get('viewing.name')];
+    const activeFilters = this.get('activeFilters');
+
+    return subgroups.map(subgroup => {
+      return {
+        title: subgroup.title,
+        metrics: subgroup.metrics.map(metric => {
+          let active = activeFilters.filter(x => x.col === metric)[0];
+           
+          return active || filters[metric];
+        }),
+      };
+    });
   }
 
 }

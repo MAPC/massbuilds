@@ -9,8 +9,12 @@
     {{discrete-filter-subpanel 
       update=(action update)
       viewing=viewing 
-      selectedValues=selectedValues}}
+      selectedValues=selectedValues
+    }}
   {{else}}
-    {{metric-filter-subpanel viewing=viewing}} 
+    {{metric-filter-subpanel 
+      viewing=viewing
+      activeFilters=activeFilters
+    }} 
   {{/if}}
 </div>
