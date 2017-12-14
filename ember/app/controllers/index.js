@@ -23,9 +23,12 @@ export default class extends Controller {
 
     this.showingFilters = true;
     this.showingMenu = false;
+
+    this.updateChildren = 0;
   }
 
 
+  @computed('updateChildren')
   get activeFilters() {
     return Object.keys(filters).map(col => {
         let value = this.get(col);
@@ -47,7 +50,6 @@ export default class extends Controller {
 
 
   @gt('activeFilters', 0) filtering
-
 
   @computed('showingFilters')
   get showingLeftPanel() {
@@ -81,6 +83,8 @@ export default class extends Controller {
         this.set(filter.col, undefined);
       }
     });
+
+    this.set('updateChildren', Math.random());
   }
 
  
@@ -89,6 +93,8 @@ export default class extends Controller {
     Object.keys(updateValues).forEach(col => {
       this.set(col, updateValues[col]);
     });
+
+    this.set('updateChildren', Math.random());
   }
 
 }

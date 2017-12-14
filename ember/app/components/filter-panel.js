@@ -37,10 +37,11 @@ export default class extends Component {
   }
 
 
-  @computed('viewing', 'activeFilters')
+  @computed('viewing', 'activeFilters.[]')
   get selectedValues() {
     const activeFilters = this.get('activeFilters');
     let result = [];
+    console.log('Updating selectedValues');
 
     if (activeFilters.length > 0) {
       const viewing = this.get('viewing');

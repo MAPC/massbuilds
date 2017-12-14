@@ -16,8 +16,13 @@ export default class extends Component {
     this.classNames = ['component', 'subpanel', 'discrete-filter'];
 
     this.view = (this.get('selectedValues').length === 0) ? 'search' : 'selected';
-    this.selected = Ember.copy(this.get('selectedValues'));
     this.searchQuery = '';
+  }
+
+
+  @computed('selectedValues')
+  get valueUpdater() {
+    this.set('selected', Ember.copy(this.get('selectedValues')));
   }
 
 
