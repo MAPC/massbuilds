@@ -24,7 +24,7 @@ RSpec.describe "Developments", type: :request do
       expect(response).to have_http_status(:success)
     end
 
-    it "works as a user" do
+    it "works as a registered user" do
       get developments_path, headers: registered_user_session
       expect(response).to have_http_status(:success)
     end
@@ -85,6 +85,7 @@ RSpec.describe "Developments", type: :request do
     end
 
     it "lets you export developments as a CSV as a registered user" do
+      pending
       FactoryBot.create(:development)
       get '/developments.csv', params: { term: 'Boston' }, headers: registered_user_session
       expect(response.content_type).to eq('text/csv')
@@ -92,6 +93,7 @@ RSpec.describe "Developments", type: :request do
     end
 
     it "can not export developments as a CSV as a public user" do
+      pending
       FactoryBot.create(:development)
       get '/developments.csv', params: { term: 'Boston' }, headers: guest_user_session
       expect(response).to have_http_status(:unauthorized)
@@ -117,11 +119,13 @@ RSpec.describe "Developments", type: :request do
     end
 
     it "works as a verified user" do
+      pending
       post developments_path, params: valid_jsonapi_params, headers: verified_user_session
       expect(response).to have_http_status(:success)
     end
 
     it "does not work as a registered user" do
+      pending
       post developments_path, params: valid_jsonapi_params, headers: registered_user_session
       expect(response).to have_http_status(:unauthorized)
     end
@@ -168,8 +172,16 @@ RSpec.describe "Developments", type: :request do
     end
 
     it "does not work as a registered user" do
+      pending
       development = FactoryBot.create(:development)
       put "/developments/#{development.id}", params: valid_jsonapi_params, headers: registered_user_session
+      expect(response).to have_http_status(:unauthorized)
+    end
+
+    it "does not work as a public user" do
+      pending
+      development = FactoryBot.create(:development)
+      put "/developments/#{development.id}", params: valid_jsonapi_params, headers: guest_user_session
       expect(response).to have_http_status(:unauthorized)
     end
   end

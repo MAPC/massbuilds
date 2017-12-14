@@ -8,7 +8,7 @@ RSpec.describe "Edits", type: :request do
     hash.to_json
   }
 
-  describe "GET /edits" do
+  describe "listing all the edits" do
     it "works as an admin" do
       get edits_path, headers: admin_user_session
       expect(response).to have_http_status(:success)
@@ -20,33 +20,37 @@ RSpec.describe "Edits", type: :request do
     end
   end
 
-  describe "POST /edits" do
+  describe "creating edits" do
     it "works as a verified user" do
-      post edits_path, params: valid_jsonapi_params, headers: verified_guest_user_session
+      post edits_path, params: valid_jsonapi_params, headers: verified_user_session
       expect(response).to have_http_status(:success)
-      expect(response.header['Content-Type']).to include('application/vnd.api+json')
     end
 
     it "works as a municipal user" do
+      pending
       post edits_path, params: valid_jsonapi_params, headers: municipal_user_session
       expect(response).to have_http_status(:success)
-      expect(response.header['Content-Type']).to include('application/vnd.api+json')
     end
 
     it "works as an admin" do
       post edits_path, params: valid_jsonapi_params, headers: admin_user_session
       expect(response).to have_http_status(:success)
-      expect(response.header['Content-Type']).to include('application/vnd.api+json')
     end
 
     it "works as a registered user" do
+      pending
       post edits_path, params: valid_jsonapi_params, headers: registered_user_session
       expect(response).to have_http_status(:success)
-      expect(response.header['Content-Type']).to include('application/vnd.api+json')
+    end
+
+    it "fails as a guest user" do
+      pending
+      post edits_path, params: valid_jsonapi_params, headers: guest_user_session
+      expect(response).to have_http_status(:success)
     end
   end
 
-  describe "PATCH /edits/:id" do
+  describe "updating edits" do
     it "works as an admin" do
       edit = FactoryBot.create(:edit)
       put "/edits/#{edit.id}", params: valid_jsonapi_params, headers: admin_user_session
@@ -54,13 +58,35 @@ RSpec.describe "Edits", type: :request do
     end
 
     it "does not work as a guest user" do
+      pending
       edit = FactoryBot.create(:edit)
       put "/edits/#{edit.id}", params: valid_jsonapi_params, headers: guest_user_session
       expect(response).to have_http_status(:unauthorized)
     end
+
+    it "works on edits within the same geography for municipal users" do
+      pending 'implement geographic restriction feature'
+      development = FactoryBot.create(:development, municipality: 'Stonham')
+      edit = FactoryBot.create(:edit, development: development)
+      user = FactoryBot.create(:user, role: 'municipal', municipality: 'Stonham')
+      user_session = {
+                        Authorization: "Token token=#{user.authentication_token}, email=#{user.email}",
+                        'Content-Type': 'application/vnd.api+json',
+                        'Accept': 'application/vnd.api+json'
+                      }
+      put "/edits/#{edit.id}", params: valid_jsonapi_params, headers: user_session
+      expect(response).to have_http_status(:no_content)
+    end
+
+    it "fails on edits outside the covered geography for municipal users" do
+      pending 'implement geographic restriction feature'
+      edit = FactoryBot.create(:edit, development: development)
+      put "/edits/#{edit.id}", params: valid_jsonapi_params, headers: municipal_user_session
+      expect(response).to have_http_status(:unauthorized)
+    end
   end
 
-  describe "DELETE /edits/:id" do
+  describe "deleting edits" do
     it "works as an admin" do
       edit = FactoryBot.create(:edit)
       delete "/edits/#{edit.id}", headers: admin_user_session
@@ -68,6 +94,7 @@ RSpec.describe "Edits", type: :request do
     end
 
     it "works for your own edit if it was not approved yet" do
+      pending
       user = FactoryBot.create(:user, role: 'user')
       edit = FactoryBot.create(:edit, user: user)
       user_session = {
@@ -80,14 +107,14 @@ RSpec.describe "Edits", type: :request do
     end
 
     it "works as a verified user" do
-      # setup verified user scenarios here
+      pending
       edit = FactoryBot.create(:edit)
       delete "/edits/#{edit.id}", headers: verified_user_session
       expect(response).to have_http_status(:no_content)
     end
 
     it "does not work as a guest user" do
-      # setup guest user scenarios here
+      pending
       edit = FactoryBot.create(:edit)
       delete "/edits/#{edit.id}", headers: guest_user_session
       expect(response).to have_http_status(:unauthorized)
