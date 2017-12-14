@@ -7,7 +7,6 @@ class EditsController < ApplicationController
     @edits = Edit.all
     respond_to do |format|
       format.jsonapi { render jsonapi: @edits }
-      format.html
     end
   end
 
@@ -39,7 +38,6 @@ class EditsController < ApplicationController
     if @edit.save
       respond_to do |format|
         format.jsonapi { head :created }
-        format.html { redirect_to @edit, notice: 'Edit was successfully created.' }
       end
     else
       respond_to do |format|
@@ -82,7 +80,6 @@ class EditsController < ApplicationController
     def edit_params
       respond_to do |format|
         format.jsonapi { ActiveModelSerializers::Deserialization.jsonapi_parse(params, only: [:user_id, :development_id, :proposed_changes]) }
-        format.html { params.require(:edit).permit(:user_id, :development_id, :proposed_changes) }
       end
     end
 end

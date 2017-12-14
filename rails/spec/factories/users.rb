@@ -6,5 +6,6 @@ FactoryBot.define do
     email
     password 'P@sswordT3st'
     role 'admin'
+    municipality 'Boston'
   end
 end

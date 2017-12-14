@@ -48,14 +48,13 @@ RSpec.describe "Users", type: :request do
 
   describe "PATCH /users" do
     it "lets a user update their own registration" do
-      pending 'figure out how to allow this'
       user = FactoryBot.create(:user, role: 'user')
       user_session = {
                         Authorization: "Token token=#{user.authentication_token}, email=#{user.email}",
                         'Content-Type': 'application/vnd.api+json',
                         'Accept': 'application/vnd.api+json'
                       }
-      patch "/users/#{user.id}", params: valid_jsonapi_params_2, headers: guest_user_session
+      patch "/users/#{user.id}", params: valid_jsonapi_params_2, headers: user_session
       expect(response).to have_http_status(:ok)
     end
 

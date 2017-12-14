@@ -4,14 +4,14 @@ class EditPolicy < ApplicationPolicy
   end
 
   def create?
-    user&.admin? || user&.verified?
+    user&.admin? || user&.verified? || user&.user? || user&.municipal?
   end
 
   def update?
-    user&.admin?
+    user&.admin? || (user.municipal? && (record.development.municipality == user.municipality))
   end
 
   def destroy?
-    user&.admin? || user&.verified?
+    user&.admin? || user&.verified? || (user&.edits&.include?(record) && record.approved == false)
   end
 end

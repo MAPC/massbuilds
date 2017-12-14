@@ -18,7 +18,6 @@ class DevelopmentsController < ApplicationController
         render jsonapi: @developments, scope: scope
       end
       format.csv { send_data @developments.to_csv, filename: "developments-#{Date.today}.csv" }
-      format.html
     end
   end
 
@@ -27,19 +26,7 @@ class DevelopmentsController < ApplicationController
     authorize @development
     respond_to do |format|
       format.jsonapi { render jsonapi: @development }
-      format.html
     end
-  end
-
-  # GET /developments/new
-  def new
-    @development = Development.new
-    authorize @development
-  end
-
-  # GET /developments/1/edit
-  def edit
-    authorize @development
   end
 
   # POST /developments
@@ -51,7 +38,6 @@ class DevelopmentsController < ApplicationController
     if @development.save
       respond_to do |format|
         format.jsonapi { head :created }
-        format.html { redirect_to @development, notice: 'Development was successfully created.' }
       end
     else
       head :bad_request
@@ -98,7 +84,6 @@ class DevelopmentsController < ApplicationController
     def development_params
       respond_to do |format|
         format.jsonapi { ActiveModelSerializers::Deserialization.jsonapi_parse(params, only: [:user_id, :rdv, :asofright, :ovr55, :clusteros, :phased, :stalled, :name, :status, :desc, :project_url, :mapc_notes, :tagline, :address, :state, :zip_code, :height, :stories, :year_compl, :prjarea, :singfamhu, :twnhsmmult, :lgmultifam, :tothu, :gqpop, :rptdemp, :emploss, :estemp, :commsf, :hotelrms, :onsitepark, :total_cost, :team_membership_count, :cancelled, :private, :fa_ret, :fa_ofcmd, :fa_indmf, :fa_whs, :fa_rnd, :fa_edinst, :fa_other, :fa_hotel, :other_rate, :affordable, :latitude, :longitude, :parcel_id, :mixed_use, :point, :programs, :forty_b, :residential, :commercial, :developer_name]) }
-        format.html { params.require(:development).permit(:user_id, :rdv, :asofright, :ovr55, :clusteros, :phased, :stalled, :name, :status, :desc, :project_url, :mapc_notes, :tagline, :address, :state, :zip_code, :height, :stories, :year_compl, :prjarea, :singfamhu, :twnhsmmult, :lgmultifam, :tothu, :gqpop, :rptdemp, :emploss, :estemp, :commsf, :hotelrms, :onsitepark, :total_cost, :team_membership_count, :cancelled, :private, :fa_ret, :fa_ofcmd, :fa_indmf, :fa_whs, :fa_rnd, :fa_edinst, :fa_other, :fa_hotel, :other_rate, :affordable, :latitude, :longitude, :parcel_id, :mixed_use, :point, :programs, :forty_b, :residential, :commercial, :developer_name) }
       end
     end
 end
