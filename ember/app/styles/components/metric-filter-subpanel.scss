@@ -3,14 +3,54 @@
   padding: 15px;
 
   .subgroup {
-    & + .subgroup { margin-top: 20px; }
+    & + .subgroup { margin-top: 25px; }
 
     h4 {
-      margin: 0 0 5px;
+      margin: 0 0 15px;
 
       color: $color_font-medium;
       font-size: 14px; 
     }
 
+    .metric {
+      & + .metric { margin-top: 5px; }
+
+      label { 
+        display: inline-block;
+
+        width: 40%;
+
+        font-size: 13px; 
+      }
+
+      input {
+        font-size: 12px;
+
+        background: none;
+        border: 0; 
+        border-bottom: 1px solid $color_bg-medium;
+        outline: none; 
+
+        &:active, &:focus {
+          border-color: $color_brand-primary--active; 
+        }
+      }
+
+      select {
+        font-size: 12px;
+
+        background: none; 
+        border: 1px solid $color_bg-medium;
+        outline: none;
+      }
+
+      &.number {
+        input {
+          width: 25%; 
+
+          text-align: right;
+        } 
+      }
+    }
   }
 }

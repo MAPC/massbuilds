@@ -9,12 +9,13 @@ export default class extends Component {
     super();
   }
 
+
   @computed('viewing.name', 'activeFilters')
   get subgroups() {
     const subgroups = metricGroups[this.get('viewing.name')];
     const activeFilters = this.get('activeFilters');
 
-    return subgroups.map(subgroup => {
+    const temp = subgroups.map(subgroup => {
       return {
         title: subgroup.title,
         metrics: subgroup.metrics.map(metric => {
@@ -24,6 +25,14 @@ export default class extends Component {
         }),
       };
     });
+
+    temp.forEach(subgroup => {
+      subgroup.metrics.forEach(metric => {
+        console.log(metric);
+      });
+    });
+
+    return temp;
   }
 
 }

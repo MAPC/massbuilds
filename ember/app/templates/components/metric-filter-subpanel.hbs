@@ -4,6 +4,37 @@
     <div class="subgroup">
       <h4>{{subgroup.title}}</h4>
 
+      {{#each subgroup.metrics as |metric|}}
+        <div class="metric {{metric.type}}">
+          <label for={{metric.col}}>{{metric.name}}</label>
+
+          {{#if (eq metric.type 'string')}}
+
+            <select name={{metric.col}} placeholder="Select to filter by"> 
+              {{#each metric.options as |option|}}
+                <option value={{option}}>{{capitalize option}}</option>
+              {{/each}}
+            </select>
+
+          {{else if (eq metric.type 'bool')}}
+
+            {{input type="checkbox" name=metric.col checked=metric.value}}
+
+          {{else if (eq metric.type 'date')}}
+
+          {{else}}
+
+            <select name="{{metric.col}}-inf">
+              <option selected={{if (eq metric.value 'gt') selected}}>&gt;</option>
+              <option selected={{if (eq metric.value 'eq') selected}}>=</option>
+              <option selected={{if (eq metric.value 'lt') selected}}>&lt;</option>
+            </select>
+
+            {{input name=metric.col value=metric.value}}
+
+          {{/if}}
+        </div>
+      {{/each}}
     </div>
   {{/each}}
 

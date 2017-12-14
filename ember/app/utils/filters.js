@@ -33,6 +33,7 @@ const filters = {
 
   'asofright': { name: 'As of Right', type: 'bool', ...defaultMetric },
   'over55': { name: 'Age Restricted', type: 'bool', ...defaultMetric },
+  'status': { name: 'Status', type: 'string', options: ['completed', 'developing', 'in progress'], ...defaultMetric },
 };
 
 
@@ -58,7 +59,6 @@ const metricGroups = {
     {
       title: 'Land Use',
       metrics: [
-        'projarea',
         'asofright',
         'phased',
         'stalled',
