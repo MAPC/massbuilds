@@ -1,6 +1,6 @@
 import Component from '@ember/component';
 import { action, computed } from 'ember-decorators/object';
-import { metricGroups } from 'massbuilds/utils/filters';
+import filters, { metricGroups } from 'massbuilds/utils/filters';
 
 
 export default class extends Component {
@@ -13,16 +13,16 @@ export default class extends Component {
     this.viewing = this.get('filterGroups')[1];
   }
 
+
   @computed('activeFilters')
   get filterGroups() {
     const activeFilters = this.get('activeFilters');
-    console.log(activeFilters);
 
     const discrete = ['Developer', 'Town/City'].map(name => {
-                    
                         let active = activeFilters.any(filter => filter.name === name); 
+                        let col = Object.values(filters).filter(x => x.name === name)[0].col;
 
-                        return { name, active, type: 'discrete' };
+                        return { name, col, active, type: 'discrete' };
                       });
 
     const metric = Object.keys(metricGroups).map(name => {
@@ -35,6 +35,7 @@ export default class extends Component {
 
     return [...discrete, ...metric];
   }
+
 
   @computed('viewing', 'activeFilters')
   get selectedValues() {
@@ -53,9 +54,16 @@ export default class extends Component {
     return result;
   }
 
+
   @action
   view(group) {
     this.set('viewing', group);
+  }
+
+
+  @action
+  update(filter) {
+    this.sendAction('update', filter);
   }
 
 }

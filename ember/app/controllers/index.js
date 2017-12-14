@@ -12,8 +12,6 @@ export default class extends Controller {
   constructor() {
     super();
 
-    console.log(filters);
-
     this.queryParams = Object.keys(filters);
     Object.values(filters).forEach(filter => {
       if (filter.filter === 'discrete') {
@@ -26,6 +24,7 @@ export default class extends Controller {
     this.showingFilters = true;
     this.showingMenu = false;
   }
+
 
   get activeFilters() {
     return Object.keys(filters).map(col => {
@@ -46,7 +45,9 @@ export default class extends Controller {
       }).filter(x => x !== null);
   }
 
+
   @gt('activeFilters', 0) filtering
+
 
   @computed('showingFilters')
   get showingLeftPanel() {
@@ -54,6 +55,7 @@ export default class extends Controller {
 
     return showingFilters;
   }
+
 
   @computed('showingMenu')
   get showingRightPanel() {
@@ -65,14 +67,20 @@ export default class extends Controller {
 
   @action
   toggleFilters() {
-    this.updateFilter({municipality: ['Boston', 'Cambridge']});
     this.toggleProperty('showingFilters');
   }
 
 
   @action
   clearFilters() {
-    this.set('filterBy', '{}');
+    Object.values(filters).forEach(filter => {
+      if (filter.filter === 'discrete') {
+        this.set(filter.col, []);
+      }
+      else {
+        this.set(filter.col, undefined);
+      }
+    });
   }
 
  

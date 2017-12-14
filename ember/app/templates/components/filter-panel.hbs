@@ -6,7 +6,10 @@
 
 <div class='filters'>
   {{#if (eq viewing.type 'discrete')}} 
-    {{discrete-filter-subpanel viewing=viewing selectedValues=selectedValues}}
+    {{discrete-filter-subpanel 
+      update=(action update)
+      viewing=viewing 
+      selectedValues=selectedValues}}
   {{else}}
     {{metric-filter-subpanel viewing=viewing}} 
   {{/if}}

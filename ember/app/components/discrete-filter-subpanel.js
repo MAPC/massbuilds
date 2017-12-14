@@ -1,7 +1,10 @@
+import Ember from 'ember';
 import Component from '@ember/component';
 import { action, computed } from 'ember-decorators/object';
+import { oneWay } from 'ember-decorators/object/computed';
 import { service } from 'ember-decorators/service';
 import discreteMap from 'massbuilds/utils/discrete-map';
+
 
 export default class extends Component {
 
@@ -13,8 +16,10 @@ export default class extends Component {
     this.classNames = ['component', 'subpanel', 'discrete-filter'];
 
     this.view = (this.get('selectedValues').length === 0) ? 'search' : 'selected';
+    this.selected = Ember.copy(this.get('selectedValues'));
     this.searchQuery = '';
   }
+
 
   @computed('map', 'viewing.name')
   get values() {
@@ -28,13 +33,13 @@ export default class extends Component {
   }
 
 
-  @computed('values', 'selectedValues.[]', 'searchQuery')
+  @computed('values', 'selected.[]', 'searchQuery')
   get filteredValues() {
     const values = this.get('values');
-    const selectedValues = this.get('selectedValues');
+    const selected = this.get('selected');
     const searchQuery = this.get('searchQuery');
 
-    let filtered = values.filter(value => selectedValues.indexOf(value) === -1);
+    let filtered = values.filter(value => selected.indexOf(value) === -1);
 
     if (searchQuery.length >= 1) {
       let query = searchQuery.toLowerCase();
@@ -58,16 +63,29 @@ export default class extends Component {
     this.set('view', view);
   }
 
+
   @action
   select(value) {
-    const selected = this.get('selectedValues');
+    const selected = this.get('selected');
     selected.pushObject(value);
+    this.set('selected', selected.sort());
+
+    this.updateFilter();
   }
 
 
   @action 
   deselect(value) {
-    this.get('selectedValues').popObject(value);
+    const selected = this.get('selected');
+    selected.removeObject(value);
+
+    this.updateFilter();
+  }
+
+
+  @action
+  updateFilter() {
+    this.sendAction('update', { [this.get('viewing.col')]: Ember.copy(this.get('selected')) });
   }
 
 
