@@ -1,0 +1,16 @@
+.component.subpanel.metric-filter {
+
+  padding: 15px;
+
+  .subgroup {
+    & + .subgroup { margin-top: 20px; }
+
+    h4 {
+      margin: 0 0 5px;
+
+      color: $color_font-medium;
+      font-size: 14px; 
+    }
+
+  }
+}

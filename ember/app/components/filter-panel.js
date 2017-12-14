@@ -10,7 +10,7 @@ export default class extends Component {
 
     this.classNames = ['component', 'filter-panel'];
 
-    this.viewing = this.get('filterGroups')[1];
+    this.viewing = this.get('filterGroups')[2];
   }
 
 

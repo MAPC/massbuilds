@@ -1,3 +1,10 @@
 <div class="component subpanel metric-filter">
-  {{model.title}}
+
+  {{#each subgroups as |subgroup|}}
+    <div class="subgroup">
+      <h4>{{subgroup.title}}</h4>
+
+    </div>
+  {{/each}}
+
 </div>
