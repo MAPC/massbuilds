@@ -27,16 +27,18 @@
   <div class="subview">
     {{input value=searchQuery placeholder=placeholder}}
 
-    <ul class="discrete-value-list">
-      {{#each filteredValues as |value|}} 
-        <li>
-          {{value}}
+    <div class="list-wrapper">
+      <ul class="discrete-value-list">
+        {{#each filteredValues as |value|}} 
+          <li>
+            {{value}}
 
-          <div class="discrete-valute-actions">
-            <button onclick={{action select value}}>+</button>
-          </div>
-        </li>
-      {{/each}}
-    </ul>
+            <div class="discrete-value-actions">
+              <button onclick={{action select value}}>+</button>
+            </div>
+          </li>
+        {{/each}}
+      </ul>
+    </div>
   </div>
 {{/if}}

@@ -42,6 +42,7 @@
 
   .subview {
     input {
+      height: $height;
       width: 100%; 
       padding: 4px 10px;
 
@@ -49,17 +50,53 @@
 
       background: none;
       border: 0;
-      height: $height;
       border-bottom: 1px solid $color_bg-medium;
 
       outline: none;
     } 
   }
 
-  .discrete-value-list {
+  .list-wrapper:after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    display: block;
+    z-index: 1;
+
+    height: 1px;
+    width: 100%;
+
+    box-shadow: 0px 0px 50px 40px $color_bg-light;
+    overflow: hidden;
+  }
+
+  ul {
     height: 60vh; 
+    margin-top: 0;
+    padding: 0 10px;
 
     overflow-y: scroll;
+
+    li { 
+      @extend ._clear; 
+
+      padding: 2px 0;
+
+      &:first-of-type { padding-top: 10px; }
+    }
+  }
+
+  .discrete-value-actions {
+    float: right;
+
+    button {
+      background: none;
+      border: none; 
+
+      &:hover {
+        color: $color_brand-primary--active; 
+      }
+    }
   }
 
 }
