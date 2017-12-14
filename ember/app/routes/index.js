@@ -16,4 +16,25 @@ export default class extends Route {
     this.get('map').set('data', model.truncDevelopments);
   }
 
+
+  /**
+   * We need to allow arrays in the query parameters
+   * for the discrete filters.
+   */
+  serializeQueryParam(value, urlKey, defaultValueType) {
+    if (defaultValueType === 'array') {
+      return value;
+    }
+    
+    return '' + value; 
+  }
+
+  deserializeQueryParam(value, urlKey, defaultValueType) {
+    if (defaultValueType === 'array' && typeof value === 'string') {
+      return value.split(',');
+    }
+
+    return value; 
+  }
+
 }

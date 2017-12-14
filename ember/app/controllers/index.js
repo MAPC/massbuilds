@@ -12,8 +12,14 @@ export default class extends Controller {
   constructor() {
     super();
 
-    this.queryParams = ['filterBy']
-    this.filterBy = {};
+    console.log(filters);
+
+    this.queryParams = Object.keys(filters);
+    Object.values(filters).forEach(filter => {
+      if (filter.filter === 'discrete') {
+        this.set(filter.col, []);
+      }
+    });
 
     this.searchPlaceholder = 'Search by Town/City, Developer, Address...';
 
@@ -21,16 +27,23 @@ export default class extends Controller {
     this.showingMenu = false;
   }
 
-  @computed('filterBy')
   get activeFilters() {
-    const filter = JSON.parse(this.get('filterBy'));
+    return Object.keys(filters).map(col => {
+        let value = this.get(col);
+        let found = null;
 
-    return Object.keys(filter).map(filterTitle => {
-      let found = filters[filterTitle];
-      found.value = filter[filterTitle];
+        if (value) {
+          if (
+            typeof value !== 'object'  // not object/array
+            || value.length > 0        // if array, then make sure it has elements
+          ) {
+            found = filters[col]; 
+            found.value = value;
+          }
+        }
 
-      return found;
-    });
+        return found;
+      }).filter(x => x !== null);
   }
 
   @gt('activeFilters', 0) filtering
@@ -49,15 +62,25 @@ export default class extends Controller {
     return showingMenu;
   }
 
+
   @action
   toggleFilters() {
+    this.updateFilter({municipality: ['Boston', 'Cambridge']});
     this.toggleProperty('showingFilters');
   }
 
 
   @action
   clearFilters() {
-    this.set('activeFilters', []);
+    this.set('filterBy', '{}');
+  }
+
+ 
+  @action
+  updateFilter(updateValues) {
+    Object.keys(updateValues).forEach(col => {
+      this.set(col, updateValues[col]);
+    });
   }
 
 }

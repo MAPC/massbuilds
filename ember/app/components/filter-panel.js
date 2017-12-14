@@ -9,14 +9,18 @@ export default class extends Component {
     super();
 
     this.classNames = ['component', 'filter-panel'];
+
+    this.viewing = this.get('filterGroups')[1];
   }
 
   @computed('activeFilters')
   get filterGroups() {
     const activeFilters = this.get('activeFilters');
+    console.log(activeFilters);
 
     const discrete = ['Developer', 'Town/City'].map(name => {
-                        let active = false; 
+                    
+                        let active = activeFilters.any(filter => filter.name === name); 
 
                         return { name, active, type: 'discrete' };
                       });
@@ -34,22 +38,19 @@ export default class extends Component {
 
   @computed('viewing', 'activeFilters')
   get selectedValues() {
-    const viewing = this.get('viewing');
     const activeFilters = this.get('activeFilters');
+    let result = [];
 
-    const result =  activeFilters.filter(_filter => _filter.name === viewing.name)[0].value;
-
-    console.log(result);
+    if (activeFilters.length > 0) {
+      const viewing = this.get('viewing');
+      const found = activeFilters.filter(_filter => _filter.name === viewing.name)[0];
+      
+      if (found) {
+        result = found.value;
+      }
+    }
 
     return result;
-  }
-
-  get viewing() {
-    return this.get('filterGroups')[1];
-  }
-
-  set viewing(group) {
-    return group;
   }
 
   @action

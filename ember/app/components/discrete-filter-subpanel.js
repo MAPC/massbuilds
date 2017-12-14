@@ -12,7 +12,7 @@ export default class extends Component {
 
     this.classNames = ['component', 'subpanel', 'discrete-filter'];
 
-    this.view = 'selected';
+    this.view = (this.get('selectedValues').length === 0) ? 'search' : 'selected';
     this.searchQuery = '';
   }
 
