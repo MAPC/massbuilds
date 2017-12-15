@@ -1,7 +1,7 @@
 import Route from '@ember/routing/route';
 import { hash } from 'rsvp';
 import { service } from 'ember-decorators/service';
-import filters from 'massbuilds/utils/filters';
+import { filters, fromQueryParams } from 'massbuilds/utils/filters';
 
 
 export default class extends Route {
@@ -12,11 +12,10 @@ export default class extends Route {
     const query = { trunc: true };
 
     if (params) {
-      query['filter'] = this.filterParams(params);
+      query['filter'] = fromQueryParams(this.filterParams(params));
     }
 
     console.log(query['filter']);
-    
 
     return hash({
       truncDevelopments: this.store.query('development', query)

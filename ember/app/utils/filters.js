@@ -152,6 +152,15 @@ Object.values(Ember.get(Development, 'attributes')._values)
 
 Object.keys(filters).forEach(col => filters[col] = {col, ...filters[col]});
 
+const fromQueryParams = params => {
+  Object.keys(params).forEach(key => {
+    let value = params[key];
+    params[key] = filters[key];
+    params[key].value = value;
+  });
+
+  return params;
+};
 
 export default filters;
-export { metricGroups, filters };
+export { metricGroups, filters, fromQueryParams };
