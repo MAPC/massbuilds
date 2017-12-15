@@ -9,9 +9,12 @@ class DevelopmentsController < ApplicationController
                       Development.search_by_name_and_location(params[:term])
                     elsif params[:minLat] && params[:minLng] && params[:maxLat] && params[:maxLng]
                       Development.where("point && ST_MakeEnvelope(?, ?, ?, ?, 4326) ", params[:minLng], params[:minLat], params[:maxLng], params[:maxLat])
+                    elsif params[:filter]
+                      filtered_developments(params[:filter])
                     else
                       Development.where(filtered_params)
                     end
+
     respond_to do |format|
       format.jsonapi do
         scope = 'trunc' if params[:trunc]
@@ -85,5 +88,12 @@ class DevelopmentsController < ApplicationController
       respond_to do |format|
         format.jsonapi { ActiveModelSerializers::Deserialization.jsonapi_parse(params, only: [:user_id, :rdv, :asofright, :ovr55, :clusteros, :phased, :stalled, :name, :status, :desc, :project_url, :mapc_notes, :tagline, :address, :state, :zip_code, :height, :stories, :year_compl, :prjarea, :singfamhu, :twnhsmmult, :lgmultifam, :tothu, :gqpop, :rptdemp, :emploss, :estemp, :commsf, :hotelrms, :onsitepark, :total_cost, :team_membership_count, :cancelled, :private, :fa_ret, :fa_ofcmd, :fa_indmf, :fa_whs, :fa_rnd, :fa_edinst, :fa_other, :fa_hotel, :other_rate, :affordable, :latitude, :longitude, :parcel_id, :mixed_use, :point, :programs, :forty_b, :residential, :commercial, :developer_name]) }
       end
+    end
+
+    # Builds a SQL query to filter parameters
+    def filtered_developments(filter)
+
+
+
     end
 end

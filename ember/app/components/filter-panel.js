@@ -51,8 +51,6 @@ export default class extends Component {
       }
     }
 
-    console.log(result);
-
     return result;
   }
 

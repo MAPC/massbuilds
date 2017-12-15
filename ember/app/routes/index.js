@@ -1,14 +1,25 @@
 import Route from '@ember/routing/route';
 import { hash } from 'rsvp';
 import { service } from 'ember-decorators/service';
+import filters from 'massbuilds/utils/filters';
+
 
 export default class extends Route {
 
   @service map
 
-  model() {
+  model(params) {
+    const query = { trunc: true };
+
+    if (params) {
+      query['filter'] = this.filterParams(params);
+    }
+
+    console.log(query['filter']);
+    
+
     return hash({
-      truncDevelopments: this.store.query('development', {trunc: true})
+      truncDevelopments: this.store.query('development', query)
     });
   }
 
@@ -37,4 +48,23 @@ export default class extends Route {
     return value; 
   }
 
+
+  filterParams(params) {
+    const setParams = {};
+
+    Object.keys(params).forEach(key => {
+      if (key in filters) {
+       const value = params[key];
+
+        if (
+          value 
+          && (!(value instanceof Array) || value.length > 0)) 
+        {
+          setParams[key] = value;
+        }
+      }
+    });
+
+    return setParams;
+  }
 }

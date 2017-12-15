@@ -11,8 +11,12 @@ export default class extends Controller {
 
   constructor() {
     super();
+    
+    const filterParams = Object.keys(filters);
+    const boundingParams = ['minLat', 'minLng', 'maxLat', 'maxLng'];
 
-    this.queryParams = Object.keys(filters);
+    this.queryParams = [...filterParams, ...boundingParams];
+
     Object.values(filters).forEach(filter => {
       if (filter.filter === 'discrete') {
         this.set(filter.col, []);
@@ -95,6 +99,7 @@ export default class extends Controller {
     });
 
     this.set('updateChildren', Math.random());
+    this.get('target').send('refreshModel');
   }
 
 }

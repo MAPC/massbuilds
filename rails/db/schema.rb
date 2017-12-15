@@ -95,6 +95,7 @@ ActiveRecord::Schema.define(version: 20171214202302) do
     t.index ["geom"], name: "ma_municipalities_geom_idx", using: :gist
     t.index ["geom"], name: "ma_municipalities_geom_idx1", using: :gist
     t.index ["geom"], name: "ma_municipalities_geom_idx2", using: :gist
+    t.index ["geom"], name: "ma_municipalities_geom_idx3", using: :gist
   end
 
   create_table "users", force: :cascade do |t|
