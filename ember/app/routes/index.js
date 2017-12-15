@@ -12,10 +12,8 @@ export default class extends Route {
     const query = { trunc: true };
 
     if (params) {
-      query['filter'] = fromQueryParams(this.filterParams(params));
+      query['filter'] = fromQueryParams(this.getFilterParams(params));
     }
-
-    console.log(query['filter']);
 
     return hash({
       truncDevelopments: this.store.query('development', query)
@@ -48,7 +46,7 @@ export default class extends Route {
   }
 
 
-  filterParams(params) {
+  getFilterParams(params) {
     const setParams = {};
 
     Object.keys(params).forEach(key => {
