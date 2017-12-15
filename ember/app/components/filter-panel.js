@@ -41,17 +41,17 @@ export default class extends Component {
   get selectedValues() {
     const activeFilters = this.get('activeFilters');
     let result = [];
-    console.log('Updating selectedValues');
 
     if (activeFilters.length > 0) {
       const viewing = this.get('viewing');
       const found = activeFilters.filter(_filter => _filter.name === viewing.name);
       
       if (found) {
-        console.log(found);
-        result = (found.length === 1) ? found.value : found;
+        result = (found.length === 1) ? found[0].value : found;
       }
     }
+
+    console.log(result);
 
     return result;
   }

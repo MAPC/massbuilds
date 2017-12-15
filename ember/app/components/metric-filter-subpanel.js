@@ -26,12 +26,6 @@ export default class extends Component {
       };
     });
 
-    temp.forEach(subgroup => {
-      subgroup.metrics.forEach(metric => {
-        console.log(metric);
-      });
-    });
-
     return temp;
   }
 

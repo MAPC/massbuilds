@@ -55,6 +55,14 @@
       outline: none;
     } 
   }
+  
+  .no-selections {
+    padding: 25px 10px;
+
+    color: $color_font-medium;
+    font-size: 14px; 
+    text-align: center;
+  }
 
   .list-wrapper:after {
     content: '';

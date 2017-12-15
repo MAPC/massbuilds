@@ -11,17 +11,23 @@
 
 {{#if (eq view 'selected')}}
   <div class="subview discrete-selected">
-    <ul> 
-      {{#each selected as |value|}}
-        <li>
-          {{value}}
+    {{#if selected}}
+      <ul> 
+        {{#each selected as |value|}}
+          <li>
+            {{value}}
 
-          <div class="discrete-value-actions">
-            <button onclick={{action deselect value}}>X</button>
-          </div>
-        </li>
-      {{/each}}
-    </ul>
+            <div class="discrete-value-actions">
+              <button onclick={{action deselect value}}>X</button>
+            </div>
+          </li>
+        {{/each}}
+      </ul>
+    {{else}}
+      <div class="no-selections">
+        No {{viewing.name}}s selected
+      </div>
+    {{/if}}
   </div>
 {{else}}
   <div class="subview">
