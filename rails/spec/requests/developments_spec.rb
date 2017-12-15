@@ -98,6 +98,13 @@ RSpec.describe "Developments", type: :request do
       expect(response.body).to include('Seaport')
     end
 
+    it "lets you export developments as a SHP as a registered user" do
+      pending 'crated development disappears from test DB before pgsql2shop is invoked in this test'
+      FactoryBot.create(:development)
+      get '/developments.shp', params: { term: 'Boston' }, headers: registered_user_session
+      expect(response.content_type).to eq('application/octec-stream')
+    end
+
     it "can not export developments as a CSV as a public user" do
       pending 'potentially implement on front-end only'
       FactoryBot.create(:development)
