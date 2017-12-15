@@ -8,7 +8,6 @@ class UsersController < ApplicationController
     @users = User.all
     respond_to do |format|
       format.jsonapi { render jsonapi: @users }
-      format.html
     end
   end
 
@@ -17,7 +16,6 @@ class UsersController < ApplicationController
     authorize @user
     respond_to do |format|
       format.jsonapi { render jsonapi: @user }
-      format.html
     end
   end
 
@@ -29,7 +27,6 @@ class UsersController < ApplicationController
     if @user.save
       respond_to do |format|
         format.jsonapi { head :created }
-        format.html { redirect_to @user, notice: 'user was successfully created.' }
       end
     else
       head :bad_request
@@ -44,7 +41,6 @@ class UsersController < ApplicationController
     if @user.update(filtered_params)
       respond_to do |format|
         format.jsonapi { head :ok }
-        format.html { redirect_to @user, notice: 'user was successfully created.' }
       end
     else
       head :bad_request
@@ -57,12 +53,10 @@ class UsersController < ApplicationController
     if @user.destroy
       respond_to do |format|
         format.jsonapi { head :ok }
-        format.html { redirect_to users_url, notice: 'user was successfully destroyed.' }
       end
     else
       respond_to do |format|
         format.jsonapi { head :bad_request }
-        format.html { redirect_to users_url, notice: 'destroying user failed.' }
       end
     end
   end
@@ -77,7 +71,6 @@ class UsersController < ApplicationController
   def user_params
     respond_to do |format|
       format.jsonapi { ActiveModelSerializers::Deserialization.jsonapi_parse(params, only: [:email, :password, :role, :first_name, :last_name]) }
-      format.html { params.require(:user).permit(:email, :password, :role, :first_name, :last_name) }
     end
   end
 end

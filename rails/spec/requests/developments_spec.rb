@@ -85,7 +85,6 @@ RSpec.describe "Developments", type: :request do
     end
 
     it "lets you export developments as a CSV as a registered user" do
-      pending
       FactoryBot.create(:development)
       get '/developments.csv', params: { term: 'Boston' }, headers: registered_user_session
       expect(response.content_type).to eq('text/csv')
@@ -93,7 +92,7 @@ RSpec.describe "Developments", type: :request do
     end
 
     it "can not export developments as a CSV as a public user" do
-      pending
+      pending 'potentially implement on front-end only'
       FactoryBot.create(:development)
       get '/developments.csv', params: { term: 'Boston' }, headers: guest_user_session
       expect(response).to have_http_status(:unauthorized)
@@ -107,25 +106,21 @@ RSpec.describe "Developments", type: :request do
     end
 
     it "works as a municipal user inside their municipality" do
-      pending 'need to add municipality info to user and permissions'
       post developments_path, params: valid_jsonapi_params, headers: municipal_user_session
       expect(response).to have_http_status(:success)
     end
 
     it "does not work as a municipal user outside their municipality" do
-      pending 'need to add municipality information to user and permissions'
       post developments_path, params: valid_jsonapi_params, headers: municipal_user_session
-      expect(response).to have_http_status(:success)
+      expect(response).to have_http_status(:unauthorized)
     end
 
     it "works as a verified user" do
-      pending
       post developments_path, params: valid_jsonapi_params, headers: verified_user_session
       expect(response).to have_http_status(:success)
     end
 
     it "does not work as a registered user" do
-      pending
       post developments_path, params: valid_jsonapi_params, headers: registered_user_session
       expect(response).to have_http_status(:unauthorized)
     end
@@ -144,42 +139,48 @@ RSpec.describe "Developments", type: :request do
     end
 
     it "works for verified users on developments they created" do
-      pending 'specify development permissions'
-      development = FactoryBot.create(:development)
-      put "/developments/#{development.id}", params: valid_jsonapi_params, headers: verified_user_session
+      user = FactoryBot.create(:user, role: 'verified')
+      development = FactoryBot.create(:development, user: user)
+      user_session = {
+                        Authorization: "Token token=#{user.authentication_token}, email=#{user.email}",
+                        'Content-Type': 'application/vnd.api+json',
+                        'Accept': 'application/vnd.api+json'
+                      }
+      put "/developments/#{development.id}", params: valid_jsonapi_params, headers: user_session
       expect(response).to have_http_status(:found)
     end
 
     it "does not work for verified users on developments they did not create" do
-      pending 'specify development permissions'
       development = FactoryBot.create(:development)
       put "/developments/#{development.id}", params: valid_jsonapi_params, headers: verified_user_session
       expect(response).to have_http_status(:unauthorized)
     end
 
-    it "works for a municipal user on developments they created" do
-      pending 'specify development permissions'
-      development = FactoryBot.create(:development)
-      put "/developments/#{development.id}", params: valid_jsonapi_params, headers: municipal_user_session
+    it "works for verified users on developments they created" do
+      user = FactoryBot.create(:user, role: 'municipal')
+      development = FactoryBot.create(:development, user: user)
+      user_session = {
+                        Authorization: "Token token=#{user.authentication_token}, email=#{user.email}",
+                        'Content-Type': 'application/vnd.api+json',
+                        'Accept': 'application/vnd.api+json'
+                      }
+      put "/developments/#{development.id}", params: valid_jsonapi_params, headers: user_session
       expect(response).to have_http_status(:found)
     end
 
     it "does not work for a municipal user on developments they did not create" do
-      pending 'specify development permissions'
       development = FactoryBot.create(:development)
       put "/developments/#{development.id}", params: valid_jsonapi_params, headers: municipal_user_session
       expect(response).to have_http_status(:unauthorized)
     end
 
     it "does not work as a registered user" do
-      pending
       development = FactoryBot.create(:development)
       put "/developments/#{development.id}", params: valid_jsonapi_params, headers: registered_user_session
       expect(response).to have_http_status(:unauthorized)
     end
 
     it "does not work as a public user" do
-      pending
       development = FactoryBot.create(:development)
       put "/developments/#{development.id}", params: valid_jsonapi_params, headers: guest_user_session
       expect(response).to have_http_status(:unauthorized)
@@ -194,15 +195,13 @@ RSpec.describe "Developments", type: :request do
     end
 
     it "works as a municipal user inside their own municipality" do
-      pending 'add municipality attributes'
       development = FactoryBot.create(:development)
       delete "/developments/#{development.id}", headers: municipal_user_session
       expect(response).to have_http_status(:no_content)
     end
 
     it "does not work as a municipal user outside their own municipality" do
-      pending 'add municipality attributes'
-      development = FactoryBot.create(:development)
+      development = FactoryBot.create(:development, municipality: 'Worcester')
       delete "/developments/#{development.id}", headers: municipal_user_session
       expect(response).to have_http_status(:unauthorized)
     end

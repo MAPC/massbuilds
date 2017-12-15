@@ -7,16 +7,8 @@ RSpec.describe EditsController, type: :routing do
       expect(:get => "/edits").to route_to("edits#index")
     end
 
-    it "routes to #new" do
-      expect(:get => "/edits/new").to route_to("edits#new")
-    end
-
     it "routes to #show" do
       expect(:get => "/edits/1").to route_to("edits#show", :id => "1")
-    end
-
-    it "routes to #edit" do
-      expect(:get => "/edits/1/edit").to route_to("edits#edit", :id => "1")
     end
 
     it "routes to #create" do
