@@ -91,9 +91,38 @@ class DevelopmentsController < ApplicationController
     end
 
     # Builds a SQL query to filter parameters
-    def filtered_developments(filter)
+    def filtered_developments(filter_hash)
+      sql = []
+      values = []
 
 
+      filter_hash.values.each do |filter|
+        column = filter['col']
+        puts column
 
+        if filter['filter'] == 'discrete'
+
+          sql << '(' + filter['value'].map { |_| "#{column} = ?" }.join(' OR ') + ')'
+          values = [*values, *filter['value']]
+
+        else # metric
+          inflector = filter['inflector']
+          value = filter['value']
+
+          unless (
+            (['<', '>', '='].include? inflector) &&
+            ((value.is_a? Numeric) || (value.is_a? Boolean))
+          )
+              next
+          end
+
+          sql << "#{column} #{inflector} ?"
+          values << value
+        end
+      end
+
+      puts sql.join(' AND ')
+
+      return Development.where(sql.join(' AND '), *values)
     end
 end
