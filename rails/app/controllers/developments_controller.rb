@@ -21,6 +21,7 @@ class DevelopmentsController < ApplicationController
         render jsonapi: @developments, scope: scope
       end
       format.csv { send_data @developments.to_csv, filename: "developments-#{Date.today}.csv" }
+      format.shp { send_data @developments.to_shp(@developments.to_sql) }
     end
   end
 
