@@ -1,4 +1,5 @@
 require 'csv'
+require 'zip'
 class Development < ApplicationRecord
   has_many :edits
   belongs_to :user
@@ -18,7 +19,7 @@ class Development < ApplicationRecord
 
   def self.to_shp(sql)
     database = Rails.configuration.database_configuration[Rails.env]
-    file_name = "export-#{Time.now.to_i}.shp"
+    file_name = "export-#{Time.now.to_i}"
     arguments = []
     arguments << "-f #{Rails.root.join('public', file_name)}"
     arguments << "-h #{database['host']}" if database['host']
@@ -29,36 +30,18 @@ class Development < ApplicationRecord
 
     `pgsql2shp #{arguments.join(" ")}`
 
-    return File.read(Rails.root.join('public', file_name))
+    zip(file_name)
   end
 
-  # private
+  private
 
-  # def zip(file_name, arguments)
-  #   #Attachment name
-  #   filename = 'basket_images-'+params[:delivery_date].gsub(/[^0-9]/,'')+'.zip'
-  #   temp_file = Tempfile.new(filename)
-
-  #   begin
-  #     #This is the tricky part
-  #     #Initialize the temp file as a zip file
-  #     Zip::OutputStream.open(temp_file) { |zos| }
-
-  #     #Add files to the zip file as usual
-  #     Zip::File.open(temp_file.path, Zip::File::CREATE) do |zip|
-  #       #Put files in here
-  #     end
-
-  #     #Read the binary data from the file
-  #     zip_data = File.read(temp_file.path)
-
-  #     #Send the data to the browser as an attachment
-  #     #We do not send the file directly because it will
-  #     #get deleted before rails actually starts sending it
-  #     send_data(zip_data, :type => 'application/zip', :filename => filename)
-  #   ensure
-  #     #Close and delete the temp file
-  #     temp_file.close
-  #     temp_file.unlink
-  #   end
+  def self.zip(file_name)
+    Zip::File.open(Rails.root.join('public', "#{file_name}.zip").to_s, Zip::File::CREATE) do |zipfile|
+      zipfile.add("#{file_name}.shp", Rails.root.join('public', "#{file_name}.shp"))
+      zipfile.add("#{file_name}.shx", Rails.root.join('public', "#{file_name}.shx"))
+      zipfile.add("#{file_name}.dbf", Rails.root.join('public', "#{file_name}.dbf"))
+      zipfile.add("#{file_name}.cpg", Rails.root.join('public', "#{file_name}.cpg"))
+    end
+    return file_name
+  end
 end

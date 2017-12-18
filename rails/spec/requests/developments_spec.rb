@@ -102,7 +102,7 @@ RSpec.describe "Developments", type: :request do
       pending 'crated development disappears from test DB before pgsql2shop is invoked in this test'
       FactoryBot.create(:development)
       get '/developments.shp', params: { term: 'Boston' }, headers: registered_user_session
-      expect(response.content_type).to eq('application/octec-stream')
+      expect(response.content_type).to eq('application/zip')
     end
 
     it "can not export developments as a CSV as a public user" do
