@@ -95,23 +95,24 @@ class DevelopmentsController < ApplicationController
       sql = []
       values = []
 
-
       filter_hash.values.each do |filter|
         column = filter['col']
-        puts column
 
         if filter['filter'] == 'discrete'
-
           sql << '(' + filter['value'].map { |_| "#{column} = ?" }.join(' OR ') + ')'
           values = [*values, *filter['value']]
 
         else # metric
-          inflector = filter['inflector']
+          type = filter['type']
           value = filter['value']
+          inflector = (type == 'bool') ? '=' : filter['inflector']
 
           unless (
-            (['<', '>', '='].include? inflector) &&
-            ((value.is_a? Numeric) || (value.is_a? Boolean))
+            (['<', '>', '='].include?(inflector)) &&
+            (
+             (type == 'number' && (value.is_a?(Numeric))) || 
+             (type == 'bool' && (value == 'true' || value == 'false'))
+            )
           )
               next
           end
@@ -120,8 +121,6 @@ class DevelopmentsController < ApplicationController
           values << value
         end
       end
-
-      puts sql.join(' AND ')
 
       return Development.where(sql.join(' AND '), *values)
     end
