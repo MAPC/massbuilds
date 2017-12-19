@@ -10,10 +10,6 @@ export default class extends Component {
 
     this.get('subgroups').forEach(subgroup => {
       subgroup.metrics.forEach(metric => {
-        if (metric.type === 'bool') {
-          metric.value = !!metric.value;
-        }
-
         this.set(metric.col, metric);
       });
     });
@@ -41,7 +37,8 @@ export default class extends Component {
 
   @action
   toggleCheckbox(metric) {
-    this.set(`${metric.col}.value`, !metric.value);
+    Ember.set(metric, 'value', !(metric.value == true));
+
     this.updateFilter(metric);
   }
 
@@ -66,7 +63,7 @@ export default class extends Component {
 
   @action
   updateFilter(filter) {
-    this.sendAction('update', { [filter.col]: this.get(filter.col) });
+    this.sendAction('update', { [filter.col]: filter });
   }
   
 

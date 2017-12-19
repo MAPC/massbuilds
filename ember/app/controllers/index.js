@@ -45,11 +45,19 @@ export default class extends Controller {
           ) {
             found = Ember.copy(filters[col]); 
 
-            if (found.filter === 'metric' && found.type === 'number') {
-              [found.inflector, found.value] = value.split(';');
+            if (found.filter === 'metric') {
+              if (found.type === 'number') {
+                const metricParts = value.split(';');
+
+                Ember.set(found, 'inflector', metricParts[0]);
+                Ember.set(found, 'value', metricParts[1]);
+              }
+              else if (found.type === 'bool') {
+                Ember.set(found, 'value', value == 'true');
+              }
             }
             else {
-              found.value = value;
+              Ember.set(found, 'value', value);
             }
           }
         }
@@ -100,9 +108,6 @@ export default class extends Controller {
  
   @action
   updateFilter(updateValues) {
-
-    console.log(updateValues);
-
     Object.keys(updateValues).forEach(col => {
       let filter = updateValues[col];
       let value = filter;
