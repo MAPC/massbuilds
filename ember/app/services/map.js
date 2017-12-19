@@ -12,15 +12,15 @@ export default class extends Service {
 
     this.lower = {lat: 41.258856, lng: -72.7496044};
     this.upper = {lat: 42.869699, lng: -70.0528674};
+    this.pad = .1;
 
     this.instance = null;
     this.data = [];
   }
 
-  @computed('data', 'lat', 'lng')
+  @computed('data', 'pad')
   get bounds() {
     const data = this.get('data');
-    console.log(data.length);
     let latLngs = [];
 
     if (data.get('length') > 0) {
@@ -30,7 +30,8 @@ export default class extends Service {
       latLngs = [this.get('lower'), this.get('upper')];
     }
 
-    return L.latLngBounds(latLngs);
+    return L.latLngBounds(latLngs)
+            .pad(this.get('pad'));
   }
     
 } 

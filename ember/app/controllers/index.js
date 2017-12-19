@@ -25,7 +25,7 @@ export default class extends Controller {
 
     this.searchPlaceholder = 'Search by Town/City, Developer, Address...';
 
-    this.showingFilters = true;
+    this.showingFilters = false;
     this.showingMenu = false;
 
     this.updateChildren = 0;
@@ -77,7 +77,14 @@ export default class extends Controller {
   }
 
 
-  @gt('activeFilters', 0) filtering
+  @computed('activeFilters')
+  get filtering() {
+    const filtering = this.get('activeFilters.length') > 0;
+    this.set('map.pad', filtering ? .1 : 0);
+
+    return filtering;
+  }
+
 
   @computed('showingFilters')
   get showingLeftPanel() {
