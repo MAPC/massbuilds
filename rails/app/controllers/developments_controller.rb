@@ -21,6 +21,16 @@ class DevelopmentsController < ApplicationController
         render jsonapi: @developments, scope: scope
       end
       format.csv { send_data @developments.to_csv, filename: "developments-#{Date.today}.csv" }
+      format.zip do
+        file_name = @developments.to_shp(@developments.to_sql)
+        send_file Rails.root.join('public', "#{file_name}.zip"), filename: "developments-#{Date.today}.zip"
+        FileUtils.rm Rails.root.join('public', "#{file_name}.zip")
+        FileUtils.rm Rails.root.join('public', "#{file_name}.shp")
+        FileUtils.rm Rails.root.join('public', "#{file_name}.shx")
+        FileUtils.rm Rails.root.join('public', "#{file_name}.dbf")
+        FileUtils.rm Rails.root.join('public', "#{file_name}.cpg")
+        FileUtils.rm Rails.root.join('public', "#{file_name}.prj")
+      end
     end
   end
 

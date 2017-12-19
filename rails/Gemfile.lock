@@ -227,6 +227,7 @@ GEM
       rspec-mocks (~> 3.7.0)
       rspec-support (~> 3.7.0)
     rspec-support (3.7.0)
+    rubyzip (1.2.1)
     sass (3.5.3)
       sass-listen (~> 4.0.0)
     sass-listen (4.0.0)
@@ -303,6 +304,7 @@ DEPENDENCIES
   rack-cors
   rails
   rspec-rails
+  rubyzip
   sass-rails
   spring
   spring-commands-rspec
