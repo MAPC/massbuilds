@@ -23,7 +23,7 @@
   </div>
 
   <div class="map-layer">
-    {{#leaflet-map lat=map.lat lng=map.lng zoom=map.zoom as |layers|}}
+    {{#leaflet-map onLoad=(action setMapInstance) bounds=map.bounds as |layers|}}
       {{layers.tile url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
 
       {{#each model.truncDevelopments as |datum|}}

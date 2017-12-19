@@ -31,6 +31,16 @@ export default class extends Controller {
     this.updateChildren = 0;
   }
 
+  @computed('map.bounds')
+  get minLat() {
+    return this.get('map.bounds');
+  }
+
+  set minLat(thing) {
+    const map = this.get('map');
+
+    return thing;
+  }
 
   @computed('updateChildren')
   get activeFilters() {
@@ -122,6 +132,13 @@ export default class extends Controller {
 
     this.set('updateChildren', Math.random());
     this.get('target').send('refreshModel');
+  }
+
+
+  @action 
+  setMapInstance(map) {
+    this.set('map.instance', map.target);
+    console.log(map.target);
   }
 
 }
