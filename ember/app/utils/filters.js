@@ -127,6 +127,12 @@ const blacklist = [
 ];
 
 
+const inflectorMap = {
+  'lt': '<',
+  'eq': '=',
+  'gt': '>',
+};
+
 
 /**
  * Cleanup
@@ -152,15 +158,37 @@ Object.values(Ember.get(Development, 'attributes')._values)
 
 Object.keys(filters).forEach(col => filters[col] = {col, ...filters[col]});
 
+
 const fromQueryParams = params => {
-  Object.keys(params).forEach(key => {
-    let value = params[key];
-    params[key] = filters[key];
-    params[key].value = value;
+  const newParams = {};
+
+  Object.keys(params).forEach(_key => {
+    let value = params[_key];
+    let key = decamelize(_key);
+
+    newParams[key] = Ember.copy(filters[_key]);
+    newParams[key].col = key;
+
+    if (newParams[key].type === 'number') {
+      const [inflector, num] = value.split(';');
+
+      newParams[key].inflector = inflectorMap[inflector];
+      newParams[key].value = parseInt(num);
+    }
+    else {
+      newParams[key].value = value;
+    }
   });
 
-  return params;
+  return newParams;
+};
+
+
+export { 
+  metricGroups, 
+  filters, 
+  fromQueryParams, 
+  inflectorMap 
 };
 
 export default filters;
-export { metricGroups, filters, fromQueryParams };

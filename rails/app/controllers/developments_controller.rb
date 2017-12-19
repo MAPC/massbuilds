@@ -21,7 +21,6 @@ class DevelopmentsController < ApplicationController
         render jsonapi: @developments, scope: scope
       end
       format.csv { send_data @developments.to_csv, filename: "developments-#{Date.today}.csv" }
-      format.shp { send_data @developments.to_shp(@developments.to_sql) }
     end
   end
 
@@ -109,13 +108,13 @@ class DevelopmentsController < ApplicationController
           inflector = (type == 'bool') ? '=' : filter['inflector']
 
           unless (
-            (['<', '>', '='].include?(inflector)) &&
+            (['=', '<', '>'].include?(inflector)) &&
             (
-             (type == 'number' && (value.is_a?(Numeric))) || 
+             (type == 'number' && (/\A[-+]?\d+\z/ === value)) || 
              (type == 'bool' && (value == 'true' || value == 'false'))
             )
           )
-              next
+            next
           end
 
           sql << "#{column} #{inflector} ?"

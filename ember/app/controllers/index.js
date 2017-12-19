@@ -43,8 +43,14 @@ export default class extends Controller {
             typeof value !== 'object'  // not object/array
             || value.length > 0        // if array, then make sure it has elements
           ) {
-            found = filters[col]; 
-            found.value = value;
+            found = Ember.copy(filters[col]); 
+
+            if (found.filter === 'metric' && found.type === 'number') {
+              [found.inflector, found.value] = value.split(';');
+            }
+            else {
+              found.value = value;
+            }
           }
         }
 
@@ -94,8 +100,19 @@ export default class extends Controller {
  
   @action
   updateFilter(updateValues) {
+
+    console.log(updateValues);
+
     Object.keys(updateValues).forEach(col => {
-      this.set(col, updateValues[col]);
+      let filter = updateValues[col];
+      let value = filter;
+
+      
+      if (filter.filter === 'metric') {
+        value = (filter.type === 'number') ? `${filter.inflector};${filter.value}` : filter.value;
+      }
+
+      this.set(col, value);
     });
 
     this.set('updateChildren', Math.random());

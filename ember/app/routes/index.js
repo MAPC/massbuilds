@@ -1,6 +1,7 @@
 import Route from '@ember/routing/route';
 import { hash } from 'rsvp';
 import { service } from 'ember-decorators/service';
+import { action } from 'ember-decorators/object';
 import { filters, fromQueryParams } from 'massbuilds/utils/filters';
 
 
@@ -43,6 +44,12 @@ export default class extends Route {
     }
 
     return value; 
+  }
+
+
+  @action
+  refreshModel() {
+  
   }
 
 

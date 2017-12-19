@@ -7,8 +7,17 @@ export default class extends Component {
 
   constructor() {
     super();
-  }
 
+    this.get('subgroups').forEach(subgroup => {
+      subgroup.metrics.forEach(metric => {
+        if (metric.type === 'bool') {
+          metric.value = !!metric.value;
+        }
+
+        this.set(metric.col, metric);
+      });
+    });
+  }
 
   @computed('viewing.name', 'activeFilters')
   get subgroups() {
@@ -28,5 +37,37 @@ export default class extends Component {
 
     return temp;
   }
+
+
+  @action
+  toggleCheckbox(metric) {
+    this.set(`${metric.col}.value`, !metric.value);
+    this.updateFilter(metric);
+  }
+
+
+  @action 
+  updateMetricInflector(metricSelected) {
+    const filter = this.get(metricSelected.name.replace('-inf', ''));
+    this.set(`${filter.col}.inflector`, metricSelected.value);
+
+    this.updateFilter(filter);
+  }
+
+
+  @action
+  updateMetricOption(metricSelected) {
+    const filter = this.get(metricSelected.name);
+    this.set(`${filter.col}.value`, metricSelected.value);
+
+    this.updateFilter(filter);
+  }
+
+
+  @action
+  updateFilter(filter) {
+    this.sendAction('update', { [filter.col]: this.get(filter.col) });
+  }
+  
 
 }
