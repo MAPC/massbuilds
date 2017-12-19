@@ -49,7 +49,7 @@ export default class extends Route {
 
   @action
   refreshModel() {
-  
+    this.refresh();
   }
 
 
