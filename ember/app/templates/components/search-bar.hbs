@@ -1,9 +1,23 @@
-<div class="search-input-wrapper">
+<div class="search-input-wrapper {{if searching 'searching'}}">
   <img src="{{rootURL}}assets/images/search.svg" class="search-icon">
   {{input class="search-input" value=searchQuery placeholder=placeholder}}
 </div>
 
-<ul class="search-list">
-  {{#each searchList as |item|}}
-  {{/each}}
-</ul>
+{{#if searching}}
+  <ul class="search-list">
+    {{#each-in searchList as |groupTitle group|}}
+      {{#if group}}
+        <li class="group-title">
+          <h4>{{groupTitle}}</h4>
+        </li>
+
+        {{#each group as |item|}}
+          <li click={{action selectItem item}}>
+            <h5>{{item.value}}</h5>
+            <p>{{item.name}}</p>
+          </li>
+        {{/each}}
+      {{/if}}
+    {{/each-in}}
+  </ul>
+{{/if}}

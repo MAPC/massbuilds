@@ -26,8 +26,8 @@ export default class extends Service {
     this.storedBounds = null;
 
     this.get('store').query('development', { trunc: true }).then(results => {
-      this.stored = results;
-      this.storedBounds = L.latLngBounds(results.map(result => L.latLng([result.get('latitude'), result.get('longitude')])));
+      this.set('stored', results);
+      this.set('storedBounds', L.latLngBounds(results.map(result => L.latLng([result.get('latitude'), result.get('longitude')]))));
     });
   }
 
@@ -39,7 +39,6 @@ export default class extends Service {
     let latLngs = [];
 
     if (data.get('length') === this.get('stored.length') && storedBounds != null) {
-      console.log('using stored bounds');
       return storedBounds;
     }
 

@@ -10,7 +10,11 @@
         X
       </button>
     </div>
-    {{search-bar placeholder=searchPlaceholder}}
+
+    {{search-bar 
+      placeholder=searchPlaceholder 
+      model=map.stored
+    }}
   </div>
 
   {{share-buttons model=model}}
@@ -20,6 +24,7 @@
     {{filter-panel 
       update=(action updateFilter)
       activeFilters=activeFilters}}
+
   </div>
 
   <div class="map-layer">
