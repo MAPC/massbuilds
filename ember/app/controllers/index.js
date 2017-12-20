@@ -1,7 +1,7 @@
 import Controller from '@ember/controller';
 import { action, computed } from 'ember-decorators/object';
-import { service } from 'ember-decorators/service';
 import { gt } from 'ember-decorators/object/computed';
+import { service } from 'ember-decorators/service';
 import filters from 'massbuilds/utils/filters';
 
 
@@ -31,16 +31,6 @@ export default class extends Controller {
     this.updateChildren = 0;
   }
 
-  @computed('map.bounds')
-  get minLat() {
-    return this.get('map.bounds');
-  }
-
-  set minLat(thing) {
-    const map = this.get('map');
-
-    return thing;
-  }
 
   @computed('updateChildren')
   get activeFilters() {
@@ -77,7 +67,7 @@ export default class extends Controller {
   }
 
 
-  @computed('activeFilters')
+  @computed('activeFilters.length')
   get filtering() {
     const filtering = this.get('activeFilters.length') > 0;
     this.set('map.pad', filtering ? .1 : 0);
@@ -120,6 +110,7 @@ export default class extends Controller {
     });
 
     this.set('updateChildren', Math.random());
+    this.get('target').send('refreshModel');
   }
 
  
@@ -129,7 +120,6 @@ export default class extends Controller {
       let filter = updateValues[col];
       let value = filter;
 
-      
       if (filter.filter === 'metric') {
         value = (filter.type === 'number') ? `${filter.inflector};${filter.value}` : filter.value;
       }
@@ -145,7 +135,6 @@ export default class extends Controller {
   @action 
   setMapInstance(map) {
     this.set('map.instance', map.target);
-    console.log(map.target);
   }
 
 }

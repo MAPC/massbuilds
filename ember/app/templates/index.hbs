@@ -26,7 +26,7 @@
     {{#leaflet-map onLoad=(action setMapInstance) bounds=map.bounds as |layers|}}
       {{layers.tile url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
 
-      {{#each model.truncDevelopments as |datum|}}
+      {{#each map.data as |datum|}}
         {{layers.circle 
           lat=datum.latitude 
           lng=datum.longitude

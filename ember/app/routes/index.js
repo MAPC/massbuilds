@@ -16,13 +16,7 @@ export default class extends Route {
       query['filter'] = fromQueryParams(this.getFilterParams(params));
     }
 
-    return hash({
-      truncDevelopments: this.store.query('development', query)
-    });
-  }
-
-  afterModel(model) {
-    this.get('map').set('data', model.truncDevelopments);
+    this.get('map').filterByQuery(query);
   }
 
 

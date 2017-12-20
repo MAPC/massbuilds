@@ -28,7 +28,7 @@ export default class extends Component {
 
   @computed('map', 'viewing.name')
   get values() {
-    const data = this.get('map.data');
+    const data = this.get('map.stored');
     const name = this.get('viewing.name');
 
     return data.map(datum => datum.get(discreteMap[name]))
@@ -83,6 +83,10 @@ export default class extends Component {
   deselect(value) {
     const selected = this.get('selected');
     selected.removeObject(value);
+
+    if (selected.get('length') === 0) {
+      this.changeView('search');
+    }
 
     this.updateFilter();
   }
