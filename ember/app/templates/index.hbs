@@ -23,6 +23,20 @@
   </div>
 
   <div class="map-layer">
+
+    {{#unless map.data}}
+      <div class="map-loading-overlay">
+        <div class="loading-text">
+          <h1>MassBuilds</h1>
+
+          <div class="loader">
+            <span class="spinning-box"></span>
+            Mapping Developments
+          </div>
+        </div>
+      </div>
+    {{/unless}}
+
     {{#leaflet-map onLoad=(action setMapInstance) bounds=map.bounds as |layers|}}
       {{layers.tile url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
 
