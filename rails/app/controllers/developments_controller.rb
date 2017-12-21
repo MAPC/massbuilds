@@ -47,13 +47,12 @@ class DevelopmentsController < ApplicationController
     @development = Development.new(development_params)
     authorize @development
     @development.user = current_user
-
     if @development.save
       respond_to do |format|
         format.jsonapi { head :created }
       end
     else
-      head :bad_request
+      render jsonapi: @development.errors.full_messages, status: :bad_request
     end
   end
 
@@ -90,13 +89,31 @@ class DevelopmentsController < ApplicationController
     end
 
     def filtered_params
-      params.permit(:user_id, :rdv, :asofright, :ovr55, :clusteros, :phased, :stalled, :name, :status, :desc, :project_url, :mapc_notes, :tagline, :address, :state, :zip_code, :height, :stories, :year_compl, :prjarea, :singfamhu, :twnhsmmult, :lgmultifam, :tothu, :gqpop, :rptdemp, :emploss, :estemp, :commsf, :hotelrms, :onsitepark, :total_cost, :team_membership_count, :cancelled, :private, :fa_ret, :fa_ofcmd, :fa_indmf, :fa_whs, :fa_rnd, :fa_edinst, :fa_other, :fa_hotel, :other_rate, :affordable, :latitude, :longitude, :parcel_id, :mixed_use, :point, :programs, :forty_b, :residential, :commercial, :developer_name, :municipality)
+      params.permit(:user_id, :rdv, :asofright, :ovr55, :clusteros, :phased, :stalled, :name, :status,
+                    :desc, :prj_url, :mapc_notes, :tagline, :address, :state, :zip_code, :height,
+                    :stories, :year_compl, :prjarea, :singfamhu, :smmultifam, :lgmultifam, :hu, :gqpop,
+                    :rptdemp, :emploss, :estemp, :commsf, :hotelrms, :onsitepark, :total_cost,
+                    :team_membership_count, :cancelled, :private, :ret_sqft, :ofcmd_sqft, :indmf_sqft,
+                    :whs_sqft, :rnd_sqft, :ei_sqft, :other_sqft, :hotel_sqft, :other_rate, :affordable,
+                    :latitude, :longitude, :parcel_id, :mixed_use, :point, :programs, :forty_b, :residential,
+                    :commercial, :municipality, :devlper, :yrcomp_est, :units_1bd, :units_2bd, :units_3bd,
+                    :affrd_unit, :aff_u30, :aff_30_50, :aff_50_80, :aff_80p, :headqtrs, :park_type, :publicsqft)
     end
 
     # Only allow a trusted parameter "white list" through.
     def development_params
       respond_to do |format|
-        format.jsonapi { ActiveModelSerializers::Deserialization.jsonapi_parse(params, only: [:user_id, :rdv, :asofright, :ovr55, :clusteros, :phased, :stalled, :name, :status, :desc, :project_url, :mapc_notes, :tagline, :address, :state, :zip_code, :height, :stories, :year_compl, :prjarea, :singfamhu, :twnhsmmult, :lgmultifam, :tothu, :gqpop, :rptdemp, :emploss, :estemp, :commsf, :hotelrms, :onsitepark, :total_cost, :team_membership_count, :cancelled, :private, :fa_ret, :fa_ofcmd, :fa_indmf, :fa_whs, :fa_rnd, :fa_edinst, :fa_other, :fa_hotel, :other_rate, :affordable, :latitude, :longitude, :parcel_id, :mixed_use, :point, :programs, :forty_b, :residential, :commercial, :developer_name, :municipality]) }
+        format.jsonapi { ActiveModelSerializers::Deserialization.jsonapi_parse(params,
+                         only: %i[user_id rdv asofright ovr55 clusteros phased stalled name status
+                                  desc prj_url mapc_notes tagline address state zip_code height
+                                  stories year_compl prjarea singfamhu smmultifam lgmultifam hu gqpop
+                                  rptdemp emploss estemp commsf hotelrms onsitepark total_cost
+                                  team_membership_count cancelled private ret_sqft ofcmd_sqft indmf_sqft
+                                  whs_sqft rnd_sqft ei_sqft other_sqft hotel_sqft other_rate affordable
+                                  latitude longitude parcel_id mixed_use point programs forty_b residential
+                                  commercial municipality devlper yrcomp_est units_1bd units_2bd units_3bd
+                                  affrd_unit aff_u30 aff_30_50 aff_50_80 aff_80p headqtrs park_type publicsqft])
+                        }
       end
     end
 
@@ -120,7 +137,7 @@ class DevelopmentsController < ApplicationController
           unless (
             (['=', '<', '>'].include?(inflector)) &&
             (
-             (type == 'number' && (/\A[-+]?\d+\z/ === value)) || 
+             (type == 'number' && (/\A[-+]?\d+\z/ === value)) ||
              (type == 'bool' && (value == 'true' || value == 'false'))
             )
           )
