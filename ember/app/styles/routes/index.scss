@@ -17,7 +17,7 @@
     display: flex;
     flex-direction: column;
 
-    height: 37px;
+    height: 36px;
     
     button {
       flex: 1 1 50%;
@@ -77,6 +77,35 @@
     } 
   }
 
+  .toggler.menu-toggler {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    z-index: 500;
+
+    width: 47px;
+    height: 47px;
+
+    background: $color_bg-light;
+    
+    border: 1px solid $color_brand-primary;
+    border-radius: 5px;
+
+    .hamburger { @extend ._vertical-center; }
+
+    &:hover {
+      .hamburger {
+        background: $color_brand-primary--active;
+        transition: background .2s;
+
+        &:after {
+          border-color: $color_brand-primary--active; 
+          transition: border-color .2s;
+        }
+      } 
+    }
+  }
+
   .panel-layer {
     z-index: 25;
   
@@ -88,6 +117,7 @@
     border-top-width: 6px;
 
     transition: left .5s ease-in, right .5s ease-in;
+    transform: translateZ(0);
 
     &.active { transition: left .5s, right .5s; }
   }

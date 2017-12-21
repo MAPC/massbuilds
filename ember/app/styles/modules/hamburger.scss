@@ -1,0 +1,30 @@
+.hamburger {
+  $thickness: 3px;
+  $color: $color_brand-primary;
+  $color-hover: $color_brand-primary--active;
+  $trans_duration: .2s;
+
+  display: inline-block;
+  
+  width: 60%;
+  height: $thickness;
+  margin: 0 auto;
+
+  background: $color;
+  transition: background $trans_duration;
+
+  &:after {
+    @extend ._vertical-center;
+
+    content: '';
+    display: block;
+    
+    width: 100%;
+    height: $thickness * 5;
+
+    border: $thickness - 1 solid $color;
+    border-left: 0;
+    border-right: 0;
+    transition: border-color $trans_duration;
+  }
+}

@@ -93,8 +93,13 @@ export default class extends Controller {
 
 
   @action
+  toggleMenu() {
+    this.toggleProperty('showingMenu');
+  }
+
+
+  @action
   toggleFilters() {
-    console.log(this.get('activeFilters'));
     this.toggleProperty('showingFilters');
   }
 
