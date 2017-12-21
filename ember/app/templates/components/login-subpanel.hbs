@@ -1,0 +1,17 @@
+<form {{action login on="submit"}}>
+
+  <div class="input-wrapper">
+    <img src="{{rootURL}}assets/images/mail.svg">
+    {{input placeholder="Email" type="email" value=username}}
+  </div>
+
+  <div class="input-wrapper">
+    <img src="{{rootURL}}assets/images/lock.svg">
+    {{input placeholder="Password" type="password" value=password}}
+  </div>
+
+  <div class="form-footer">
+    <button class='submit' type="submit">LOGIN</button>
+  </div>
+
+</form>

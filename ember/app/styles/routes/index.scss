@@ -90,10 +90,15 @@
     
     border: 1px solid $color_brand-primary;
     border-radius: 5px;
+    transition: border-color .2s;
 
     .hamburger { @extend ._vertical-center; }
 
     &:hover {
+      border-color: $color_brand-primary--active;
+      transition: border-color .2s;
+
+      /*
       .hamburger {
         background: $color_brand-primary--active;
         transition: background .2s;
@@ -103,6 +108,7 @@
           transition: border-color .2s;
         }
       } 
+      */
     }
   }
 
@@ -126,6 +132,7 @@
     position: absolute;
     top: 0;
     right: -100%; 
+    z-index: 100;
 
     width: 32%;
 
