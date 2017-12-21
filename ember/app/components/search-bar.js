@@ -57,12 +57,11 @@ export default class extends Component {
 
       sortOrder.forEach(col => {
         let name = filters[col].name;
-        let filter = (col === 'name' || col === 'address') ? 'atomic' : 'discrete';
 
         filtered[name] = this.get(col)
-                            .filter(value => value.toLowerCase().startsWith(searchQuery))
-                            .map(value => {
-                              return { value, name, filter }
+                            .filter(row => row.value.toLowerCase().startsWith(searchQuery))
+                            .map(row => {
+                              return { ...row , name }
                             });
       });
     }
@@ -81,15 +80,25 @@ export default class extends Component {
 
   @action 
   selectItem(item) {
-    console.log(item);
+    if (item.id) {
+      console.log('atomic');
+    }
+    else {
+      console.log('discrete');
+    }
   }
 
 
   valuesFor(column) {
     return this.get('developments')
-               .map(development => development.get(column))
-               .filter(x => x !== null && x !== undefined)
-               .sort();
+               .map(development => {
+                 return { 
+                  id: development.get('id'),
+                  value: development.get(column),
+                 };
+                })
+               .filter(x => x.value !== null && x.value !== undefined)
+               .sortBy('value');
   }
 
 
@@ -98,6 +107,7 @@ export default class extends Component {
                .map(development => development.get(column))
                .uniq()
                .filter(x => x !== null && x !== undefined)
-               .sort();
+               .sort()
+               .map(value => { return { value }; });
   }
 }

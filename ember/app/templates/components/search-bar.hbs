@@ -12,7 +12,7 @@
         </li>
 
         {{#each group as |item|}}
-          <li click={{action selectItem item}}>
+          <li onclick={{action selectItem item}}>
             <h5>{{item.value}}</h5>
             <p>{{item.name}}</p>
           </li>
