@@ -81,7 +81,7 @@ export default class extends Component {
 
   @action 
   selectItem(item) {
-     
+    console.log(item);
   }
 
 
