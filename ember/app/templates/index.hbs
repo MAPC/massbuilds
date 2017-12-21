@@ -12,6 +12,7 @@
     </div>
 
     {{search-bar 
+      addDiscreteFilter=(action addDiscreteFilter)
       placeholder=searchPlaceholder 
       model=map.stored
     }}
@@ -24,7 +25,6 @@
     {{filter-panel 
       update=(action updateFilter)
       activeFilters=activeFilters}}
-
   </div>
 
   <div class="map-layer">

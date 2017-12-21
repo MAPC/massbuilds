@@ -61,7 +61,7 @@ export default class extends Component {
         filtered[name] = this.get(col)
                             .filter(row => row.value.toLowerCase().startsWith(searchQuery))
                             .map(row => {
-                              return { ...row , name }
+                              return { ...row , name, col }
                             });
       });
     }
@@ -84,8 +84,10 @@ export default class extends Component {
       console.log('atomic');
     }
     else {
-      console.log('discrete');
+      this.sendAction('addDiscreteFilter', item)
     }
+
+    this.set('searchQuery', '');
   }
 
 

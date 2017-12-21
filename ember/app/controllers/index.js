@@ -94,6 +94,7 @@ export default class extends Controller {
 
   @action
   toggleFilters() {
+    console.log(this.get('activeFilters'));
     this.toggleProperty('showingFilters');
   }
 
@@ -116,6 +117,9 @@ export default class extends Controller {
  
   @action
   updateFilter(updateValues) {
+
+    console.log(updateValues);
+
     Object.keys(updateValues).forEach(col => {
       let filter = updateValues[col];
       let value = filter;
@@ -129,6 +133,21 @@ export default class extends Controller {
 
     this.set('updateChildren', Math.random());
     this.get('target').send('refreshModel');
+  }
+
+
+  @action 
+  addDiscreteFilter(selected) {
+    const filter = { [selected.col]: [selected.value] };
+
+    const active = this.get('activeFilters')
+                       .filter(active => active.name === selected.name)[0];
+
+    if (active) {
+      filter[selected.col] = [ ...filter[selected.col], ...active.value].uniq();
+    }
+
+    this.updateFilter(filter);
   }
 
 
