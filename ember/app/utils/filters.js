@@ -117,7 +117,6 @@ const blacklist = [
   'mapcNotes',
   'projectUrl',
   'tagline',
-  'address',
   'zipCode',
   'parcelId',
   'programs',

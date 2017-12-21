@@ -11,7 +11,7 @@ export default class extends Component {
 
     this.classNames = ['component', 'search-bar'];
 
-    this.sortOrder = ['municipality', 'developerName', 'name'];
+    this.sortOrder = ['municipality', 'developerName', 'name', 'address'];
     this.searchQuery = '';
   }
 
@@ -33,14 +33,19 @@ export default class extends Component {
 
   @computed('developments')
   get name() {
-    return this.get('developments')
-               .map(development => development.get('name'))
-               .filter(x => x !== null && x !== undefined).sort();
+    return this.valuesFor('name');
   }
+
+
+  @computed('developments')
+  get address() {
+    return this.valuesFor('address');
+  }
+
 
   @computed('searchQuery')
   get searchList() {
-    const searchQuery = this.get('searchQuery').toLowerCase();
+    const searchQuery = this.get('searchQuery').toLowerCase().trim();
     const sortOrder = this.get('sortOrder');
     const developments = this.get('developments');
     const addressRegex =  /^\d{1,9}\w? (\w )?[a-zA-Z]+/i;
@@ -52,7 +57,7 @@ export default class extends Component {
 
       sortOrder.forEach(col => {
         let name = filters[col].name;
-        let filter = (col === 'name') ? 'atomic' : 'discrete';
+        let filter = (col === 'name' || col === 'address') ? 'atomic' : 'discrete';
 
         filtered[name] = this.get(col)
                             .filter(value => value.toLowerCase().startsWith(searchQuery))
@@ -77,6 +82,14 @@ export default class extends Component {
   @action 
   selectItem(item) {
      
+  }
+
+
+  valuesFor(column) {
+    return this.get('developments')
+               .map(development => development.get(column))
+               .filter(x => x !== null && x !== undefined)
+               .sort();
   }
 
 
