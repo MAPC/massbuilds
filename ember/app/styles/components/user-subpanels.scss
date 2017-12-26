@@ -19,6 +19,12 @@
         height: auto;
         opacity: .6;
       }  
+
+      &.error {
+        input {
+          border-color: $color_state-negative; 
+        } 
+      }
     }
 
     input {
@@ -36,6 +42,11 @@
         border-color: $color_brand-primary--active;
         transition: border-color .2s;
       }
+    }
+
+    .error-message {
+      margin: 10px auto;
+      color: $color_state-negative; 
     }
 
     .form-footer {
@@ -57,6 +68,22 @@
         border-color: $color_brand-primary--active;
         transition: border-color .2s;
       }
+
+      &.disabled {
+        color: $color_font-medium;
+
+        border-color: $color_bg-medium;
+        cursor: default; 
+
+        opacity: .6;
+      }
+    }
+
+    hr {
+      height: 1px;
+
+      background: $color_brand-primary;
+      border: none; 
     }
 
     .auth-switch {

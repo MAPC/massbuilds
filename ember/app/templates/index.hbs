@@ -18,7 +18,7 @@
     }}
   </div>
 
-  <button class="toggler menu-toggler" onclick={{action toggleMenu}}>
+  <button class="toggler menu-toggler {{if showingRightPanel 'active'}}" onclick={{action toggleMenu}}>
     <span class="hamburger"></span>
   </button>
 

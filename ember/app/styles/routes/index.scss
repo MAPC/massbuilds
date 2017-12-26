@@ -92,24 +92,12 @@
     border-radius: 5px;
     transition: border-color .2s;
 
-    .hamburger { @extend ._vertical-center; }
-
     &:hover {
       border-color: $color_brand-primary--active;
       transition: border-color .2s;
-
-      /*
-      .hamburger {
-        background: $color_brand-primary--active;
-        transition: background .2s;
-
-        &:after {
-          border-color: $color_brand-primary--active; 
-          transition: border-color .2s;
-        }
-      } 
-      */
     }
+
+    .hamburger { @extend ._vertical-center; }
   }
 
   .panel-layer {

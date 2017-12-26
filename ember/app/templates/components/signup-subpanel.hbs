@@ -4,7 +4,7 @@
 
   <div class="input-wrapper">
     <img src="{{rootURL}}assets/images/user.svg">
-    {{input placeholder="Full Name" type="text" value=fullname}}
+    {{input placeholder="Full Name" type="text" value=fullName}}
   </div>
 
   <div class="input-wrapper">
@@ -25,8 +25,14 @@
   </div>
 
 
+  {{#if errorMessage}}
+    <div class="error-message">
+      {{errorMessage}}
+    </div>
+  {{/if}}
+
   <div class="form-footer">
-    <button class='submit' type="submit">Signup</button>
+    <button class='submit {{unless submittable 'disabled'}}' type="submit">Signup</button>
   </div>
 
 </form>
