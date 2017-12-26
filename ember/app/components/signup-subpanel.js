@@ -39,12 +39,21 @@ export default class extends Component {
 
   @action
   signup() {
+    if (!this.get('submittable')) {
+      return;
+    }
+
     let noErrors = true; 
     let errorMessage = 'You must fill in all fields.';
 
     const email = this.get('username');
     const [ firstName, lastName, otherName ] = this.get('fullName').split(' ');
     const { password, confirmPassword } = this.getProperties('password', 'confirmPassword');
+
+
+    /**
+     * Validations
+     */
 
     if (!email) {
       noErrors = false; 
@@ -76,12 +85,23 @@ export default class extends Component {
       noErrors = false; 
     }
 
+
+    /**
+     * Create new user and login.
+     */
+
     if (noErrors) {
-      this.get('store').createRecord('user', {
-         
-      })
-      .then(result => {
-         
+      const userSchema = { firstName, lastName, email, password };
+
+      this.get('store')
+      .createRecord('user', userSchema)
+      .save()
+      .then(() => {
+        this.get('session')
+        .authenticate('authenticator:devise', email, password)
+        .catch(e => {
+          this.set('errorMessage', 'Account was created, but cannot be logged in at this time.');
+        });
       })
       .catch(e => {
         this.set('errorMessage', 'Not able to sign up at this time.');
