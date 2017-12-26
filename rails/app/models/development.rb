@@ -5,7 +5,43 @@ class Development < ApplicationRecord
   belongs_to :user
   include PgSearch
   pg_search_scope :search_by_name_and_location, against: [:name, :municipality, :address], using: { tsearch: { any_word: true } }
-  validates :name, presence: true
+  validates :name, :year_compl, :yrcomp_est, :status, :address, :zip_code, :hu,
+            :commsf, :desc, presence: true
+  validates_inclusion_of :rdv, :asofright, :clusteros, :phased, :stalled, :mixed_use,
+                         :headqtrs, :ovr55, in: [true, false]
+  with_options if: :proposed?, presence: true do |projected|
+    projected.validates :singfamhu
+    projected.validates :smmultifam
+    projected.validates :lgmultifam
+    projected.validates :onsitepark
+    projected.validates :park_type
+  end
+  with_options if: :groundbroken?, presence: :true do |groundbroken|
+    groundbroken.validates :singfamhu
+    groundbroken.validates :smmultifam
+    groundbroken.validates :lgmultifam
+    groundbroken.validates :units_1bd
+    groundbroken.validates :units_2bd
+    groundbroken.validates :units_3bd
+    groundbroken.validates :affrd_unit
+    groundbroken.validates :aff_u30
+    groundbroken.validates :aff_30_50
+    groundbroken.validates :aff_50_80
+    groundbroken.validates :aff_80p
+    groundbroken.validates :gqpop
+    groundbroken.validates :ret_sqft
+    groundbroken.validates :ofcmd_sqft
+    groundbroken.validates :indmf_sqft
+    groundbroken.validates :whs_sqft
+    groundbroken.validates :rnd_sqft
+    groundbroken.validates :ei_sqft
+    groundbroken.validates :other_sqft
+    groundbroken.validates :hotel_sqft
+    groundbroken.validates :hotelrms
+    groundbroken.validates :onsitepark
+    groundbroken.validates :park_type
+    groundbroken.validates :publicsqft
+  end
 
   def self.to_csv
     attributes = self.column_names
@@ -43,5 +79,17 @@ class Development < ApplicationRecord
       zipfile.add("#{file_name}.cpg", Rails.root.join('public', "#{file_name}.cpg"))
     end
     return file_name
+  end
+
+  def projected?
+    status == 'projected'
+  end
+
+  def proposed?
+    status == 'proposed'
+  end
+
+  def groundbroken?
+    status == 'in_construction' || 'completed'
   end
 end

@@ -49,7 +49,7 @@ RSpec.describe "Developments", type: :request do
       expect(parsed_body['data'][0]['attributes']['status']).to eq('MyString')
       expect(parsed_body['data'][0]['attributes']['longitude']).to eq(-71.3940804)
       expect(parsed_body['data'][0]['attributes']['latitude']).to eq(42.1845218)
-      expect(parsed_body['data'][0]['attributes']['developer_name']).to eq('Gilbane')
+      expect(parsed_body['data'][0]['attributes']['devlper']).to eq('Gilbane')
     end
 
     it "returns results within the bounding box" do
@@ -131,7 +131,10 @@ RSpec.describe "Developments", type: :request do
 
     it "works as a verified user" do
       post developments_path, params: valid_jsonapi_params, headers: verified_user_session
-      expect(response).to have_http_status(:success)
+      aggregate_failures "testing response" do
+        expect(response).to have_http_status(:success)
+        expect(response.body).to be_empty
+      end
     end
 
     it "does not work as a registered user" do

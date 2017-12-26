@@ -9,7 +9,7 @@ FactoryBot.define do
     name "Seaport"
     status "MyString"
     desc "MyText"
-    project_url "MyString"
+    prj_url "http://www.example.com/"
     mapc_notes "MyText"
     tagline "MyString"
     address "123 Main Street"
@@ -20,9 +20,9 @@ FactoryBot.define do
     year_compl 1
     prjarea 1
     singfamhu 1
-    twnhsmmult 1
+    smmultifam 1
     lgmultifam 1
-    tothu 1
+    hu 1
     gqpop 1
     rptdemp 1
     emploss 1
@@ -34,14 +34,14 @@ FactoryBot.define do
     team_membership_count 1
     cancelled false
     private false
-    fa_ret 1.5
-    fa_ofcmd 1.5
-    fa_indmf 1.5
-    fa_whs 1.5
-    fa_rnd 1.5
-    fa_edinst 1.5
-    fa_other 1.5
-    fa_hotel 1.5
+    ret_sqft 1.5
+    ofcmd_sqft 1.5
+    indmf_sqft 1.5
+    whs_sqft 1.5
+    rnd_sqft 1.5
+    ei_sqft 1.5
+    other_sqft 1.5
+    hotel_sqft 1.5
     other_rate 1.5
     affordable 1.5
     parcel_id "MyString"
@@ -52,6 +52,18 @@ FactoryBot.define do
     residential false
     commercial false
     municipality "Boston"
-    developer_name "Gilbane"
+    devlper "Gilbane"
+    units_1bd 1
+    units_2bd 1
+    units_3bd 1
+    affrd_unit false
+    aff_u30 1
+    aff_30_50 1
+    aff_50_80 1
+    aff_80p 1
+    headqtrs false
+    park_type "parking"
+    publicsqft 1
+    yrcomp_est '2010'
   end
 end

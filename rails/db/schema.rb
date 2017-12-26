@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171214202302) do
+ActiveRecord::Schema.define(version: 20171221191328) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,7 +27,7 @@ ActiveRecord::Schema.define(version: 20171214202302) do
     t.string "name"
     t.string "status"
     t.text "desc"
-    t.string "project_url"
+    t.string "prj_url"
     t.text "mapc_notes"
     t.string "tagline"
     t.string "address"
@@ -38,9 +38,9 @@ ActiveRecord::Schema.define(version: 20171214202302) do
     t.integer "year_compl"
     t.integer "prjarea"
     t.integer "singfamhu"
-    t.integer "twnhsmmult"
+    t.integer "smmultifam"
     t.integer "lgmultifam"
-    t.integer "tothu"
+    t.integer "hu"
     t.integer "gqpop"
     t.integer "rptdemp"
     t.integer "emploss"
@@ -52,14 +52,14 @@ ActiveRecord::Schema.define(version: 20171214202302) do
     t.integer "team_membership_count"
     t.boolean "cancelled", default: false
     t.boolean "private", default: false
-    t.float "fa_ret"
-    t.float "fa_ofcmd"
-    t.float "fa_indmf"
-    t.float "fa_whs"
-    t.float "fa_rnd"
-    t.float "fa_edinst"
-    t.float "fa_other"
-    t.float "fa_hotel"
+    t.float "ret_sqft"
+    t.float "ofcmd_sqft"
+    t.float "indmf_sqft"
+    t.float "whs_sqft"
+    t.float "rnd_sqft"
+    t.float "ei_sqft"
+    t.float "other_sqft"
+    t.float "hotel_sqft"
     t.float "other_rate"
     t.float "affordable"
     t.decimal "latitude"
@@ -74,7 +74,19 @@ ActiveRecord::Schema.define(version: 20171214202302) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "municipality"
-    t.string "developer_name"
+    t.string "devlper"
+    t.string "yrcomp_est"
+    t.integer "units_1bd"
+    t.integer "units_2bd"
+    t.integer "units_3bd"
+    t.integer "affrd_unit"
+    t.integer "aff_u30"
+    t.integer "aff_30_50"
+    t.integer "aff_50_80"
+    t.integer "aff_80p"
+    t.boolean "headqtrs"
+    t.string "park_type"
+    t.integer "publicsqft"
   end
 
   create_table "edits", force: :cascade do |t|
