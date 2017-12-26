@@ -15,6 +15,8 @@ export default class extends Component {
 
     this.username = '';
     this.password = '';
+
+    this.errorMessage = null;
   }
 
 
@@ -23,7 +25,11 @@ export default class extends Component {
     const session = this.get('session');
     const { username, password } = this.getProperties('username', 'password');
 
-    session.authenticate('authenticator:devise');
+    session
+    .authenticate('authenticator:devise', username, password)
+    .catch(e => {
+      this.set('errorMessage', 'Cannot login at this time.');
+    });
   }
 
 

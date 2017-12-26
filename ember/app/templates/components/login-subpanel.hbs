@@ -12,6 +12,12 @@
     {{input placeholder="Password" type="password" value=password}}
   </div>
 
+  {{#if errorMessage}}
+    <div class="error-message">
+      {{errorMessage}}
+    </div>
+  {{/if}}
+
   <div class="form-footer">
     <button class='submit' type="submit">Login</button>
   </div>

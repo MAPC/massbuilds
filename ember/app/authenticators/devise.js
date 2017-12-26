@@ -4,5 +4,5 @@ import Devise from 'ember-simple-auth/authenticators/devise';
 
 
 export default Devise.extend({
-  serverTokenEndpoint: url.resolve(config.host, 'users/sign_in'),
+  serverTokenEndpoint: url.resolve(config.host, 'my/users/sign_in'),
 });
