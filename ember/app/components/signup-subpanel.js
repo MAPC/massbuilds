@@ -25,9 +25,6 @@ export default class extends Component {
 
   @computed('fullName', 'username', 'password', 'confirmPassword')
   get submittable() {
-
-    console.log("hello");
-
     return [
       'fullName', 
       'username',

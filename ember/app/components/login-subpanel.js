@@ -1,5 +1,5 @@
 import Component from '@ember/component';
-import { action } from 'ember-decorators/object';
+import { action, computed } from 'ember-decorators/object';
 import { service } from 'ember-decorators/service';
 
 
@@ -20,8 +20,19 @@ export default class extends Component {
   }
 
 
+  @computed('username', 'password') 
+  get submittable() {
+    return ['username','password'].every(field => this.get(field) !== '');
+  }
+
+
+
   @action
   login() {
+    if (!this.get('submittable')) {
+      return;
+    }
+
     const session = this.get('session');
     const { username, password } = this.getProperties('username', 'password');
 
