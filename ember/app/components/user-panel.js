@@ -5,5 +5,9 @@ import { service } from 'ember-decorators/service';
 export default class extends Component {
 
   @service session
+
+  constructor()  {
+    super();
+  }
   
 }
