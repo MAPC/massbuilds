@@ -101,6 +101,7 @@ export default class extends Component {
         });
       })
       .catch(e => {
+        console.log(e);
         this.set('errorMessage', 'Not able to sign up at this time.');
       });
     }
