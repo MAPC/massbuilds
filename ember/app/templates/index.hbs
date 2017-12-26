@@ -61,7 +61,11 @@
   </div>
 
   <div class="panel-layer right-panel-layer {{if showingRightPanel 'active'}}">
-    {{user-panel}}
+    {{user-panel
+      panel=panel
+      showLoginPanel=showLoginPanel
+      showSignupPanel=showSignupPanel
+    }}
   </div>
 
 </section>

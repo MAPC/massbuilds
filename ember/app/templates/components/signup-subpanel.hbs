@@ -1,0 +1,37 @@
+<h2>Signup</h2>
+
+<form {{action signup on="submit"}}>
+
+  <div class="input-wrapper">
+    <img src="{{rootURL}}assets/images/user.svg">
+    {{input placeholder="Full Name" type="text" value=fullname}}
+  </div>
+
+  <div class="input-wrapper">
+    <img src="{{rootURL}}assets/images/mail.svg">
+    {{input placeholder="Email" type="email" value=username}}
+  </div>
+
+  <hr>
+
+  <div class="input-wrapper">
+    <img src="{{rootURL}}assets/images/lock.svg">
+    {{input placeholder="Password" type="password" value=password}}
+  </div>
+
+  <div class="input-wrapper">
+    <img src="{{rootURL}}assets/images/check-square.svg">
+    {{input placeholder="Confirm Password" type="password" value=confirmPassword}}
+  </div>
+
+
+  <div class="form-footer">
+    <button class='submit' type="submit">Signup</button>
+  </div>
+
+</form>
+
+<div class="auth-switch">
+  Already have an account? 
+  {{link-to 'Login here' (query-params panel=undefined)}}
+</div>

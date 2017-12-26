@@ -6,12 +6,12 @@ import { service } from 'ember-decorators/service';
 export default class extends Component {
 
   @service session
-  
+
 
   constructor() {
     super();
 
-    this.classNames = ['component', 'subpanel', 'login-subpanel'];
+    this.classNames = ['component', 'subpanel', 'signup-subpanel'];
 
     this.username = '';
     this.password = '';
@@ -19,17 +19,14 @@ export default class extends Component {
 
 
   @action
-  login() {
-    const session = this.get('session');
-    const { username, password } = this.getProperties('username', 'password');
-
-    session.authenticate('authenticator:devise');
+  signup() {
+     
   }
 
 
   @action
-  showSignupPanel() {
-    this.sendAction('showSignupPanel');
+  showLoginPanel() {
+    this.sendAction('showLoginPanel');
   }
 
 }

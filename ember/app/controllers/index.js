@@ -1,6 +1,6 @@
+import Ember from 'ember';
 import Controller from '@ember/controller';
 import { action, computed } from 'ember-decorators/object';
-import { gt } from 'ember-decorators/object/computed';
 import { service } from 'ember-decorators/service';
 import filters from 'massbuilds/utils/filters';
 
@@ -9,13 +9,15 @@ export default class extends Controller {
 
   @service map
 
+
   constructor() {
     super();
     
     const filterParams = Object.keys(filters);
     const boundingParams = ['minLat', 'minLng', 'maxLat', 'maxLng'];
+    const otherParams = ['panel'];
 
-    this.queryParams = [...filterParams, ...boundingParams];
+    this.queryParams = [...filterParams, ...boundingParams, ...otherParams];
 
     Object.values(filters).forEach(filter => {
       if (filter.filter === 'discrete') {
@@ -121,9 +123,6 @@ export default class extends Controller {
  
   @action
   updateFilter(updateValues) {
-
-    console.log(updateValues);
-
     Object.keys(updateValues).forEach(col => {
       let filter = updateValues[col];
       let value = filter;

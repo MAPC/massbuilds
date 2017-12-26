@@ -1,5 +1,11 @@
 {{#if session.isAuthenticated}}
   {{account-subpanel}}
 {{else}}
-  {{login-subpanel}}
+  {{#if (eq panel 'signup')}}
+    {{signup-subpanel}}
+  {{else}}
+    {{login-subpanel 
+      showSignupPanel=showSignupPanel
+    }}
+  {{/if}}
 {{/if}}
