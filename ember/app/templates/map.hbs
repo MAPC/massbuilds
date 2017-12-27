@@ -1,4 +1,4 @@
-<section class='route application'>
+<section class='route map'>
 
   <!-- floating components -->
   <div class="search-wrapper">
@@ -22,7 +22,9 @@
     <span class="hamburger"></span>
   </button>
 
-  {{share-buttons model=model}}
+  {{#if session.isAuthenticated}}
+    {{share-buttons model=model}}
+  {{/if}}
 
   {{map-legend}}
   <!--/ floating components -->
