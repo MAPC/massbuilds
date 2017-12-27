@@ -29,7 +29,7 @@ export default class extends Controller {
     this.searchPlaceholder = 'Search by Town/City, Developer, Address...';
 
     this.showingFilters = false;
-    this.showingMenu = true;
+    this.showingMenu = !this.get('session.isAuthenticated');
 
     this.updateChildren = 0;
     this.panel = null;
