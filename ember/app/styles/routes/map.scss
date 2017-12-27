@@ -7,8 +7,8 @@
 
   .search-wrapper {
     position: absolute;
-    top: 5vh;
-    left: 4%;
+    top: 20px;
+    left: 20px;
     z-index: 50;
     display: flex;
   }
@@ -17,7 +17,7 @@
     display: flex;
     flex-direction: column;
 
-    height: 36px;
+    height: 37px;
     
     button {
       flex: 1 1 50%;
@@ -104,7 +104,7 @@
     z-index: 25;
   
     height: 100vh;
-    padding: 0 4%;
+    padding: 0 20px;
 
     background: $color_bg-light;
     border: 0px solid $color_brand-primary;
@@ -132,8 +132,8 @@
   .left-panel-layer {
     left: -100%;
 
-    width: 32%;
-    padding-top: 110px;
+    width: max-content;
+    padding-top: 80px;
 
     border-right-width: 1px;
 
