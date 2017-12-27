@@ -112,6 +112,27 @@
 
   &.account-subpanel {
     height: 98vh;
+
+    .subpanel-content {
+      padding-top: 100px;
+    }
+
+    .user-info {
+      text-align: center; 
+      
+      .user-image {
+        width: 150px; 
+        height: 150px;
+        margin: 0 auto;
+
+        background: $color_bg-medium;
+        border-radius: 50%;
+      }
+
+      h3 {
+        font-size: 30px; 
+      }
+    }
      
     .logout-button {
       position: absolute;
