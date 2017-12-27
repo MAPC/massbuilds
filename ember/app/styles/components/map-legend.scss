@@ -1,0 +1,31 @@
+.component.map-legend {
+  position: fixed;
+  bottom: 15px;
+  left: 60px;
+  z-index: 50;
+
+  padding: 15px;
+
+  background: $color_bg-light;
+  border: 1px solid $color_brand-primary;
+
+  ul {
+    &.status-list {
+      li {
+        font-size: 12px;
+
+        span {
+          $size: 12px;
+
+          width: $size;
+          height: $size;
+
+          border: 1px solid $color_bg-medium;
+          border-radius: 50%;
+        } 
+
+      }
+    } 
+  }
+
+}

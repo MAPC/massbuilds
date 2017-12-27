@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import statusColors from 'massbuilds/utils/status-colors';
 import Development from 'massbuilds/models/development';
 const { decamelize } = Ember.String;
 
@@ -33,7 +34,7 @@ const filters = {
 
   'asofright': { name: 'As of Right', type: 'bool', ...defaultMetric },
   'over55': { name: 'Age Restricted', type: 'bool', ...defaultMetric },
-  'status': { name: 'Status', type: 'string', options: ['completed', 'developing', 'in progress'], ...defaultMetric },
+  'status': { name: 'Status', type: 'string', options: Object.keys(statusColors), ...defaultMetric },
 };
 
 

@@ -23,6 +23,8 @@
   </button>
 
   {{share-buttons model=model}}
+
+  {{map-legend}}
   <!--/ floating components -->
 
   <div class="panel-layer left-panel-layer {{if showingLeftPanel 'active'}}">
@@ -54,7 +56,7 @@
           lat=datum.latitude 
           lng=datum.longitude
           color=(status-color datum.status)
-          radius=2
+          radius=3
         }} 
       {{/each}}
     {{/leaflet-map}}

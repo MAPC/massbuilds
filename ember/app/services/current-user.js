@@ -12,12 +12,10 @@ export default class extends Service {
 
 
   load() {
-    console.log(this.get('session'));
     const email = this.get('session.data.authenticated.email');
 
     if (!isEmpty(email)) {
       return this.get('store').queryRecord('user', { email }).then(user => {
-        console.log(user);
         this.set('user', user);
       });
     }

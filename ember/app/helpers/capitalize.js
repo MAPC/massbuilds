@@ -3,7 +3,7 @@ import { helper } from '@ember/component/helper';
 export function capitalize(params) {
   const input = params[0] || '';
 
-  return input.split(' ')
+  return input.split(/[\s\_]+/)
               .map(x => x.capitalize())
               .join(' ');
 }

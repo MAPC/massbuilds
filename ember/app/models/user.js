@@ -1,24 +1,23 @@
-import { computed } from 'ember-decorators/object';
-
 import DS from 'ember-data';
-const { Model, attr, hasMany } = DS;
+import { computed } from 'ember-decorators/object';
+import { attr, hasMany } from 'ember-decorators/data';
 
 
-export default Model.extend({
+export default class extends DS.Model {
 
-  email: attr('string'),
-  password: attr('string'),
-  firstName: attr('string'),
-  lastName: attr('string'),
-  municipality: attr('string'),
-  role: attr('string'),
+  @attr('string') email
+  @attr('string') password
+  @attr('string') firstName
+  @attr('string') lastName
+  @attr('string') municipality
+  @attr('string') role
 
-  developments: hasMany('developments'),
-
+  @hasMany('developments') developments
 
   @computed('firstName', 'lastName')
-  fullName(firstName, lastName) {
+  get fullName() {
+    const { firstName, lastName } = this.getProperties('firstName', 'lastName');
     return `${firstName} ${lastName}`;
   }
 
-});
+}
