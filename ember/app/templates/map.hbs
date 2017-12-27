@@ -53,8 +53,8 @@
         {{layers.circle 
           lat=datum.latitude 
           lng=datum.longitude
-          color='#3c5875'
-          radius=1.2
+          color=(status-color datum.status)
+          radius=2
         }} 
       {{/each}}
     {{/leaflet-map}}
