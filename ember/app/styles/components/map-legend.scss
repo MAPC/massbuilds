@@ -7,20 +7,29 @@
   padding: 15px;
 
   background: $color_bg-light;
-  border: 1px solid $color_brand-primary;
+  border: 2px solid $color_bg-medium;
+  border-radius: 5px;
 
   ul {
+    padding: 0;
+    margin: 0;
+
     &.status-list {
       li {
+        & + li { margin-top: 4px; }
+
         font-size: 12px;
 
         span {
-          $size: 12px;
+          $size: 10px;
+
+          display: inline-block;
+          top: 1px;
 
           width: $size;
           height: $size;
+          margin-right: $size / 2;
 
-          border: 1px solid $color_bg-medium;
           border-radius: 50%;
         } 
 
