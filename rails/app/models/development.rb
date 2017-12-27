@@ -9,12 +9,12 @@ class Development < ApplicationRecord
             :commsf, :desc, presence: true
   validates_inclusion_of :rdv, :asofright, :clusteros, :phased, :stalled, :mixed_use,
                          :headqtrs, :ovr55, in: [true, false]
-  with_options if: :proposed?, presence: true do |projected|
-    projected.validates :singfamhu
-    projected.validates :smmultifam
-    projected.validates :lgmultifam
-    projected.validates :onsitepark
-    projected.validates :park_type
+  with_options if: :proposed?, presence: true do |proposed|
+    proposed.validates :singfamhu
+    proposed.validates :smmultifam
+    proposed.validates :lgmultifam
+    proposed.validates :onsitepark
+    proposed.validates :park_type
   end
   with_options if: :groundbroken?, presence: :true do |groundbroken|
     groundbroken.validates :singfamhu
@@ -90,6 +90,6 @@ class Development < ApplicationRecord
   end
 
   def groundbroken?
-    status == 'in_construction' || 'completed'
+    status == ('in_construction' || 'completed')
   end
 end

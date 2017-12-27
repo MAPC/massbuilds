@@ -8,13 +8,13 @@ FactoryBot.define do
     stalled false
     name "Seaport"
     status "MyString"
-    desc "MyText"
+    desc "A sample development"
     prj_url "http://www.example.com/"
     mapc_notes "MyText"
     tagline "MyString"
     address "123 Main Street"
     state "MA"
-    zip_code "MyString"
+    zip_code "02138"
     height 1
     stories 1
     year_compl 1
@@ -47,6 +47,8 @@ FactoryBot.define do
     parcel_id "MyString"
     mixed_use false
     point "POINT(-71.3940804 42.1845218)"
+    latitude -71.3940804
+    longitude 42.1845218
     programs "MyString"
     forty_b false
     residential false
@@ -64,6 +66,6 @@ FactoryBot.define do
     headqtrs false
     park_type "parking"
     publicsqft 1
-    yrcomp_est '2010'
+    yrcomp_est "2010"
   end
 end

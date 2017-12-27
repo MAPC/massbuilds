@@ -19,6 +19,7 @@ gem 'rack-cors', :require => 'rack/cors'
 gem 'pundit'
 gem 'pg_search'
 gem 'rubyzip'
+gem 'json-schema'
 
 group :development, :test do
   gem 'pry-byebug'
