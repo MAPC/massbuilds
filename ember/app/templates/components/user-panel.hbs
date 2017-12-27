@@ -1,4 +1,5 @@
 {{#if session.isAuthenticated}}
+  {{removePanelParam}}
   {{account-subpanel}}
 {{else}}
   {{#if (eq panel 'signup')}}

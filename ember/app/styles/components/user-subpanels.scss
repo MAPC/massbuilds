@@ -109,4 +109,21 @@
       }
     }
   }
+
+  &.account-subpanel {
+    height: 98vh;
+     
+    .logout-button {
+      position: absolute;
+      bottom: 20px;  
+      right: -40px;
+
+      color: $color_brand-primary--active;
+
+      background: none;
+      border: none;
+
+      &:hover { color: $color_brand-primary; }
+    }
+  }
 }

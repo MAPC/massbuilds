@@ -39,6 +39,7 @@ export default class extends Component {
     session
     .authenticate('authenticator:devise', username, password)
     .catch(e => {
+      console.log(e);
       this.set('errorMessage', 'Cannot login at this time.');
     });
   }

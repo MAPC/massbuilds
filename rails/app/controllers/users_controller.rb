@@ -5,7 +5,13 @@ class UsersController < ApplicationController
   # GET /users
   def index
     authorize User
-    @users = User.all
+
+    if params[:email]
+      @users = User.where(email: params[:email]).first
+    else
+      @users = User.all
+    end
+
     respond_to do |format|
       format.jsonapi { render jsonapi: @users }
     end
@@ -70,7 +76,7 @@ class UsersController < ApplicationController
   # Only allow a trusted parameter "white list" through.
   def user_params
     respond_to do |format|
-      format.jsonapi { ActiveModelSerializers::Deserialization.jsonapi_parse(params, only: [:email, :password, :role, :first_name, :last_name]) }
+      format.jsonapi { ActiveModelSerializers::Deserialization.jsonapi_parse(params, only: [:email, :password, :role, :first_name, :last_name, :municipality]) }
     end
   end
 end

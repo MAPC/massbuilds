@@ -6,6 +6,14 @@ import { service } from 'ember-decorators/service';
 export default class extends Component {
 
   @service session
+  @service currentUser
+
+
+  constructor() {
+    super();
+
+    this.classNames = ['component', 'subpanel', 'account-subpanel']
+  }
 
 
   @action 

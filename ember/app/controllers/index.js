@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import Controller from '@ember/controller';
-import { action, computed, observes } from 'ember-decorators/object';
+import { action, computed } from 'ember-decorators/object';
 import { service } from 'ember-decorators/service';
 import filters from 'massbuilds/utils/filters';
 
@@ -32,6 +32,7 @@ export default class extends Controller {
     this.showingMenu = true;
 
     this.updateChildren = 0;
+    this.panel = null;
   }
 
 
@@ -154,14 +155,11 @@ export default class extends Controller {
     this.updateFilter(filter);
   }
 
-  @action
-  removePanelParam() {
-    this.set('panel', null);
-  }
 
   @action 
   setMapInstance(map) {
     this.set('map.instance', map.target);
   }
+
 
 }
