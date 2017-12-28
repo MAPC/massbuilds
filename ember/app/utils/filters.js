@@ -32,8 +32,8 @@ const filters = {
   'developerName': { name: 'Developer', ...defaultDiscrete },
   'municipality':  { name: 'Town/City', ...defaultDiscrete },
 
-  'asofright': { name: 'As of Right', type: 'bool', ...defaultMetric },
-  'over55': { name: 'Age Restricted', type: 'bool', ...defaultMetric },
+  'asofright': { name: 'As of Right', type: 'boolean', ...defaultMetric },
+  'over55': { name: 'Age Restricted', type: 'boolean', ...defaultMetric },
   'status': { name: 'Status', type: 'string', options: Object.keys(statusColors), ...defaultMetric },
 };
 

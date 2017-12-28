@@ -117,7 +117,7 @@ class DevelopmentsController < ApplicationController
       end
     end
 
-    # Builds a SQL query to filter parameters
+    # Builds a SQL query to filter developments by query parameters
     def filtered_developments(filter_hash)
       sql = []
       values = []
@@ -132,13 +132,13 @@ class DevelopmentsController < ApplicationController
         else # metric
           type = filter['type']
           value = filter['value']
-          inflector = (type == 'bool') ? '=' : filter['inflector']
+          inflector = (type == 'boolean') ? '=' : filter['inflector']
 
           unless (
             (['=', '<', '>'].include?(inflector)) &&
             (
              (type == 'number' && (/\A[-+]?\d+\z/ === value)) ||
-             (type == 'bool' && (value == 'true' || value == 'false'))
+             (type == 'boolean' && (value == 'true' || value == 'false'))
             )
           )
             next

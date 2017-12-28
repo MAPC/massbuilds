@@ -16,7 +16,7 @@
               {{/each}}
             </select>
 
-          {{else if (eq metric.type 'bool')}}
+          {{else if (eq metric.type 'boolean')}}
 
             {{input type="checkbox" name=metric.col checked=(if metric.value 'checked') change=(action toggleCheckbox metric)}}
 
