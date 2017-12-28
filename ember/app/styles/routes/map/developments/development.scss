@@ -2,4 +2,16 @@
 
   min-width: 800px;
 
+  .close-link {
+    position: absolute;
+    top: -90px;
+    right: 10px;
+
+    &:hover { color: $color_brand-primary--active; }
+
+    img {
+      top: 7px; 
+    }
+  }
+
 }
