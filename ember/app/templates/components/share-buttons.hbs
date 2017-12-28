@@ -1,11 +1,11 @@
 <div class="share-buttons-wrapper {{if isOpen 'active'}}">
   <button class="toggler" onclick={{action toggleOpen}}>
-    <img src="{{rootURL}}assets/images/share.svg">
+    <img src="/assets/images/share.svg">
   </button>
 
   <div class="share-drawer">
     <button class="share-button" action={{toLink}}>
-      <img src="{{rootURL}}assets/images/link.svg">
+      <img src="/assets/images/link.svg">
     </button>
     <button class="share-button" action={{toShapefile}}>.shp</button>
     <button class="share-button" action={{toGeoJSON}}>.json</button>
