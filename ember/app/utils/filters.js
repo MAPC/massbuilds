@@ -33,7 +33,7 @@ const filters = {
   'municipality':  { name: 'Town/City', ...defaultDiscrete },
 
   'asofright': { name: 'As of Right', type: 'boolean', ...defaultMetric },
-  'over55': { name: 'Age Restricted', type: 'boolean', ...defaultMetric },
+  'ovr55': { name: 'Age Restricted', type: 'boolean', ...defaultMetric },
   'status': { name: 'Status', type: 'string', options: Object.keys(statusColors), ...defaultMetric },
 };
 
@@ -71,16 +71,16 @@ const metricGroups = {
     {
       title: 'Units',
       metrics: [
-        'tothu',
+        'hu',
         'singfamhu',
-        'twnhsmmult',
+        'smmultifam',
         'lgmultifam',
       ]
     },
     {
       title: 'Other',
       metrics: [
-        'over55',
+        'ovr55',
         'affordable',
         'private',
       ]
@@ -98,14 +98,14 @@ const metricGroups = {
     {
       title: 'Makeup',
       metrics: [
-        'faRet',
-        'faOfcmd',
-        'faIndmf',
-        'faWhs',
-        'faRnd',
-        'faEdinst',
-        'faHotel',
-        'faOther',
+        'retSqft',
+        'ofcmdSqft',
+        'indmfSqft',
+        'whsSqft',
+        'rndSqft',
+        'eiSqft',
+        'hotelSqft',
+        'otherSqft',
       ]
     }
   ],

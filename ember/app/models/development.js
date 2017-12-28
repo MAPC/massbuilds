@@ -1,70 +1,80 @@
 import DS from 'ember-data'; 
-const { Model, attr, belongsTo } = DS;
+import { attr, belongsTo } from 'ember-decorators/data';
 
 
-export default Model.extend({
+export default class extends DS.Model {
 
-  user: belongsTo({ async: true }),
+  @belongsTo({async: true}) user
 
-  name: attr('string'),
-  status: attr('string'),
-  desc: attr('string'),
-  projectUrl: attr('string'),
-  mapcNotes: attr('string'),
-  tagline: attr('string'),
-  address: attr('string'),
-  state: attr('string'),
-  zipCode: attr('string'),
-  parcelId: attr('string'),
-  programs: attr('string'),
-  municipality: attr('string'),
-  developerName: attr('string'),
+  @attr('string') name
+  @attr('string') status
+  @attr('string') desc
+  @attr('string') prjUrl
+  @attr('string') mapcNotes
+  @attr('string') tagline
+  @attr('string') address
+  @attr('string') state
+  @attr('string') zipCode
+  @attr('string') parkType
+  @attr('string') parcelId
+  @attr('string') municipality
+  @attr('string') devlper
+  @attr('string') yrcompEst
+  @attr('string') programs
 
-  height: attr('number'),
-  stories: attr('number'),
-  yearCompl: attr('number'),
-  prjarea: attr('number'),
-  singfamhu: attr('number'),
-  twnhsmmult: attr('number'),
-  lgmultifam: attr('number'),
-  tothu: attr('number'),
-  gqpop: attr('number'),
-  rptdemp: attr('number'),
-  emploss: attr('number'),
-  estemp: attr('number'),
-  commsf: attr('number'),
-  hotelrms: attr('number'),
-  onsitepark: attr('number'),
-  totalCost: attr('number'),
-  teamMembershipCount: attr('number'),
-  faRet: attr('number'),
-  faOfcmd: attr('number'),
-  faIndmf: attr('number'),
-  faWhs: attr('number'),
-  faRnd: attr('number'),
-  faEdinst: attr('number'),
-  faOther: attr('number'),
-  faHotel: attr('number'),
-  otherRate: attr('number'),
-  affordable: attr('number'),
-  latitude: attr('number'),
-  longitude: attr('number'),
+  @attr('number') height
+  @attr('number') stories
+  @attr('number') yearCompl
+  @attr('number') prjarea
+  @attr('number') singfamhu
+  @attr('number') smmultifam
+  @attr('number') lgmultifam
+  @attr('number') hu
+  @attr('number') gqpop
+  @attr('number') rptdemp
+  @attr('number') emploss
+  @attr('number') estemp
+  @attr('number') commsf
+  @attr('number') hotelrms
+  @attr('number') onsitepark
+  @attr('number') totalCost
+  @attr('number') teamMembershipCount
+  @attr('number') retSqft
+  @attr('number') ofcmdSqft
+  @attr('number') indmfSqft
+  @attr('number') whsSqft
+  @attr('number') rndSqft
+  @attr('number') eiSqft
+  @attr('number') otherSqft
+  @attr('number') hotelSqft
+  @attr('number') otherRate
+  @attr('number') affordable
+  @attr('number') latitude
+  @attr('number') longitude
+  @attr('number') units1bd
+  @attr('number') units2bd
+  @attr('number') units3bd
+  @attr('number') affrdUnit
+  @attr('number') affU30
+  @attr('number') aff3050
+  @attr('number') aff5080
+  @attr('number') aff80p
+  @attr('number') publicsqft
 
-  rdv: attr('boolean'),
-  asofright: attr('boolean'),
-  over55: attr('boolean'),
-  clusteros: attr('boolean'),
-  phased: attr('boolean'),
-  stalled: attr('boolean'),
-  cancelled: attr('boolean', { default: false }),
-  private: attr('boolean', { default: false }),
-  fortyB: attr('boolean'),
-  mixedUse: attr('boolean'),
+  @attr('boolean') rdv
+  @attr('boolean') asofright
+  @attr('boolean') ovr55
+  @attr('boolean') clusteros
+  @attr('boolean') phased
+  @attr('boolean') stalled
+  @attr('boolean') cancelled
+  @attr('boolean') private
+  @attr('boolean') headqtrs
+  @attr('boolean') mixedUse
+  @attr('boolean') fortyB
+  @attr('boolean') residential
+  @attr('boolean') commercial
 
-  residential: attr('boolean'),
-  commercial: attr('boolean'),
-
-  createdAt: attr('date'),
-  updatedAt: attr('date'),
-
-});
+  @attr('date') createdAt
+  @attr('date') updatedAt
+}
