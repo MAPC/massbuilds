@@ -1,14 +1,21 @@
+{{#if linkMessage}}
+  <div class='link-message'>
+    {{linkMessage}}
+  </div>
+{{/if}}
+
 <div class="share-buttons-wrapper {{if isOpen 'active'}}">
+
   <button class="toggler" onclick={{action toggleOpen}}>
     <img src="/assets/images/share.svg">
   </button>
 
   <div class="share-drawer">
-    <button class="share-button" action={{toLink}}>
+    <button class="share-button" onclick={{action toLink}}>
       <img src="/assets/images/link.svg">
     </button>
-    <button class="share-button" action={{toShapefile}}>.shp</button>
-    <button class="share-button" action={{toGeoJSON}}>.json</button>
-    <button class="share-button" action={{toCSV}}>.csv</button>
+    <button class="share-button" onclick={{action toShapefile}}>.shp</button>
+    <button class="share-button" onclick={{action toGeoJSON}}>.json</button>
+    <button class="share-button" onclick={{action toCSV}}>.csv</button>
   </div>
 </div>

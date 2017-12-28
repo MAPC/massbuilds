@@ -81,4 +81,19 @@
 
     > img { width: 40%; }
   }
+
+  .link-message {
+    position: absolute;
+    top: -40px;
+    left: -15px;
+    z-index: 10;
+
+    padding: 6px 8px;
+    
+    font-size: 12px;
+
+    background: $color_bg-light; 
+    border: 1px solid $color_brand-primary;
+    border-radius: 5px;
+  }
 }
