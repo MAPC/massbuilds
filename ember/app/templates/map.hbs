@@ -58,7 +58,8 @@
           lat=datum.latitude 
           lng=datum.longitude
           color=(status-color datum.status)
-          radius=3
+          onClick=(action 'viewDevelopment' datum.id)
+          radius=4
         }} 
       {{/each}}
     {{/leaflet-map}}

@@ -156,6 +156,12 @@ export default class extends Controller {
   }
 
 
+  @action
+  viewDevelopment(id) {
+    this.transitionToRoute('map.developments.development', id);
+  }
+
+
   @action 
   setMapInstance(map) {
     this.set('map.instance', map.target);
