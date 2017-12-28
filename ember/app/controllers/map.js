@@ -36,6 +36,12 @@ export default class extends Controller {
   }
 
 
+  @computed('target.currentRouteName')
+  get showingDevelopment() {
+    return this.get('target.currentRouteName') === 'map.developments.development';
+  }
+
+
   @computed('updateChildren')
   get activeFilters() {
     return Object.keys(filters).map(col => {
@@ -79,11 +85,9 @@ export default class extends Controller {
   }
 
 
-  @computed('showingFilters')
+  @computed('showingFilters', 'showingDevelopment')
   get showingLeftPanel() {
-    const showingFilters = this.get('showingFilters');
-
-    return showingFilters;
+    return this.get('showingFilters') || this.get('showingDevelopment');
   }
 
 

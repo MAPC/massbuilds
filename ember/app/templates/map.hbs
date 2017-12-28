@@ -27,13 +27,18 @@
     {{share-buttons model=model}}
   {{/if}}
 
-  {{map-legend}}
+  {{map-legend showing=showingFilters}}
   <!--/ floating components -->
 
   <div class="panel-layer left-panel-layer {{if showingLeftPanel 'active'}}">
-    {{filter-panel 
-      update=(action updateFilter)
-      activeFilters=activeFilters}}
+    {{#if showingFilters}}
+      {{filter-panel 
+        update=(action updateFilter)
+        activeFilters=activeFilters
+      }}
+    {{else}}
+      {{outlet}}
+    {{/if}}
   </div>
 
   <div class="map-layer">
