@@ -24,7 +24,7 @@
   </button>
 
   {{#if session.isAuthenticated}}
-    {{share-buttons model=model}}
+    {{share-buttons filterParams=filterParams}}
   {{/if}}
 
   {{map-legend showing=showingFilters}}

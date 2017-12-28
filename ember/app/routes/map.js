@@ -14,9 +14,15 @@ export default class extends Route {
 
     if (params) {
       query['filter'] = fromQueryParams(this.getFilterParams(params));
+      this.set('filterParams', query['filter']);
     }
 
     this.get('map').filterByQuery(query);
+  }
+
+
+  afterModel() {
+    this.controllerFor('map').set('filterParams', this.get('filterParams'));
   }
 
 
@@ -38,6 +44,15 @@ export default class extends Route {
     }
 
     return value; 
+  }
+
+
+  setupController(controller, model) {
+    this._super(controller, model);
+
+    console.log(this.get('filterParams'));
+
+    controller.set('filterParams', this.get('filterParams'));
   }
 
 

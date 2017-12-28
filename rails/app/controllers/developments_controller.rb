@@ -20,7 +20,7 @@ class DevelopmentsController < ApplicationController
         scope = 'trunc' if params[:trunc]
         render jsonapi: @developments, scope: scope
       end
-      format.csv { send_data @developments.to_csv, filename: "developments-#{Date.today}.csv" }
+      format.csv { send_data @developments.to_csv, filename: "massbuild-developments-#{Date.today}.csv" }
       format.zip do
         file_name = @developments.to_shp(@developments.to_sql)
         send_file Rails.root.join('public', "#{file_name}.zip")
@@ -121,6 +121,10 @@ class DevelopmentsController < ApplicationController
     def filtered_developments(filter_hash)
       sql = []
       values = []
+
+      if filter_hash.is_a? String
+        filter_hash = JSON.parse(filter_hash)
+      end
 
       filter_hash.values.each do |filter|
         column = filter['col']
