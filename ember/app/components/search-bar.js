@@ -81,10 +81,10 @@ export default class extends Component {
   @action 
   selectItem(item) {
     if (item.id) {
-      console.log('atomic');
+      this.sendAction('viewDevelopment', item.id);
     }
     else {
-      this.sendAction('addDiscreteFilter', item)
+      this.sendAction('addDiscreteFilter', item);
     }
 
     this.set('searchQuery', '');
