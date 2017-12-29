@@ -19,11 +19,11 @@ export default class extends DS.Model {
   @attr('string') parcelId
   @attr('string') municipality
   @attr('string') devlper
-  @attr('string') yrcompEst
 
   @attr('number') height
   @attr('number') stories
   @attr('number') yearCompl
+  @attr('number') yrcompEst
   @attr('number') prjarea
   @attr('number') singfamhu
   @attr('number') smmultifam
@@ -64,12 +64,9 @@ export default class extends DS.Model {
   @attr('boolean') clusteros
   @attr('boolean') phased
   @attr('boolean') stalled
-  @attr('boolean') cancelled
   @attr('boolean') private
   @attr('boolean') headqtrs
   @attr('boolean') mixedUse
-  @attr('boolean') residential
-  @attr('boolean') commercial
 
   @attr('date') createdAt
   @attr('date') updatedAt
