@@ -6,8 +6,4 @@ export default class extends Route {
     return this.store.findRecord('development', params.development_id);
   }
 
-  afterModel(model) {
-    console.log(model) ;
-  }
-
 }

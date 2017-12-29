@@ -6,11 +6,123 @@
   {{/link-to}}
 
   <div class="development-content">
-    <div class="column">
-      <h1>{{model.name}}</h1>
+    <div class="layout-column">
+      <div class="development-header">
+        <h1>{{model.name}}</h1>
+        <h2><img src="/assets/images/map-pin.svg"> {{model.address}}</h2>
+
+        {{#if model.prjUrl}}
+          <a href={{model.prjUrl}} class="project-url">{{model.prjUrl}}</a>
+        {{/if}}
+      </div>
+
+      <div class="metric-groups-wrapper">
+        <div class="metric-groups">
+          <article> 
+            <h4>Key Info</h4>
+
+            <div class="row">
+              <div class="column">
+                <div class="field">
+                  <label for="status">Status:</label>
+                  {{capitalize model.status}}
+                </div>
+
+                <div class="field">
+                  {{#if (eq model.status 'completed')}}
+                    <label for="yearCompl">Year Completed</label>
+                    {{model.yearCompl}}
+                  {{else}}
+                    <label for="yrcompEst">Yr. Compl. Est.</label>
+                    {{#if model.yrcompEst}}
+                      {{model.yrcompEst}}
+                    {{else}}
+                      {{model.yearCompl}}
+                    {{/if}}
+                  {{/if}}
+                </div>
+
+                <div class="field">
+                  <label for="totalCost">Cost</label>
+                  ${{model.totalCost}}
+                </div>
+
+                <div class="field">
+                  <label for="prjarea">Project Area</label>
+                  {{model.prjarea}} sqft.
+                </div>
+              </div>
+
+              <div class="column">
+                <div class="field">
+                  <label for="height">Height</label>
+                  {{model.height}} ft.
+                </div>
+
+                <div class="field">
+                  <label for="stories">Stories</label>
+                  {{model.stories}}
+                </div>
+
+                <div class="field">
+                  <label for="onsitepark">Parking Spaces</label>
+                  {{model.onsitepark}}
+                </div>
+
+                <div class="field">
+                  <label for="parkType">Parking Type</label>
+                  {{model.parkType}}
+                </div>
+              </div>
+            </div>
+
+            <p class="attributes">
+              <label>Attributes:</label>
+
+              {{#if model.rdv}}Redevelopment, {{/if}}
+              {{#if model.phased}}Phased, {{/if}}
+              {{#if model.stalled}}Stalled, {{/if}}
+              {{#if model.asofright}}As of Right, {{/if}}
+              {{#if model.mixedUse}}Mixed Use{{/if}}
+            </p>
+          </article>
+
+          <article>
+            <h4>Residential</h4>
+
+            <div class="row">
+              <div class="column">
+              </div>
+
+              <div class="column">
+              </div>
+            </div>
+          </article>
+
+          <article>
+            <h4>Commercial</h4>
+          </article>
+        </div>
+      </div>
     </div>
 
-    <div class="column">
+    <div class="layout-column">
+      <div class="detail">
+        <h3>Developer</h3>
+        <p>{{model.devlper}}</p>
+      </div>
+
+      {{#if model.user}}
+        <div class="detail">
+          <h3>Entry Created By</h3>
+          <p>{{model.user.fullName}}</p>
+        </div>
+      {{/if}}
+
+      <div class="detail">
+        <h3>Last Updated</h3>
+        <p>{{model.updatedAt}}</p>
+      </div>
     </div>
   </div>
 

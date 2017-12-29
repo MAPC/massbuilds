@@ -49,9 +49,6 @@ export default class extends Route {
 
   setupController(controller, model) {
     this._super(controller, model);
-
-    console.log(this.get('filterParams'));
-
     controller.set('filterParams', this.get('filterParams'));
   }
 
