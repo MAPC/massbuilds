@@ -11,7 +11,7 @@ export default class extends Component {
 
     this.classNames = ['component', 'search-bar'];
 
-    this.sortOrder = ['municipality', 'developerName', 'name', 'address'];
+    this.sortOrder = ['municipality', 'nhood', 'devlper', 'name', 'address'];
     this.searchQuery = '';
   }
 
@@ -26,8 +26,14 @@ export default class extends Component {
 
 
   @computed('developments')
-  get developerName() {
-    return this.uniqueValuesFor('developerName');
+  get devlper() {
+    return this.uniqueValuesFor('devlper');
+  }
+
+
+  @computed('developments')
+  get nhood() {
+    return this.uniqueValuesFor('nhood');
   }
 
 

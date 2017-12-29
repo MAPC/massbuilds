@@ -10,7 +10,7 @@ export default class extends Component {
 
     this.classNames = ['component', 'filter-panel'];
 
-    this.viewing = this.get('filterGroups')[2];
+    this.viewing = this.get('filterGroups')[3];
   }
 
 
@@ -18,7 +18,7 @@ export default class extends Component {
   get filterGroups() {
     const activeFilters = this.get('activeFilters');
 
-    const discrete = ['Developer', 'Town/City'].map(name => {
+    const discrete = ['Town/City', 'Neighborhood', 'Developer'].map(name => {
                         let active = activeFilters.any(filter => filter.name === name); 
                         let col = Object.values(filters).filter(x => x.name === name)[0].col;
 

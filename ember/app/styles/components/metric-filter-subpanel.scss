@@ -1,6 +1,7 @@
 .component.subpanel.metric-filter {
 
   padding: 15px;
+  padding-right: 0px;
 
   .subgroup {
     & + .subgroup { margin-top: 25px; }
@@ -18,7 +19,7 @@
       label { 
         display: inline-block;
 
-        width: 45%;
+        width: 53%;
 
         font-size: 13px; 
       }
@@ -46,7 +47,7 @@
 
       &.number {
         input {
-          width: 25%; 
+          width: 19%; 
 
           text-align: right;
         } 

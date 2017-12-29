@@ -1,5 +1,7 @@
 .component.search-bar {
 
+  $width: 354px;
+
   .search-icon {
     @extend ._vertical-center;
     top: 48%;
@@ -12,7 +14,7 @@
   }
 
   input.search-input {
-    width: 320px;
+    width: $width;
     padding: 8px 12px; 
     padding-left: 32px;
 
@@ -39,7 +41,7 @@
 
   ul {
     margin: 0;
-    width: 320px; 
+    width: $width; 
     max-height: 70vh;
 
     overflow: scroll; 

@@ -1,5 +1,6 @@
 const discreteMap = {
-  'Developer': 'developerName',
+  'Neighborhood': 'nhood',
+  'Developer': 'devlper',
   'Town/City': 'municipality',
 };
 

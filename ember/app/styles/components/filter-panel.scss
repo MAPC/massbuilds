@@ -1,7 +1,7 @@
 .component.filter-panel {
   display: flex;
 
-  width: 345px;
+  width: 375px;
 
   border-top: 1px solid $color_brand-primary;
 
@@ -48,6 +48,6 @@
     }
   }
 
-  .filters { width: 100%; }
+  .filters { width: 66.66%; }
 
 }

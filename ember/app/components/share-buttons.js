@@ -40,10 +40,11 @@ export default class extends Component {
     const copier = document.createElement('textarea');
     copier.class = 'copy-area';
     copier.innerHTML = window.location.href
-                                        .split('&municipality[]=').join(',')
-                                        .split('&developerName[]=').join(',')
-                                        .split('[]=').join('=')
-                                        .split('%3B').join(';');
+                                      .split('&municipality[]=').join(',')
+                                      .split('&devlper[]=').join(',')
+                                      .split('&nhood[]=').join(',')
+                                      .split('[]=').join('=')
+                                      .split('%3B').join(';');
 
     document.querySelector('body').appendChild(copier);
     copier.select();

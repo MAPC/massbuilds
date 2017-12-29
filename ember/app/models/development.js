@@ -10,8 +10,8 @@ export default class extends DS.Model {
   @attr('string') status
   @attr('string') desc
   @attr('string') prjUrl
-  @attr('string') mapcNotes
   @attr('string') tagline
+  @attr('string') nhood
   @attr('string') address
   @attr('string') state
   @attr('string') zipCode
@@ -20,7 +20,6 @@ export default class extends DS.Model {
   @attr('string') municipality
   @attr('string') devlper
   @attr('string') yrcompEst
-  @attr('string') programs
 
   @attr('number') height
   @attr('number') stories
@@ -32,13 +31,11 @@ export default class extends DS.Model {
   @attr('number') hu
   @attr('number') gqpop
   @attr('number') rptdemp
-  @attr('number') emploss
   @attr('number') estemp
   @attr('number') commsf
   @attr('number') hotelrms
   @attr('number') onsitepark
   @attr('number') totalCost
-  @attr('number') teamMembershipCount
   @attr('number') retSqft
   @attr('number') ofcmdSqft
   @attr('number') indmfSqft
@@ -51,9 +48,9 @@ export default class extends DS.Model {
   @attr('number') affordable
   @attr('number') latitude
   @attr('number') longitude
-  @attr('number') units1bd
-  @attr('number') units2bd
-  @attr('number') units3bd
+  @attr('number') units1Bd
+  @attr('number') units2Bd
+  @attr('number') units3Bd
   @attr('number') affrdUnit
   @attr('number') affU30
   @attr('number') aff3050
@@ -71,7 +68,6 @@ export default class extends DS.Model {
   @attr('boolean') private
   @attr('boolean') headqtrs
   @attr('boolean') mixedUse
-  @attr('boolean') fortyB
   @attr('boolean') residential
   @attr('boolean') commercial
 
