@@ -10,6 +10,5 @@ export default class extends Controller {
   constructor() {
     super();
   }
-  
 
 }

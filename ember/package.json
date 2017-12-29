@@ -40,6 +40,7 @@
     "ember-export-application-global": "^2.0.0",
     "ember-leaflet": "^3.0.12",
     "ember-load-initializers": "^1.0.0",
+    "ember-math-helpers": "^2.3.0",
     "ember-resolver": "^4.0.0",
     "ember-simple-auth": "^1.4.0",
     "ember-source": "~2.16.0",
