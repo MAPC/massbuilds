@@ -38,6 +38,8 @@ export default class extends Component {
   @action
   toLink() {
     const copier = document.createElement('textarea');
+    const body = document.querySelector('body');
+
     copier.class = 'copy-area';
     copier.innerHTML = window.location.href
                                       .split('&municipality[]=').join(',')
@@ -46,14 +48,14 @@ export default class extends Component {
                                       .split('[]=').join('=')
                                       .split('%3B').join(';');
 
-    document.querySelector('body').appendChild(copier);
+    body.appendChild(copier);
     copier.select();
 
     if (document.execCommand('copy')) {
       this.notifyLinkShared();
     }
 
-    copier.innerHTML = '';
+    body.removeChild(copier);
   }
 
 
