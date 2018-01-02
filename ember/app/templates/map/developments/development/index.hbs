@@ -1,4 +1,4 @@
-<section class="route map-developments-development">
+<section class="route map-developments-development-index">
 
   <div class="links">
     {{#link-to 'map'}}
@@ -21,8 +21,13 @@
         <h2><img src="/assets/images/map-pin.svg"> {{model.address}}</h2>
 
         {{#if model.prjUrl}}
-          <a href={{model.prjUrl}} class="project-url">{{model.prjUrl}}</a>
+          <h2 class="project-url">
+            <img src="/assets/images/link.svg">
+            <a href={{model.prjUrl}}>{{model.prjUrl}}</a>
+          </h2>
+
         {{/if}}
+
       </div>
 
       <div class="metric-groups-wrapper">
@@ -370,10 +375,12 @@
     </div>
 
     <div class="layout-column">
-      <div class="detail">
-        <h3>Developer</h3>
-        <p>{{model.devlper}}</p>
-      </div>
+      {{#if model.devlper}}
+        <div class="detail">
+          <h3>Developer</h3>
+          <p>{{model.devlper}}</p>
+        </div>
+      {{/if}}
 
       {{#if model.user}}
         <div class="detail">

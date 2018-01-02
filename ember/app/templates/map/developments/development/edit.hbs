@@ -1,4 +1,4 @@
-<section class="route map-developments-development">
+<section class="route map-developments-development-edit">
 
   <div class="links">
     {{#link-to 'map.developments.development' model.id}}
@@ -13,7 +13,10 @@
         <h1>{{input value=model.name placeholder="Development Name"}}</h1>
         <h2><img src="/assets/images/map-pin.svg"> {{input value=model.address placeholder="Development Address"}}</h2>
 
-          <span class="project-url">{{input value=model.prjUrl placeholder="Project Website"}}</span>
+        <h2 class="project-url">
+          <img src="/assets/images/link.svg">
+          {{input value=model.prjUrl placeholder="Project Website"}}
+        </h2>
       </div>
 
       <div class="metric-groups-wrapper">
@@ -31,38 +34,38 @@
                 <div class="field">
                   {{#if (eq model.status 'completed')}}
                     <label for="yearCompl">Year Completed</label>
-                    {{input value=model.yearCompl placeholder="Year Completed"}}
+                    {{input value=model.yearCompl placeholder="Enter here"}}
                   {{else}}
                     <label for="yrcompEst">Yr. Compl. Est.</label>
-                    {{input value=model.yrcompEst placeholder="Estimated Year Completed"}}
+                    {{input value=model.yrcompEst placeholder="Enter here"}}
                   {{/if}}
                 </div>
 
                 <div class="field">
                   <label for="totalCost">Cost</label>
-                  ${{input value=model.totalCost placeholder="Cost"}}
+                  ${{input value=model.totalCost placeholder="Enter here"}}
                 </div>
 
                 <div class="field">
                   <label for="prjarea">Project Area</label>
-                  {{input value=model.prjarea placeholder="Project Area"}} sqft.
+                  {{input value=model.prjarea placeholder="Enter here"}}<span>sqft.</span>
                 </div>
               </div>
 
               <div class="column">
                 <div class="field">
                   <label for="height">Height</label>
-                  {{input value=model.height placeholder="Height"}} ft.
+                  {{input value=model.height placeholder="Enter here"}}<span>ft.</span>
                 </div>
 
                 <div class="field">
                   <label for="stories">Stories</label>
-                  {{input value=model.stories placeholder="Stories"}}
+                  {{input value=model.stories placeholder="Enter here"}}
                 </div>
 
                 <div class="field">
                   <label for="onsitepark">Parking Spaces</label>
-                  {{input value=model.onsitepark placeholder="Parking Spaces"}}
+                  {{input value=model.onsitepark placeholder="Enter here"}}
                 </div>
 
                 <div class="field">
@@ -108,8 +111,8 @@
             <div class="row">
               <div class="column">
                 <div class="field">
-                  <label for="gqpop">Group Quarters Pop.</label>
-                  {{input value=model.gqpop placeholder="Group Quarters Pop."}}
+                  <label for="gqpop">Grp. Qrtrs. Pop.</label>
+                  {{input value=model.gqpop placeholder="Enter here"}}
                 </div>
               </div>
               <div class="column">
@@ -235,20 +238,20 @@
             <div class="row">
               <div class="column">
                 <div class="field">
-                  <label for="estemp">Estimated Employment</label>
-                  {{input value=model.estemp placeholder=0}}
+                  <label for="estemp">Estmtd. Emplmnt.</label>
+                  {{input value=model.estemp placeholder="Enter here"}}
                 </div>
 
                 <div class="field">
-                  <label for="rptdemp">Reported Employment</label>
-                  {{input value=model.rptdemp placeholder=0}}
+                  <label for="rptdemp">Rprtd. Emplmnt.</label>
+                  {{input value=model.rptdemp placeholder="Enter here"}}
                 </div>
               </div>
 
               <div class="column">
                 <div class="field">
                   <label for="hotelrms">Hotel Rooms</label>
-                  {{input value=model.hotelrms placeholder=0}}
+                  {{input value=model.hotelrms placeholder="Enter here"}}
                 </div>
               </div>
             </div>
@@ -336,7 +339,7 @@
     <div class="layout-column">
       <div class="detail">
         <h3>Developer</h3>
-        <p>{{input value=model.devlper placeholder="Developer Name"}}</p>
+        <p>{{input value=model.devlper placeholder="Enter Developer Name"}}</p>
       </div>
 
       {{#if model.user}}

@@ -13,8 +13,10 @@
 
       & + a {
         display: inline-lock;
+
         margin-left: 5px;
         padding-left: 10px;
+
         border-left: 1px solid $color_bg-medium;
       }
     }
@@ -63,6 +65,13 @@
       padding-left: 0;
 
       border-right: 1px solid $color_bg-medium;
+    }
+
+    a {
+      color: $color_brand-primary;
+      font-size: 14px; 
+
+      &:hover { text-decoration: underline; }
     }
   }
 
@@ -209,7 +218,7 @@
 
         &:first-of-type {
           text-align: left;
-          color: $color_brand-primary--active; 
+          color: $color_font-medium; 
         }
       }
     }

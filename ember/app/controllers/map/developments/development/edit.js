@@ -1,8 +1,14 @@
 import Controller from '@ember/controller';
-import { action, computed, observes } from 'ember-decorators/object';
+import { action } from 'ember-decorators/object';
 
 
 export default class extends Controller {
+
+
+  @action
+  save() {
+     
+  }
 
 
   @action 
@@ -44,17 +50,11 @@ export default class extends Controller {
   }
 
 
-  @action
-  save() {
-     
-  }
-
-
   sumProperties() {
     const properties = this.getProperties(...arguments);
 
     return Object.values(properties)
-                 .reduce((a, b) => parseInt(a) + (parseInt(b) || 0));
+                 .reduce((a, b) => parseFloat(a) + (parseFloat(b) || 0), 0);
   }
 
 }

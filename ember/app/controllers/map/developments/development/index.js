@@ -9,7 +9,7 @@ export default class extends Controller {
   @service session
 
 
-  @computed('model')
+  @computed('model.rdv', 'model.phased', 'model.stalled', 'model.asofright', 'model.mixedUse')
   get keyAttributes() {
     return this.attributesFor({
       rdv: 'Redevelopment',
@@ -21,7 +21,7 @@ export default class extends Controller {
   }
 
 
-  @computed('model')
+  @computed('model.ovr55', 'model.private')
   get residentialAttributes() {
     return this.attributesFor({
       ovr55: 'Age Restricted' ,
@@ -30,7 +30,7 @@ export default class extends Controller {
   }
 
 
-  @computed('model')
+  @computed('model.headqtrs')
   get commercialAttributes() {
     return this.attributesFor({
       headqtrs: 'Company Headquarters',
