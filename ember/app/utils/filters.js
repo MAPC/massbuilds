@@ -142,7 +142,6 @@ const metricGroups = {
     {
       title: 'Affordability',
       metrics: [
-        'affordable',
         'affrdUnit',
         'affU30',
         'affU3050',

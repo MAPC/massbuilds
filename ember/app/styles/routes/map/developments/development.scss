@@ -83,14 +83,14 @@
     }
   }
 
-  .development-header { flex: 1 1 15%; }
+  .development-header { flex: 1 1 10%; }
 
   .metric-groups-wrapper {
-    flex: 1 0 85%;
+    flex: 1 0 90%;
 
     overflow: scroll;
 
-    &:after {
+    &:after, &:before {
       content: '';
       position: absolute;
       bottom: -2px;
@@ -103,10 +103,17 @@
       box-shadow: 0px 0px 50px 40px $color_bg-light;
       overflow: hidden;
     }
+
+    &:before {
+      top: 0px; 
+      bottom: initial;
+    }
   }
 
   .metric-groups {
     max-height: 100%;
+    padding-top: 40px;
+    padding-bottom: 50px;
 
     overflow: scroll;
   }
@@ -155,9 +162,21 @@
     }
   }
 
+  .table-wrapper {
+    width: 95%; 
+    margin: 50px auto 0;
+
+    h3 {
+      padding: 8px;
+
+      font-size: 18px; 
+
+      background: $color_bg-light--active;
+    }
+  }
+
   table {
-    width: 90%;
-    margin: 0 auto;
+    width: 100%;
 
     tr {
       font-size: 14px;
