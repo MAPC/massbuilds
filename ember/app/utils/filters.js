@@ -86,7 +86,6 @@ const filters = {
   'hotelrms': { name: 'Hotel rooms', type: 'number', ...defaultMetric },
   'rptdemp': { name: 'Reported emplmnt', type: 'number', ...defaultMetric },
   'estemp': { name: 'Estmtd. emplmnt', type: 'number', ...defaultMetric },
-  'estemp': { name: 'Estmtd. emplmnt', type: 'number', ...defaultMetric },
 
   'headqtrs': { name: 'Company HQ', type: 'boolean', ...defaultMetric },
 
@@ -185,7 +184,6 @@ const metricGroups = {
       metrics: [
         'headqtrs',
         'hotelrms',
-        'estemp',
       ]
     },
   ],

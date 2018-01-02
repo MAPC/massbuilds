@@ -119,7 +119,7 @@
   }
 
   article {
-    & + article { margin-top: 30px; }
+    & + article { margin-top: 40px; }
 
     text-align: center; 
 
@@ -149,6 +149,7 @@
   }
 
   .attributes {
+    margin-bottom: 0;
     padding: 15px;
 
     text-align: left; 
@@ -163,13 +164,15 @@
   }
 
   .table-wrapper {
-    width: 95%; 
-    margin: 50px auto 0;
+    width: 96%; 
+    margin: 20px auto 30px;
+    border: 1px solid $color_bg-light--active;
 
     h3 {
-      padding: 8px;
+      margin: 0;
+      padding: 6px 8px;
 
-      font-size: 18px; 
+      font-size: 15px; 
 
       background: $color_bg-light--active;
     }
@@ -189,7 +192,7 @@
       } 
 
       &:nth-of-type(2n+1):not(.table-header) { 
-        background: lighten($color_bg-light--active, 1); 
+        background: lighten($color_bg-light--active, 3); 
       }
 
       td { 

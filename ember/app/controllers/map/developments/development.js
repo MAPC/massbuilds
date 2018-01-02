@@ -29,6 +29,14 @@ export default class extends Controller {
   }
 
 
+  @computed('model')
+  get commercialAttributes() {
+    return this.attributesFor({
+      headqtrs: 'Company Headquarters',
+    });
+  }
+
+
   attributesFor(attributeDict) {
     const attributes = [];
     const model = this.get('model');
