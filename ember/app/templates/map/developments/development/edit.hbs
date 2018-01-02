@@ -149,37 +149,37 @@
 
                 <tr>
                   <td>Single Family</td>
-                  <td>{{input value=model.singfamhu placeholder=0}}</td>
+                  <td>{{input value=model.singfamhu placeholder=0 key-up=(action updateHu)}}</td>
                   <td>{{round (mult 100 (div model.singfamhu model.hu))}}%</td>
                 </tr>
 
                 <tr>
                   <td>Small Multi-family</td>
-                  <td>{{input value=model.smmultifam placeholder=0}}</td>
+                  <td>{{input value=model.smmultifam placeholder=0 key-up=(action updateHu)}}</td>
                   <td>{{round (mult 100 (div model.smmultifam model.hu))}}%</td>
                 </tr>
 
                 <tr>
                   <td>Large Multi-family</td>
-                  <td>{{input value=model.lgmultifam placeholder=0}}</td>
+                  <td>{{input value=model.lgmultifam placeholder=0 key-up=(action updateHu)}}</td>
                   <td>{{round (mult 100 (div model.lgmultifam model.hu))}}%</td>
                 </tr>
 
                 <tr>
                   <td>Studio/1 Bedroom</td>
-                  <td>{{input value=model.units1Bd placeholder=0}}</td>
+                  <td>{{input value=model.units1Bd placeholder=0 key-up=(action updateHu)}}</td>
                   <td>{{round (mult 100 (div model.units1Bd model.hu))}}%</td>
                 </tr>
 
                 <tr>
                   <td>2 Bedroom</td>
-                  <td>{{input value=model.units2Bd placeholder=0}}</td>
+                  <td>{{input value=model.units2Bd placeholder=0 key-up=(action updateHu)}}</td>
                   <td>{{round (mult 100 (div model.units2Bd model.hu))}}%</td>
                 </tr>
 
                 <tr>
                   <td>3 Bedroom</td>
-                  <td>{{input value=model.units3Bd placeholder=0}}</td>
+                  <td>{{input value=model.units3Bd placeholder=0 key-up=(action updateHu)}}</td>
                   <td>{{round (mult 100 (div model.units3Bd model.hu))}}%</td>
                 </tr>
               </table>
@@ -204,25 +204,25 @@
 
                 <tr>
                   <td>Units &lt;30% AMI</td>
-                  <td>{{input value=model.affU30 placeholder=0}}</td>
+                  <td>{{input value=model.affU30 placeholder=0 key-up=(action updateAffrdUnit)}}</td>
                   <td>{{round (mult 100 (div model.affU30 model.affrdUnit))}}%</td>
                 </tr>
 
                 <tr>
                   <td>Units 30-50% AMI</td>
-                  <td>{{input value=model.affU3050 placeholder=0}}</td>
+                  <td>{{input value=model.affU3050 placeholder=0 key-up=(action updateAffrdUnit)}}</td>
                   <td>{{round (mult 100 (div model.affU3050 model.affrdUnit))}}%</td>
                 </tr>
 
                 <tr>
                   <td>Units 50-80% AMI</td>
-                  <td>{{input value=model.affU5080 placeholder=0}}</td>
+                  <td>{{input value=model.affU5080 placeholder=0 key-up=(action updateAffrdUnit)}}</td>
                   <td>{{round (mult 100 (div model.affU5080 model.affrdUnit))}}%</td>
                 </tr>
 
                 <tr>
                   <td>Units 80-100% AMI</td>
-                  <td>{{input value=model.affU80p placeholder=0}}</td>
+                  <td>{{input value=model.affU80p placeholder=0 key-up=(action updateAffrdUnit)}}</td>
                   <td>{{round (mult 100 (div model.affU80p model.affrdUnit))}}%</td>
                 </tr>
               </table>
@@ -281,49 +281,49 @@
 
                 <tr>
                   <td>Retail</td>
-                  <td>{{input value=model.retSqft placeholder=0}}</td>
+                  <td>{{input value=model.retSqft placeholder=0 key-up=(action updateCommsf)}}</td>
                   <td>{{round (mult 100 (div model.retSqft model.commsf))}}%</td>
                 </tr>
 
                 <tr>
                   <td>Office/Medical</td>
-                  <td>{{input value=model.ofcmdSqft placeholder=0}}</td>
+                  <td>{{input value=model.ofcmdSqft placeholder=0 key-up=(action updateCommsf)}}</td>
                   <td>{{round (mult 100 (div model.ofcmdSqft model.commsf))}}%</td>
                 </tr>
 
                 <tr>
                   <td>Industrial/Manufacturing</td>
-                  <td>{{input value=model.indmfSqft placeholder=0}}</td>
+                  <td>{{input value=model.indmfSqft placeholder=0 key-up=(action updateCommsf)}}</td>
                   <td>{{round (mult 100 (div model.indmfSqft model.commsf))}}%</td>
                 </tr>
 
                 <tr>
                   <td>Warehouse/Shipping</td>
-                  <td>{{input value=model.whsSqft placeholder=0}}</td>
+                  <td>{{input value=model.whsSqft placeholder=0 key-up=(action updateCommsf)}}</td>
                   <td>{{round (mult 100 (div model.whsSqft model.commsf))}}%</td>
                 </tr>
 
                 <tr>
                   <td>Research/Development</td>
-                  <td>{{input value=model.rndSqft placeholder=0}}</td>
+                  <td>{{input value=model.rndSqft placeholder=0 key-up=(action updateCommsf)}}</td>
                   <td>{{round (mult 100 (div model.rndSqft model.commsf))}}%</td>
                 </tr>
 
                 <tr>
                   <td>Educational/Institutional</td>
-                  <td>{{input value=model.eiSqft placeholder=0}}</td>
+                  <td>{{input value=model.eiSqft placeholder=0 key-up=(action updateCommsf)}}</td>
                   <td>{{round (mult 100 (div model.eiSqft model.commsf))}}%</td>
                 </tr>
 
                 <tr>
                   <td>Hotel Room</td>
-                  <td>{{input value=model.hotelSqft placeholder=0}}</td>
+                  <td>{{input value=model.hotelSqft placeholder=0 key-up=(action updateCommsf)}}</td>
                   <td>{{round (mult 100 (div model.hotelSqft model.commsf))}}%</td>
                 </tr>
 
                 <tr>
                   <td>Other</td>
-                  <td>{{input value=model.otherSqft placeholder=0}}</td>
+                  <td>{{input value=model.otherSqft placeholder=0 key-up=(action updateCommsf)}}</td>
                   <td>{{round (mult 100 (div model.otherSqft model.commsf))}}%</td>
                 </tr>
               </table>
