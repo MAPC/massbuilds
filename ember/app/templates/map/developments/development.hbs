@@ -76,15 +76,12 @@
               </div>
             </div>
 
-            <p class="attributes">
-              <label>Attributes:</label>
-
-              {{#if model.rdv}}Redevelopment, {{/if}}
-              {{#if model.phased}}Phased, {{/if}}
-              {{#if model.stalled}}Stalled, {{/if}}
-              {{#if model.asofright}}As of Right, {{/if}}
-              {{#if model.mixedUse}}Mixed Use{{/if}}
-            </p>
+            {{#if keyAttributes}}
+              <p class="attributes">
+                <label>Attributes:</label>
+                {{keyAttributes}}
+              </p>
+            {{/if}}
           </article>
 
           <article>
@@ -97,6 +94,13 @@
               <div class="column">
               </div>
             </div>
+
+            {{#if residentialAttributes}}
+              <p class="attributes">
+                <label>Attributes:</label>
+                {{residentialAttributes}}
+              </p>
+            {{/if}}
 
             <table class="housing-units">
               <tr class="table-header">
@@ -158,6 +162,72 @@
 
           <article>
             <h4>Commercial</h4>
+
+            <div class="row">
+              <div class="column">
+              </div>
+
+              <div class="column">
+              </div>
+            </div>
+
+            <table class="commercial-makeup">
+              <tr class="table-header">
+                <td>Unit Type</td>
+                <td>Quantity</td>
+                <td>Percentage</td>
+              </tr>
+
+              {{#if model.singfamhu}}
+                <tr>
+                  <td>Single Family</td>
+                  <td>{{model.singfamhu}}</td>
+                  <td>{{mult 100 (div model.singfamhu model.hu)}}%</td>
+                </tr>
+              {{/if}}
+
+              {{#if model.smmultifam}}
+                <tr>
+                  <td>Small Multi-family</td>
+                  <td>{{model.smmultifam}}</td>
+                  <td>{{mult 100 (div model.smmultifam model.hu)}}%</td>
+                </tr>
+              {{/if}}
+
+              {{#if model.lgmultifam}}
+                <tr>
+                  <td>Large Multi-family</td>
+                  <td>{{model.lgmultifam}}</td>
+                  <td>{{mult 100 (div model.lgmultifam model.hu)}}%</td>
+                </tr>
+              {{/if}}
+
+              {{#if model.units1Bd}}
+                <tr>
+                  <td>Studio/1 Bedroom</td>
+                  <td>{{model.units1Bd}}</td>
+                  <td>{{mult 100 (div model.units1Bd model.hu)}}%</td>
+                </tr>
+              {{/if}}
+
+              {{#if model.units2Bd}}
+                <tr>
+                  <td>2 Bedroom</td>
+                  <td>{{model.units2Bd}}</td>
+                  <td>{{mult 100 (div model.units2Bd model.hu)}}%</td>
+                </tr>
+              {{/if}}
+
+              {{#if model.units3Bd}}
+                <tr>
+                  <td>3 Bedroom</td>
+                  <td>{{model.units3Bd}}</td>
+                  <td>{{mult 100 (div model.units3Bd model.hu)}}%</td>
+                </tr>
+              {{/if}}
+
+            </table>
+
           </article>
         </div>
       </div>
