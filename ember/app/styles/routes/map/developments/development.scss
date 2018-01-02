@@ -3,12 +3,21 @@
   min-width: 800px;
   padding: 0 10px;
 
-  .close-link {
+  .links {
     position: absolute;
     top: -65px;
     right: 10px;
 
-    &:hover { color: $color_brand-primary--active; }
+    a {
+      &:hover { color: $color_brand-primary--active; }
+
+      & + a {
+        display: inline-lock;
+        margin-left: 5px;
+        padding-left: 10px;
+        border-left: 1px solid $color_bg-medium;
+      }
+    }
 
     img { top: 6px; }
   }

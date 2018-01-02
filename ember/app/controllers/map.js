@@ -38,7 +38,11 @@ export default class extends Controller {
 
   @computed('target.currentRouteName')
   get showingDevelopment() {
-    return this.get('target.currentRouteName') === 'map.developments.development';
+    return [
+      'map.developments.development.index',
+      'map.developments.development.edit',
+      'map.developments.development.create',
+    ].indexOf(this.get('target.currentRouteName')) !== -1;
   }
 
 
