@@ -10,11 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171221191328) do
+ActiveRecord::Schema.define(version: 20180102152324) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "postgis"
+  enable_extension "postgres_fdw"
 
   create_table "developments", force: :cascade do |t|
     t.integer "user_id"
@@ -87,6 +88,8 @@ ActiveRecord::Schema.define(version: 20171221191328) do
     t.boolean "headqtrs"
     t.string "park_type"
     t.integer "publicsqft"
+    t.bigint "rpa_poly_id"
+    t.index ["rpa_poly_id"], name: "index_developments_on_rpa_poly_id"
   end
 
   create_table "edits", force: :cascade do |t|

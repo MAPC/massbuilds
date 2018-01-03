@@ -43,6 +43,8 @@ class Development < ApplicationRecord
     groundbroken.validates :publicsqft
   end
 
+  after_save :update_rpa
+
   def self.to_csv
     attributes = self.column_names
     CSV.generate(headers: true) do |csv|
@@ -91,5 +93,18 @@ class Development < ApplicationRecord
 
   def groundbroken?
     status == ('in_construction' || 'completed')
+  end
+
+  def update_rpa
+    return if rpa_poly_id.present?
+    rpa_query = <<~SQL
+      SELECT rpa_id
+      FROM
+        (SELECT rpa_id, ST_TRANSFORM(rpa_poly.shape, 4326) as shape FROM rpa_poly) rpa,
+        (SELECT id, name, point FROM developments) development
+        WHERE ST_Intersects(point, rpa.shape)
+        AND id = #{id};
+    SQL
+    self.update(rpa_poly_id: ActiveRecord::Base.connection.exec_query(rpa_query).to_hash[0]['rpa_id'])
   end
 end
