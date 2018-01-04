@@ -121,4 +121,17 @@ class Development < ApplicationRecord
     SQL
     self.update(counties_polym_id: ActiveRecord::Base.connection.exec_query(counties_query).to_hash[0]['objectid'])
   end
+
+  def update_municipality
+    return if ma_municipalities_id.present?
+    municipalities_query = <<~SQL
+      SELECT objectid
+      FROM
+        (SELECT objectid, ST_TRANSFORM(ma_municipalities.shape, 4326) as shape FROM ma_municipalities) municipality,
+        (SELECT id, name, point FROM developments) development
+        WHERE ST_Intersects(point, county.shape)
+        AND id = #{id};
+    SQL
+    self.update(ma_municipalities_id: ActiveRecord::Base.connection.exec_query(municipalities_query).to_hash[0]['objectid'])
+  end
 end

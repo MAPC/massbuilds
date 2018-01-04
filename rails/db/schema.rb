@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180102152324) do
+ActiveRecord::Schema.define(version: 20180104202248) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -90,7 +90,9 @@ ActiveRecord::Schema.define(version: 20180102152324) do
     t.integer "publicsqft"
     t.bigint "rpa_poly_id"
     t.bigint "counties_polym_id"
+    t.bigint "ma_municipalities_id"
     t.index ["counties_polym_id"], name: "index_developments_on_counties_polym_id"
+    t.index ["ma_municipalities_id"], name: "index_developments_on_ma_municipalities_id"
     t.index ["rpa_poly_id"], name: "index_developments_on_rpa_poly_id"
   end
 
@@ -103,17 +105,6 @@ ActiveRecord::Schema.define(version: 20180102152324) do
     t.boolean "approved", default: false
     t.index ["development_id"], name: "index_edits_on_development_id"
     t.index ["user_id"], name: "index_edits_on_user_id"
-  end
-
-  create_table "ma_municipalities", primary_key: "gid", id: :serial, force: :cascade do |t|
-    t.integer "muni_id"
-    t.string "municipal", limit: 35
-    t.geometry "geom", limit: {:srid=>26986, :type=>"multi_polygon"}
-    t.index ["geom"], name: "ma_municipalities_geom_idx", using: :gist
-    t.index ["geom"], name: "ma_municipalities_geom_idx1", using: :gist
-    t.index ["geom"], name: "ma_municipalities_geom_idx2", using: :gist
-    t.index ["geom"], name: "ma_municipalities_geom_idx3", using: :gist
-    t.index ["geom"], name: "ma_municipalities_geom_idx4", using: :gist
   end
 
   create_table "users", force: :cascade do |t|
