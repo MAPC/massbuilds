@@ -9,6 +9,7 @@ FactoryBot.define do
                          status: 'projected',
                          address: '23 Banks St',
                          zip_code: '02138',
+                         point: 'POINT(-71.3940804 42.1845218)',
                          hu: 1,
                          commsf: 25,
                          desc: 'A sample edited development',
