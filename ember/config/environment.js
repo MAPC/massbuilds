@@ -31,8 +31,12 @@ module.exports = function(environment) {
     ENV['host'] = 'http://localhost:3000';
   }
 
+  if (environment === 'staging') {
+    ENV['host'] = 'http://api.staging2.massbuilds.com';
+  }
+
   if (environment === 'production') {
-    ENV['host'] = 'http://api.massbuilds.com';
+    ENV['host'] = 'https://api.massbuilds.com';
   }
 
   if (environment === 'test') {
