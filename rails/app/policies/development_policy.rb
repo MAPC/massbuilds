@@ -3,6 +3,10 @@ class DevelopmentPolicy < ApplicationPolicy
     true
   end
 
+  def show?
+    true
+  end
+
   def create?
     user&.admin? || user&.verified? || (user&.municipal? && (record.municipality == user.municipality))
   end

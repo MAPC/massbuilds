@@ -25,6 +25,9 @@ module.exports = function(environment) {
     contentSecurityPolicy: {
       'connect-src': '*',
     },
+    'ember-simple-auth': {
+      authenticationRoute: 'map',
+    }
   };
 
   if (environment === 'development') {
