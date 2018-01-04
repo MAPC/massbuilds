@@ -7,5 +7,6 @@ FactoryBot.define do
     password 'P@sswordT3st'
     role 'admin'
     municipality 'Boston'
+    request_verified_status false
   end
 end
