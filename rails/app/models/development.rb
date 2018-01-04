@@ -44,6 +44,7 @@ class Development < ApplicationRecord
   end
 
   after_save :update_rpa
+  after_save :update_county
 
   def self.to_csv
     attributes = self.column_names
@@ -98,13 +99,26 @@ class Development < ApplicationRecord
   def update_rpa
     return if rpa_poly_id.present?
     rpa_query = <<~SQL
-      SELECT rpa_id
+      SELECT objectid
       FROM
-        (SELECT rpa_id, ST_TRANSFORM(rpa_poly.shape, 4326) as shape FROM rpa_poly) rpa,
+        (SELECT objectid, ST_TRANSFORM(rpa_poly.shape, 4326) as shape FROM rpa_poly) rpa,
         (SELECT id, name, point FROM developments) development
         WHERE ST_Intersects(point, rpa.shape)
         AND id = #{id};
     SQL
-    self.update(rpa_poly_id: ActiveRecord::Base.connection.exec_query(rpa_query).to_hash[0]['rpa_id'])
+    self.update(rpa_poly_id: ActiveRecord::Base.connection.exec_query(rpa_query).to_hash[0]['objectid'])
+  end
+
+  def update_county
+    return if counties_polym_id.present?
+    counties_query = <<~SQL
+      SELECT objectid
+      FROM
+        (SELECT objectid, ST_TRANSFORM(counties_polym.shape, 4326) as shape FROM counties_polym) county,
+        (SELECT id, name, point FROM developments) development
+        WHERE ST_Intersects(point, county.shape)
+        AND id = #{id};
+    SQL
+    self.update(counties_polym_id: ActiveRecord::Base.connection.exec_query(counties_query).to_hash[0]['objectid'])
   end
 end

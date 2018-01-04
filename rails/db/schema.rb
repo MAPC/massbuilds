@@ -89,6 +89,8 @@ ActiveRecord::Schema.define(version: 20180102152324) do
     t.string "park_type"
     t.integer "publicsqft"
     t.bigint "rpa_poly_id"
+    t.bigint "counties_polym_id"
+    t.index ["counties_polym_id"], name: "index_developments_on_counties_polym_id"
     t.index ["rpa_poly_id"], name: "index_developments_on_rpa_poly_id"
   end
 
@@ -111,6 +113,7 @@ ActiveRecord::Schema.define(version: 20180102152324) do
     t.index ["geom"], name: "ma_municipalities_geom_idx1", using: :gist
     t.index ["geom"], name: "ma_municipalities_geom_idx2", using: :gist
     t.index ["geom"], name: "ma_municipalities_geom_idx3", using: :gist
+    t.index ["geom"], name: "ma_municipalities_geom_idx4", using: :gist
   end
 
   create_table "users", force: :cascade do |t|

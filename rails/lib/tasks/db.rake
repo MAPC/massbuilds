@@ -20,9 +20,20 @@ namespace :db do
     ActiveRecord::Base.connection.execute "DROP FOREIGN TABLE IF EXISTS rpa_poly"
     # ActiveRecord::Base.connection.remove_reference :developments, :rpa_poly
   end
+
+  task add_counties_fdw: :environment do
+    ActiveRecord::Base.connection.execute "IMPORT FOREIGN SCHEMA editor LIMIT TO (counties_polym) FROM SERVER dblive95 INTO public;"
+    # ActiveRecord::Base.connection.add_reference :developments, :counties_polym, index: true
+  end
+
+  task delete_counties_fdw: :environment do
+    ActiveRecord::Base.connection.execute "DROP FOREIGN TABLE IF EXISTS counties_polym"
+    # ActiveRecord::Base.connection.remove_reference :developments, :counties_polym
+  end
 end
 
 Rake::Task["db:setup"].enhance do
   Rake::Task["db:add_foreign_data_wrapper_interface"].invoke
   Rake::Task["db:add_rpa_fdw"].invoke
+  Rake::Task["db:add_counties_fdw"].invoke
 end
