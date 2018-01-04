@@ -23,6 +23,7 @@ default: &default
 
 development:
   <<: *default
+  username: <%= ENV['MASSBUILDS_DATABASE_USERNAME'] %>
   database: massbuilds_development
 
   # The specified database role being used to connect to postgres.
@@ -57,6 +58,7 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
+  username: <%= ENV['MASSBUILDS_DATABASE_USERNAME'] %>
   database: massbuilds_test
 
 staging:
