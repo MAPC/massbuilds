@@ -5,7 +5,13 @@
   {{/link-to}}
 
   {{#if changes}}
-    <button onclick={{action update}} class='submit-changes'>Submit Changes</button>
+    <button onclick={{action update}} class='submit-changes'>
+      {{#if (eq mode 'edit')}}
+        Submit Changes
+      {{else}}
+        Create Development
+      {{/if}}
+    </button>
   {{/if}}
 </div>
 
@@ -30,7 +36,14 @@
             <div class="column">
               <div class="field">
                 <label for="status">Status:</label>
-                {{capitalize editing.status}}
+                <select name="status" onchange={{action checkForUpdated 'status'}}>
+                  {{#unless editing.status}}
+                    <option disabled selected>Select Status</option>
+                  {{/unless}}
+                  {{#each filters.status.options as |option|}}
+                    <option value={{option}} selected={{if (eq option editing.status) 'selected'}}>{{capitalize option}}</option>
+                  {{/each}}
+                </select>
               </div>
 
               <div class="field">
@@ -73,6 +86,15 @@
               <div class="field">
                 <label for="parkType">Parking Type</label>
                 {{editing.parkType}}
+                <select name="parkType" onchange={{action checkForUpdated 'parkType'}}>
+                  {{#unless editing.parkType}}
+                    <option disabled selected>Select Parking Type</option>
+                  {{/unless}}
+                  {{#each filters.parkType.options as |option|}}
+                    <option value={{option}} selected={{if (eq option editing.parkType) 'selected'}}>{{capitalize option}}</option>
+                  {{/each}}
+                </select>
+
               </div>
             </div>
           </div>

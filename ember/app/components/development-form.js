@@ -2,6 +2,7 @@ import Ember from 'ember';
 import Component from '@ember/component';
 import { action, computed } from 'ember-decorators/object';
 import { empty } from 'ember-decorators/object/computed';
+import filters from 'massbuilds/utils/filters';
 
 
 export default class extends Component {
@@ -15,6 +16,7 @@ export default class extends Component {
     this.changes = false;
     this.proposedChanges = {};
     this.editing = this.get('model').toJSON();
+    this.filters = filters;
   }
 
 
@@ -78,14 +80,19 @@ export default class extends Component {
 
 
   checkForUpdated(fieldName) {
+    const strings = ['status', 'parkType'];
+
     const modeled = this.get(`model.${fieldName}`);
     let edited = this.get(`editing.${fieldName}`);
+
+    if (strings.indexOf(fieldName) !== -1) {
+      edited = document.querySelector(`select[name="${fieldName}"]`).value;
+    }
 
     if (typeof edited === 'boolean') {
       edited = !edited;
     }
     
-
     if ((modeled || '').toString() !== (edited || '').toString()) {
       this.set(`proposedChanges.${fieldName}`, edited);
       this.set('changes', true);
