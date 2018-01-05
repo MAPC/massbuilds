@@ -1,24 +1,12 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Setup Notes
 
-Things you may want to cover:
+Before running `bin/setup` you need to set two environment variables: `FOREIGN_DATABASE_USERNAME` and `FOREIGN_DATABASE_PASSWORD` to comport with the username and password of your postgres foreign database.
 
-* Ruby version
+Before running the test suite you need to enable the foreign data wrapper in the test database:
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+  RAILS_ENV=test rake db:add_foreign_data_wrapper_interface
+  RAILS_ENV=test rake db:add_rpa_fdw
+  RAILS_ENV=test rake db:add_counties_fdw
+  RAILS_ENV=test rake db:add_municipalities_fdw
