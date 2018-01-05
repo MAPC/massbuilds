@@ -10,11 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171221191328) do
+ActiveRecord::Schema.define(version: 20180104215708) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "postgis"
+  enable_extension "postgres_fdw"
 
   create_table "developments", force: :cascade do |t|
     t.integer "user_id"
@@ -87,6 +88,12 @@ ActiveRecord::Schema.define(version: 20171221191328) do
     t.boolean "headqtrs"
     t.string "park_type"
     t.integer "publicsqft"
+    t.bigint "rpa_poly_id"
+    t.bigint "counties_polym_id"
+    t.bigint "ma_municipalities_id"
+    t.index ["counties_polym_id"], name: "index_developments_on_counties_polym_id"
+    t.index ["ma_municipalities_id"], name: "index_developments_on_ma_municipalities_id"
+    t.index ["rpa_poly_id"], name: "index_developments_on_rpa_poly_id"
   end
 
   create_table "edits", force: :cascade do |t|
@@ -98,16 +105,6 @@ ActiveRecord::Schema.define(version: 20171221191328) do
     t.boolean "approved", default: false
     t.index ["development_id"], name: "index_edits_on_development_id"
     t.index ["user_id"], name: "index_edits_on_user_id"
-  end
-
-  create_table "ma_municipalities", primary_key: "gid", id: :serial, force: :cascade do |t|
-    t.integer "muni_id"
-    t.string "municipal", limit: 35
-    t.geometry "geom", limit: {:srid=>26986, :type=>"multi_polygon"}
-    t.index ["geom"], name: "ma_municipalities_geom_idx", using: :gist
-    t.index ["geom"], name: "ma_municipalities_geom_idx1", using: :gist
-    t.index ["geom"], name: "ma_municipalities_geom_idx2", using: :gist
-    t.index ["geom"], name: "ma_municipalities_geom_idx3", using: :gist
   end
 
   create_table "users", force: :cascade do |t|
@@ -128,6 +125,7 @@ ActiveRecord::Schema.define(version: 20171221191328) do
     t.string "first_name"
     t.string "last_name"
     t.string "municipality"
+    t.boolean "request_verified_status", default: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

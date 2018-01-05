@@ -43,6 +43,9 @@ class Development < ApplicationRecord
     groundbroken.validates :publicsqft
   end
 
+  after_save :update_rpa
+  after_save :update_county
+
   def self.to_csv
     attributes = self.column_names
     CSV.generate(headers: true) do |csv|
@@ -91,5 +94,44 @@ class Development < ApplicationRecord
 
   def groundbroken?
     status == ('in_construction' || 'completed')
+  end
+
+  def update_rpa
+    return if rpa_poly_id.present?
+    rpa_query = <<~SQL
+      SELECT objectid
+      FROM
+        (SELECT objectid, ST_TRANSFORM(rpa_poly.shape, 4326) as shape FROM rpa_poly) rpa,
+        (SELECT id, name, point FROM developments) development
+        WHERE ST_Intersects(point, rpa.shape)
+        AND id = #{id};
+    SQL
+    self.update(rpa_poly_id: ActiveRecord::Base.connection.exec_query(rpa_query).to_hash[0]['objectid'])
+  end
+
+  def update_county
+    return if counties_polym_id.present?
+    counties_query = <<~SQL
+      SELECT objectid
+      FROM
+        (SELECT objectid, ST_TRANSFORM(counties_polym.shape, 4326) as shape FROM counties_polym) county,
+        (SELECT id, name, point FROM developments) development
+        WHERE ST_Intersects(point, county.shape)
+        AND id = #{id};
+    SQL
+    self.update(counties_polym_id: ActiveRecord::Base.connection.exec_query(counties_query).to_hash[0]['objectid'])
+  end
+
+  def update_municipality
+    return if ma_municipalities_id.present?
+    municipalities_query = <<~SQL
+      SELECT objectid
+      FROM
+        (SELECT objectid, ST_TRANSFORM(ma_municipalities.shape, 4326) as shape FROM ma_municipalities) municipality,
+        (SELECT id, name, point FROM developments) development
+        WHERE ST_Intersects(point, county.shape)
+        AND id = #{id};
+    SQL
+    self.update(ma_municipalities_id: ActiveRecord::Base.connection.exec_query(municipalities_query).to_hash[0]['objectid'])
   end
 end
