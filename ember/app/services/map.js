@@ -69,7 +69,6 @@ export default class extends Service {
       this.get('store')
           .query('development', query)
           .then(result => {
-            console.log(result);
             this.set('data', result);
           });
     }
