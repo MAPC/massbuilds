@@ -5,6 +5,8 @@ RSpec.describe "Edits", type: :request do
     hash = Hash.new {|h,k| h[k] = Hash.new(&h.default_proc) }
     hash["data"]["type"] = "edit"
     hash["data"]["attributes"] = FactoryBot.attributes_for(:edit)
+    # hash["data"]["relationships"]["development"]["data"]["type"] = 'developments'
+    # hash["data"]["relationships"]["development"]["data"]["id"] = 1
     hash.to_json
   }
 

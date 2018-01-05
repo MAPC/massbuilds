@@ -80,7 +80,7 @@ class EditsController < ApplicationController
     # Only allow a trusted parameter "white list" through.
     def edit_params
       respond_to do |format|
-        format.jsonapi { ActiveModelSerializers::Deserialization.jsonapi_parse(params, only: [:user_id, :development_id, :proposed_changes]) }
+        format.jsonapi { ActiveModelSerializers::Deserialization.jsonapi_parse(params) }
       end
     end
 end
