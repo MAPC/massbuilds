@@ -24,7 +24,7 @@ namespace :import do
     csv_text = File.read(Rails.root.join('lib', 'import', 'developments.csv'))
     csv = CSV.parse(csv_text, headers: true, encoding: 'ISO-8859-1')
     csv.each do |row|
-      Development.create(
+      development = Development.new(
         id: row['id'],
         user_id: row["creator_id"],
         rdv: row["rdv"],
@@ -83,6 +83,8 @@ namespace :import do
         commercial: row["commercial"],
         created_at: row["created_at"]
       )
+
+      development.save(validate: false)
     end
   end
 
