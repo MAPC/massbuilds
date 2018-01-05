@@ -152,7 +152,7 @@
 
                 <tr>
                   <td>Single Family</td>
-                  <td>{{input value=model.singfamhu placeholder=0 key-up=(action updateHu)}}</td>
+                  <td>{{input value=model.singfamhu placeholder=0 key-up=(action 'updateHu' 'singfamhu')}}</td>
                   <td>{{round (mult 100 (div model.singfamhu model.hu))}}%</td>
                 </tr>
 

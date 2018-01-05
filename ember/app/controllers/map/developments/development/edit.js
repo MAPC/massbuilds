@@ -1,5 +1,6 @@
+import Ember from 'ember';
 import Controller from '@ember/controller';
-import { action } from 'ember-decorators/object';
+import { action, computed, readOnly } from 'ember-decorators/object';
 
 
 export default class extends Controller {
@@ -7,17 +8,28 @@ export default class extends Controller {
 
   constructor() {
     super();
+
+    this.original = Ember.copy(this.get('model'));
+  }
+
+
+  @readOnly
+  @computed('model')
+  original() {
+    return Ember.copy(this.get('model'));
   }
 
 
   @action
-  save() {
+  createEdit() {
      
   }
 
 
   @action 
-  updateHu() {
+  updateHu(fieldName) {
+    this.checkForUpdated(fieldName);
+
     this.set('model.hu', this.sumProperties(
       'model.singfamhu',
       'model.smmultifam',
@@ -60,6 +72,14 @@ export default class extends Controller {
 
     return Object.values(properties)
                  .reduce((a, b) => parseFloat(a) + (parseFloat(b) || 0), 0);
+  }
+
+
+  checkForUpdated(fieldName) {
+    const original = this.get('original');
+
+    console.log(this.get(`model.${fieldName}`));
+    console.log(original[fieldName]);
   }
 
 }

@@ -136,11 +136,12 @@ class DevelopmentsController < ApplicationController
         else # metric
           type = filter['type']
           value = filter['value']
-          inflector = (type == 'boolean') ? '=' : filter['inflector']
+          inflector = (type == 'boolean' || type == 'string') ? '=' : filter['inflector']
 
           unless (
             (['=', '<', '>'].include?(inflector)) &&
             (
+             (type == 'string') ||
              (type == 'number' && (/\A[-+]?\d+\z/ === value)) ||
              (type == 'boolean' && (value == 'true' || value == 'false'))
             )
