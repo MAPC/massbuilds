@@ -12,6 +12,7 @@ export default class extends DS.Model {
   @attr('string') municipality
   @attr('string') role
 
+  @hasMany('edits') edits
   @hasMany('developments') developments
 
   @computed('firstName', 'lastName')

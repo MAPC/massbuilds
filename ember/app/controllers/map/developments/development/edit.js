@@ -8,12 +8,9 @@ export default class extends Controller {
 
   constructor() {
     super();
-
-    this.original = Ember.copy(this.get('model'));
   }
 
 
-  @readOnly
   @computed('model')
   original() {
     return Ember.copy(this.get('model'));
