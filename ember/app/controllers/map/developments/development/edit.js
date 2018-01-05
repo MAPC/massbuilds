@@ -16,8 +16,6 @@ export default class extends Controller {
       proposedChanges: JSON.stringify(proposedChanges)
     });
 
-    console.log(newEdit);
-
     newEdit.save().then(response => {
       this.transitionToRoute('map.developments.development.index', this.get('model'));
     });

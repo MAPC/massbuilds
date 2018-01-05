@@ -33,6 +33,7 @@ class EditsController < ApplicationController
   def create
     @edit = Edit.new(edit_params)
     authorize @edit
+
     @edit.user = current_user
 
     if @edit.save

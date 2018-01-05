@@ -1,11 +1,11 @@
 <div class="links">
-  {{#link-to 'map.developments.development' editing.id}}
+  {{#link-to 'map.developments.development.index' model.id}}
     <img src="/assets/images/chevrons-left.svg">
     Cancel
   {{/link-to}}
 
   {{#if changes}}
-    <button onclick={{action update}}>Submit Changes</button>
+    <button onclick={{action update}} class='submit-changes'>Submit Changes</button>
   {{/if}}
 </div>
 

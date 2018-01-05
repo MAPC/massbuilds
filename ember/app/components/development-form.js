@@ -10,6 +10,8 @@ export default class extends Component {
   constructor() {
     super();
 
+    this.classNames = ['component', 'development-form'];
+
     this.changes = false;
     this.proposedChanges = {};
     this.editing = this.get('model').toJSON();

@@ -15,7 +15,6 @@ ActiveRecord::Schema.define(version: 20180105193650) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "postgis"
-  enable_extension "postgres_fdw"
 
   create_table "developments", force: :cascade do |t|
     t.integer "user_id"
@@ -88,12 +87,6 @@ ActiveRecord::Schema.define(version: 20180105193650) do
     t.boolean "headqtrs"
     t.string "park_type"
     t.integer "publicsqft"
-    t.bigint "rpa_poly_id"
-    t.bigint "counties_polym_id"
-    t.bigint "ma_municipalities_id"
-    t.index ["counties_polym_id"], name: "index_developments_on_counties_polym_id"
-    t.index ["ma_municipalities_id"], name: "index_developments_on_ma_municipalities_id"
-    t.index ["rpa_poly_id"], name: "index_developments_on_rpa_poly_id"
   end
 
   create_table "edits", force: :cascade do |t|

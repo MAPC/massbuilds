@@ -1,0 +1,20 @@
+.component.development-form {
+
+  button.submit-changes {
+    margin-left: 10px;
+    padding: 5px 9px;
+
+    color: $color_font-light;
+
+    background: $color_brand-primary--active; 
+    border: 0;
+    border-radius: 5px;
+    transition: background .15s;
+
+    &:hover {
+      background: $color_brand-primary; 
+      transition: background .15s;
+    }
+  }
+
+}
