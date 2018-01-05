@@ -11,9 +11,12 @@
 
             {{#if (eq metric.type 'string')}}
 
-              <select name={{metric.col}} placeholder="Select to filter by" onchange={{action updateMetricOption value="target"}}> 
+              <select name={{metric.col}} onchange={{action updateMetricOption value="target"}}> 
+                {{#unless metric.value}}
+                  <option disabled selected=selected>Select to filter</option>
+                {{/unless}}
                 {{#each metric.options as |option|}}
-                  <option value={{option}}>{{capitalize option}}</option>
+                  <option value={{option}} selected={{if (eq metric.value option) 'selected'}}>{{capitalize option}}</option>
                 {{/each}}
               </select>
 
