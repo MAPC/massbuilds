@@ -49,8 +49,10 @@ export default class extends Service {
       latLngs = [this.get('lower'), this.get('upper')];
     }
 
-    return L.latLngBounds(latLngs)
-            .pad(this.get('pad'));
+    const bounds = L.latLngBounds(latLngs)
+                    .pad(this.get('pad'));
+
+    return bounds;
   }
 
 
@@ -67,6 +69,7 @@ export default class extends Service {
       this.get('store')
           .query('development', query)
           .then(result => {
+            console.log(result);
             this.set('data', result);
           });
     }

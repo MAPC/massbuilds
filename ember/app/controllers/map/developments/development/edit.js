@@ -5,6 +5,11 @@ import { action } from 'ember-decorators/object';
 export default class extends Controller {
 
 
+  constructor() {
+    super();
+  }
+
+
   @action
   save() {
      

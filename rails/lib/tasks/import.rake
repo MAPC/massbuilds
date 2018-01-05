@@ -1,10 +1,29 @@
 require 'csv'
 namespace :import do
+
+  desc 'Perform all import tasks in proper order'
+  task in_order: :environment do
+    puts 'import:user_data'
+    Rake::Task["import:user_data"].invoke
+
+    puts 'import:development_data'
+    Rake::Task["import:development_data"].invoke
+
+    puts 'database:fix_seq_id'
+    Rake::Task["database:fix_seq_id"].invoke
+
+    puts 'import:developer_name_data'
+    Rake::Task["import:developer_name_data"].invoke
+
+    puts 'import:development_municipalities'
+    Rake::Task["import:development_municipalities"].invoke
+  end
+
   desc 'Import previous development data'
   task development_data: :environment do
     csv_text = File.read(Rails.root.join('lib', 'import', 'developments.csv'))
     csv = CSV.parse(csv_text, headers: true, encoding: 'ISO-8859-1')
-    csv.each_with_index do |row, index|
+    csv.each do |row|
       Development.create(
         id: row['id'],
         user_id: row["creator_id"],
@@ -17,7 +36,7 @@ namespace :import do
         name: row["name"],
         status: row["status"],
         desc: row["desc"],
-        project_url: row["project_url"],
+        prj_url: row["project_url"],
         mapc_notes: row["mapc_notes"],
         tagline: row["tagline"],
         address: row["address"],
@@ -28,9 +47,10 @@ namespace :import do
         year_compl: row["year_compl"],
         prjarea: row["prjarea"],
         singfamhu: row["singfamhu"],
-        twnhsmmult: row["twnhsmmult"],
+        smmultifam: row["twnhsmmult"],
         lgmultifam: row["lgmultifam"],
-        tothu: row["tothu"],
+        hu: row["tothu"],
+        yrcomp_est: 0,
         gqpop: row["gqpop"],
         rptdemp: row["rptdemp"],
         emploss: row["emploss"],
@@ -42,14 +62,14 @@ namespace :import do
         team_membership_count: row["team_membership_count"],
         cancelled: row["cancelled"],
         private: row["private"],
-        fa_ret: row["fa_ret"],
-        fa_ofcmd: row["fa_ofcmd"],
-        fa_indmf: row["fa_indmf"],
-        fa_whs: row["fa_whs"],
-        fa_rnd: row["fa_rnd"],
-        fa_edinst: row["fa_edinst"],
-        fa_other: row["fa_other"],
-        fa_hotel: row["fa_hotel"],
+        ret_sqft: row["fa_ret"],
+        ofcmd_sqft: row["fa_ofcmd"],
+        indmf_sqft: row["fa_indmf"],
+        whs_sqft: row["fa_whs"],
+        rnd_sqft: row["fa_rnd"],
+        ei_sqft: row["fa_edinst"],
+        other_sqft: row["fa_other"],
+        hotel_sqft: row["fa_hotel"],
         other_rate: row["other_rate"],
         affordable: row["affordable"],
         latitude: row["latitude"],
@@ -102,7 +122,7 @@ namespace :import do
     csv_text = File.read(Rails.root.join('lib', 'import', 'developer_names.csv'))
     csv = CSV.parse(csv_text, headers: true, encoding: 'ISO-8859-1')
     csv.each do |row|
-      Development.find(row['development_id']).update(developer_name: row['name'])
+      Development.find(row['development_id']).update(devlper: row['name'])
     end
   end
 
