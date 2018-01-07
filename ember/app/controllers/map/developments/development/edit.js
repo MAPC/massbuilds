@@ -13,7 +13,7 @@ export default class extends Controller {
     const newEdit = this.get('store').createRecord('edit', {
       development: this.get('model'),
       user: this.get('currentUser.user'),
-      proposedChanges: JSON.stringify(proposedChanges)
+      proposedChanges: proposedChanges
     });
 
     newEdit.save().then(response => {

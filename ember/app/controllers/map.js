@@ -37,6 +37,12 @@ export default class extends Controller {
 
 
   @computed('target.currentRouteName')
+  get showingUsers() {
+    return this.get('target.currentRouteName') === 'map.users';
+  }
+
+
+  @computed('target.currentRouteName')
   get showingDevelopment() {
     return [
       'map.developments.development.index',
@@ -91,7 +97,11 @@ export default class extends Controller {
 
   @computed('showingFilters', 'showingDevelopment')
   get showingLeftPanel() {
-    return this.get('showingFilters') || this.get('showingDevelopment');
+    return (
+      this.get('showingFilters') 
+      || this.get('showingDevelopment')
+      || this.get('showingUsers')
+    );
   }
 
 

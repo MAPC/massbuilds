@@ -1,1 +1,46 @@
-{{outlet}}
+<section class="route users">
+
+  {{input value=searchQuery placeholder='Search by First/Last Name or Email'}}
+
+  <table class="users-table">
+    <tr class="table-header">
+      <td>Name</td>
+      <td>Email</td>
+      <td>Municipality</td>
+      <td>Date Joined</td>
+      <td>Role</td>
+    </tr>
+
+    {{#each filteredUsers as |user|}}
+      <tr>
+        <td data-cell="full-name">
+          {{user.fullName}}
+        </td>
+        <td data-cell="email">
+          {{user.email}}
+        </td>
+        <td data-cell="municipality">
+          {{#if user.municipality}}
+            {{user.municipality}}
+          {{else}}
+            -
+          {{/if}}
+        </td>
+        <td data-cell="created-at">
+          {{user.createdAt}}
+        </td>
+        <td data-cell="role"> 
+          <select name="{{user.id}}-role" onchange={{action updateUser user}}>
+            {{#if (eq user.role 'admin')}}
+              <option disabled selected='selected'>Admin</option>
+            {{/if}}
+            {{#each roles as |role|}}
+              <option value={{role}} selected={{if (eq user.role role) 'selected'}}>{{capitalize role}}</option>
+            {{/each}} 
+          </select>
+        </td>
+      </tr>
+    {{/each}}
+  </table>
+
+</section>

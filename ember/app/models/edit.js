@@ -6,7 +6,7 @@ export default class extends DS.Model {
   @belongsTo('development') development
   @belongsTo('user', { async: true }) user
 
-  @attr('string') proposedChanges
+  @attr('json') proposedChanges
 
   @attr('date') createdAt
 
