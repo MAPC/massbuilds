@@ -196,34 +196,6 @@
     }
   }
 
-  table {
-    width: 100%;
-
-    tr {
-      font-size: 14px;
-
-      &.table-header {
-        font-size: 12px;
-
-        border-bottom: 1px solid $color_brand-primary;
-        td { color: $color_font-dark !important; }
-      } 
-
-      &:nth-of-type(2n+1):not(.table-header) { 
-        background: lighten($color_bg-light--active, 3); 
-      }
-
-      td { 
-        padding: 5px;
-
-        &:first-of-type {
-          text-align: left;
-          color: $color_font-medium; 
-        }
-      }
-    }
-  }
-
   .detail {
 
     font-size: 15px;

@@ -12,6 +12,8 @@ export default class extends DS.Model {
   @attr('string') municipality
   @attr('string') role
 
+  @attr('date') createdAt
+
   @hasMany('edits') edits
   @hasMany('developments') developments
 

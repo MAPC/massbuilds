@@ -7,13 +7,12 @@ export default class extends Controller {
   constructor() {
     super();
 
-    this.roles = ['user', 'verified', 'municipal'];
-    this.searchQuery = '';
+    const roles = ['user', 'verified', 'municipal'];
+    this.roles = roles;
+    this.filterableRoles = [...roles, 'admin'];
 
-    const pageLength = 25;
-    this.pageLength = pageLength;
-    this.min = 0;
-    this.max = pageLength;
+    this.searchQuery = '';
+    this.roleFilter = 'all';
   }
 
 
@@ -23,22 +22,27 @@ export default class extends Controller {
   }
 
 
-  @computed('sortedUsers', 'searchQuery')
+  @computed('sortedUsers', 'searchQuery', 'roleFilter')
   get filteredUsers() {
     const sortedUsers = this.get('sortedUsers');
+    const roleFilter = this.get('roleFilter');
     const searchQuery = this.get('searchQuery').toLowerCase();
     const { min, max } = this.getProperties('min', 'max');
 
     const searchable = ['lastName', 'firstName', 'email', 'fullName'];
     let filteredUsers = Ember.copy(sortedUsers);
 
+    if (roleFilter !== 'all') {
+      filteredUsers = filteredUsers.filter(user => user.get('role') === roleFilter);
+    }
+
     if (searchQuery.length > 0) {
-      filteredUsers = sortedUsers.filter(user => {
+      filteredUsers = filteredUsers.filter(user => {
         return searchable.any(attr => user.get(attr).toLowerCase().startsWith(searchQuery));
       });
     }
 
-    return filteredUsers.splice(min, max);
+    return filteredUsers;
   }
 
 
@@ -50,6 +54,12 @@ export default class extends Controller {
       user.set('role', newRole);
       user.save();
     }
+  }
+
+
+  @action
+  filterRole() {
+    this.set('roleFilter', document.querySelector('select[name="role-filter"]').value);
   }
 
 }
