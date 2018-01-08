@@ -1,5 +1,5 @@
 import Component from '@ember/component';
-import { action } from 'ember-decorators/object';
+import { action, computed } from 'ember-decorators/object';
 import { service } from 'ember-decorators/service';
 
 
@@ -13,6 +13,17 @@ export default class extends Component {
     super();
 
     this.classNames = ['component', 'subpanel', 'account-subpanel']
+  }
+
+
+  @computed('currentUser.user.role') 
+  get verified() {
+    const userRole = this.get('currentUser.user.role');
+    const verifiedRoles = ['admin', 'municipal', 'verified'];
+
+    console.log(userRole);
+
+    return verifiedRoles.indexOf(userRole) !== -1;
   }
 
 

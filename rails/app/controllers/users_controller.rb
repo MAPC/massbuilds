@@ -46,7 +46,7 @@ class UsersController < ApplicationController
     return head :unauthorized if filtered_params.empty?
     if @user.update(filtered_params)
       respond_to do |format|
-        format.jsonapi { head :ok }
+        format.jsonapi { render jsonapi: @user }
       end
     else
       head :bad_request

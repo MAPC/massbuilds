@@ -23,11 +23,12 @@ module Massbuilds
     # -- all .rb files in that directory are automatically loaded.
     config.generators.javscript_engine :js
     config.middleware.use ActionDispatch::Flash
+    config.middleware.use Rack::MethodOverride
 
     config.middleware.insert_before 0, Rack::Cors do
       allow do
         origins '*'
-        resource '*', :headers => :any, :methods => [:get, :post, :options]
+        resource '*', :headers => :any, :methods => [:get, :post, :options, :put, :patch, :delete]
       end
     end
   end

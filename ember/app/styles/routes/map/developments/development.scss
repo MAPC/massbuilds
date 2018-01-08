@@ -3,27 +3,6 @@
   min-width: 800px;
   padding: 0 10px;
 
-  .links {
-    position: absolute;
-    top: -65px;
-    right: 10px;
-
-    a {
-      &:hover { color: $color_brand-primary--active; }
-
-      & + a {
-        display: inline-lock;
-
-        margin-left: 5px;
-        padding-left: 10px;
-
-        border-left: 1px solid $color_bg-medium;
-      }
-    }
-
-    img { top: 6px; }
-  }
-
   .development-content {
     display: flex; 
 

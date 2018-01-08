@@ -1,0 +1,18 @@
+.component.verified-mark {
+  $size: 24px;
+
+  width: $size;
+  height: $size;
+  
+  background: $color_brand-primary--active;
+  border-radius: 50%;
+
+  img  {
+    top: -($size / 2);
+
+    width: $size / 2;
+
+    cursor: help;
+  }
+
+}
