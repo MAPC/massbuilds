@@ -8,7 +8,7 @@ import filters from 'massbuilds/utils/filters';
 export default class extends Controller {
 
   @service map
-  @service session
+  @service currentUser
 
 
   constructor() {
@@ -29,7 +29,7 @@ export default class extends Controller {
     this.searchPlaceholder = 'Search by Town/City, Developer, Address...';
 
     this.showingFilters = false;
-    this.showingMenu = !this.get('session.isAuthenticated');
+    this.showingMenu = false;
 
     this.updateChildren = 0;
     this.panel = null;
@@ -44,7 +44,10 @@ export default class extends Controller {
 
   @computed('target.currentRouteName')
   get showingModerations() {
-    return this.get('target.currentRouteName') === 'map.moderations';
+    return [
+      'map.moderations',
+      'map.moderations.for.user',
+    ].indexOf(this.get('target.currentRouteName')) !== -1;
   }
 
 
@@ -53,7 +56,7 @@ export default class extends Controller {
     return [
       'map.developments.development.index',
       'map.developments.development.edit',
-      'map.developments.development.create',
+      'map.developments.create',
       'map.developments.for.user',
     ].indexOf(this.get('target.currentRouteName')) !== -1;
   }
@@ -113,11 +116,12 @@ export default class extends Controller {
   }
 
 
-  @computed('showingMenu')
+  @computed('showingMenu', 'currentUser.user')
   get showingRightPanel() {
-    const showingMenu = this.get('showingMenu');
-
-    return showingMenu;
+    return (
+      this.get('showingMenu')
+      || this.get('currentUser.user') === undefined
+    );
   }
 
 
