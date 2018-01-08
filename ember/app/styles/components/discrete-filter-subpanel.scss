@@ -31,11 +31,24 @@
         transition: border-width .2s, height .2s;
       }
 
-      img {
-        @extend ._vertical-center;
+      
+      span { @extend ._vertical-center; }
 
+      img {
+        top: 3px;
         height: 15px; 
         margin: 0 auto;
+
+        & + em {
+          display: inline-block;
+
+          margin-left: 4px;
+          padding: 1px 8px;
+
+          font-size: 12px;
+
+          border-left: 1px solid $color_bg-medium;
+        }
       }
     }
   }

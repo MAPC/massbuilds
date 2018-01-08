@@ -1,9 +1,20 @@
 <div class="subviews">
   <button onclick={{action changeView 'search'}} class="{{if (eq view 'search') 'active'}}">
-    <img src="/assets/images/search.svg">
+    <span>
+      <img src="/assets/images/search.svg">
+    </span>
   </button>
   <button onclick={{action changeView 'selected'}} class="{{if (eq view 'selected') 'active'}}">
-    <img src="/assets/images/check-square.svg">
+    <span>
+      <img src="/assets/images/check-square.svg"> 
+      <em>
+        {{#if selectedValues}}
+          {{selectedValues.length}}
+        {{else}}
+          0
+        {{/if}}
+      </em>
+    </span>
   </button>
 </div>
 

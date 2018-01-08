@@ -9,7 +9,7 @@ export default class extends DS.Model {
 
   @attr('string') name
   @attr('string') status
-  @attr('string') desc
+  @attr('string') descr
   @attr('string') prjUrl
   @attr('string') tagline
   @attr('string') nhood
