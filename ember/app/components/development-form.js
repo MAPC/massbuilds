@@ -70,6 +70,15 @@ export default class extends Component {
     ));
   }
 
+  @computed('editing.status')
+  get groundBroken() {
+    const status = this.get('editing.status');
+
+    return (
+      status === 'completed'
+      || status === 'in_construction'
+    );
+  }
 
   sumProperties() {
     const properties = this.getProperties(...arguments);
@@ -87,6 +96,7 @@ export default class extends Component {
 
     if (strings.indexOf(fieldName) !== -1) {
       edited = document.querySelector(`select[name="${fieldName}"]`).value;
+      this.set(`editing.${fieldName}`, edited);
     }
 
     if (typeof edited === 'boolean') {

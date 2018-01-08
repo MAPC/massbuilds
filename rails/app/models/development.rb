@@ -5,11 +5,15 @@ class Development < ApplicationRecord
   belongs_to :user
   include PgSearch
   pg_search_scope :search_by_name_and_location, against: [:name, :municipality, :address], using: { tsearch: { any_word: true } }
-  validates :name, :year_compl, :yrcomp_est, :status, :address, :zip_code, :hu,
+  validates :name, :status, :address, :zip_code, :hu,
             :commsf, :desc, presence: true
   validates_inclusion_of :rdv, :asofright, :clusteros, :phased, :stalled, :mixed_use,
                          :headqtrs, :ovr55, in: [true, false]
+  with_options if: :projected?, presence: true do |projected|
+    projected.validates :yrcomp_est
+  end
   with_options if: :proposed?, presence: true do |proposed|
+    proposed.validates :yrcomp_est
     proposed.validates :singfamhu
     proposed.validates :smmultifam
     proposed.validates :lgmultifam
@@ -17,6 +21,7 @@ class Development < ApplicationRecord
     proposed.validates :park_type
   end
   with_options if: :groundbroken?, presence: :true do |groundbroken|
+    groundbroken.validates :year_compl
     groundbroken.validates :singfamhu
     groundbroken.validates :smmultifam
     groundbroken.validates :lgmultifam

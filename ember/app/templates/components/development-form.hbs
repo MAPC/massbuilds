@@ -54,7 +54,7 @@
               </div>
 
               <div class="field">
-                {{#if (eq editing.status 'completed')}}
+                {{#if groundBroken}}
                   <label for="yearCompl">Year Completed</label>
                   {{input value=editing.yearCompl placeholder="Enter here" key-up=(action checkForUpdated 'yearCompl')}}
                 {{else}}
