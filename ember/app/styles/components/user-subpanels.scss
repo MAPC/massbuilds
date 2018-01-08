@@ -140,6 +140,59 @@
         }
       }
     }
+
+    .user-actions {
+      display: flex;
+      flex-wrap: wrap;
+
+      width: 90%;
+      margin: 0 auto;
+
+      a {
+        $cell_margin: 1px;
+
+        display: block;
+        box-sizing: border-box;
+        flex: 1 1 33.33%;
+
+        max-width: calc(33.33% - 2px);
+        margin: $cell_margin;
+        padding: 20px 10px;
+
+        color: $color_font-light;
+        text-align: center;
+        font-size: 13px;
+
+        background: $color_brand-primary;
+        border-radius: 5px;
+        transition: background .15s;
+
+        &:hover {
+          background: $color_brand-primary--active; 
+          transition: background .15s;
+        }
+
+        .icon-wrapper {
+          $icon_size: 40px;
+
+          width: $icon_size;
+          height: $icon_size;
+          margin: 10px auto;
+
+          background: $color_bg-light;
+
+          border-radius: 50%;
+
+          img {
+            @extend ._vertical-center;
+            
+            max-width: 50%; 
+            max-height: 50%;
+            margin: 0 auto;
+          }
+        }
+      }
+    }
      
     .logout-button {
       position: absolute;

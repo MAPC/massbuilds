@@ -13,46 +13,51 @@
     </h3>
   </div>
 
-  <ul class="user-actions">
-    <li>
-      {{#link-to 'map.developments.create'}} 
+  <div class="user-actions">
+    {{#link-to 'map.developments.create'}} 
+      <div class="icon-wrapper">
         <img src="/assets/images/plus.svg"> 
-        Create Development
-      {{/link-to}}
-    </li>
+      </div>
 
-    <li>
-      {{#link-to 'map.developments.for.user' currentUser.user}} 
+      Create Development
+    {{/link-to}}
+
+    {{#link-to 'map.developments.for.user' currentUser.user}} 
+      <div class="icon-wrapper">
         <img src="/assets/images/map-pin.svg"> 
-        My Developments
-      {{/link-to}}
-    </li>
+      </div>
+
+      My Developments
+    {{/link-to}}
 
     {{#unless (eq currentUser.user.role 'admin')}}
-      <li>
-        {{#link-to 'map.moderations.for.user' currentUser.user}} 
+      {{#link-to 'map.moderations.for.user' currentUser.user}} 
+        <div class="icon-wrapper">
           <img src="/assets/images/edit-3.svg"> 
-          My Edits
-        {{/link-to}}
-      </li>
+        </div>
+
+        My Edits
+      {{/link-to}}
     {{/unless}}
 
     {{#if (eq currentUser.user.role 'admin')}}
-      <li>
-        {{#link-to 'map.moderations.index'}} 
+      {{#link-to 'map.moderations.index'}} 
+        <div class="icon-wrapper">
           <img src="/assets/images/edit-3.svg"> 
-          Moderations
-        {{/link-to}}
-      </li>
+        </div>
 
-      <li>
-        {{#link-to 'map.users'}} 
+        Moderations
+      {{/link-to}}
+
+      {{#link-to 'map.users'}} 
+        <div class="icon-wrapper">
           <img src="/assets/images/user.svg"> 
-          Manage Users
-        {{/link-to}}
-      </li>
+        </div>
+
+        Manage Users
+      {{/link-to}}
     {{/if}}
-  </ul>
+  </div>
   
 </div>
 

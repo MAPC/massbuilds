@@ -1,8 +1,8 @@
 const statusColors = {
-  'completed': '#77438A',
-  'in_construction': '#456AA8',
-  'planning': '#51A681',
-  'projected': '#EAB941',
+  'completed': '#208095',
+  'in_construction': '#5ebb25',
+  'planning': '#eb892f',
+  'projected': '#eeda2d',
 };
 
 export default statusColors;
