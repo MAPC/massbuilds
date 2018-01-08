@@ -28,6 +28,7 @@ export default class extends Controller {
 
     this.searchPlaceholder = 'Search by Town/City, Developer, Address...';
 
+    this.overrideRightPanel = false;
     this.showingFilters = false;
     this.showingMenu = false;
 
@@ -116,18 +117,28 @@ export default class extends Controller {
   }
 
 
-  @computed('showingMenu', 'currentUser.user')
+  @computed('showingMenu', 'currentUser.user', 'overrideRightPanel')
   get showingRightPanel() {
-    return (
-      this.get('showingMenu')
-      || this.get('currentUser.user') === undefined
-    );
+    if (this.get('showingMenu')) {
+      return true;
+    }
+
+    if (this.get('overrideRightPanel')) {
+      return false;
+    }
+
+    return this.get('currentUser.user') === undefined;
   }
 
 
   @action
   toggleMenu() {
-    this.toggleProperty('showingMenu');
+    if (!this.get('overrideRightPanel')) {
+      this.set('overrideRightPanel', true);
+    }
+    else {
+      this.toggleProperty('showingMenu');
+    }
   }
 
 

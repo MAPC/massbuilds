@@ -23,7 +23,7 @@
     <span class="hamburger"></span>
   </button>
 
-  {{#if session.isAuthenticated}}
+  {{#if currentUser.user}}
     {{share-buttons filterParams=filterParams}}
   {{/if}}
 

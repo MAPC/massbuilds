@@ -1,8 +1,15 @@
 <div class="left-panel-links">
-  {{#link-to 'map.developments.development.index' model.id}}
-    <img src="/assets/images/chevrons-left.svg">
-    Cancel
-  {{/link-to}}
+  {{#if (eq mode 'edit')}}
+    {{#link-to 'map.developments.development.index' model.id}}
+      <img src="/assets/images/chevrons-left.svg">
+      Cancel
+    {{/link-to}}
+  {{else}}
+    {{#link-to 'map'}}
+      <img src="/assets/images/chevrons-left.svg">
+      Cancel
+    {{/link-to}}
+  {{/if}}
 
   {{#if changes}}
     <button onclick={{action update}} class='submit-changes'>

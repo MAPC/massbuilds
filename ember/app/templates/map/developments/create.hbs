@@ -1,1 +1,7 @@
-{{outlet}}
+<section class="route map-developments-create">
+  {{development-form
+    updateModel=(action createDevelopment)
+    model=model
+    mode='create'
+  }}
+</section>
