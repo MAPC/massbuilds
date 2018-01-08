@@ -12,8 +12,19 @@ Router.map(function() {
       this.route('development', { path: '/:development_id'}, function() {
         this.route('edit');
       });
+
+      this.route('create');
+
+      this.route('for', function() {
+        this.route('user', { path: '/:user_id' });
+      });
     });
     this.route('users');
+    this.route('moderations', function() {
+      this.route('for', function() {
+        this.route('user', { path: '/:user_id' });
+      });
+    });
   });
 });
 

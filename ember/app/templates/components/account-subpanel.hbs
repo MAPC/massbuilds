@@ -14,6 +14,44 @@
   </div>
 
   <ul class="user-actions">
+    <li>
+      {{#link-to 'map.developments.create'}} 
+        <img src="/assets/images/plus.svg"> 
+        Create Development
+      {{/link-to}}
+    </li>
+
+    <li>
+      {{#link-to 'map.developments.for.user' currentUser.user}} 
+        <img src="/assets/images/map-pin.svg"> 
+        My Developments
+      {{/link-to}}
+    </li>
+
+    {{#unless (eq currentUser.user.role 'admin')}}
+      <li>
+        {{#link-to 'map.moderations.for.user' currentUser.user}} 
+          <img src="/assets/images/edit-3.svg"> 
+          My Edits
+        {{/link-to}}
+      </li>
+    {{/unless}}
+
+    {{#if (eq currentUser.user.role 'admin')}}
+      <li>
+        {{#link-to 'map.moderations.index'}} 
+          <img src="/assets/images/edit-3.svg"> 
+          Moderations
+        {{/link-to}}
+      </li>
+
+      <li>
+        {{#link-to 'map.users'}} 
+          <img src="/assets/images/user.svg"> 
+          Manage Users
+        {{/link-to}}
+      </li>
+    {{/if}}
   </ul>
   
 </div>

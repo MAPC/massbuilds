@@ -43,11 +43,18 @@ export default class extends Controller {
 
 
   @computed('target.currentRouteName')
+  get showingModerations() {
+    return this.get('target.currentRouteName') === 'map.moderations';
+  }
+
+
+  @computed('target.currentRouteName')
   get showingDevelopment() {
     return [
       'map.developments.development.index',
       'map.developments.development.edit',
       'map.developments.development.create',
+      'map.developments.for.user',
     ].indexOf(this.get('target.currentRouteName')) !== -1;
   }
 
@@ -95,12 +102,13 @@ export default class extends Controller {
   }
 
 
-  @computed('showingFilters', 'showingDevelopment')
+  @computed('showingFilters', 'showingDevelopment', 'showingUsers', 'showingModerations')
   get showingLeftPanel() {
     return (
       this.get('showingFilters') 
       || this.get('showingDevelopment')
       || this.get('showingUsers')
+      || this.get('showingModerations')
     );
   }
 
