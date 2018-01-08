@@ -14,7 +14,7 @@
   </div>
 
   <div class="user-actions">
-    {{#link-to 'map.developments.create'}} 
+    {{#link-to 'map.developments.create' click=(action closeMenu)}} 
       <div class="icon-wrapper">
         <img src="/assets/images/plus.svg"> 
       </div>
@@ -22,7 +22,7 @@
       Create Development
     {{/link-to}}
 
-    {{#link-to 'map.developments.for.user' currentUser.user}} 
+    {{#link-to 'map.developments.for.user' currentUser.user click=(action closeMenu)}} 
       <div class="icon-wrapper">
         <img src="/assets/images/map-pin.svg"> 
       </div>
@@ -31,7 +31,7 @@
     {{/link-to}}
 
     {{#unless (eq currentUser.user.role 'admin')}}
-      {{#link-to 'map.moderations.for.user' currentUser.user}} 
+      {{#link-to 'map.moderations.for.user' currentUser.user click=(action closeMenu)}} 
         <div class="icon-wrapper">
           <img src="/assets/images/edit-3.svg"> 
         </div>
@@ -41,7 +41,7 @@
     {{/unless}}
 
     {{#if (eq currentUser.user.role 'admin')}}
-      {{#link-to 'map.moderations.index'}} 
+      {{#link-to 'map.moderations.index' click=(action closeMenu)}} 
         <div class="icon-wrapper">
           <img src="/assets/images/edit-3.svg"> 
         </div>
@@ -49,7 +49,7 @@
         Moderations
       {{/link-to}}
 
-      {{#link-to 'map.users'}} 
+      {{#link-to 'map.users' click=(action closeMenu)}} 
         <div class="icon-wrapper">
           <img src="/assets/images/user.svg"> 
         </div>

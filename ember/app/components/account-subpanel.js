@@ -21,8 +21,6 @@ export default class extends Component {
     const userRole = this.get('currentUser.user.role');
     const verifiedRoles = ['admin', 'municipal', 'verified'];
 
-    console.log(userRole);
-
     return verifiedRoles.indexOf(userRole) !== -1;
   }
 
@@ -30,6 +28,12 @@ export default class extends Component {
   @action 
   logout() {
     this.get('session').invalidate();
+  }
+
+
+  @action
+  closeMenu() {
+    this.sendAction('toggleMenu');
   }
 
 }
