@@ -199,6 +199,7 @@ export default class extends Controller {
 
   @action
   viewDevelopment(id) {
+    this.set('showingFilters', false);
     this.transitionToRoute('map.developments.development', id);
   }
 
