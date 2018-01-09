@@ -31,7 +31,6 @@
         transition: border-width .2s, height .2s;
       }
 
-      
       span { @extend ._vertical-center; }
 
       img {
@@ -110,10 +109,33 @@
       white-space: nowrap;
       overflow: hidden;
 
+      img.selected-filter {
+        height: 12px; 
+        width: auto;
+      }
+
+      span {
+        cursor: pointer; 
+
+        &:hover { color: $color_brand-primary--active; }
+      }
+
       &:first-of-type { 
         padding-top: 10px; 
 
         .discrete-value-actions { top: 60%; }
+      }
+
+      &.is-selected {
+        font-weight: 600; 
+
+        .discrete-value-actions button {
+          transform: rotate(45deg);
+
+          &:hover {
+            color: $color_state-negative; 
+          }
+        }
       }
     }
   }
@@ -124,6 +146,8 @@
     right: 0;
 
     button {
+      font-size: 18px;
+
       background: none;
       border: none; 
 

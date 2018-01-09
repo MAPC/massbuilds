@@ -25,11 +25,13 @@
     {{#if selected}}
       <ul> 
         {{#each selected as |value|}}
-          <li>
-            {{value}}
+          <li class="is-selected">
+            <span onclick={{action deselect value}}>
+              {{value}}
+            </span>
 
             <div class="discrete-value-actions">
-              <button onclick={{action deselect value}}>X</button>
+              <button onclick={{action deselect value}}>+</button>
             </div>
           </li>
         {{/each}}
@@ -47,11 +49,17 @@
     <div class="list-wrapper">
       <ul class="discrete-value-list">
         {{#each filteredValues as |value|}} 
-          <li>
-            {{value}}
+          <li class="{{if value.isSelected 'is-selected'}}">
+            {{#if value.isSelected}} 
+              <img src="/assets/images/filter.svg" class="selected-filter">
+            {{/if}}
+            
+            <span onclick={{action select value.value}}>
+              {{value.value}}
+            </span>
 
             <div class="discrete-value-actions">
-              <button onclick={{action select value}}>+</button>
+              <button onclick={{action select value.value}}>+</button>
             </div>
           </li>
         {{/each}}

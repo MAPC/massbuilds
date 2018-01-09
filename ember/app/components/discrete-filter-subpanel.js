@@ -44,14 +44,19 @@ export default class extends Component {
     const selected = this.get('selected');
     const searchQuery = this.get('searchQuery');
 
-    let filtered = values.filter(value => selected.indexOf(value) === -1);
+    let filtered = Ember.copy(values);
 
     if (searchQuery.length >= 1) {
       let query = searchQuery.toLowerCase();
       filtered = filtered.filter(value => value.toLowerCase().startsWith(query));
     }
 
-    return filtered.sort();
+    return filtered.sort().map(value => {
+      return { 
+        value, 
+        isSelected: (selected.indexOf(value) !== -1)
+      }; 
+    });
   }
 
 
@@ -72,6 +77,11 @@ export default class extends Component {
   @action
   select(value) {
     const selected = this.get('selected');
+
+    if (selected.indexOf(value) !== -1) {
+      return this.deselect(value);
+    }
+
     selected.pushObject(value);
     this.set('selected', selected.sort());
 
