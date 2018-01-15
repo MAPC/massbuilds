@@ -44,10 +44,11 @@ const filters = {
 
   'yearCompl': { name: 'Year completed', type: 'number', ...defaultMetric },
   'yrcomplEst': { name: 'Year compl. est.',  type: 'number', ...defaultMetric },
-  'prjarea': { name: 'Project area size', type: 'number', ...defaultMetric },
+  'prjarea': { name: 'Project area size', type: 'number', unit: 'sqft', ...defaultMetric },
   'publicsqft': { name: 'Public sqft', type: 'number', ...defaultMetric },
   'onsitepark': { name: 'Parking spaces', type: 'number', ...defaultMetric },
   'dNTrnsit': { name: 'Dist. to transit', type: 'number', ...defaultMetric },
+  'height': { name: 'Height', type: 'number', unit: 'ft', ...defaultMetric },
 
   'clusteros': { name: 'Cluster dvlpmnt.', type: 'boolean', ...defaultMetric },
   'floodzone': { name: 'In flood zone', type: 'boolean', ...defaultMetric },

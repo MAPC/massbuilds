@@ -68,10 +68,18 @@
 
       &.number {
         input {
-          width: 19%; 
+          width: 16%; 
 
           text-align: right;
         } 
+
+        .metric-unit {
+          position: absolute;
+          top: 5px;
+          right: 0px;
+
+          font-size: 12px;
+        }
       }
     }
   }

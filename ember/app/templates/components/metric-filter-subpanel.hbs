@@ -36,6 +36,9 @@
 
               {{input name=metric.col value=metric.value change=(action updateFilter metric)}}
 
+              {{#if metric.unit}}
+                <span class="metric-unit">{{metric.unit}}</span>
+              {{/if}}
             {{/if}}
           </div>
         {{/each}}
