@@ -64,7 +64,6 @@ export default class extends DS.Model {
   @attr('boolean') clusteros
   @attr('boolean') phased
   @attr('boolean') stalled
-  @attr('boolean') private
   @attr('boolean') headqtrs
   @attr('boolean') mixedUse
 

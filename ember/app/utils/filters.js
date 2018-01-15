@@ -104,7 +104,6 @@ const metricGroups = {
         'rdv',
         'phased',
         'stalled',
-        //'createdAt',
       ]
     },
     {
@@ -153,7 +152,6 @@ const metricGroups = {
       metrics: [
         'gqpop',
         'ovr55',
-        'private',
       ]
     },
   ],
