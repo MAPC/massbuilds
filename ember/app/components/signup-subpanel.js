@@ -14,7 +14,8 @@ export default class extends Component {
 
     this.classNames = ['component', 'subpanel', 'signup-subpanel'];
 
-    this.fullName = '';
+    this.firstName = '';
+    this.lastName = '';
     this.username = '';
     this.password = '';
     this.confirmPassword = '';
@@ -26,7 +27,8 @@ export default class extends Component {
   @computed('fullName', 'username', 'password', 'confirmPassword')
   get submittable() {
     return [
-      'fullName', 
+      'firstName', 
+      'lastName', 
       'username',
       'password', 
       'confirmPassword'
@@ -44,7 +46,7 @@ export default class extends Component {
     let errorMessage = 'You must fill in all fields.';
 
     const email = this.get('username');
-    const [ firstName, lastName, otherName ] = this.get('fullName').split(' ');
+    const { firstName, lastName } = this.getProperties('firstName', 'lastName');
     const { password, confirmPassword } = this.getProperties('password', 'confirmPassword');
 
 
@@ -101,7 +103,6 @@ export default class extends Component {
         });
       })
       .catch(e => {
-        console.log(e);
         this.set('errorMessage', 'Not able to sign up at this time.');
       });
     }
