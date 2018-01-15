@@ -12,4 +12,37 @@
     .leaflet-left { left: 150px; }
   }
 
+  .massbuilds-tooltip {
+    padding: 8px 16px;
+    border: 1px solid $color_brand-primary;
+
+    h4 {
+      margin: 0;
+      margin-bottom: 5px;
+
+      font-size: 16px;
+    } 
+
+    h5 {
+      display: inline-block;
+
+      margin: 0;
+      padding: 0;
+
+      font-size: 14px;
+      line-height: 14px;
+
+      &:last-of-type { 
+        margin-left: 5px;
+        padding-left: 10px;
+
+        font-weight: 400;
+
+        border-left: 1px solid $color_bg-medium;
+      }
+
+      span { color: $color_font-medium; }
+    }
+  }
+
 }
