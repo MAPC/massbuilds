@@ -1,7 +1,5 @@
-import Ember from 'ember';
 import Component from '@ember/component';
 import { action, computed } from 'ember-decorators/object';
-import { empty } from 'ember-decorators/object/computed';
 import { service } from 'ember-decorators/service';
 import filters from 'massbuilds/utils/filters';
 
@@ -20,6 +18,33 @@ export default class extends Component {
     this.proposedChanges = {};
     this.editing = this.get('model').toJSON();
     this.filters = filters;
+
+    this.huFields = [
+      'editing.singfamhu',
+      'editing.smmultifam',
+      'editing.lgmultifam',
+      'editing.units1Bd',
+      'editing.units2Bd',
+      'editing.units3Bd',
+    ];
+
+    this.affrdUnitFields = [
+      'editing.affU30',
+      'editing.affU3050',
+      'editing.affU5080',
+      'editing.affU80p',
+    ];
+
+    this.commsfFields = [
+      'editing.retSqft', 
+      'editing.ofcmdSqft', 
+      'editing.indmfSqft', 
+      'editing.whsSqft', 
+      'editing.rndSqft', 
+      'editing.eiSqft', 
+      'editing.hotelSqft', 
+      'editing.otherSqft',
+    ];
   }
 
 
@@ -33,14 +58,7 @@ export default class extends Component {
   updateHu(fieldName) {
     this.checkForUpdated(fieldName);
 
-    this.set('editing.hu', this.sumProperties(
-      'editing.singfamhu',
-      'editing.smmultifam',
-      'editing.lgmultifam',
-      'editing.units1Bd',
-      'editing.units2Bd',
-      'editing.units3Bd'
-    ));
+    this.set('editing.hu', this.sumProperties(...this.get('huFields'), 'editing.unknownhu'));
   }
 
 
@@ -48,12 +66,7 @@ export default class extends Component {
   updateAffrdUnit(fieldName) {
     this.checkForUpdated(fieldName);
 
-    this.set('editing.affrdUnit', this.sumProperties(
-      'editing.affU30',
-      'editing.affU3050',
-      'editing.affU5080',
-      'editing.affU80p'
-    ));
+    this.set('editing.affrdUnit', this.sumProperties(...this.get('affrdUnitFields'), 'editing.affUnknown'));
   }
 
 
@@ -61,16 +74,28 @@ export default class extends Component {
   updateCommsf(fieldName) {
     this.checkForUpdated(fieldName);
 
-    this.set('editing.commsf', this.sumProperties(
-      'editing.retSqft', 
-      'editing.ofcmdSqft', 
-      'editing.indmfSqft', 
-      'editing.whsSqft', 
-      'editing.rndSqft', 
-      'editing.eiSqft', 
-      'editing.hotelSqft', 
-      'editing.otherSqft'
-    ));
+    this.set('editing.commsf', this.sumProperties(...this.get('commsfFields'), 'editing.unkSqft'));
+  }
+
+
+  @action
+  updateUnkSqft() {
+    this.updateDependentField('unkSqft', 'commsf')
+    this.updateCommsf('commsf');
+  }
+
+
+  @action
+  updateAffUnknown() {
+    this.updateDependentField('affUnknown', 'affrdUnit')
+    this.updateAffrdUnit('affrdUnit');
+  }
+
+
+  @action
+  updateUnknownhu() {
+    this.updateDependentField('unknownhu', 'hu')
+    this.updateHu('hu');
   }
 
 
@@ -88,6 +113,16 @@ export default class extends Component {
       status === 'completed'
       || status === 'in_construction'
     );
+  }
+
+
+  updateDependentField(dependent, parent) {
+    const parentValue = this.get(`editing.${parent}`);
+    const summed = this.sumProperties(...this.get(`${parent}Fields`));
+
+    const dependentValue = (parentValue > summed) ? parentValue - summed : 0;
+
+    this.set(`editing.${dependent}`, dependentValue);
   }
 
 

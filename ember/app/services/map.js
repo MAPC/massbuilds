@@ -41,8 +41,6 @@ export default class extends Service {
     let data = [];
     let mod = 0;
 
-    console.log(viewing);
-
     if (viewing) {
       data = [viewing];
       mod = -.0024;
