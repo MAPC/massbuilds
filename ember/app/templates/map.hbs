@@ -43,7 +43,7 @@
 
   <div class="map-layer">
 
-    {{#unless map.data}}
+    {{#unless (or map.stored map.filteredData)}}
       <div class="map-loading-overlay">
         <div class="loading-text">
           <h1>MassBuilds</h1>
@@ -59,28 +59,20 @@
     {{#leaflet-map onLoad=(action setMapInstance) bounds=map.bounds as |layers|}}
       {{layers.tile url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
 
-      {{#each map.data as |datum|}}
-        {{#layers.circle 
-          lat=datum.latitude 
-          lng=datum.longitude
-          color=(status-color datum.status)
-          onClick=(action 'viewDevelopment' datum.id)
-          radius=4
-          as |circle|
-        }} 
-          {{#circle.tooltip className='massbuilds-tooltip'}}
-            <h4>{{datum.name}}</h4>
-            <h5 style="color: {{status-color datum.status}}">
-              {{capitalize datum.status}}
-            </h5>
-            <h5>
-              <span>Year of Completion: </span>
-              2012
-              {{datum.yearCompl}}
-            </h5>
-          {{/circle.tooltip}}
-        {{/layers.circle}}
-      {{/each}}
+      {{#if (gt map.filteredData.length 0)}}
+        {{map-layer 
+          data=map.filteredData
+          layers=layers 
+          viewDevelopment=(action viewDevelopment)
+        }}
+      {{/if}}
+
+      {{map-layer 
+        data=map.stored 
+        layers=layers 
+        faded=activeFilters
+        viewDevelopment=(action viewDevelopment)
+      }}
     {{/leaflet-map}}
   </div>
 

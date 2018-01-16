@@ -20,7 +20,7 @@ export default class extends Service {
     this.pad = 0;
 
     this.instance = null;
-    this.data = [];
+    this.filteredData = [];
 
     this.stored = [];
     this.storedBounds = null;
@@ -32,9 +32,10 @@ export default class extends Service {
   }
 
 
-  @computed('data')
+  @computed('stored', 'filteredData.length')
   get bounds() {
-    const data = this.get('data');
+    const dataSource = (this.get('filteredData.length') > 0) ? 'filteredData' : 'stored';
+    const data = this.get(dataSource);
     const storedBounds = this.get('storedBounds');
     let latLngs = [];
 
@@ -62,14 +63,14 @@ export default class extends Service {
       && this.get('stored.length') > 0
     ) {
       this.set('pad', 0);
-      this.set('data', this.get('stored'));
+      this.set('filteredData', []);
     }
     else {
       this.set('pad', .1);
       this.get('store')
           .query('development', query)
           .then(result => {
-            this.set('data', result);
+            this.set('filteredData', result);
           });
     }
   }
