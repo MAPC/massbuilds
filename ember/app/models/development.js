@@ -29,6 +29,7 @@ export default class extends DS.Model {
   @attr('number') singfamhu
   @attr('number') smmultifam
   @attr('number') lgmultifam
+  @attr('number') unknownhu
   @attr('number') hu
   @attr('number') gqpop
   @attr('number') rptdemp
@@ -45,6 +46,7 @@ export default class extends DS.Model {
   @attr('number') eiSqft
   @attr('number') otherSqft
   @attr('number') hotelSqft
+  @attr('number') unkSqft
   @attr('number') otherRate
   @attr('number') latitude
   @attr('number') longitude
@@ -56,6 +58,7 @@ export default class extends DS.Model {
   @attr('number') aff3050
   @attr('number') aff5080
   @attr('number') aff80p
+  @attr('number') affUnknown
   @attr('number') publicsqft
 
   @attr('boolean') rdv
