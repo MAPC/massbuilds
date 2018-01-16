@@ -20,7 +20,10 @@ export default class extends Service {
     this.pad = 0;
 
     this.instance = null;
+    this.viewing = null;
     this.filteredData = [];
+
+    this.boundsUpdater = 0;
 
     this.stored = [];
     this.storedBounds = null;
@@ -32,10 +35,23 @@ export default class extends Service {
   }
 
 
-  @computed('stored', 'filteredData.length')
+  @computed('stored', 'filteredData.length', 'viewing', 'boundsUpdater')
   get bounds() {
-    const dataSource = (this.get('filteredData.length') > 0) ? 'filteredData' : 'stored';
-    const data = this.get(dataSource);
+    const viewing = this.get('viewing');
+    let data = [];
+    let mod = 0;
+
+    console.log(viewing);
+
+    if (viewing) {
+      data = [viewing];
+      mod = -.0024;
+    }
+    else {
+      const dataSource = (this.get('filteredData.length') > 0) ? 'filteredData' : 'stored';
+      data = this.get(dataSource);
+    }
+
     const storedBounds = this.get('storedBounds');
     let latLngs = [];
 
@@ -44,7 +60,7 @@ export default class extends Service {
     }
 
     if (data.get('length') > 0) {
-      latLngs = data.map(datum => L.latLng([datum.get('latitude'), datum.get('longitude')]));
+      latLngs = data.map(datum => L.latLng([datum.get('latitude'), datum.get('longitude') + mod]));
     }
     else {
       latLngs = [this.get('lower'), this.get('upper')];
@@ -54,6 +70,11 @@ export default class extends Service {
                     .pad(this.get('pad'));
 
     return bounds;
+  }
+
+
+  returnToPoint() {
+    this.set('boundsUpdater', Math.random());
   }
 
 

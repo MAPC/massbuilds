@@ -26,7 +26,10 @@
   <div class="layout-column">
     <div class="development-header">
       <h1>{{input value=editing.name placeholder="Development Name" key-up=(action checkForUpdated 'name')}}</h1>
-      <h2><img src="/assets/images/map-pin.svg"> {{input value=editing.address placeholder="Development Address" key-up=(action checkForUpdated 'address')}}</h2>
+      <h2>
+        <img src="/assets/images/map-pin.svg" onclick={{action findPosition}}> 
+        {{input value=editing.address placeholder="Development Address" key-up=(action checkForUpdated 'address')}}
+      </h2>
 
       <h2 class="project-url">
         <img src="/assets/images/link.svg">

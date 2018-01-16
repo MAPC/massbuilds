@@ -2,10 +2,13 @@ import Ember from 'ember';
 import Component from '@ember/component';
 import { action, computed } from 'ember-decorators/object';
 import { empty } from 'ember-decorators/object/computed';
+import { service } from 'ember-decorators/service';
 import filters from 'massbuilds/utils/filters';
 
 
 export default class extends Component {
+
+  @service map
 
 
   constructor() {
@@ -70,6 +73,13 @@ export default class extends Component {
     ));
   }
 
+
+  @action 
+  findPosition() {
+    this.get('map').returnToPoint();
+  }
+
+
   @computed('editing.status')
   get groundBroken() {
     const status = this.get('editing.status');
@@ -79,6 +89,7 @@ export default class extends Component {
       || status === 'in_construction'
     );
   }
+
 
   sumProperties() {
     const properties = this.getProperties(...arguments);

@@ -17,8 +17,8 @@
   <div class="development-content">
     <div class="layout-column">
       <div class="development-header">
-        <h1>{{model.name}}</h1>
-        <h2><img src="/assets/images/map-pin.svg"> {{model.address}}</h2>
+        <h1 onclick={{action findPosition}}>{{model.name}}</h1>
+        <h2><img src="/assets/images/map-pin.svg" onclick={{action findPosition}}> {{model.address}}</h2>
 
         {{#if model.prjUrl}}
           <h2 class="project-url">

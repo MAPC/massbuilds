@@ -1,5 +1,5 @@
 import Controller from '@ember/controller';
-import { computed } from 'ember-decorators/object';
+import { action, computed } from 'ember-decorators/object';
 import { service } from 'ember-decorators/service';
 
 
@@ -35,6 +35,12 @@ export default class extends Controller {
     return this.attributesFor({
       headqtrs: 'Company Headquarters',
     });
+  }
+
+
+  @action
+  findPosition() {
+    this.get('map').returnToPoint();
   }
 
 

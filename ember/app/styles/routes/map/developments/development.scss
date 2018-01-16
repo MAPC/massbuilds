@@ -26,6 +26,14 @@
     margin-bottom: 6px;
 
     font-size: 26px;
+
+    cursor: pointer;
+    transition: color .15s;
+    
+    &:hover { 
+      color: $color_brand-primary--active; 
+      transition: color .15s;
+    }
   }
 
   h2 {
@@ -34,6 +42,13 @@
     margin: 0;
 
     font-size: 18px;
+
+    &:not(.project-url) {
+      img:hover {
+        cursor: pointer;
+        opacity: .8;
+      } 
+    }
 
     img {
       top: 3px;
