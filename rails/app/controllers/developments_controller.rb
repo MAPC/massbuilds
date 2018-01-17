@@ -90,7 +90,7 @@ class DevelopmentsController < ApplicationController
 
     def filtered_params
       params.permit(:user_id, :rdv, :asofright, :ovr55, :clusteros, :phased, :stalled, :name, :status,
-                    :desc, :prj_url, :mapc_notes, :tagline, :address, :state, :zip_code, :height,
+                    :descr, :prj_url, :mapc_notes, :tagline, :address, :state, :zip_code, :height,
                     :stories, :year_compl, :prjarea, :singfamhu, :smmultifam, :lgmultifam, :hu, :gqpop,
                     :rptdemp, :emploss, :estemp, :commsf, :hotelrms, :onsitepark, :total_cost,
                     :team_membership_count, :cancelled, :private, :ret_sqft, :ofcmd_sqft, :indmf_sqft,
@@ -105,7 +105,7 @@ class DevelopmentsController < ApplicationController
       respond_to do |format|
         format.jsonapi { ActiveModelSerializers::Deserialization.jsonapi_parse(params,
                          only: %i[user_id rdv asofright ovr55 clusteros phased stalled name status
-                                  desc prj_url mapc_notes tagline address state zip_code height
+                                  descr prj_url mapc_notes tagline address state zip_code height
                                   stories year_compl prjarea singfamhu smmultifam lgmultifam hu gqpop
                                   rptdemp emploss estemp commsf hotelrms onsitepark total_cost
                                   team_membership_count cancelled private ret_sqft ofcmd_sqft indmf_sqft

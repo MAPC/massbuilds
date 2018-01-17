@@ -6,7 +6,7 @@ class Development < ApplicationRecord
   include PgSearch
   pg_search_scope :search_by_name_and_location, against: [:name, :municipality, :address], using: { tsearch: { any_word: true } }
   validates :name, :status, :address, :yrcomp_est, :year_compl, :zip_code, :hu,
-            :commsf, :desc, presence: true
+            :commsf, :descr, presence: true
   validates_inclusion_of :rdv, :asofright, :clusteros, :phased, :stalled, :mixed_use,
                          :headqtrs, :ovr55, in: [true, false]
   with_options if: :proposed?, presence: true do |proposed|

@@ -1,7 +1,7 @@
 class DevelopmentSerializer < ActiveModel::Serializer
 [:id, :name, :status, :address, :municipality, :devlper, :latitude, :longitude].each { |attr| attribute attr }
 [:user_id, :rdv, :asofright, :ovr55, :clusteros, :phased, :stalled,
-  :desc, :prj_url, :mapc_notes, :tagline, :state, :zip_code, :height,
+  :descr, :prj_url, :mapc_notes, :tagline, :state, :zip_code, :height,
   :stories, :year_compl, :prjarea, :singfamhu, :smmultifam, :lgmultifam,
   :hu, :gqpop, :rptdemp, :emploss, :estemp, :commsf, :hotelrms, :onsitepark,
   :total_cost, :team_membership_count, :cancelled, :private, :ret_sqft,

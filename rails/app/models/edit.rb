@@ -24,7 +24,7 @@ class Edit < ApplicationRecord
     {
       "title": "Edit",
       "type": "object",
-      "required": ["name", "year_compl", "yrcomp_est", "status", "address", "zip_code", "hu", "commsf", "desc", "rdv", "asofright", "clusteros", "phased", "stalled", "mixed_use", "headqtrs", "ovr55"],
+      "required": ["name", "year_compl", "yrcomp_est", "status", "address", "zip_code", "hu", "commsf", "descr", "rdv", "asofright", "clusteros", "phased", "stalled", "mixed_use", "headqtrs", "ovr55"],
       "properties": {
         "name": {
           "type": "string"
