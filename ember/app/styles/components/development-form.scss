@@ -1,6 +1,6 @@
 .component.development-form {
 
-  input { 
+  input, textarea { 
     padding: 2px 8px;
     margin: 2px;
 
@@ -13,6 +13,16 @@
       background: mix($color_bg-light--active, $color_brand-primary, 80);
       transition: background .15s;
     }
+  }
+
+  textarea {
+    width: 100%;
+    min-height: 200px;
+    padding: 8px;
+
+    font-size: 12px;
+
+    resize: vertical;
   }
 
   .development-header {

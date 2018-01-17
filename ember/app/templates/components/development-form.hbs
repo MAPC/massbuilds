@@ -57,13 +57,13 @@
               </div>
 
               <div class="field">
-                {{#if groundBroken}}
-                  <label for="yearCompl">Year Completed</label>
-                  {{input value=editing.yearCompl placeholder="Enter here" key-up=(action checkForUpdated 'yearCompl')}}
-                {{else}}
-                  <label for="yrcompEst">Yr. Compl. Est.</label>
-                  {{input value=editing.yrcompEst placeholder="Enter here" key-up=(action checkForUpdated 'yrcompEst')}}
-                {{/if}}
+                <label for="yearCompl">Year Completed</label>
+                {{input value=editing.yearCompl placeholder="Enter here" key-up=(action checkForUpdated 'yearCompl')}}
+              </div>
+
+              <div class="field">
+                <label for="yrcompEst">Yr. Compl. Est.</label>
+                {{input value=editing.yrcompEst placeholder="Enter here" key-up=(action checkForUpdated 'yrcompEst')}}
               </div>
 
               <div class="field">
@@ -393,6 +393,11 @@
     <div class="detail">
       <h3>Last Updated</h3>
       <p>{{editing.updatedAt}}</p>
+    </div>
+
+    <div class="detail">
+      <h3>Description</h3>
+      <p>{{textarea value=editing.descr placeholder="Enter Description" key-up=(action checkForUpdated 'descr')}}</p>
     </div>
   </div>
 </div>
