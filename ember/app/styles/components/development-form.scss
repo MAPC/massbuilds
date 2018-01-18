@@ -15,6 +15,17 @@
     }
   }
 
+  .required:before {
+    content: '*';
+    position: absolute;
+    left: -10px;
+    top: 0;
+    display: block;
+
+    color: $color_state-negative;
+    font-size: 10px;
+  }
+
   textarea {
     width: 100%;
     min-height: 200px;

@@ -25,15 +25,15 @@
 <div class="development-content">
   <div class="layout-column">
     <div class="development-header">
-      <h1>{{input value=editing.name placeholder="Development Name" key-up=(action checkForUpdated 'name')}}</h1>
-      <h2>
+      <h1 class="required">{{input value=editing.name class="required-field" placeholder="Development Name" key-up=(action checkForUpdated 'name')}}</h1>
+      <h2 class="required">
         <img src="/assets/images/map-pin.svg" onclick={{action findPosition}}> 
-        {{input value=editing.address placeholder="Development Address" key-up=(action checkForUpdated 'address')}}
+        {{input value=editing.address class="required-field" placeholder="Development Address" key-up=(action checkForUpdated 'address')}}
       </h2>
 
-      <h2 class="project-url">
+      <h2 class="project-url required">
         <img src="/assets/images/link.svg">
-        {{input value=editing.prjUrl placeholder="Project Website" key-up=(action checkForUpdated 'prjUrl')}}
+        {{input value=editing.prjUrl class="required-field" placeholder="Project Website" key-up=(action checkForUpdated 'prjUrl')}}
       </h2>
     </div>
 
@@ -45,8 +45,8 @@
           <div class="row">
             <div class="column">
               <div class="field">
-                <label for="status">Status:</label>
-                <select name="status" onchange={{action checkForUpdated 'status'}}>
+                <label for="status" class="required">Status:</label>
+                <select name="status" class="required-field" onchange={{action checkForUpdated 'status'}}>
                   {{#unless editing.status}}
                     <option disabled selected>Select Status</option>
                   {{/unless}}
@@ -57,13 +57,13 @@
               </div>
 
               <div class="field">
-                <label for="yearCompl">Year Completed</label>
-                {{input value=editing.yearCompl placeholder="Enter here" key-up=(action checkForUpdated 'yearCompl')}}
+                <label for="yearCompl" class="required">Year Completed</label>
+                {{input value=editing.yearCompl class="required-field" placeholder="Enter here" key-up=(action checkForUpdated 'yearCompl')}}
               </div>
 
               <div class="field">
-                <label for="yrcompEst">Yr. Compl. Est.</label>
-                {{input value=editing.yrcompEst placeholder="Enter here" key-up=(action checkForUpdated 'yrcompEst')}}
+                <label for="yrcompEst" class="required">Yr. Compl. Est.</label>
+                {{input value=editing.yrcompEst class="required-field" placeholder="Enter here" key-up=(action checkForUpdated 'yrcompEst')}}
               </div>
 
               <div class="field">
@@ -170,8 +170,8 @@
 
           <div class="table-wrapper">
             <h3 class="field">
-              <label for="hu">Tot. Housing Units</label>
-              {{input value=editing.hu placeholder="Total Housing Units" key-up=(action updateUnknownhu)}} Units
+              <label for="hu" class="required">Tot. Housing Units</label>
+              {{input value=editing.hu class="required-field" placeholder="Total Housing Units" key-up=(action updateUnknownhu)}} Units
             </h3>
 
             <table class="housing-units">
@@ -306,8 +306,8 @@
 
           <div class="table-wrapper">
             <h3 class="field">
-              <label for="commsf">Commercial Square Footage</label>
-              {{input value=editing.commsf placeholder="Total square footage" key-up=(action updateUnkSqft)}} sqft.
+              <label for="commsf" class="required">Commercial Square Footage</label>
+              {{input value=editing.commsf class="required-field" placeholder="Total square footage" key-up=(action updateUnkSqft)}} sqft.
             </h3>
 
             <table class="commercial-makeup">
@@ -396,10 +396,8 @@
     </div>
 
     <div class="detail">
-      <h3>Description</h3>
-      <p>{{textarea value=editing.descr placeholder="Enter Description" key-up=(action checkForUpdated 'descr')}}</p>
+      <h3 class="required">Description</h3>
+      <p>{{textarea value=editing.descr class="required-field" placeholder="Enter Description" key-up=(action checkForUpdated 'descr')}}</p>
     </div>
   </div>
 </div>
-
-
