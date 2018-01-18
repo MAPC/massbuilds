@@ -10,11 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180117140436) do
+ActiveRecord::Schema.define(version: 20180117202455) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "postgis"
+  enable_extension "postgres_fdw"
+
+  create_table "allpoints_final2", primary_key: "gid", id: :serial, force: :cascade do |t|
+    t.decimal "id"
+    t.integer "muni_id"
+    t.string "muni", limit: 18
+    t.string "parloc_id", limit: 20
+    t.decimal "fy", precision: 10
+    t.geometry "geom", limit: {:srid=>26986, :type=>"st_point"}
+    t.index ["geom"], name: "allpoints_final2_geom_idx", using: :gist
+  end
 
   create_table "developments", force: :cascade do |t|
     t.integer "user_id"
@@ -48,7 +59,7 @@ ActiveRecord::Schema.define(version: 20180117140436) do
     t.integer "commsf"
     t.integer "hotelrms"
     t.integer "onsitepark"
-    t.integer "total_cost"
+    t.bigint "total_cost"
     t.integer "team_membership_count"
     t.boolean "cancelled", default: false
     t.boolean "private", default: false
@@ -87,9 +98,19 @@ ActiveRecord::Schema.define(version: 20180117140436) do
     t.boolean "headqtrs"
     t.string "park_type"
     t.integer "publicsqft"
+    t.bigint "rpa_poly_id"
+    t.bigint "counties_polym_id"
+    t.bigint "ma_municipalities_id"
     t.integer "unknownhu"
     t.integer "affUnknown"
     t.integer "unk_sqft"
+    t.string "loc_id"
+    t.integer "parcel_fy"
+    t.string "n_transit"
+    t.string "d_n_trnsit"
+    t.index ["counties_polym_id"], name: "index_developments_on_counties_polym_id"
+    t.index ["ma_municipalities_id"], name: "index_developments_on_ma_municipalities_id"
+    t.index ["rpa_poly_id"], name: "index_developments_on_rpa_poly_id"
   end
 
   create_table "edits", force: :cascade do |t|

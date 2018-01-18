@@ -21,11 +21,11 @@ namespace :import do
 
   desc 'Import previous development data'
   task development_data: :environment do
-    csv_text = File.read(Rails.root.join('lib', 'import', 'developments.csv'))
+    csv_text = File.read(Rails.root.join('lib', 'import', 'joined_final_massbuilds_data_2018.csv'))
     csv = CSV.parse(csv_text, headers: true, encoding: 'ISO-8859-1')
     csv.each do |row|
       development = Development.new(
-        id: row['id'],
+        id: row['project_id'],
         user_id: row["creator_id"],
         rdv: row["rdv"],
         asofright: row["asofright"],
@@ -35,8 +35,8 @@ namespace :import do
         stalled: row["stalled"],
         name: row["name"],
         status: row["status"],
-        desc: row["desc"],
-        prj_url: row["project_url"],
+        descr: row["descr"],
+        prj_url: row["prj_url"],
         mapc_notes: row["mapc_notes"],
         tagline: row["tagline"],
         address: row["address"],
@@ -47,10 +47,10 @@ namespace :import do
         year_compl: row["year_compl"],
         prjarea: row["prjarea"],
         singfamhu: row["singfamhu"],
-        smmultifam: row["twnhsmmult"],
+        smmultifam: row["smmultifam"],
         lgmultifam: row["lgmultifam"],
-        hu: row["tothu"],
-        yrcomp_est: 0,
+        hu: row["hu"],
+        yrcomp_est: row["yrcomp_est"],
         gqpop: row["gqpop"],
         rptdemp: row["rptdemp"],
         emploss: row["emploss"],
@@ -62,28 +62,46 @@ namespace :import do
         team_membership_count: row["team_membership_count"],
         cancelled: row["cancelled"],
         private: row["private"],
-        ret_sqft: row["fa_ret"],
-        ofcmd_sqft: row["fa_ofcmd"],
-        indmf_sqft: row["fa_indmf"],
-        whs_sqft: row["fa_whs"],
-        rnd_sqft: row["fa_rnd"],
-        ei_sqft: row["fa_edinst"],
-        other_sqft: row["fa_other"],
-        hotel_sqft: row["fa_hotel"],
+        ret_sqft: row["ret_sqft"],
+        ofcmd_sqft: row["ofcmd_sqft"],
+        indmf_sqft: row["indmf_sqft"],
+        whs_sqft: row["whs_sqft"],
+        rnd_sqft: row["rnd_sqft"],
+        ei_sqft: row["ei_sqft"],
+        other_sqft: row["other_sqft"],
+        hotel_sqft: row["hotel_sqft"],
         other_rate: row["other_rate"],
         affordable: row["affordable"],
         latitude: row["latitude"],
         longitude: row["longitude"],
         parcel_id: row["parcel_id"],
         mixed_use: row["mixed_use"],
-        point: row["point"],
         programs: row["programs"],
         forty_b: row["forty_b"],
         residential: row["residential"],
         commercial: row["commercial"],
-        created_at: row["created_at"]
+        created_at: row["created_at"],
+        ma_municipalities_id: row["muni_id"],
+        municipality: row["municipal"],
+        units_1bd: row["units_1bd"],
+        units_2bd: row["units_2bd"],
+        units_3bd: row["units_3bd"],
+        affrd_unit: row["affrd_unit"],
+        aff_u30: row["aff_u30"],
+        aff_30_50: row["aff_30_50"],
+        aff_50_80: row["aff_50_80"],
+        aff_80p: row["aff_80p"],
+        headqtrs: row["headqtrs"],
+        park_type: row["park_type"],
+        publicsqft: row["publicsqft"],
+        devlper: row["devlper"],
+        loc_id: row["loc_id"],
+        parcel_fy: row["parcel_fy"],
+        n_transit: row.try(:[], 'n_transit'),
+        d_n_trnsit: row["d_n_trnsit"],
+        updated_at: row["updated_at"],
+        point: convert_srid(row["geom"])
       )
-
       development.save(validate: false)
     end
   end
@@ -140,5 +158,13 @@ namespace :import do
         AND id = #{development.id};
     SQL
     ActiveRecord::Base.connection.exec_query(municipality_query).to_hash
+  end
+
+  def convert_srid(point)
+    return nil if point.match(/POINT\(\d+\.\d+\s\d+\.\d+\)/).to_s.blank?
+    conversion_query = <<~SQL
+      SELECT ST_AsText(ST_Transform(ST_GeomFromText('#{point.match(/POINT\(\d+\.\d+\s\d+\.\d+\)/).to_s}',26986),4326)) As wgs_geom;
+    SQL
+    ActiveRecord::Base.connection.exec_query(conversion_query).to_hash[0]["wgs_geom"]
   end
 end

@@ -102,7 +102,10 @@ class Development < ApplicationRecord
         WHERE ST_Intersects(point, rpa.shape)
         AND id = #{id};
     SQL
-    self.update(rpa_poly_id: ActiveRecord::Base.connection.exec_query(rpa_query).to_hash[0]['objectid'])
+    sql_result = ActiveRecord::Base.connection.exec_query(rpa_query).to_hash[0]
+    return if sql_result.blank?
+    self.rpa_poly_id = sql_result['objectid']
+    self.save(validate: false)
   end
 
   def update_county
@@ -115,19 +118,25 @@ class Development < ApplicationRecord
         WHERE ST_Intersects(point, county.shape)
         AND id = #{id};
     SQL
-    self.update(counties_polym_id: ActiveRecord::Base.connection.exec_query(counties_query).to_hash[0]['objectid'])
+    sql_result = ActiveRecord::Base.connection.exec_query(counties_query).to_hash[0]
+    return if sql_result.blank?
+    self.counties_polym_id = sql_result['objectid']
+    self.save(validate: false)
   end
 
   def update_municipality
     return if ma_municipalities_id.present?
     municipalities_query = <<~SQL
-      SELECT objectid
+      SELECT muni_id
       FROM
-        (SELECT objectid, ST_TRANSFORM(ma_municipalities.shape, 4326) as shape FROM ma_municipalities) municipality,
+        (SELECT muni_id, ST_TRANSFORM(ma_municipalities.shape, 4326) as shape FROM ma_municipalities) municipality,
         (SELECT id, name, point FROM developments) development
         WHERE ST_Intersects(point, county.shape)
         AND id = #{id};
     SQL
-    self.update(ma_municipalities_id: ActiveRecord::Base.connection.exec_query(municipalities_query).to_hash[0]['objectid'])
+    sql_result = ActiveRecord::Base.connection.exec_query(municipalities_query).to_hash[0]
+    return if sql_result.blank?
+    self.ma_municipalities_id = sql_result['muni_id']
+    self.save(validate: false)
   end
 end
