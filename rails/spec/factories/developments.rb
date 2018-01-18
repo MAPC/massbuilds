@@ -10,8 +10,6 @@ FactoryBot.define do
     status "MyString"
     desc "A sample development"
     prj_url "http://www.example.com/"
-    mapc_notes "MyText"
-    tagline "MyString"
     address "123 Main Street"
     state "MA"
     zip_code "02138"
@@ -25,15 +23,11 @@ FactoryBot.define do
     hu 1
     gqpop 1
     rptdemp 1
-    emploss 1
     estemp 1
     commsf 1
     hotelrms 1
     onsitepark 1
     total_cost 1
-    team_membership_count 1
-    cancelled false
-    private false
     ret_sqft 1.5
     ofcmd_sqft 1.5
     indmf_sqft 1.5

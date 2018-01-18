@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180117202455) do
+ActiveRecord::Schema.define(version: 20180118184958) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,8 +39,6 @@ ActiveRecord::Schema.define(version: 20180117202455) do
     t.string "status"
     t.text "descr"
     t.string "prj_url"
-    t.text "mapc_notes"
-    t.string "tagline"
     t.string "address"
     t.string "state", default: "MA"
     t.string "zip_code"
@@ -54,15 +52,11 @@ ActiveRecord::Schema.define(version: 20180117202455) do
     t.integer "hu"
     t.integer "gqpop"
     t.integer "rptdemp"
-    t.integer "emploss"
     t.integer "estemp"
     t.integer "commsf"
     t.integer "hotelrms"
     t.integer "onsitepark"
     t.bigint "total_cost"
-    t.integer "team_membership_count"
-    t.boolean "cancelled", default: false
-    t.boolean "private", default: false
     t.float "ret_sqft"
     t.float "ofcmd_sqft"
     t.float "indmf_sqft"

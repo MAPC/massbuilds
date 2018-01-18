@@ -81,12 +81,6 @@ class Edit < ApplicationRecord
         "prj_url": {
           "type": "string"
         },
-        "mapc_notes": {
-          "type": "string"
-        },
-        "tagline": {
-          "type": "string"
-        },
         "state": {
           "type": "string"
         },
@@ -114,9 +108,6 @@ class Edit < ApplicationRecord
         "rptdemp": {
           "type": "number"
         },
-        "emploss": {
-          "type": "number"
-        },
         "estemp": {
           "type": "number"
         },
@@ -128,15 +119,6 @@ class Edit < ApplicationRecord
         },
         "total_cost": {
           "type": "number"
-        },
-        "team_membership_count": {
-          "type": "number"
-        },
-        "cancelled": {
-          "type": "boolean"
-        },
-        "private": {
-          "type": "boolean"
         },
         "ret_sqft": {
           "type": "number"
