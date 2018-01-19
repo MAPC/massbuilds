@@ -21,7 +21,7 @@ namespace :import do
 
   desc 'Import previous development data'
   task development_data: :environment do
-    csv_text = File.read(Rails.root.join('lib', 'import', 'joined_final_massbuilds_data_2018.csv'))
+    csv_text = File.read(Rails.root.join('lib', 'import', 'joined_final_massbuilds_data_2018_zip_fixed.csv'))
     csv = CSV.parse(csv_text, headers: true, encoding: 'ISO-8859-1')
     csv.each do |row|
       development = Development.new(
