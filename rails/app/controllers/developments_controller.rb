@@ -49,7 +49,7 @@ class DevelopmentsController < ApplicationController
     @development.user = current_user
     if @development.save
       respond_to do |format|
-        format.jsonapi { head :created }
+        format.jsonapi { render jsonapi: @development }
       end
     else
       render jsonapi: @development.errors.full_messages, status: :bad_request
