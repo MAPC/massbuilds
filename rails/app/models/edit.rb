@@ -171,7 +171,7 @@ class Edit < ApplicationRecord
         "commercial": {
           "type": "boolean"
         },
-        "municipality": {
+        "municipal": {
           "type": "string"
         },
         "devlper": {
