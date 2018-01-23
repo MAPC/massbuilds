@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180118184958) do
+ActiveRecord::Schema.define(version: 20180123202651) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -78,7 +78,7 @@ ActiveRecord::Schema.define(version: 20180118184958) do
     t.boolean "commercial"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "municipality"
+    t.string "municipal"
     t.string "devlper"
     t.string "yrcomp_est"
     t.integer "units_1bd"
@@ -94,7 +94,7 @@ ActiveRecord::Schema.define(version: 20180118184958) do
     t.integer "publicsqft"
     t.bigint "rpa_poly_id"
     t.bigint "counties_polym_id"
-    t.bigint "ma_municipalities_id"
+    t.bigint "muni_id"
     t.integer "unknownhu"
     t.integer "affUnknown"
     t.integer "unk_sqft"
@@ -103,7 +103,7 @@ ActiveRecord::Schema.define(version: 20180118184958) do
     t.string "n_transit"
     t.string "d_n_trnsit"
     t.index ["counties_polym_id"], name: "index_developments_on_counties_polym_id"
-    t.index ["ma_municipalities_id"], name: "index_developments_on_ma_municipalities_id"
+    t.index ["muni_id"], name: "index_developments_on_muni_id"
     t.index ["rpa_poly_id"], name: "index_developments_on_rpa_poly_id"
   end
 

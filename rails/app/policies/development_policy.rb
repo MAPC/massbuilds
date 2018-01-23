@@ -8,7 +8,7 @@ class DevelopmentPolicy < ApplicationPolicy
   end
 
   def create?
-    user&.admin? || user&.verified? || (user&.municipal? && (record.municipality == user.municipality))
+    user&.admin? || user&.verified? || (user&.municipal? && (record.municipal == user.municipality))
   end
 
   def update?
@@ -16,6 +16,6 @@ class DevelopmentPolicy < ApplicationPolicy
   end
 
   def destroy?
-    user&.admin? || (user&.municipal? && (record.municipality == user.municipality))
+    user&.admin? || (user&.municipal? && (record.municipal == user.municipality))
   end
 end

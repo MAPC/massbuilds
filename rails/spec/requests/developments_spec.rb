@@ -11,7 +11,7 @@ RSpec.describe "Developments", type: :request do
   let(:valid_jsonapi_params_worcester) {
     hash = Hash.new {|h,k| h[k] = Hash.new(&h.default_proc) }
     hash["data"]["type"] = "development"
-    hash["data"]["attributes"] = FactoryBot.attributes_for(:development, municipality: 'Worcester')
+    hash["data"]["attributes"] = FactoryBot.attributes_for(:development, municipal: 'Worcester')
     hash.to_json
   }
 
@@ -218,7 +218,7 @@ RSpec.describe "Developments", type: :request do
     end
 
     it "does not work as a municipal user outside their own municipality" do
-      development = FactoryBot.create(:development, municipality: 'Worcester')
+      development = FactoryBot.create(:development, municipal: 'Worcester')
       delete "/developments/#{development.id}", headers: municipal_user_session
       expect(response).to have_http_status(:unauthorized)
     end

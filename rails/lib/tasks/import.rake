@@ -25,7 +25,7 @@ namespace :import do
     csv = CSV.parse(csv_text, headers: true, encoding: 'ISO-8859-1')
     csv.each do |row|
       development = Development.new(
-        id: row['project_id'],
+        id: row['project_id'], # in export make sure we use project_id for this
         user_id: row["creator_id"],
         rdv: row["rdv"],
         asofright: row["asofright"],
@@ -75,8 +75,8 @@ namespace :import do
         residential: row["residential"],
         commercial: row["commercial"],
         created_at: row["created_at"],
-        ma_municipalities_id: row["muni_id"],
-        municipality: row["municipal"],
+        muni_id: row["muni_id"],
+        municipal: row["municipal"],
         units_1bd: row["units_1bd"],
         units_2bd: row["units_2bd"],
         units_3bd: row["units_3bd"],
@@ -102,10 +102,10 @@ namespace :import do
 
   desc 'Import previous development data'
   task development_municipalities: :environment do
-    Development.where(municipality: nil).each do |development|
-      municipality = find_municipality(development)
-      next if municipality.blank?
-      development.update(municipality: municipality[0]['municipal'])
+    Development.where(municipal: nil).each do |development|
+      municipal = find_municipality(development)
+      next if municipal.blank?
+      development.update(municipal: municipality[0]['municipal'])
     end
   end
 

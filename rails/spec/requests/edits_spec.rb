@@ -76,7 +76,7 @@ RSpec.describe "Edits", type: :request do
     end
 
     it "fails on edits outside the covered geography for municipal users" do
-      development = FactoryBot.create(:development, municipality: 'Worcester')
+      development = FactoryBot.create(:development, municipal: 'Worcester')
       user = FactoryBot.create(:user, role: 'municipal')
       edit = FactoryBot.create(:edit, user: user, development: development)
       user_session = {

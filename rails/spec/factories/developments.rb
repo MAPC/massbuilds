@@ -47,7 +47,7 @@ FactoryBot.define do
     forty_b false
     residential false
     commercial false
-    municipality "Boston"
+    municipal "Boston"
     devlper "Gilbane"
     units_1bd 1
     units_2bd 1

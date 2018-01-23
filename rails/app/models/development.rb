@@ -4,7 +4,7 @@ class Development < ApplicationRecord
   has_many :edits
   belongs_to :user
   include PgSearch
-  pg_search_scope :search_by_name_and_location, against: [:name, :municipality, :address], using: { tsearch: { any_word: true } }
+  pg_search_scope :search_by_name_and_location, against: [:name, :municipal, :address], using: { tsearch: { any_word: true } }
   validates :name, :status, :address, :yrcomp_est, :year_compl, :zip_code, :hu,
             :commsf, :descr, presence: true
   validates_inclusion_of :rdv, :asofright, :clusteros, :phased, :stalled, :mixed_use,
@@ -125,7 +125,7 @@ class Development < ApplicationRecord
   end
 
   def update_municipality
-    return if ma_municipalities_id.present?
+    return if muni_id.present?
     municipalities_query = <<~SQL
       SELECT muni_id
       FROM
@@ -136,7 +136,7 @@ class Development < ApplicationRecord
     SQL
     sql_result = ActiveRecord::Base.connection.exec_query(municipalities_query).to_hash[0]
     return if sql_result.blank?
-    self.ma_municipalities_id = sql_result['muni_id']
+    self.muni_id = sql_result['muni_id']
     self.save(validate: false)
   end
 end
