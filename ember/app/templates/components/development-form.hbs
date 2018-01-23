@@ -26,14 +26,15 @@
   <div class="layout-column">
     <div class="development-header">
       <h1 class="required">{{input value=editing.name class="required-field" placeholder="Development Name" key-up=(action checkForUpdated 'name')}}</h1>
-      <h2 class="required">
+      <h2 class="required address-fields">
         <img src="/assets/images/map-pin.svg" onclick={{action findPosition}}> 
-        {{input value=editing.address class="required-field" placeholder="Development Address" key-up=(action checkForUpdated 'address')}}
+        {{input value=editing.address class="required-field" placeholder="Development Street Address" key-up=(action checkForUpdated 'address')}}
+        {{input value=editing.zipCode class="required-field" placeholder="Zip Code" key-up=(action checkForUpdated 'zipCode')}}
       </h2>
 
-      <h2 class="project-url required">
+      <h2 class="project-url">
         <img src="/assets/images/link.svg">
-        {{input value=editing.prjUrl class="required-field" placeholder="Project Website" key-up=(action checkForUpdated 'prjUrl')}}
+        {{input value=editing.prjUrl placeholder="Project Website" key-up=(action checkForUpdated 'prjUrl')}}
       </h2>
     </div>
 
@@ -160,11 +161,6 @@
             <span>
               <label for="ovr55">Age Restricted: </label>
               {{input type='checkbox' checked=editing.ovr55 click=(action checkForUpdated 'ovr55')}}
-            </span>,
-
-            <span>
-              <label for="private">Private: </label>
-              {{input type='checkbox' checked=editing.private click=(action checkForUpdated 'private')}}
             </span>
           </p>
 

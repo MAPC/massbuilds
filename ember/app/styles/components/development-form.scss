@@ -40,6 +40,15 @@
     h1 > input { width: 100%; } 
     h2 > input { width: 90%; }
 
+    .address-fields {
+      input {
+        &:first-of-type { width: 70%; } 
+        &:last-of-type { 
+          width: 20%;
+        }
+      }  
+    }
+
     .project-url > input { 
       width: 50%; 
       font-size: 14px; 
