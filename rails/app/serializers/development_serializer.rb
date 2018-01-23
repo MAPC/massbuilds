@@ -16,10 +16,10 @@ class DevelopmentSerializer < ActiveModel::Serializer
   end
 
   def latitude
-    self.object.point.y
+    self.object.point.try :y
   end
 
   def longitude
-    self.object.point.x
+    self.object.point.try :x
   end
 end

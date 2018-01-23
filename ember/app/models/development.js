@@ -1,4 +1,6 @@
 import DS from 'ember-data'; 
+import L from 'npm:leaflet';
+import { computed } from 'ember-decorators/object';
 import { attr, belongsTo, hasMany } from 'ember-decorators/data';
 
 
@@ -72,4 +74,5 @@ export default class extends DS.Model {
 
   @attr('date') createdAt
   @attr('date') updatedAt
+  
 }
