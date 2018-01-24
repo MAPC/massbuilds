@@ -98,6 +98,8 @@ GEM
     factory_bot_rails (4.8.2)
       factory_bot (~> 4.8.2)
       railties (>= 3.0.0)
+    faraday (0.11.0)
+      multipart-post (>= 1.2, < 3)
     ffi (1.9.18)
     formatador (0.2.5)
     globalid (0.4.1)
@@ -145,6 +147,7 @@ GEM
     mini_portile2 (2.3.0)
     minitest (5.10.3)
     multi_json (1.12.2)
+    multipart-post (2.0.0)
     nenv (0.3.0)
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
@@ -295,6 +298,7 @@ DEPENDENCIES
   devise
   dotenv-rails
   factory_bot_rails
+  faraday
   guard
   guard-livereload
   guard-rspec

@@ -43,6 +43,8 @@ class Development < ApplicationRecord
     groundbroken.validates :publicsqft
   end
 
+
+  before_save :geocode
   after_save :update_rpa
   after_save :update_county
 
@@ -73,6 +75,12 @@ class Development < ApplicationRecord
   end
 
   private
+
+  def geocode
+    return if point.present?
+    result = Faraday.get "http://www.mapquestapi.com/geocoding/v1/address?key=#{Rails.application.secrets.mapquest_api_key}&location=#{address},#{state},#{zip_code}"
+    self.point = "POINT (#{JSON.parse(result.body)['results'][0]['locations'][0]['latLng']['lng']} #{JSON.parse(result.body)['results'][0]['locations'][0]['latLng']['lat']})"
+  end
 
   def self.zip(file_name)
     Zip::File.open(Rails.root.join('public', "#{file_name}.zip").to_s, Zip::File::CREATE) do |zipfile|

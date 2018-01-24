@@ -1,5 +1,5 @@
 class DevelopmentSerializer < ActiveModel::Serializer
-[:id, :name, :status, :address, :municipality, :devlper, :latitude, :longitude].each { |attr| attribute attr }
+[:id, :name, :status, :address, :municipal, :devlper, :latitude, :longitude].each { |attr| attribute attr }
 [:user_id, :rdv, :asofright, :ovr55, :clusteros, :phased, :stalled,
   :descr, :prj_url, :state, :zip_code, :height,
   :stories, :year_compl, :prjarea, :singfamhu, :smmultifam, :lgmultifam,

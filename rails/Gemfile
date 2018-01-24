@@ -20,6 +20,7 @@ gem 'pundit'
 gem 'pg_search'
 gem 'rubyzip'
 gem 'json-schema'
+gem 'faraday'
 
 group :development, :test do
   gem 'pry-byebug'
