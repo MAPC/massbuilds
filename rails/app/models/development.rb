@@ -47,6 +47,7 @@ class Development < ApplicationRecord
   before_save :geocode
   after_save :update_rpa
   after_save :update_county
+  after_save :update_n_transit
 
   def self.to_csv
     attributes = self.column_names
@@ -101,34 +102,34 @@ class Development < ApplicationRecord
   end
 
   def update_rpa
-    return if rpa_poly_id.present?
+    return if rpa_name.present?
     rpa_query = <<~SQL
-      SELECT objectid
+      SELECT rpa_name
       FROM
-        (SELECT objectid, ST_TRANSFORM(rpa_poly.shape, 4326) as shape FROM rpa_poly) rpa,
+        (SELECT rpa_name, ST_TRANSFORM(rpa_poly.shape, 4326) as shape FROM rpa_poly) rpa,
         (SELECT id, name, point FROM developments) development
         WHERE ST_Intersects(point, rpa.shape)
         AND id = #{id};
     SQL
     sql_result = ActiveRecord::Base.connection.exec_query(rpa_query).to_hash[0]
     return if sql_result.blank?
-    self.rpa_poly_id = sql_result['objectid']
+    self.rpa_name = sql_result['rpa_name']
     self.save(validate: false)
   end
 
   def update_county
     return if counties_polym_id.present?
     counties_query = <<~SQL
-      SELECT objectid
+      SELECT county_id
       FROM
-        (SELECT objectid, ST_TRANSFORM(counties_polym.shape, 4326) as shape FROM counties_polym) county,
+        (SELECT county_id, ST_TRANSFORM(counties_polym.shape, 4326) as shape FROM counties_polym) county,
         (SELECT id, name, point FROM developments) development
         WHERE ST_Intersects(point, county.shape)
         AND id = #{id};
     SQL
     sql_result = ActiveRecord::Base.connection.exec_query(counties_query).to_hash[0]
     return if sql_result.blank?
-    self.counties_polym_id = sql_result['objectid']
+    self.counties_polym_id = sql_result['county_id']
     self.save(validate: false)
   end
 
@@ -139,12 +140,28 @@ class Development < ApplicationRecord
       FROM
         (SELECT muni_id, ST_TRANSFORM(ma_municipalities.shape, 4326) as shape FROM ma_municipalities) municipality,
         (SELECT id, name, point FROM developments) development
-        WHERE ST_Intersects(point, county.shape)
+        WHERE ST_Intersects(point, municipality.shape)
         AND id = #{id};
     SQL
     sql_result = ActiveRecord::Base.connection.exec_query(municipalities_query).to_hash[0]
     return if sql_result.blank?
     self.muni_id = sql_result['muni_id']
+    self.save(validate: false)
+  end
+
+  def update_n_transit
+    return if n_transit.present?
+    n_transit_query = <<~SQL
+      SELECT srvc_name
+      FROM
+        (SELECT srvc_name, ST_TRANSFORM(tod_service_area_poly.shape, 4326) as shape FROM tod_service_area_poly) service_area,
+        (SELECT id, name, point FROM developments) development
+        WHERE ST_Intersects(point, service_area.shape)
+        AND id = #{id};
+    SQL
+    sql_result = ActiveRecord::Base.connection.exec_query(n_transit_query).to_hash[0]
+    return if sql_result.blank?
+    self.n_transit = sql_result['srvc_name']
     self.save(validate: false)
   end
 end
