@@ -55,7 +55,7 @@ class Development < ApplicationRecord
     CSV.generate(headers: true) do |csv|
       csv << self.column_names
       all.each do |development|
-        csv << attributes.map{ |attr| development.send(attr) }
+        csv << attributes.map{ |attr| development.send(attr.gsub(/\,/,";")) }
       end
     end
   end
