@@ -13,37 +13,34 @@ namespace :db do
 
   task add_rpa_fdw: :environment do
     ActiveRecord::Base.connection.execute "IMPORT FOREIGN SCHEMA editor LIMIT TO (rpa_poly) FROM SERVER dblive95 INTO public;"
-    # ActiveRecord::Base.connection.add_reference :developments, :rpa_poly, index: true
   end
 
   task delete_rpa_fdw: :environment do
     ActiveRecord::Base.connection.execute "DROP FOREIGN TABLE IF EXISTS rpa_poly"
-    # ActiveRecord::Base.connection.remove_reference :developments, :rpa_poly
   end
 
   task add_counties_fdw: :environment do
     ActiveRecord::Base.connection.execute "IMPORT FOREIGN SCHEMA editor LIMIT TO (counties_polym) FROM SERVER dblive95 INTO public;"
-    # ActiveRecord::Base.connection.add_reference :developments, :counties_polym, index: true
   end
 
   task delete_counties_fdw: :environment do
     ActiveRecord::Base.connection.execute "DROP FOREIGN TABLE IF EXISTS counties_polym"
-    # ActiveRecord::Base.connection.remove_reference :developments, :counties_polym
   end
 
   task add_municipalities_fdw: :environment do
     ActiveRecord::Base.connection.execute "IMPORT FOREIGN SCHEMA editor LIMIT TO (ma_municipalities) FROM SERVER dblive95 INTO public;"
-    # ActiveRecord::Base.connection.add_reference :developments, :ma_municipalities, index: true
   end
 
   task delete_municipalities_fdw: :environment do
     ActiveRecord::Base.connection.execute "DROP FOREIGN TABLE IF EXISTS ma_municipalities"
-    # ActiveRecord::Base.connection.remove_reference :developments, :ma_municipalities
   end
 
   task add_tod_service_area: :environment do
     ActiveRecord::Base.connection.execute "IMPORT FOREIGN SCHEMA editor LIMIT TO (tod_service_area_poly) FROM SERVER dblive95 INTO public;"
-    # ActiveRecord::Base.connection.add_reference :developments, :, index: true
+  end
+
+  task add_neighborhoods_poly: :environment do
+    ActiveRecord::Base.connection.execute "IMPORT FOREIGN SCHEMA editor LIMIT TO (neighborhoods_poly) FROM SERVER dblive95 INTO public;"
   end
 end
 

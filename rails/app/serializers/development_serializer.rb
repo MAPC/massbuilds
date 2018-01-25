@@ -4,7 +4,7 @@ class DevelopmentSerializer < ActiveModel::Serializer
   :descr, :prj_url, :state, :zip_code, :height,
   :stories, :year_compl, :prjarea, :singfamhu, :smmultifam, :lgmultifam,
   :hu, :gqpop, :rptdemp, :estemp, :commsf, :hotelrms, :onsitepark,
-  :total_cost, :ret_sqft, :rpa_name, :county,
+  :total_cost, :ret_sqft, :rpa_name, :county, :nhood,
   :ofcmd_sqft, :indmf_sqft, :whs_sqft, :rnd_sqft, :ei_sqft, :other_sqft,
   :hotel_sqft, :other_rate, :affordable, :parcel_id, :mixed_use, :point,
   :programs, :forty_b, :residential, :commercial, :yrcomp_est, :units_1bd,

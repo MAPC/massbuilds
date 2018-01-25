@@ -48,6 +48,7 @@ class Development < ApplicationRecord
   after_save :update_rpa
   after_save :update_county
   after_save :update_n_transit
+  after_save :update_neighborhood
 
   def self.to_csv
     attributes = self.column_names
@@ -162,6 +163,22 @@ class Development < ApplicationRecord
     sql_result = ActiveRecord::Base.connection.exec_query(n_transit_query).to_hash[0]
     return if sql_result.blank?
     self.n_transit = sql_result['srvc_name']
+    self.save(validate: false)
+  end
+
+  def update_neighborhood
+    return if nhood.present?
+    nhood_query = <<~SQL
+      SELECT nhood_name
+      FROM
+        (SELECT nhood_name, ST_TRANSFORM(neighborhoods_poly.shape, 4326) as shape FROM neighborhoods_poly) nhood,
+        (SELECT id, name, point FROM developments) development
+        WHERE ST_Intersects(point, nhood.shape)
+        AND id = #{id};
+    SQL
+    sql_result = ActiveRecord::Base.connection.exec_query(nhood_query).to_hash[0]
+    return if sql_result.blank?
+    self.nhood = sql_result['nhood_name']
     self.save(validate: false)
   end
 end
