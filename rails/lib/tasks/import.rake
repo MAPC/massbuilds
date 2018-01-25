@@ -90,7 +90,7 @@ namespace :import do
         devlper: row["devlper"],
         loc_id: row["loc_id"],
         parcel_fy: row["parcel_fy"],
-        n_transit: row.try(:[], 'n_transit'),
+        # n_transit: [row.try(:[], 'n_transit')],
         d_n_trnsit: row["d_n_trnsit"],
         updated_at: row["updated_at"],
         point: convert_srid(row["geom"])

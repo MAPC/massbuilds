@@ -160,9 +160,13 @@ class Development < ApplicationRecord
         WHERE ST_Intersects(point, service_area.shape)
         AND id = #{id};
     SQL
-    sql_result = ActiveRecord::Base.connection.exec_query(n_transit_query).to_hash[0]
+    sql_result = ActiveRecord::Base.connection.exec_query(n_transit_query).to_hash
     return if sql_result.blank?
-    self.n_transit = sql_result['srvc_name']
+    transit_stops = []
+    sql_result.each do |result|
+      transit_stops << result['srvc_name']
+    end
+    self.n_transit = transit_stops
     self.save(validate: false)
   end
 
