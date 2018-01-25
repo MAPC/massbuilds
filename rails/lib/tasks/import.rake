@@ -75,7 +75,6 @@ namespace :import do
         residential: row["residential"],
         commercial: row["commercial"],
         created_at: row["created_at"],
-        muni_id: row["muni_id"],
         municipal: row["municipal"],
         units_1bd: row["units_1bd"],
         units_2bd: row["units_2bd"],

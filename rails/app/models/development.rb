@@ -134,18 +134,18 @@ class Development < ApplicationRecord
   end
 
   def update_municipality
-    return if muni_id.present?
+    return if municipal.present?
     municipalities_query = <<~SQL
-      SELECT muni_id
+      SELECT municipal
       FROM
-        (SELECT muni_id, ST_TRANSFORM(ma_municipalities.shape, 4326) as shape FROM ma_municipalities) municipality,
+        (SELECT municipal, ST_TRANSFORM(ma_municipalities.shape, 4326) as shape FROM ma_municipalities) municipality,
         (SELECT id, name, point FROM developments) development
         WHERE ST_Intersects(point, municipality.shape)
         AND id = #{id};
     SQL
     sql_result = ActiveRecord::Base.connection.exec_query(municipalities_query).to_hash[0]
     return if sql_result.blank?
-    self.muni_id = sql_result['muni_id']
+    self.municipal = sql_result['municipal']
     self.save(validate: false)
   end
 

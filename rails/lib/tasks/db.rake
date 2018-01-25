@@ -40,6 +40,11 @@ namespace :db do
     ActiveRecord::Base.connection.execute "DROP FOREIGN TABLE IF EXISTS ma_municipalities"
     # ActiveRecord::Base.connection.remove_reference :developments, :ma_municipalities
   end
+
+  task add_tod_service_area: :environment do
+    ActiveRecord::Base.connection.execute "IMPORT FOREIGN SCHEMA editor LIMIT TO (tod_service_area_poly) FROM SERVER dblive95 INTO public;"
+    # ActiveRecord::Base.connection.add_reference :developments, :, index: true
+  end
 end
 
 Rake::Task["db:setup"].enhance do
