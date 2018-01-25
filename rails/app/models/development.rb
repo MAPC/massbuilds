@@ -118,18 +118,18 @@ class Development < ApplicationRecord
   end
 
   def update_county
-    return if counties_polym_id.present?
+    return if county.present?
     counties_query = <<~SQL
-      SELECT county_id
+      SELECT county
       FROM
-        (SELECT county_id, ST_TRANSFORM(counties_polym.shape, 4326) as shape FROM counties_polym) county,
+        (SELECT county, ST_TRANSFORM(counties_polym.shape, 4326) as shape FROM counties_polym) county,
         (SELECT id, name, point FROM developments) development
         WHERE ST_Intersects(point, county.shape)
         AND id = #{id};
     SQL
     sql_result = ActiveRecord::Base.connection.exec_query(counties_query).to_hash[0]
     return if sql_result.blank?
-    self.counties_polym_id = sql_result['county_id']
+    self.county = sql_result['county']
     self.save(validate: false)
   end
 

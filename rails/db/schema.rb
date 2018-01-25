@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180125154203) do
+ActiveRecord::Schema.define(version: 20180125155301) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -92,7 +92,6 @@ ActiveRecord::Schema.define(version: 20180125154203) do
     t.boolean "headqtrs"
     t.string "park_type"
     t.integer "publicsqft"
-    t.bigint "counties_polym_id"
     t.bigint "muni_id"
     t.integer "unknownhu"
     t.integer "affUnknown"
@@ -102,7 +101,7 @@ ActiveRecord::Schema.define(version: 20180125154203) do
     t.string "n_transit"
     t.string "d_n_trnsit"
     t.string "rpa_name"
-    t.index ["counties_polym_id"], name: "index_developments_on_counties_polym_id"
+    t.string "county"
     t.index ["muni_id"], name: "index_developments_on_muni_id"
   end
 
