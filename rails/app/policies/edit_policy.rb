@@ -8,7 +8,7 @@ class EditPolicy < ApplicationPolicy
   end
 
   def update?
-    user&.admin? || (user.municipal? && (record.development.municipality == user.municipality))
+    user&.admin? || (user.municipal? && (record.development.municipal == user.municipality))
   end
 
   def destroy?

@@ -8,7 +8,7 @@ FactoryBot.define do
     stalled false
     name "Seaport"
     status "MyString"
-    desc "A sample development"
+    descr "A sample development"
     prj_url "http://www.example.com/"
     address "123 Main Street"
     state "MA"
