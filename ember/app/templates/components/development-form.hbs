@@ -167,7 +167,12 @@
           <div class="table-wrapper">
             <h3 class="field">
               <label for="hu" class="required">Tot. Housing Units</label>
-              {{input value=editing.hu class="required-field" placeholder="Total Housing Units" key-up=(action updateUnknownhu)}} Units
+
+              {{#if editing.hu}}
+                {{editing.hu}} Unit{{unless (eq editing.hu 1) 's'}}
+              {{else}}
+                Enter quantity of each unit type below
+              {{/if}}
             </h3>
 
             <table class="housing-units">
@@ -224,7 +229,12 @@
           <div class="table-wrapper">
             <h3 class="field">
               <label for="affrdUnit">Affordable Units</label>
-              {{input value=editing.affrdUnit placeholder="Total Affordable Units" key-up=(action updateAffUnknown)}} Units
+
+              {{#if editing.affrdUnit}}
+                {{editing.affrdUnit}} Unit{{unless (eq editing.affrdUnit 1) 's'}}
+              {{else}}
+                Enter quantity of each unit type below
+              {{/if}}
             </h3>
 
             <table class="affordable-units">
@@ -303,7 +313,12 @@
           <div class="table-wrapper">
             <h3 class="field">
               <label for="commsf" class="required">Commercial Square Footage</label>
-              {{input value=editing.commsf class="required-field" placeholder="Total square footage" key-up=(action updateUnkSqft)}} sqft.
+
+              {{#if editing.commsf}}
+                {{editing.commsf}} sqft.
+              {{else}}
+                Enter the floor area for each use type below
+              {{/if}}
             </h3>
 
             <table class="commercial-makeup">

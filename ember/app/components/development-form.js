@@ -57,8 +57,8 @@ export default class extends Component {
   @action 
   updateHu(fieldName) {
     this.checkForUpdated(fieldName);
-
-    this.set('editing.hu', this.sumProperties(...this.get('huFields'), 'editing.unknownhu'));
+    const sum = this.sumProperties(...this.get('huFields'), 'editing.unknownhu')
+    this.set('editing.hu', sum);
   }
 
 
@@ -75,27 +75,6 @@ export default class extends Component {
     this.checkForUpdated(fieldName);
 
     this.set('editing.commsf', this.sumProperties(...this.get('commsfFields'), 'editing.unkSqft'));
-  }
-
-
-  @action
-  updateUnkSqft() {
-    this.updateDependentField('unkSqft', 'commsf')
-    this.updateCommsf('commsf');
-  }
-
-
-  @action
-  updateAffUnknown() {
-    this.updateDependentField('affUnknown', 'affrdUnit')
-    this.updateAffrdUnit('affrdUnit');
-  }
-
-
-  @action
-  updateUnknownhu() {
-    this.updateDependentField('unknownhu', 'hu')
-    this.updateHu('hu');
   }
 
 
@@ -116,21 +95,18 @@ export default class extends Component {
   }
 
 
-  updateDependentField(dependent, parent) {
-    const parentValue = this.get(`editing.${parent}`);
-    const summed = this.sumProperties(...this.get(`${parent}Fields`));
-
-    const dependentValue = (parentValue > summed) ? parentValue - summed : 0;
-
-    this.set(`editing.${dependent}`, dependentValue);
-  }
-
-
   sumProperties() {
     const properties = this.getProperties(...arguments);
 
-    return Object.values(properties)
-                 .reduce((a, b) => parseFloat(a) + (parseFloat(b) || 0), 0);
+    const values = Object.values(properties)
+                         .filter(prop => prop !== null && prop !== undefined);
+
+    if (values.length > 0) {
+      return values.reduce((a, b) => parseFloat(a) + (parseFloat(b) || 0));
+    }
+    else {
+      return null; 
+    }
   }
 
 
