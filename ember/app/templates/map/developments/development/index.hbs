@@ -192,6 +192,15 @@
                       <td>{{round (mult 100 (div model.units3Bd model.hu))}}%</td>
                     </tr>
                   {{/if}}
+
+                  {{#if model.unknownhu}}
+                    <tr>
+                      <td>Unknown</td>
+                      <td>{{number-format model.unknownhu decimals=0}}</td>
+                      <td>{{round (mult 100 (div model.unknownhu model.hu))}}%</td>
+                    </tr>
+                  {{/if}}
+
                 </table>
               {{/if}}
             </div>

@@ -38,7 +38,7 @@ class EditsController < ApplicationController
 
     if @edit.save
       respond_to do |format|
-        format.jsonapi { head :created }
+        format.jsonapi { render jsonapi: @edit }
       end
     else
       respond_to do |format|

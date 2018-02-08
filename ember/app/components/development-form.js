@@ -50,6 +50,7 @@ export default class extends Component {
 
   @action
   update() {
+    console.log(this.get('proposedChanges'));
     this.sendAction('updateModel', this.get('proposedChanges'));
   }
 
@@ -57,8 +58,9 @@ export default class extends Component {
   @action 
   updateHu(fieldName) {
     this.checkForUpdated(fieldName);
-    const sum = this.sumProperties(...this.get('huFields'), 'editing.unknownhu')
-    this.set('editing.hu', sum);
+
+    this.set('editing.hu', this.sumProperties(...this.get('huFields'), 'editing.unknownhu'));
+    this.checkForUpdated('hu');
   }
 
 
@@ -67,6 +69,7 @@ export default class extends Component {
     this.checkForUpdated(fieldName);
 
     this.set('editing.affrdUnit', this.sumProperties(...this.get('affrdUnitFields'), 'editing.affUnknown'));
+    this.checkForUpdated('affrdUnit');
   }
 
 
@@ -75,6 +78,7 @@ export default class extends Component {
     this.checkForUpdated(fieldName);
 
     this.set('editing.commsf', this.sumProperties(...this.get('commsfFields'), 'editing.unkSqft'));
+    this.checkForUpdated('commsf');
   }
 
 
