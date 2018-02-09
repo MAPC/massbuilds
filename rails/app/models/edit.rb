@@ -244,6 +244,13 @@ class Edit < ApplicationRecord
         schema[:required] << value
       end
     end
+
+    updated_development_hash.each do |key, value|
+      if value.blank?
+        updated_development_hash.delete(key)
+      end
+    end
+
     JSON::Validator.fully_validate(schema, updated_development_hash, errors_as_objects: true).each do |json_error|
       errors.add(json_error[:fragment], json_error[:message])
     end

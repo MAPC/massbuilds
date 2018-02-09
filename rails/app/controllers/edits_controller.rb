@@ -51,7 +51,9 @@ class EditsController < ApplicationController
   def update
     authorize @edit
     if @edit.update(edit_params)
-      head :no_content
+      respond_to do |format|
+        format.jsonapi { render jsonapi: @edit }
+      end
     else
       head :bad_request
     end

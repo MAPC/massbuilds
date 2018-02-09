@@ -11,14 +11,8 @@
     {{/link-to}}
   {{/if}}
 
-  {{#if changes}}
-    <button onclick={{action update}} class='submit-changes'>
-      {{#if (eq mode 'edit')}}
-        Submit Changes
-      {{else}}
-        Create Development
-      {{/if}}
-    </button>
+  {{#if (and fulfilled changes)}}
+    <button onclick={{action update}} class='submit-changes'>{{submitText}}</button>
   {{/if}}
 </div>
 
@@ -168,7 +162,7 @@
             <h3 class="field">
               <label for="hu" class="required">Tot. Housing Units</label>
 
-              {{#if editing.hu}}
+              {{#if (and (not-eq editing.hu null) (gte editing.hu 0))}}
                 {{editing.hu}} Unit{{unless (eq editing.hu 1) 's'}}
               {{else}}
                 Enter quantity of each unit type below
@@ -230,7 +224,7 @@
             <h3 class="field">
               <label for="affrdUnit">Affordable Units</label>
 
-              {{#if editing.affrdUnit}}
+              {{#if (and (not-eq editing.affrdUnit null) (gte editing.affrdUnit 0))}}
                 {{editing.affrdUnit}} Unit{{unless (eq editing.affrdUnit 1) 's'}}
               {{else}}
                 Enter quantity of each unit type below
@@ -314,7 +308,7 @@
             <h3 class="field">
               <label for="commsf" class="required">Commercial Square Footage</label>
 
-              {{#if editing.commsf}}
+              {{#if (and (not-eq editing.commsf null) (gte editing.commsf 0))}}
                 {{editing.commsf}} sqft.
               {{else}}
                 Enter the floor area for each use type below
@@ -403,7 +397,7 @@
 
     <div class="detail">
       <h3>Last Updated</h3>
-      <p>{{editing.updatedAt}}</p>
+      <p>{{format-date editing.updatedAt format='MMM. Do YYYY'}}</p>
     </div>
 
     <div class="detail">

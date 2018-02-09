@@ -18,7 +18,7 @@
     <div class="layout-column">
       <div class="development-header">
         <h1 onclick={{action findPosition}}>{{model.name}}</h1>
-        <h2><img src="/assets/images/map-pin.svg" onclick={{action findPosition}}> {{model.address}}</h2>
+        <h2><img src="/assets/images/map-pin.svg" onclick={{action findPosition}}> {{model.fullAddress}}</h2>
 
         {{#if model.prjUrl}}
           <h2 class="project-url">
@@ -402,7 +402,7 @@
 
       <div class="detail">
         <h3>Last Updated</h3>
-        <p>{{model.updatedAt}}</p>
+        <p>{{format-date model.updatedAt format='MMM. Do YYYY'}}</p>
       </div>
     </div>
   </div>

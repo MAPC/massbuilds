@@ -1,7 +1,7 @@
 import Component from '@ember/component';
-import { action, computed } from 'ember-decorators/object';
-import { service } from 'ember-decorators/service';
 import filters from 'massbuilds/utils/filters';
+import { service } from 'ember-decorators/service';
+import { action, computed } from 'ember-decorators/object';
 
 
 export default class extends Component {
@@ -18,6 +18,7 @@ export default class extends Component {
     this.proposedChanges = {};
     this.editing = this.get('model').toJSON();
     this.filters = filters;
+    this.fulfilled = false;
 
     this.huFields = [
       'editing.singfamhu',
@@ -45,12 +46,31 @@ export default class extends Component {
       'editing.hotelSqft', 
       'editing.otherSqft',
     ];
+
+    const base = [
+      'name', 'status', 'address', 'yrcompEst', 'yearCompl',
+      'zipCode', 'hu', 'commsf', 'descr',
+    ];
+
+    const proposed = [
+      ...base,
+      'singfamhu', 'smmultifam', 'lgmultifam', 'onsitepark',
+    ];
+
+    const groundBroken = [
+      ...proposed,
+      'units1bd', 'units2bd', 'units3bd', 'affrdUnit', 'affU30',
+      'aff3050', 'aff5080', 'aff80p', 'gqpop', 'retSqft', 
+      'ofcmdSqft', 'indmfSqft', 'whsSqft', 'rndSqft', 'eiSqft',
+      'otherSqft', 'hotelSqft', 'hotelrms', 'publicsqft',
+    ];
+
+    this.criteria = { base, proposed, groundBroken };
   }
 
 
   @action
   update() {
-    console.log(this.get('proposedChanges'));
     this.sendAction('updateModel', this.get('proposedChanges'));
   }
 
@@ -77,7 +97,10 @@ export default class extends Component {
   updateCommsf(fieldName) {
     this.checkForUpdated(fieldName);
 
-    this.set('editing.commsf', this.sumProperties(...this.get('commsfFields'), 'editing.unkSqft'));
+    const sum = this.sumProperties(...this.get('commsfFields'), 'editing.unkSqft');
+    console.log(sum);
+
+    this.set('editing.commsf', sum);
     this.checkForUpdated('commsf');
   }
 
@@ -89,7 +112,7 @@ export default class extends Component {
 
 
   @computed('editing.status')
-  get groundBroken() {
+  get isGroundBroken() {
     const status = this.get('editing.status');
 
     return (
@@ -99,11 +122,19 @@ export default class extends Component {
   }
 
 
+  @computed('editing.status')
+  get isProposed() {
+    return this.get('editing.status') === 'planning';
+  }
+
+
   sumProperties() {
     const properties = this.getProperties(...arguments);
 
     const values = Object.values(properties)
-                         .filter(prop => prop !== null && prop !== undefined);
+                         .filter(prop => prop !== null && prop !== undefined && prop !== "");
+
+    console.log(values);
 
     if (values.length > 0) {
       return values.reduce((a, b) => parseFloat(a) + (parseFloat(b) || 0));
@@ -128,10 +159,16 @@ export default class extends Component {
     if (typeof edited === 'boolean') {
       edited = !edited;
     }
+
+    console.log(modeled, edited, (modeled || '').toString(), (edited || '').toString());
     
     if ((modeled || '').toString() !== (edited || '').toString()) {
       this.set(`proposedChanges.${fieldName}`, edited);
       this.set('changes', true);
+
+      // If we have updated data, check to see if all fields for the 
+      // current status have been filled out.
+      this.checkCriteria();
     }
     else {
       const proposedChanges = this.get('proposedChanges');
@@ -142,6 +179,25 @@ export default class extends Component {
         this.set('changes', false);
       }
     }
+  }
+
+  
+  checkCriteria() {
+    let criteria = null;
+
+    if (this.get('isGroundBroken')) {
+      criteria = this.get('criteria.groundBroken');
+    }
+    else if (this.get('isProposed')) {
+      criteria = this.get('criteria.proposed');
+    }
+    else {
+      criteria = this.get('criteria.base');
+    }
+
+    const fulfilled = criteria.every(x => this.get(`editing.${x}`) !== null && this.get(`editing.${x}`) !== undefined);
+
+    this.set('fulfilled', fulfilled);
   }
 
 

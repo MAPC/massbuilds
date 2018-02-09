@@ -6,8 +6,8 @@ import { attr, belongsTo, hasMany } from 'ember-decorators/data';
 
 export default class extends DS.Model {
 
-  @belongsTo('user', {async: true}) user
-  @hasMany('edit', { async: true}) edits
+  @belongsTo('user', { async: true }) user
+  @hasMany('edit', { async: true }) edits
 
   @attr('string') name
   @attr('string') status
@@ -16,7 +16,7 @@ export default class extends DS.Model {
   @attr('string') tagline
   @attr('string') nhood
   @attr('string') address
-  @attr('string') state
+  @attr('string', { default: 'MA' }) state
   @attr('string') zipCode
   @attr('string') parkType
   @attr('string') parcelId
@@ -75,4 +75,12 @@ export default class extends DS.Model {
   @attr('date') createdAt
   @attr('date') updatedAt
   
+
+  @computed('address', 'municipality', 'state', 'zipCode')
+  get fullAddress() {
+    const props = this.getProperties('address', 'municipality', 'state', 'zipCode');
+
+    return `${props.address}, ${props.municipality}, ${props.state} ${props.zipCode}`;
+  }
+
 }
