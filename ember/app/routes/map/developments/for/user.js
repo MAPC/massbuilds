@@ -23,13 +23,17 @@ export default class extends Route {
 
 
   model({ user_id }) {
+    return this.get('currentUser.user.developments');
+    /*
     return this.get('store').findRecord('user', user_id).then(user => {
       return user.get('developments');
     });
+    */
   }
 
 
   afterModel(model) {
+    console.log(model);
     if (model.get('length') > 0) {
       this.get('map').set('data', model);
     }
