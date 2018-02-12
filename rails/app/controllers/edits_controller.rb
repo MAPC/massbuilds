@@ -5,6 +5,7 @@ class EditsController < ApplicationController
   def index
     authorize Edit
     @edits = Edit.all
+
     respond_to do |format|
       format.jsonapi { render jsonapi: @edits }
     end

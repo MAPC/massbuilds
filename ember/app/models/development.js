@@ -1,13 +1,12 @@
 import DS from 'ember-data'; 
-import L from 'npm:leaflet';
 import { computed } from 'ember-decorators/object';
 import { attr, belongsTo, hasMany } from 'ember-decorators/data';
 
 
 export default class extends DS.Model {
 
-  @belongsTo('user', { async: true }) user
-  @hasMany('edit', { async: true }) edits
+  @belongsTo('user') user
+  @hasMany('edit') edits
 
   @attr('string') name
   @attr('string') status
@@ -76,11 +75,11 @@ export default class extends DS.Model {
   @attr('date') updatedAt
   
 
-  @computed('address', 'municipality', 'state', 'zipCode')
+  @computed('address', 'municipal', 'state', 'zipCode')
   get fullAddress() {
-    const props = this.getProperties('address', 'municipality', 'state', 'zipCode');
+    const props = this.getProperties('address', 'municipal', 'state', 'zipCode');
 
-    return `${props.address}, ${props.municipality}, ${props.state} ${props.zipCode}`;
+    return `${props.address}, ${props.municipal}, ${props.state} ${props.zipCode}`;
   }
 
 }

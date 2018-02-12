@@ -1,89 +1,10 @@
 .route.developments-for-user {
-  width: 700px; 
-  padding: 0 15px; 
-
-  .panel-headers {
-    h1 {
-      margin: 0;
-
-      font-size: 30px; 
-      font-weight: 600;
-    } 
-
-    h3 { 
-      margin-top: 5px; 
-
-      color: $color_font-medium;
-      font-size: 16px;
-    }
-  }
-
-  .no-records {
-    margin: 100px auto 0; 
-
-    color: $color_font-medium;
-    font-size: 14px;
-    text-align: center;
-
-    a {
-      color: $color_brand-primary--active; 
-
-      &:hover { color: $color_brand-primary; }
-    }
-  }
-
-  ul {
-    margin-top: 30px;
-    padding-top: 30px;
-
-    .list-body {
-      max-height: 60vh;
-      padding-bottom: 20px;
-
-      overflow-y: scroll;
-    }
-
-    &:after {
-      content: '' ;
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      z-index: 10;
-
-      width: 100%;
-
-      box-shadow: 0 0 25px 20px $color_bg-light;
-    }
-
+  ul.item-list {
     li {
-      display: flex; 
-
-      padding: 5px;
-
-      &.list-header {
-        position: absolute;
-        top: 0;
-        left: 0;
-        z-index: 10;
-
-        width: 100%;
-
-        color: $color_font-medium;
-        font-size: 14px;
-
-        background: $color_bg-light;
-        border-bottom: 1px solid $color_bg-medium; 
-      }
-
-      &:nth-of-type(2n) { background: darken($color_bg-light, 2); }
-
-      a {
-        &:hover { color: $color_brand-primary--active; }
-      }
-
       & > div {
         &:first-of-type { 
           flex: 1 0 25%; 
+
           font-weight: 600;
         } 
         &:nth-of-type(2) { flex: 1 0 60%; } 

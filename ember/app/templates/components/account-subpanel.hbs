@@ -31,7 +31,7 @@
     {{/link-to}}
 
     {{#unless (eq currentUser.user.role 'admin')}}
-      {{#link-to 'map.moderations.for.user' currentUser.user click=(action closeMenu)}} 
+      {{#link-to 'map.moderations.for.user' currentUser.user.id click=(action closeMenu)}} 
         <div class="icon-wrapper">
           <img src="/assets/images/edit-3.svg"> 
         </div>

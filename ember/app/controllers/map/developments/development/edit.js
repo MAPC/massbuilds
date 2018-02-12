@@ -45,7 +45,6 @@ export default class extends Controller {
 
     newEdit.save().then(() => {
       this.transitionToRoute('map.developments.development.index', this.get('model'));
-      console.log("transitioned");
     });
   }
 

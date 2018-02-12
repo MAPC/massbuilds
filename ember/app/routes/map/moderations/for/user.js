@@ -1,3 +1,4 @@
+import RSVP from 'rsvp';
 import Route from '@ember/routing/route';
 import { service } from 'ember-decorators/service';
 
@@ -21,9 +22,14 @@ export default class extends Route {
   }
 
 
-  model({ user_id }) {
-    return this.get('store').findRecord('user', user_id).then(user => {
-      return user.get('edits');
+  model() {
+    return RSVP.resolve(this.get('currentUser.user.edits')).then(edits => {
+      return RSVP.hash({ 
+        edits, 
+        developments: RSVP.all(edits.mapBy('development')), // :face_with_rolling_eyes: update the development data
+      }).then(model => {
+        return model.edits; 
+      });
     });
   }
 

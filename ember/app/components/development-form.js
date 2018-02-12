@@ -98,7 +98,6 @@ export default class extends Component {
     this.checkForUpdated(fieldName);
 
     const sum = this.sumProperties(...this.get('commsfFields'), 'editing.unkSqft');
-    console.log(sum);
 
     this.set('editing.commsf', sum);
     this.checkForUpdated('commsf');
@@ -134,8 +133,6 @@ export default class extends Component {
     const values = Object.values(properties)
                          .filter(prop => prop !== null && prop !== undefined && prop !== "");
 
-    console.log(values);
-
     if (values.length > 0) {
       return values.reduce((a, b) => parseFloat(a) + (parseFloat(b) || 0));
     }
@@ -159,8 +156,6 @@ export default class extends Component {
     if (typeof edited === 'boolean') {
       edited = !edited;
     }
-
-    console.log(modeled, edited, (modeled || '').toString(), (edited || '').toString());
     
     if ((modeled || '').toString() !== (edited || '').toString()) {
       this.set(`proposedChanges.${fieldName}`, edited);
