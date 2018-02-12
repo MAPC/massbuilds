@@ -78,8 +78,9 @@ class Development < ApplicationRecord
 
   def geocode
     return if point.present?
-    result = Faraday.get "http://www.mapquestapi.com/geocoding/v1/address?key=#{Rails.application.secrets.mapquest_api_key}&location=#{address},#{state},#{zip_code}"
-    self.point = "POINT (#{JSON.parse(result.body)['results'][0]['locations'][0]['latLng']['lng']} #{JSON.parse(result.body)['results'][0]['locations'][0]['latLng']['lat']})"
+    result = Faraday.get "http://34.229.32.63/v1/search?text=#{address},#{state},#{zip_code}&sources=oa"
+    self.point = "POINT (#{JSON.parse(result.body)['features'][0]['geometry']['coordinates'][0]} #{JSON.parse(result.body)['features'][0]['geometry']['coordinates'][1]})"
+    self.municipal = "#{JSON.parse(result.body)['features'][0]['properties']['locality']}"
   end
 
   def self.zip(file_name)
