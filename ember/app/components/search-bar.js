@@ -11,7 +11,7 @@ export default class extends Component {
 
     this.classNames = ['component', 'search-bar'];
 
-    this.sortOrder = ['municipality', 'nhood', 'devlper', 'name', 'address'];
+    this.sortOrder = ['municipal', 'nhood', 'devlper', 'name', 'address'];
     this.searchQuery = '';
   }
 
@@ -20,8 +20,8 @@ export default class extends Component {
 
 
   @computed('developments')
-  get municipality() {
-    return this.uniqueValuesFor('municipality');
+  get municipal() {
+    return this.uniqueValuesFor('municipal');
   }
 
 

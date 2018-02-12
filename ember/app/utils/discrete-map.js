@@ -1,7 +1,7 @@
 const discreteMap = {
   'Neighborhood': 'nhood',
   'Developer': 'devlper',
-  'Town/City': 'municipality',
+  'Town/City': 'municipal',
 };
 
 export default discreteMap;

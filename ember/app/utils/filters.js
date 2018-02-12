@@ -34,7 +34,7 @@ const filters = {
   // Discrete
 
   'devlper': { name: 'Developer', ...defaultDiscrete },
-  'municipality':  { name: 'Town/City', ...defaultDiscrete },
+  'municipal':  { name: 'Town/City', ...defaultDiscrete },
   'nhood': { name: 'Neighborhood', ...defaultDiscrete },
 
   // Key Info

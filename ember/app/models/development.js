@@ -20,7 +20,7 @@ export default class extends DS.Model {
   @attr('string') zipCode
   @attr('string') parkType
   @attr('string') parcelId
-  @attr('string') municipality
+  @attr('string') municipal
   @attr('string') devlper
 
   @attr('number') height
