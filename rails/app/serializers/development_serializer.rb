@@ -1,10 +1,10 @@
 class DevelopmentSerializer < ActiveModel::Serializer
-[:id, :name, :status, :address, :municipal, :devlper, :latitude, :longitude].each { |attr| attribute attr }
+[:id, :name, :status, :address, :nhood, :municipal, :devlper, :latitude, :longitude].each { |attr| attribute attr }
 [:user_id, :rdv, :asofright, :ovr55, :clusteros, :phased, :stalled,
   :descr, :prj_url, :state, :zip_code, :height,
   :stories, :year_compl, :prjarea, :singfamhu, :smmultifam, :lgmultifam,
   :hu, :gqpop, :rptdemp, :estemp, :commsf, :hotelrms, :onsitepark,
-  :total_cost, :ret_sqft, :rpa_name, :county, :nhood, :n_transit,
+  :total_cost, :ret_sqft, :rpa_name, :county, :n_transit,
   :ofcmd_sqft, :indmf_sqft, :whs_sqft, :rnd_sqft, :ei_sqft, :other_sqft,
   :hotel_sqft, :other_rate, :affordable, :parcel_id, :mixed_use, :point,
   :programs, :forty_b, :residential, :commercial, :yrcomp_est, :units_1bd,

@@ -17,8 +17,6 @@ export default class extends Controller {
       for (let col in changes) {
         const emberCol = Ember.String.camelize(col);
 
-        console.log(record.get('development'));
-
         changes[emberCol] = {
           name: filters[emberCol].name,
           oldValue: record.get(`development.${emberCol}`),

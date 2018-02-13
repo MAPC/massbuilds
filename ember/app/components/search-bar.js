@@ -62,6 +62,7 @@ export default class extends Component {
       }
 
       sortOrder.forEach(col => {
+        if (col === 'nhood') { console.log(this.get(col))};
         let name = filters[col].name;
 
         filtered[name] = this.get(col)
