@@ -1,0 +1,26 @@
+.route.moderations-index {
+ 
+  ul.item-list {
+    li, .list-body > li {
+      small { font-size: 10px; }
+
+      .row {
+        & > div {
+          &:first-of-type { flex: 1 0 35%; }
+          &:nth-of-type(2) { flex: 1 0 25% !important; }
+          &:nth-of-type(3) { flex: 1 0 20% !important; }
+          &:last-of-type { flex: 1 0 20%; }
+        }
+      }
+    }
+
+    .actions {
+      padding-top: 10px;
+
+      text-align: right; 
+
+      button + button { margin-left: 15px; }
+    }
+  }
+
+}

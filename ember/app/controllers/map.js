@@ -45,7 +45,7 @@ export default class extends Controller {
   @computed('target.currentRouteName')
   get showingModerations() {
     return [
-      'map.moderations',
+      'map.moderations.index',
       'map.moderations.for.user',
     ].indexOf(this.get('target.currentRouteName')) !== -1;
   }

@@ -1,4 +1,6 @@
+import RSVP from 'rsvp';
 import Route from '@ember/routing/route';
+
 
 export default Route.extend({
 
@@ -15,8 +17,20 @@ export default Route.extend({
 
 
   model() {
-    return this.get('store').findAll('edit');
+    return RSVP.resolve(this.get('store').findAll('edit')).then(edits => {
+      return RSVP.hash({
+        edits,
+        developments: RSVP.all(edits.mapBy('development')),
+      }).then(model => {
+        return model.edits;
+      });
+    });
   },
+
+
+  afterModel(model) {
+    console.log(model);
+  }
 
 
 });

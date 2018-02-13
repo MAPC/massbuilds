@@ -61,6 +61,10 @@
 
       padding: 5px;
 
+      font-size: 15px;
+
+      background: darken($color_bg-light, 2);
+
       &.list-header {
         position: absolute;
         top: 0;
@@ -76,7 +80,7 @@
         border-bottom: 1px solid $color_bg-medium; 
       }
 
-      &:nth-of-type(2n) { background: darken($color_bg-light, 2); }
+      &:nth-of-type(2n) { background: darken($color_bg-light, 4); }
 
       a:hover { color: $color_brand-primary--active; }
     }  
