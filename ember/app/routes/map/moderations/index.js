@@ -11,7 +11,7 @@ export default Route.extend({
     const currentUser = this.get('currentUser.user');
 
     if (currentUser.get('role') !== 'admin')  {
-      this.transitionTo('map.moderations.for.user', currentUser);
+      this.transitionTo('map.moderations.for.user', currentUser.get('id'));
     }
   },
 
@@ -20,17 +20,11 @@ export default Route.extend({
     return RSVP.resolve(this.get('store').findAll('edit')).then(edits => {
       return RSVP.hash({
         edits,
-        developments: RSVP.all(edits.mapBy('development')),
+        developments: RSVP.all(edits.map(edit => edit.belongsTo('development').reload())),
       }).then(model => {
         return model.edits;
       });
     });
   },
-
-
-  afterModel(model) {
-    console.log(model);
-  }
-
 
 });

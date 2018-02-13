@@ -6,7 +6,7 @@ import { action, computed } from 'ember-decorators/object';
 
 export default class extends Controller {
 
-  @computed('model.[]')
+  @computed('model.[]', 'model.@each.development')
   get moderations() {
     const model = this.get('model');
     const moderations = [];
@@ -14,10 +14,10 @@ export default class extends Controller {
     model.forEach(record => {
       const changes = Ember.copy(record.get('proposedChanges'));
 
-      console.log(changes);
-
       for (let col in changes) {
         const emberCol = Ember.String.camelize(col);
+
+        console.log(record.get('development'));
 
         changes[emberCol] = {
           name: filters[emberCol].name,

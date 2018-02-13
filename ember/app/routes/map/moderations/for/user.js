@@ -26,7 +26,7 @@ export default class extends Route {
     return RSVP.resolve(this.get('currentUser.user.edits')).then(edits => {
       return RSVP.hash({ 
         edits, 
-        developments: RSVP.all(edits.mapBy('development')), // :face_with_rolling_eyes: update the development data
+        developments: RSVP.all(edits.map(edit => edit.belongsTo('development').reload())), // :face_with_rolling_eyes: update the development data
       }).then(model => {
         return model.edits; 
       });
