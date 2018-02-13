@@ -24,7 +24,7 @@ export default class extends Route {
 
   model({ user_id }) {
     return this.get('store').findRecord('user', user_id).then(user => {
-      return user.get('developments');
+      return user.hasMany('developments').reload();
     });
   }
 
