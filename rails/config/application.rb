@@ -25,9 +25,16 @@ module Massbuilds
     config.middleware.use ActionDispatch::Flash
     config.middleware.use Rack::MethodOverride
 
+    known_hosts = [
+      'http://localhost:4200', 
+      'http://staging2.massbuilds.com',
+      'http://massbuilds.com',
+      'https://massbuilds.com'
+    ]
+
     config.middleware.insert_before 0, Rack::Cors do
       allow do
-        origins ['http://localhost:4200', 'http://staging2.massbuilds.com']
+        origins known_hosts
         resource '*', :headers => :any, :methods => [:get, :post, :options, :put, :patch, :delete]
       end
     end
