@@ -27,7 +27,11 @@
           <li data-mod-id={{moderation.id}}>
             <div class="row">
               <div> 
-                {{#link-to 'map.developments.development' moderation.development}}{{moderation.development.name}}{{/link-to}}
+                {{#if moderation.development}}
+                  {{#link-to 'map.developments.development' moderation.development}}{{moderation.development.name}}{{/link-to}}
+                {{else}}
+                  {{moderation.changes.name.newValue}} <small>(New)</small>
+                {{/if}}
               </div>
               <div>
                 {{moderation.user.fullName}} 
@@ -40,20 +44,24 @@
               <ul>
                 {{#each-in moderation.changes as |k change|}} 
                   <li>
-                    <b>{{change.name}}</b> has been changed from 
+                    <b>{{change.name}}</b> has been changed 
 
-                    <span>
-                      {{#if change.oldValue}} 
-                        {{change.oldValue}}
-                      {{else}}
-                        <em>no value</em>
-                      {{/if}}
-                    </span>
+                    {{#unless moderation.approved}}
+                      from 
+
+                      <span>
+                        {{#if (and (not-eq change.oldValue null) (not-eq change.oldValue undefined))}} 
+                          {{change.oldValue}}
+                        {{else}}
+                          <em>no value</em>
+                        {{/if}}
+                      </span>
+                    {{/unless}}
 
                     to 
 
                     <span>
-                      {{#if change.newValue}}
+                      {{#if (and (not-eq change.newValue null) (not-eq change.newValue undefined))}}
                         {{change.newValue}}
                       {{else}}
                         <em>no value</em>

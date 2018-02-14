@@ -41,6 +41,7 @@ const filters = {
 
   'status': { name: 'Status', type: 'string', options: Object.keys(statusColors), ...defaultMetric },
   'parkType': { name: 'Parking type', type: 'string', options: ['garage', 'underground', 'surface'], ...defaultMetric },
+  'descr': { name: 'Description', type: 'string', ...defaultMetric },
 
   'yearCompl': { name: 'Year completed', type: 'number', ...defaultMetric },
   'yrcomplEst': { name: 'Year compl. est.',  type: 'number', ...defaultMetric },
@@ -193,14 +194,11 @@ const blacklist = [
   'latitude', 
   'longitude',
   'mapcNotes',
-  'projectUrl',
   'tagline',
-  'zipCode',
   'parcelId',
   'programs',
   'user',
   'state',
-  'desc',
 ];
 
 

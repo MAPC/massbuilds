@@ -9,6 +9,7 @@ import { action, computed } from 'ember-decorators/object';
 export default class extends Controller {
 
   @service currentUser
+  @service notifications
 
  
   @computed('currentUser.user', 'model')
@@ -44,6 +45,11 @@ export default class extends Controller {
     });
 
     newEdit.save().then(() => {
+      const action = this.get('hasPublishPermissions') ? 'published edits' : 'submitted edits for review';
+      const developmentName = this.get('model.name');
+
+      this.get('notifications').show(`You have ${action} to ${developmentName}.`)
+
       this.transitionToRoute('map.developments.development.index', this.get('model'));
     });
   }

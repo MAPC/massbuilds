@@ -28,7 +28,7 @@ export default class extends Route {
         edits, 
         developments: RSVP.all(edits.map(edit => edit.belongsTo('development').reload())), // :face_with_rolling_eyes: update the development data
       }).then(model => {
-        return model.edits; 
+        return model.edits.sortBy('createdAt').reverse(); 
       });
     });
   }
