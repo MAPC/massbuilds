@@ -52,39 +52,39 @@
               </div>
 
               <div class="field">
-                <label for="yearCompl" class="required">Year Completed</label>
+                <label for="yearCompl" class="required">Year Complete (Known)</label>
                 {{input value=editing.yearCompl class="required-field" placeholder="Enter here" key-up=(action checkForUpdated 'yearCompl')}}
               </div>
 
               <div class="field">
-                <label for="yrcompEst" class="required">Yr. Compl. Est.</label>
+                <label for="yrcompEst" class="required">Year Complete (Estimate)</label>
                 {{input value=editing.yrcompEst class="required-field" placeholder="Enter here" key-up=(action checkForUpdated 'yrcompEst')}}
               </div>
 
               <div class="field">
-                <label for="totalCost">Cost</label>
+                <label for="totalCost">Cost of Construction</label>
                 ${{input value=editing.totalCost placeholder="Enter here" key-up=(action checkForUpdated 'totalCost')}}
               </div>
 
               <div class="field">
-                <label for="prjarea">Project Area</label>
-                {{input value=editing.prjarea placeholder="Enter here" key-up=(action checkForUpdated 'prjarea')}}<span>sqft.</span>
+                <label for="prjarea">Project Area in Square Feet</label>
+                {{input value=editing.prjarea placeholder="Enter here" key-up=(action checkForUpdated 'prjarea')}}<span></span>
               </div>
             </div>
 
             <div class="column">
               <div class="field">
-                <label for="height">Height</label>
+                <label for="height">Height (feet)</label>
                 {{input value=editing.height placeholder="Enter here" key-up=(action checkForUpdated 'height')}}<span>ft.</span>
               </div>
 
               <div class="field">
-                <label for="stories">Stories</label>
+                <label for="stories">Number of Stories</label>
                 {{input value=editing.stories placeholder="Enter here" key-up=(action checkForUpdated 'stories')}}
               </div>
 
               <div class="field">
-                <label for="onsitepark">Parking Spaces</label>
+                <label for="onsitepark">Number of Parking Spaces</label>
                 {{input value=editing.onsitepark placeholder="Enter here" key-up=(action checkForUpdated 'onsitepark')}}
               </div>
 
@@ -141,7 +141,7 @@
           <div class="row">
             <div class="column">
               <div class="field">
-                <label for="gqpop">Grp. Qrtrs. Pop.</label>
+                <label for="gqpop">Group Quarters Population</label>
                 {{input value=editing.gqpop placeholder="Enter here" key-up=(action checkForUpdated 'gqpop')}}
               </div>
             </div>
@@ -160,7 +160,7 @@
 
           <div class="table-wrapper">
             <h3 class="field">
-              <label for="hu" class="required">Tot. Housing Units</label>
+              <label for="hu" class="required">Total # of Housing Units</label>
 
               {{#if (and (not-eq editing.hu null) (gte editing.hu 0))}}
                 {{editing.hu}} Unit{{unless (eq editing.hu 1) 's'}}
@@ -277,12 +277,12 @@
           <div class="row">
             <div class="column">
               <div class="field">
-                <label for="estemp">Estmtd. Emplmnt.</label>
+                <label for="estemp">Estimated Employment</label>
                 {{input value=editing.estemp placeholder="Enter here" key-up=(action checkForUpdated 'estemp')}}
               </div>
 
               <div class="field">
-                <label for="rptdemp">Rprtd. Emplmnt.</label>
+                <label for="rptdemp">Reported Employment</label>
                 {{input value=editing.rptdemp placeholder="Enter here" key-up=(action checkForUpdated 'rptdemp')}}
               </div>
             </div>
@@ -309,7 +309,7 @@
               <label for="commsf" class="required">Commercial Square Footage</label>
 
               {{#if (and (not-eq editing.commsf null) (gte editing.commsf 0))}}
-                {{editing.commsf}} sqft.
+                {{editing.commsf}}
               {{else}}
                 Enter the floor area for each use type below
               {{/if}}
