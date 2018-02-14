@@ -1,0 +1,69 @@
+<div class="subviews">
+  <button onclick={{action changeView 'search'}} class="{{if (eq view 'search') 'active'}}">
+    <span>
+      <img src="/assets/images/search.svg">
+    </span>
+  </button>
+  <button onclick={{action changeView 'selected'}} class="{{if (eq view 'selected') 'active'}}">
+    <span>
+      <img src="/assets/images/check-square.svg"> 
+      <em>
+        {{#if selectedValues}}
+          {{selectedValues.length}}
+        {{else}}
+          0
+        {{/if}}
+      </em>
+    </span>
+  </button>
+</div>
+
+{{valueUpdater}}
+
+{{#if (eq view 'selected')}}
+  <div class="subview discrete-selected">
+    {{#if selected}}
+      <ul> 
+        {{#each selected as |value|}}
+          <li class="is-selected">
+            <span onclick={{action deselect value}}>
+              {{value}}
+            </span>
+
+            <div class="discrete-value-actions">
+              <button onclick={{action deselect value}}>+</button>
+            </div>
+          </li>
+        {{/each}}
+      </ul>
+    {{else}}
+      <div class="no-selections">
+        No {{viewing.name}}s selected
+      </div>
+    {{/if}}
+  </div>
+{{else}}
+  <div class="subview">
+    {{input value=searchQuery placeholder=placeholder}}
+
+    <div class="list-wrapper">
+      <ul class="discrete-value-list">
+        {{#each filteredValues as |value|}} 
+          <li class="{{if value.isSelected 'is-selected'}}">
+            {{#if value.isSelected}} 
+              <img src="/assets/images/filter.svg" class="selected-filter">
+            {{/if}}
+            
+            <span onclick={{action select value.value}}>
+              {{value.value}}
+            </span>
+
+            <div class="discrete-value-actions">
+              <button onclick={{action select value.value}}>+</button>
+            </div>
+          </li>
+        {{/each}}
+      </ul>
+    </div>
+  </div>
+{{/if}}

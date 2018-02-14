@@ -1,0 +1,33 @@
+.notifications-popup {
+  $width: 300px;
+
+  position: fixed;
+  bottom: -15px;
+  right: 30px + $width;
+  z-index: 999;
+
+  .notification {
+    top: 0;
+    left: 0;
+
+    max-width: $width;
+    padding: 10px 20px;
+
+    font-size: 14px;
+    
+    background: $color_bg-light;
+    border-radius: 5px;
+    border: 1px solid $color_brand-primary--active;
+    opacity: 0;
+    transition: top .2s, opacity .2s;
+
+    &.error { border-color: $color_state-negative; }
+
+    &.active {
+      top: -50px; 
+
+      opacity: 1;
+      transition: top .2s, opacity .2s;
+    }
+  }
+}

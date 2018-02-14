@@ -1,0 +1,50 @@
+<img src="/assets/images/logo-with-text.png" class="logo-image">
+
+<form {{action signup on="submit"}}>
+
+  <h2>Signup</h2>
+
+  <div class="input-wrapper">
+    <img src="/assets/images/user.svg">
+    {{input placeholder="First Name" type="text" value=firstName}}
+  </div>
+
+  <div class="input-wrapper">
+    <img src="/assets/images/user.svg">
+    {{input placeholder="Last Name" type="text" value=lastName}}
+  </div>
+
+  <div class="input-wrapper">
+    <img src="/assets/images/mail.svg">
+    {{input placeholder="Email" type="email" value=username}}
+  </div>
+
+  <hr>
+
+  <div class="input-wrapper">
+    <img src="/assets/images/lock.svg">
+    {{input placeholder="Password" type="password" value=password}}
+  </div>
+
+  <div class="input-wrapper">
+    <img src="/assets/images/check-square.svg">
+    {{input placeholder="Confirm Password" type="password" value=confirmPassword}}
+  </div>
+
+
+  {{#if errorMessage}}
+    <div class="error-message">
+      {{errorMessage}}
+    </div>
+  {{/if}}
+
+  <div class="form-footer">
+    <button class='submit {{unless submittable 'disabled'}}' type="submit">Signup</button>
+  </div>
+
+</form>
+
+<div class="auth-switch">
+  Already have an account? 
+  {{link-to 'Login here' (query-params panel=null)}}
+</div>

@@ -1,0 +1,408 @@
+<div class="left-panel-links">
+  {{#if (eq mode 'edit')}}
+    {{#link-to 'map.developments.development.index' model.id}}
+      <img src="/assets/images/chevrons-left.svg">
+      Cancel
+    {{/link-to}}
+  {{else}}
+    {{#link-to 'map'}}
+      <img src="/assets/images/chevrons-left.svg">
+      Cancel
+    {{/link-to}}
+  {{/if}}
+
+  {{#if (and fulfilled changes)}}
+    <button onclick={{action update}} class='submit-changes styled'>{{submitText}}</button>
+  {{/if}}
+</div>
+
+<div class="development-content">
+  <div class="layout-column">
+    <div class="development-header">
+      <h1 class="required">{{input value=editing.name class="required-field" placeholder="Development Name" key-up=(action checkForUpdated 'name')}}</h1>
+      <h2 class="required address-fields">
+        <img src="/assets/images/map-pin.svg" onclick={{action findPosition}}> 
+        {{input value=editing.address class="required-field" placeholder="Development Street Address" key-up=(action checkForUpdated 'address')}}
+        {{input value=editing.zipCode class="required-field" placeholder="Zip Code" key-up=(action checkForUpdated 'zipCode')}}
+      </h2>
+
+      <h2 class="project-url">
+        <img src="/assets/images/link.svg">
+        {{input value=editing.prjUrl placeholder="Project Website" key-up=(action checkForUpdated 'prjUrl')}}
+      </h2>
+    </div>
+
+    <div class="metric-groups-wrapper">
+      <div class="metric-groups">
+        <article> 
+          <h4>Key Info</h4>
+
+          <div class="row">
+            <div class="column">
+              <div class="field">
+                <label for="status" class="required">Status:</label>
+                <select name="status" class="required-field" onchange={{action checkForUpdated 'status'}}>
+                  {{#unless editing.status}}
+                    <option disabled selected>Select Status</option>
+                  {{/unless}}
+                  {{#each filters.status.options as |option|}}
+                    <option value={{option}} selected={{if (eq option editing.status) 'selected'}}>{{capitalize option}}</option>
+                  {{/each}}
+                </select>
+              </div>
+
+              <div class="field">
+                <label for="yearCompl" class="required">Year Completed</label>
+                {{input value=editing.yearCompl class="required-field" placeholder="Enter here" key-up=(action checkForUpdated 'yearCompl')}}
+              </div>
+
+              <div class="field">
+                <label for="yrcompEst" class="required">Yr. Compl. Est.</label>
+                {{input value=editing.yrcompEst class="required-field" placeholder="Enter here" key-up=(action checkForUpdated 'yrcompEst')}}
+              </div>
+
+              <div class="field">
+                <label for="totalCost">Cost</label>
+                ${{input value=editing.totalCost placeholder="Enter here" key-up=(action checkForUpdated 'totalCost')}}
+              </div>
+
+              <div class="field">
+                <label for="prjarea">Project Area</label>
+                {{input value=editing.prjarea placeholder="Enter here" key-up=(action checkForUpdated 'prjarea')}}<span>sqft.</span>
+              </div>
+            </div>
+
+            <div class="column">
+              <div class="field">
+                <label for="height">Height</label>
+                {{input value=editing.height placeholder="Enter here" key-up=(action checkForUpdated 'height')}}<span>ft.</span>
+              </div>
+
+              <div class="field">
+                <label for="stories">Stories</label>
+                {{input value=editing.stories placeholder="Enter here" key-up=(action checkForUpdated 'stories')}}
+              </div>
+
+              <div class="field">
+                <label for="onsitepark">Parking Spaces</label>
+                {{input value=editing.onsitepark placeholder="Enter here" key-up=(action checkForUpdated 'onsitepark')}}
+              </div>
+
+              {{#unless (lte editing.onsitepark 0)}}
+                <div class="field">
+                  <label for="parkType">Parking Type</label>
+                  {{editing.parkType}}
+                  <select name="parkType" onchange={{action checkForUpdated 'parkType'}}>
+                    {{#unless editing.parkType}}
+                      <option disabled selected>Select Parking Type</option>
+                    {{/unless}}
+                    {{#each filters.parkType.options as |option|}}
+                      <option value={{option}} selected={{if (eq option editing.parkType) 'selected'}}>{{capitalize option}}</option>
+                    {{/each}}
+                  </select>
+                </div>
+              {{/unless}}
+            </div>
+          </div>
+
+          <p class="attributes">
+            <label>Attributes:</label>
+
+            <span>
+              <label for="rdv">Redevelopment: </label>
+              {{input type='checkbox' checked=editing.rdv click=(action checkForUpdated 'rdv')}}
+            </span>,
+
+            <span>
+              <label for="phased">Phased: </label>
+              {{input type='checkbox' checked=editing.phased click=(action checkForUpdated 'phased')}}
+            </span>,
+
+            <span>
+              <label for="stalled">Stalled: </label>
+              {{input type='checkbox' checked=editing.stalled click=(action checkForUpdated 'stalled')}}
+            </span>,
+
+            <span>
+              <label for="asofright">As of Right: </label>
+              {{input type='checkbox' checked=editing.asofright click=(action checkForUpdated 'asofright')}}
+            </span>,
+
+            <span>
+              <label for="mixedUse">Mixed Use: </label>
+              {{input type='checkbox' checked=editing.mixedUse click=(action checkForUpdated 'mixedUse')}}
+            </span>
+          </p>
+        </article>
+
+        <article>
+          <h4>Residential</h4>
+
+          <div class="row">
+            <div class="column">
+              <div class="field">
+                <label for="gqpop">Grp. Qrtrs. Pop.</label>
+                {{input value=editing.gqpop placeholder="Enter here" key-up=(action checkForUpdated 'gqpop')}}
+              </div>
+            </div>
+            <div class="column">
+            </div>
+          </div>
+
+          <p class="attributes">
+            <label>Attributes:</label>
+
+            <span>
+              <label for="ovr55">Age Restricted: </label>
+              {{input type='checkbox' checked=editing.ovr55 click=(action checkForUpdated 'ovr55')}}
+            </span>
+          </p>
+
+          <div class="table-wrapper">
+            <h3 class="field">
+              <label for="hu" class="required">Tot. Housing Units</label>
+
+              {{#if (and (not-eq editing.hu null) (gte editing.hu 0))}}
+                {{editing.hu}} Unit{{unless (eq editing.hu 1) 's'}}
+              {{else}}
+                Enter quantity of each unit type below
+              {{/if}}
+            </h3>
+
+            <table class="housing-units">
+              <tr class="table-header">
+                <td>Unit Type</td>
+                <td>Quantity</td>
+                <td>Percentage</td>
+              </tr>
+
+              <tr>
+                <td>Single Family</td>
+                <td>{{input value=editing.singfamhu placeholder=0 key-up=(action updateHu 'singfamhu')}}</td>
+                <td>{{round (mult 100 (div editing.singfamhu editing.hu))}}%</td>
+              </tr>
+
+              <tr>
+                <td>Small Multi-family</td>
+                <td>{{input value=editing.smmultifam placeholder=0 key-up=(action updateHu 'smmultifam')}}</td>
+                <td>{{round (mult 100 (div editing.smmultifam editing.hu))}}%</td>
+              </tr>
+
+              <tr>
+                <td>Large Multi-family</td>
+                <td>{{input value=editing.lgmultifam placeholder=0 key-up=(action updateHu 'lgmultifam')}}</td>
+                <td>{{round (mult 100 (div editing.lgmultifam editing.hu))}}%</td>
+              </tr>
+
+              <tr>
+                <td>Studio/1 Bedroom</td>
+                <td>{{input value=editing.units1Bd placeholder=0 key-up=(action updateHu 'units1Bd')}}</td>
+                <td>{{round (mult 100 (div editing.units1Bd editing.hu))}}%</td>
+              </tr>
+
+              <tr>
+                <td>2 Bedroom</td>
+                <td>{{input value=editing.units2Bd placeholder=0 key-up=(action updateHu 'units2Bd')}}</td>
+                <td>{{round (mult 100 (div editing.units2Bd editing.hu))}}%</td>
+              </tr>
+
+              <tr>
+                <td>3 Bedroom</td>
+                <td>{{input value=editing.units3Bd placeholder=0 key-up=(action updateHu 'units3Bd')}}</td>
+                <td>{{round (mult 100 (div editing.units3Bd editing.hu))}}%</td>
+              </tr>
+
+              <tr>
+                <td>Unknown</td>
+                <td>{{input value=editing.unknownhu placeholder=0 key-up=(action updateHu 'unknownhu')}}</td>
+                <td>{{round (mult 100 (div editing.unknownhu editing.hu))}}%</td>
+              </tr>
+            </table>
+          </div>
+
+          <div class="table-wrapper">
+            <h3 class="field">
+              <label for="affrdUnit">Affordable Units</label>
+
+              {{#if (and (not-eq editing.affrdUnit null) (gte editing.affrdUnit 0))}}
+                {{editing.affrdUnit}} Unit{{unless (eq editing.affrdUnit 1) 's'}}
+              {{else}}
+                Enter quantity of each unit type below
+              {{/if}}
+            </h3>
+
+            <table class="affordable-units">
+              <tr class="table-header">
+                <td>Unit Type</td>
+                <td>Quantity</td>
+                <td>Percentage</td>
+              </tr>
+
+              <tr>
+                <td>Units &lt;30% AMI</td>
+                <td>{{input value=editing.affU30 placeholder=0 key-up=(action updateAffrdUnit 'affU30')}}</td>
+                <td>{{round (mult 100 (div editing.affU30 editing.affrdUnit))}}%</td>
+              </tr>
+
+              <tr>
+                <td>Units 30-50% AMI</td>
+                <td>{{input value=editing.affU3050 placeholder=0 key-up=(action updateAffrdUnit 'affU3050')}}</td>
+                <td>{{round (mult 100 (div editing.affU3050 editing.affrdUnit))}}%</td>
+              </tr>
+
+              <tr>
+                <td>Units 50-80% AMI</td>
+                <td>{{input value=editing.affU5080 placeholder=0 key-up=(action updateAffrdUnit 'affU5080')}}</td>
+                <td>{{round (mult 100 (div editing.affU5080 editing.affrdUnit))}}%</td>
+              </tr>
+
+              <tr>
+                <td>Units 80-100% AMI</td>
+                <td>{{input value=editing.affU80p placeholder=0 key-up=(action updateAffrdUnit 'affU80p')}}</td>
+                <td>{{round (mult 100 (div editing.affU80p editing.affrdUnit))}}%</td>
+              </tr>
+
+              <tr>
+                <td>Unknown</td>
+                <td>{{input value=editing.affUnknown placeholder=0 key-up=(action updateAffrdUnit 'affUnknown')}}</td>
+                <td>{{round (mult 100 (div editing.affUnknown editing.affrdUnit))}}%</td>
+              </tr>
+            </table>
+          </div>
+        </article>
+
+        <article>
+          <h4>Commercial</h4>
+
+          <div class="row">
+            <div class="column">
+              <div class="field">
+                <label for="estemp">Estmtd. Emplmnt.</label>
+                {{input value=editing.estemp placeholder="Enter here" key-up=(action checkForUpdated 'estemp')}}
+              </div>
+
+              <div class="field">
+                <label for="rptdemp">Rprtd. Emplmnt.</label>
+                {{input value=editing.rptdemp placeholder="Enter here" key-up=(action checkForUpdated 'rptdemp')}}
+              </div>
+            </div>
+
+            <div class="column">
+              <div class="field">
+                <label for="hotelrms">Hotel Rooms</label>
+                {{input value=editing.hotelrms placeholder="Enter here" key-up=(action checkForUpdated 'hotelrms')}}
+              </div>
+            </div>
+          </div>
+
+          <p class="attributes">
+            <label>Attributes:</label>
+
+            <span>
+              <label for="headqtrs">Company Headquarters: </label>
+              {{input type='checkbox' checked=editing.headqtrs click=(action checkForUpdated 'headqtrs')}}
+            </span>
+          </p>
+
+          <div class="table-wrapper">
+            <h3 class="field">
+              <label for="commsf" class="required">Commercial Square Footage</label>
+
+              {{#if (and (not-eq editing.commsf null) (gte editing.commsf 0))}}
+                {{editing.commsf}} sqft.
+              {{else}}
+                Enter the floor area for each use type below
+              {{/if}}
+            </h3>
+
+            <table class="commercial-makeup">
+              <tr class="table-header">
+                <td>Use Type</td>
+                <td>Floor Area (sqft.)</td>
+                <td>Percentage</td>
+              </tr>
+
+              <tr>
+                <td>Retail</td>
+                <td>{{input value=editing.retSqft placeholder=0 key-up=(action updateCommsf 'retSqft')}}</td>
+                <td>{{round (mult 100 (div editing.retSqft editing.commsf))}}%</td>
+              </tr>
+
+              <tr>
+                <td>Office/Medical</td>
+                <td>{{input value=editing.ofcmdSqft placeholder=0 key-up=(action updateCommsf 'ofcmdSqft')}}</td>
+                <td>{{round (mult 100 (div editing.ofcmdSqft editing.commsf))}}%</td>
+              </tr>
+
+              <tr>
+                <td>Industrial/Manufacturing</td>
+                <td>{{input value=editing.indmfSqft placeholder=0 key-up=(action updateCommsf 'indmfSqft')}}</td>
+                <td>{{round (mult 100 (div editing.indmfSqft editing.commsf))}}%</td>
+              </tr>
+
+              <tr>
+                <td>Warehouse/Shipping</td>
+                <td>{{input value=editing.whsSqft placeholder=0 key-up=(action updateCommsf 'whsSqft')}}</td>
+                <td>{{round (mult 100 (div editing.whsSqft editing.commsf))}}%</td>
+              </tr>
+
+              <tr>
+                <td>Research/Development</td>
+                <td>{{input value=editing.rndSqft placeholder=0 key-up=(action updateCommsf 'rndSqft')}}</td>
+                <td>{{round (mult 100 (div editing.rndSqft editing.commsf))}}%</td>
+              </tr>
+
+              <tr>
+                <td>Educational/Institutional</td>
+                <td>{{input value=editing.eiSqft placeholder=0 key-up=(action updateCommsf 'eiSqft')}}</td>
+                <td>{{round (mult 100 (div editing.eiSqft editing.commsf))}}%</td>
+              </tr>
+
+              <tr>
+                <td>Hotel Room</td>
+                <td>{{input value=editing.hotelSqft placeholder=0 key-up=(action updateCommsf 'hotelSqft')}}</td>
+                <td>{{round (mult 100 (div editing.hotelSqft editing.commsf))}}%</td>
+              </tr>
+
+              <tr>
+                <td>Other</td>
+                <td>{{input value=editing.otherSqft placeholder=0 key-up=(action updateCommsf 'otherSqft')}}</td>
+                <td>{{round (mult 100 (div editing.otherRate editing.commsf))}}%</td>
+              </tr>
+
+              <tr>
+                <td>Unknown</td>
+                <td>{{input value=editing.unkSqft placeholder=0 key-up=(action updateCommsf 'unkSqft')}}</td>
+                <td>{{round (mult 100 (div editing.unkSqft editing.commsf))}}%</td>
+              </tr>
+            </table>
+          </div>
+        </article>
+      </div>
+    </div>
+  </div>
+
+  <div class="layout-column">
+    <div class="detail">
+      <h3>Developer</h3>
+      <p>{{input value=editing.devlper placeholder="Enter Developer Name" key-up=(action checkForUpdated 'devlper')}}</p>
+    </div>
+
+    {{#if editing.user}}
+      <div class="detail">
+        <h3>Entry Created By</h3>
+        <p>{{editing.user.fullName}}</p>
+      </div>
+    {{/if}}
+
+    <div class="detail">
+      <h3>Last Updated</h3>
+      <p>{{format-date editing.updatedAt format='MMM. Do YYYY'}}</p>
+    </div>
+
+    <div class="detail">
+      <h3 class="required">Description</h3>
+      <p>{{textarea value=editing.descr class="required-field" placeholder="Enter Description" key-up=(action checkForUpdated 'descr')}}</p>
+    </div>
+  </div>
+</div>

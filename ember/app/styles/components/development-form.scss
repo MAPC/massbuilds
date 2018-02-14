@@ -1,0 +1,92 @@
+.component.development-form {
+
+  input, textarea { 
+    padding: 2px 8px;
+    margin: 2px;
+
+    background: mix($color_bg-light--active, $color_brand-primary, 90); 
+    border: none;
+    outline: none; 
+    transition: background .15s;
+
+    &:focus, &:active {
+      background: mix($color_bg-light--active, $color_brand-primary, 80);
+      transition: background .15s;
+    }
+  }
+
+  h1:hover {
+    color: $color_font-dark !important;
+  }
+
+  .required:before {
+    content: '*';
+    position: absolute;
+    left: -10px;
+    top: 0;
+    display: block;
+
+    color: $color_state-negative;
+    font-size: 10px;
+  }
+
+  textarea {
+    width: 100%;
+    min-height: 200px;
+    padding: 8px;
+
+    font-size: 12px;
+
+    resize: vertical;
+  }
+
+  .development-header {
+    h1 > input { width: 100%; } 
+    h2 > input { width: 90%; }
+
+    .address-fields {
+      input {
+        &:first-of-type { width: 70%; } 
+        &:last-of-type { 
+          width: 20%;
+        }
+      }  
+    }
+
+    .project-url > input { 
+      width: 50%; 
+      font-size: 14px; 
+    }
+  }
+
+  .column {
+    input {
+      max-width: 50%;
+      padding: 0 8px;
+
+      text-align: right;
+
+      border: none;
+      border-bottom: 1px solid rgba($color_brand-primary--active, 0);
+
+      & + span { 
+        display: inline-block;
+
+        margin-left: 6px; 
+      }
+    }
+  }
+
+  .attributes {
+    span > label {
+      margin-left: 3px;
+      margin-right: 0;
+
+      color: $color_font-medium; 
+      font-size: 13px;
+    }
+  }
+ 
+  button.submit-changes { margin-left: 10px; }
+
+}

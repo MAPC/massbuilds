@@ -1,0 +1,160 @@
+.component.subpanel.discrete-filter {
+
+  $height: 36px;
+  $border_width: 3px;
+
+  width: 100%;
+   
+  .subviews {
+    display: flex;
+
+    width: 100%;
+    height: $height;
+
+    button {
+      flex: 1 0 50%; 
+
+      height: $height;
+
+      border: 0;
+      border-bottom: 1px solid $color_bg-medium;
+
+      transform: translateZ(0);
+      transition: border-width .2s, height .2s;
+
+      &:first-of-type { border-right: 1px solid $color_bg-medium; }
+
+      &.active {
+        height: $height + $border_width;
+        border-bottom: $border_width solid $color_brand-primary; 
+
+        transition: border-width .2s, height .2s;
+      }
+
+      span { @extend ._vertical-center; }
+
+      img {
+        top: 3px;
+        height: 15px; 
+        margin: 0 auto;
+
+        & + em {
+          display: inline-block;
+
+          margin-left: 4px;
+          padding: 1px 8px;
+
+          font-size: 12px;
+
+          border-left: 1px solid $color_bg-medium;
+        }
+      }
+    }
+  }
+
+  .subview {
+    input {
+      height: $height;
+      width: 100%; 
+      padding: 4px 10px;
+
+      font-size: 12px;
+
+      background: none;
+      border: 0;
+      border-bottom: 1px solid $color_bg-medium;
+
+      outline: none;
+    } 
+  }
+  
+  .no-selections {
+    padding: 25px 10px;
+
+    color: $color_font-medium;
+    font-size: 14px; 
+    text-align: center;
+  }
+
+  .list-wrapper:after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    display: block;
+    z-index: 100;
+
+    height: 1px;
+    width: 100%;
+
+    box-shadow: 0px 0px 50px 40px $color_bg-light;
+    overflow: hidden;
+  }
+
+  ul {
+    height: 65vh; 
+    margin-top: 0;
+    padding: 0 0 35px 10px;
+
+    overflow-y: scroll;
+
+    li { 
+      width: 100%;
+      padding: 3px 0;
+      padding-right: 40px;
+
+      font-size: 15px;
+      text-overflow: ellipsis;
+
+      white-space: nowrap;
+      overflow: hidden;
+
+      img.selected-filter {
+        height: 12px; 
+        width: auto;
+      }
+
+      span {
+        cursor: pointer; 
+
+        &:hover { color: $color_brand-primary--active; }
+      }
+
+      &:first-of-type { 
+        padding-top: 10px; 
+
+        .discrete-value-actions { top: 60%; }
+      }
+
+      &.is-selected {
+        font-weight: 600; 
+
+        .discrete-value-actions button {
+          transform: rotate(45deg);
+
+          &:hover {
+            color: $color_state-negative; 
+          }
+        }
+      }
+    }
+  }
+
+  .discrete-value-actions {
+    @extend ._vertical-center;
+    left: initial;
+    right: 0;
+    z-index: 20;
+
+    button {
+      font-size: 18px;
+
+      background: none;
+      border: none; 
+
+      &:hover {
+        color: $color_brand-primary--active; 
+      }
+    }
+  }
+
+}

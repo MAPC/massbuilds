@@ -1,0 +1,65 @@
+<div class="subpanel-content">
+
+  <div class="user-info">
+    <img src="/assets/images/logo.png" class="logo-image">
+
+    <h3>
+      {{currentUser.user.fullName}}
+
+      {{#if verified}}
+        {{verified-mark}}
+      {{/if}}
+    </h3>
+  </div>
+
+  <div class="user-actions">
+    {{#link-to 'map.developments.create' click=(action closeMenu)}} 
+      <div class="icon-wrapper">
+        <img src="/assets/images/plus.svg"> 
+      </div>
+
+      Create Development
+    {{/link-to}}
+
+    {{#link-to 'map.developments.for.user' currentUser.user.id click=(action closeMenu)}} 
+      <div class="icon-wrapper">
+        <img src="/assets/images/map-pin.svg"> 
+      </div>
+
+      My Developments
+    {{/link-to}}
+
+    {{#unless (eq currentUser.user.role 'admin')}}
+      {{#link-to 'map.moderations.for.user' currentUser.user.id click=(action closeMenu)}} 
+        <div class="icon-wrapper">
+          <img src="/assets/images/edit-3.svg"> 
+        </div>
+
+        My Edits
+      {{/link-to}}
+    {{/unless}}
+
+    {{#if (eq currentUser.user.role 'admin')}}
+      {{#link-to 'map.moderations.index' click=(action closeMenu)}} 
+        <div class="icon-wrapper">
+          <img src="/assets/images/edit-3.svg"> 
+        </div>
+
+        Moderations
+      {{/link-to}}
+
+      {{#link-to 'map.users' click=(action closeMenu)}} 
+        <div class="icon-wrapper">
+          <img src="/assets/images/user.svg"> 
+        </div>
+
+        Manage Users
+      {{/link-to}}
+    {{/if}}
+  </div>
+  
+</div>
+
+<button class="logout-button" onclick={{action logout}}>
+  Logout
+</button>

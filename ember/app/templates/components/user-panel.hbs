@@ -1,0 +1,12 @@
+{{#if session.isAuthenticated}}
+  {{removePanelParam}}
+  {{account-subpanel toggleMenu=(action toggleMenu)}}
+{{else}}
+  {{#if (eq panel 'signup')}}
+    {{signup-subpanel}}
+  {{else}}
+    {{login-subpanel 
+      showSignupPanel=showSignupPanel
+    }}
+  {{/if}}
+{{/if}}

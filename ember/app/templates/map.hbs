@@ -1,0 +1,90 @@
+<section class='route map'>
+
+  <!-- floating components -->
+  <div class="search-wrapper">
+    <div class="filter-actions">
+      <button onclick={{action toggleFilters}} class="filter-toggler {{if showingFilters 'active'}} {{if filtering 'filtering'}}">
+        <img src="/assets/images/filter.svg">
+      </button>
+      <button onclick={{action clearFilters}} class="clear-filters {{unless filtering 'disabled'}}">
+        X
+      </button>
+    </div>
+
+    {{search-bar 
+      addDiscreteFilter=(action addDiscreteFilter)
+      viewDevelopment=(action viewDevelopment)
+      placeholder=searchPlaceholder 
+      model=map.stored
+    }}
+  </div>
+
+  <button class="toggler menu-toggler {{if showingRightPanel 'active'}}" onclick={{action toggleMenu}}>
+    <span class="hamburger"></span>
+  </button>
+
+  {{#if currentUser.user}}
+    {{share-buttons filterParams=filterParams}}
+  {{/if}}
+
+  {{map-legend showing=showingFilters}}
+
+  {{notifications-popup}}
+  <!--/ floating components -->
+
+  <div class="panel-layer left-panel-layer {{if showingLeftPanel 'active'}}">
+    {{#if showingFilters}}
+      {{filter-panel 
+        update=(action updateFilter)
+        activeFilters=activeFilters
+      }}
+    {{else}}
+      {{outlet}}
+    {{/if}}
+  </div>
+
+  <div class="map-layer">
+
+    {{#unless (or map.stored map.filteredData)}}
+      <div class="map-loading-overlay">
+        <div class="loading-text">
+          <h1>MassBuilds</h1>
+
+          <div class="loader">
+            <span class="spinning-box"></span>
+            Mapping Developments
+          </div>
+        </div>
+      </div>
+    {{/unless}}
+
+    {{#leaflet-map bounds=map.bounds as |layers|}}
+      {{layers.tile url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
+
+      {{#if (gt map.filteredData.length 0)}}
+        {{map-layer 
+          data=map.filteredData
+          layers=layers 
+          viewDevelopment=(action viewDevelopment)
+        }}
+      {{/if}}
+
+      {{map-layer 
+        data=map.stored 
+        layers=layers 
+        faded=activeFilters
+        viewDevelopment=(action viewDevelopment)
+      }}
+    {{/leaflet-map}}
+  </div>
+
+  <div class="panel-layer right-panel-layer {{if showingRightPanel 'active'}}">
+    {{user-panel
+      panel=panel
+      toggleMenu=(action toggleMenu)
+      showLoginPanel=showLoginPanel
+      showSignupPanel=showSignupPanel
+    }}
+  </div>
+
+</section>

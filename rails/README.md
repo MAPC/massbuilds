@@ -1,24 +1,27 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Setup Notes
 
-Things you may want to cover:
+Before running `bin/setup` you need to set two environment variables: `FOREIGN_DATABASE_USERNAME` and `FOREIGN_DATABASE_PASSWORD` to comport with the username and password of your postgres foreign database.
 
-* Ruby version
+You will need a mapquest api key set `MAPQUEST_API_KEY` in your .env for the geocoder to work.
 
-* System dependencies
+Before running the test suite you need to enable the foreign data wrapper in the test database:
 
-* Configuration
+  RAILS_ENV=test rake db:add_foreign_data_wrapper_interface
+  RAILS_ENV=test rake db:add_rpa_fdw
+  RAILS_ENV=test rake db:add_counties_fdw
+  RAILS_ENV=test rake db:add_municipalities_fdw
 
-* Database creation
+### Postgres Security Challenges
 
-* Database initialization
+In order to implement foreign data wrappers your postgres user defined in `database.yml` needs to have super user privileges or it will fail. You can do this with: `ALTER ROLE massbuilds WITH SUPERUSER;`
 
-* How to run the test suite
+The foreign database also needs to allow connections via pg_hba.conf in the following manner:
 
-* Services (job queues, cache servers, search engines, etc.)
+```
+ubuntu@ip:/etc/postgresql/9.5/main$ sudo vi pg_hba.conf
+ubuntu@i:/etc/postgresql/9.5/main$ sudo pg_ctlcluster 9.5 main restart -m fast
+```
 
-* Deployment instructions
-
-* ...
+Also make sure the foreign_database_username and foreign_database_password attributes are set in `secrets.yml`.

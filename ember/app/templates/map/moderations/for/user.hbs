@@ -1,0 +1,75 @@
+<section class="route map-for moderations-for-user">
+
+  <div class="left-panel-links">
+    {{#link-to 'map'}}
+      <img src="/assets/images/chevrons-left.svg">
+      Close
+    {{/link-to}}
+  </div>
+
+  <div class="panel-headers">
+    <h1>My Moderations</h1>
+    <h3>Listed below are all of the moderations you have created</h3>
+  </div> 
+
+  {{#if model}}
+    <ul class="item-list">
+      <li class="list-header">
+        <div class="row">
+          <div>Development</div>
+          <div>Status</div>
+          <div>Date Submitted</div>
+          <div></div>
+        </div>
+      </li>
+      <div class='list-body'>
+        {{#each moderations as |moderation|}} 
+          <li data-mod-id={{moderation.id}}>
+            <div class="row">
+              <div> 
+                {{#link-to 'map.developments.development' moderation.development}}{{moderation.development.name}}{{/link-to}}
+              </div>
+              <div style="color: {{if moderation.approved '#51a681' '#eab941'}}">
+                {{if moderation.approved 'Approved' 'In Review'}}
+              </div>
+              <div>{{format-date moderation.createdAt format="MMM Do YYYY"}}</div>
+              <div><button class="view-button" onclick={{action toggleViewModeration moderation.id}}>View Moderation</button></div> 
+            </div>
+            <div class='moderation-details'>
+              <ul>
+                {{#each-in moderation.changes as |k change|}} 
+                  <li>
+                  <b>{{change.name}}</b> has been changed from 
+
+                  <span>
+                    {{#if change.oldValue}} 
+                      {{change.oldValue}}
+                    {{else}}
+                      <em>none</em>
+                    {{/if}}
+                  </span>
+
+                  to 
+
+                  <span>
+                    {{#if change.newValue}}
+                      {{change.newValue}}
+                    {{else}}
+                      <em>none</em>
+                    {{/if}}
+                  </span>
+                  </li>
+                {{/each-in}}
+              </ul>
+            </div>
+          </li>
+        {{/each}}
+      </div>
+    </ul>
+  {{else}}
+    <div class="no-records">
+      You have not created any moderations.
+    </div>
+  {{/if}}
+
+</section>

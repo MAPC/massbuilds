@@ -1,0 +1,287 @@
+<%= form_with(model: development, local: true) do |form| %>
+  <% if development.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(development.errors.count, "error") %> prohibited this development from being saved:</h2>
+
+      <ul>
+      <% development.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :user_id %>
+    <%= form.number_field :user_id, id: :development_user_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :rdv %>
+    <%= form.check_box :rdv, id: :development_rdv %>
+  </div>
+
+  <div class="field">
+    <%= form.label :asofright %>
+    <%= form.check_box :asofright, id: :development_asofright %>
+  </div>
+
+  <div class="field">
+    <%= form.label :ovr55 %>
+    <%= form.check_box :ovr55, id: :development_ovr55 %>
+  </div>
+
+  <div class="field">
+    <%= form.label :clusteros %>
+    <%= form.check_box :clusteros, id: :development_clusteros %>
+  </div>
+
+  <div class="field">
+    <%= form.label :phased %>
+    <%= form.check_box :phased, id: :development_phased %>
+  </div>
+
+  <div class="field">
+    <%= form.label :stalled %>
+    <%= form.check_box :stalled, id: :development_stalled %>
+  </div>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name, id: :development_name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :status %>
+    <%= form.text_field :status, id: :development_status %>
+  </div>
+
+  <div class="field">
+    <%= form.label :desc %>
+    <%= form.text_area :desc, id: :development_desc %>
+  </div>
+
+  <div class="field">
+    <%= form.label :project_url %>
+    <%= form.text_field :project_url, id: :development_project_url %>
+  </div>
+
+  <div class="field">
+    <%= form.label :mapc_notes %>
+    <%= form.text_area :mapc_notes, id: :development_mapc_notes %>
+  </div>
+
+  <div class="field">
+    <%= form.label :tagline %>
+    <%= form.text_field :tagline, id: :development_tagline %>
+  </div>
+
+  <div class="field">
+    <%= form.label :address %>
+    <%= form.text_field :address, id: :development_address %>
+  </div>
+
+  <div class="field">
+    <%= form.label :state %>
+    <%= form.text_field :state, id: :development_state %>
+  </div>
+
+  <div class="field">
+    <%= form.label :zip_code %>
+    <%= form.text_field :zip_code, id: :development_zip_code %>
+  </div>
+
+  <div class="field">
+    <%= form.label :height %>
+    <%= form.number_field :height, id: :development_height %>
+  </div>
+
+  <div class="field">
+    <%= form.label :stories %>
+    <%= form.number_field :stories, id: :development_stories %>
+  </div>
+
+  <div class="field">
+    <%= form.label :year_compl %>
+    <%= form.number_field :year_compl, id: :development_year_compl %>
+  </div>
+
+  <div class="field">
+    <%= form.label :prjarea %>
+    <%= form.number_field :prjarea, id: :development_prjarea %>
+  </div>
+
+  <div class="field">
+    <%= form.label :singfamhu %>
+    <%= form.number_field :singfamhu, id: :development_singfamhu %>
+  </div>
+
+  <div class="field">
+    <%= form.label :twnhsmmult %>
+    <%= form.number_field :twnhsmmult, id: :development_twnhsmmult %>
+  </div>
+
+  <div class="field">
+    <%= form.label :lgmultifam %>
+    <%= form.number_field :lgmultifam, id: :development_lgmultifam %>
+  </div>
+
+  <div class="field">
+    <%= form.label :tothu %>
+    <%= form.number_field :tothu, id: :development_tothu %>
+  </div>
+
+  <div class="field">
+    <%= form.label :gqpop %>
+    <%= form.number_field :gqpop, id: :development_gqpop %>
+  </div>
+
+  <div class="field">
+    <%= form.label :rptdemp %>
+    <%= form.number_field :rptdemp, id: :development_rptdemp %>
+  </div>
+
+  <div class="field">
+    <%= form.label :emploss %>
+    <%= form.number_field :emploss, id: :development_emploss %>
+  </div>
+
+  <div class="field">
+    <%= form.label :estemp %>
+    <%= form.number_field :estemp, id: :development_estemp %>
+  </div>
+
+  <div class="field">
+    <%= form.label :commsf %>
+    <%= form.number_field :commsf, id: :development_commsf %>
+  </div>
+
+  <div class="field">
+    <%= form.label :hotelrms %>
+    <%= form.number_field :hotelrms, id: :development_hotelrms %>
+  </div>
+
+  <div class="field">
+    <%= form.label :onsitepark %>
+    <%= form.number_field :onsitepark, id: :development_onsitepark %>
+  </div>
+
+  <div class="field">
+    <%= form.label :total_cost %>
+    <%= form.number_field :total_cost, id: :development_total_cost %>
+  </div>
+
+  <div class="field">
+    <%= form.label :team_membership_count %>
+    <%= form.number_field :team_membership_count, id: :development_team_membership_count %>
+  </div>
+
+  <div class="field">
+    <%= form.label :cancelled %>
+    <%= form.check_box :cancelled, id: :development_cancelled %>
+  </div>
+
+  <div class="field">
+    <%= form.label :private %>
+    <%= form.check_box :private, id: :development_private %>
+  </div>
+
+  <div class="field">
+    <%= form.label :fa_ret %>
+    <%= form.text_field :fa_ret, id: :development_fa_ret %>
+  </div>
+
+  <div class="field">
+    <%= form.label :fa_ofcmd %>
+    <%= form.text_field :fa_ofcmd, id: :development_fa_ofcmd %>
+  </div>
+
+  <div class="field">
+    <%= form.label :fa_indmf %>
+    <%= form.text_field :fa_indmf, id: :development_fa_indmf %>
+  </div>
+
+  <div class="field">
+    <%= form.label :fa_whs %>
+    <%= form.text_field :fa_whs, id: :development_fa_whs %>
+  </div>
+
+  <div class="field">
+    <%= form.label :fa_rnd %>
+    <%= form.text_field :fa_rnd, id: :development_fa_rnd %>
+  </div>
+
+  <div class="field">
+    <%= form.label :fa_edinst %>
+    <%= form.text_field :fa_edinst, id: :development_fa_edinst %>
+  </div>
+
+  <div class="field">
+    <%= form.label :fa_other %>
+    <%= form.text_field :fa_other, id: :development_fa_other %>
+  </div>
+
+  <div class="field">
+    <%= form.label :fa_hotel %>
+    <%= form.text_field :fa_hotel, id: :development_fa_hotel %>
+  </div>
+
+  <div class="field">
+    <%= form.label :other_rate %>
+    <%= form.text_field :other_rate, id: :development_other_rate %>
+  </div>
+
+  <div class="field">
+    <%= form.label :affordable %>
+    <%= form.text_field :affordable, id: :development_affordable %>
+  </div>
+
+  <div class="field">
+    <%= form.label :latitude %>
+    <%= form.text_field :latitude, id: :development_latitude %>
+  </div>
+
+  <div class="field">
+    <%= form.label :longitude %>
+    <%= form.text_field :longitude, id: :development_longitude %>
+  </div>
+
+  <div class="field">
+    <%= form.label :parcel_id %>
+    <%= form.text_field :parcel_id, id: :development_parcel_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :mixed_use %>
+    <%= form.check_box :mixed_use, id: :development_mixed_use %>
+  </div>
+
+  <div class="field">
+    <%= form.label :point %>
+    <%= form.text_field :point, id: :development_point %>
+  </div>
+
+  <div class="field">
+    <%= form.label :programs %>
+    <%= form.text_field :programs, id: :development_programs %>
+  </div>
+
+  <div class="field">
+    <%= form.label :forty_b %>
+    <%= form.check_box :forty_b, id: :development_forty_b %>
+  </div>
+
+  <div class="field">
+    <%= form.label :residential %>
+    <%= form.check_box :residential, id: :development_residential %>
+  </div>
+
+  <div class="field">
+    <%= form.label :commercial %>
+    <%= form.check_box :commercial, id: :development_commercial %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

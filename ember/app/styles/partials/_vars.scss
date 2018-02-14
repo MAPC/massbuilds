@@ -1,0 +1,21 @@
+$color_mod: aqua;
+
+$color_brand-primary: mix(#3c5875, #208095, 50);
+$color_brand-primary--active: mix($color_mod, $color_brand-primary, 40);
+
+$color_bg-light: #FFFFFF;
+$color_bg-medium: #CCCCCC;
+$color_bg-dark: #091F2F;
+
+$color_bg-light--active: mix(black, $color_bg-light, 5);
+$color_bg-light--accent: $color_bg-light--active;
+
+$color_font-light: #FFFFFF;
+$color_font-medium: #777;
+$color_font-dark: #091F2F;
+
+$color_state-negative: red;
+
+$font_family-primary: 'Nunito', Helvetica, sans-serif;
+
+$transition_border: border-color .25s;

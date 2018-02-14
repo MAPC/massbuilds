@@ -1,0 +1,25 @@
+{{#each data as |datum|}}
+  {{#if (and datum.latitude datum.longitude)}}
+    {{#layers.circle 
+      lat=datum.latitude 
+      lng=datum.longitude
+      color=(status-color datum.status)
+      onClick=(action 'view' datum.id)
+      opacity=(if faded 0.3 1)
+      radius=4
+      as |circle|
+    }} 
+      {{#circle.tooltip className='massbuilds-tooltip'}}
+        <h4>{{datum.name}}</h4>
+        <h5 style="color: {{status-color datum.status}}">
+          {{capitalize datum.status}}
+        </h5>
+        <h5>
+          <span>Year of Completion: </span>
+          2012
+          {{datum.yearCompl}}
+        </h5>
+      {{/circle.tooltip}}
+    {{/layers.circle}}
+  {{/if}}
+{{/each}}

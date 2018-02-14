@@ -1,0 +1,5 @@
+<ul class="status-list">
+  {{#each-in statusColors as |status color|}}
+    <li><span style={{background-color color}}></span> {{capitalize status}}</li>
+  {{/each-in}}
+</ul>

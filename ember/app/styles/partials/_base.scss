@@ -1,0 +1,31 @@
+body {
+  color: $color_font-dark;
+  font-family: $font_family-primary;
+
+  background: $color_bg-light;
+}
+
+.loading-text {
+  @extend ._vertical-center;
+  top: 40%;
+  display: inline-block;
+
+  margin: 0 auto;
+
+  color: $color_brand-primary;
+  text-align: center;
+}
+
+.spinning-box {
+  @extend ._spinner; 
+  $size: 15px;
+
+  display: inline-block;
+
+  width: $size;
+  height: $size;
+  margin-right: $size;
+
+  border: 1px solid $color_bg-dark;
+}
+

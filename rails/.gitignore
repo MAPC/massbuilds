@@ -15,3 +15,10 @@
 
 # Ignore Byebug command history file.
 .byebug_history
+
+/public/export*
+
+.env
+
+# Ignore encrypted secrets key file.
+config/secrets.yml.key

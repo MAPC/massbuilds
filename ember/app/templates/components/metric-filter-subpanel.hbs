@@ -1,0 +1,49 @@
+<div class="component subpanel metric-filter">
+
+  <div class="subgroup-wrapper">
+    {{#each subgroups as |subgroup|}}
+      <div class="subgroup">
+        <h4>{{subgroup.title}}</h4>
+
+        {{#each subgroup.metrics as |metric|}}
+          <div class="metric {{metric.type}}">
+            <label for={{metric.col}}>{{metric.name}}</label>
+
+            {{#if (eq metric.type 'string')}}
+
+              <select name={{metric.col}} onchange={{action updateMetricOption value="target"}}> 
+                {{#unless metric.value}}
+                  <option disabled selected=selected>Select to filter</option>
+                {{/unless}}
+                {{#each metric.options as |option|}}
+                  <option value={{option}} selected={{if (eq metric.value option) 'selected'}}>{{capitalize option}}</option>
+                {{/each}}
+              </select>
+
+            {{else if (eq metric.type 'boolean')}}
+
+              {{input type="checkbox" name=metric.col checked=(if metric.value 'checked') change=(action toggleCheckbox metric)}}
+
+            {{else if (eq metric.type 'date')}}
+
+            {{else}}
+
+              <select name="{{metric.col}}-inf" onchange={{action updateMetricInflector value="target"}}>
+                <option selected={{if (eq metric.inflector 'gt') 'selected'}} value="gt">&gt;</option>
+                <option selected={{if (eq metric.inflector 'eq') 'selected'}} value="eq">=</option>
+                <option selected={{if (eq metric.inflector 'lt') 'selected'}} value="lt">&lt;</option>
+              </select>
+
+              {{input name=metric.col value=metric.value change=(action updateFilter metric)}}
+
+              {{#if metric.unit}}
+                <span class="metric-unit">{{metric.unit}}</span>
+              {{/if}}
+            {{/if}}
+          </div>
+        {{/each}}
+      </div>
+    {{/each}}
+  </div>
+
+</div>
