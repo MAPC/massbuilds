@@ -15,6 +15,7 @@ $color_font-medium: #777;
 $color_font-dark: #091F2F;
 
 $color_state-negative: red;
+$color_state-negative--dark: darken($color_state-negative, 15);
 
 $font_family-primary: 'Nunito', Helvetica, sans-serif;
 

@@ -18,9 +18,9 @@ export default class extends ModerationController {
   @action
   approve(moderation) {
     const development = moderation.get('development.name');
+    const user = moderation.get('user.fullName');
 
-    this.get('notifications').show(`You have approved an edit for ${development}`);
-    return;
+    this.get('notifications').show(`You have approved an edit from ${user} for ${development}`);
     
     moderation.set('approved', true);
     moderation.save();
@@ -29,6 +29,11 @@ export default class extends ModerationController {
 
   @action
   deny(moderation) {
+    const development = moderation.get('development.name');
+    const user = moderation.get('user.fullName');
+
+    this.get('notifications').show(`You have denied an edit from ${user} for ${development}`, 'error');
+
     moderation.destroyRecord();
   }
 

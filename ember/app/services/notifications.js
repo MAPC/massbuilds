@@ -1,3 +1,4 @@
+import Ember from 'ember';
 import Service from '@ember/service';
 import { action } from 'ember-decorators/object';
 
@@ -7,9 +8,9 @@ export default class extends Service {
   constructor() {
     super(...arguments);
 
-    this.message = 'This is a message for coding purposes';
+    this.message = null;
     this.mode = null;
-    this.tick = null;
+    this.timer = null;
   }
 
 
@@ -18,7 +19,8 @@ export default class extends Service {
     this.set('message', message);
     this.set('mode', mode || null);
 
-    this.set('tick', Math.random());
+    Ember.run.cancel(this.get('timer'));
+    this.timer = Ember.run.later(this, () => this.set('message', null), 5000);
   }
 
 };

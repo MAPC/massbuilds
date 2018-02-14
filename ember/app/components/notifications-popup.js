@@ -13,25 +13,24 @@ export default class extends Component {
     super(...arguments);
 
     this.classNames = ['component', 'notifications-popup'];
-    this.timer = null;
   }
 
 
-  @computed('notifications.tick')
-  get observe() {
-    if (this.get('notifications.tick') === null) {
-      return;
+  @computed('notifications.message')
+  get active() {
+    return this.get('notifications.message');
+  }
+
+
+  @computed('notifications.message')
+  get message() {
+    const message = this.get('notifications.message');
+
+    if (message) {
+      this.set('lastMessage', message);
     }
 
-    Ember.run.cancel(this.get('timer'));
-
-    this.set('active', true);
-
-    console.log(this.get('active'));
-
-    this.set('timer', Ember.run.later(this, () => {
-      this.set('active', false);
-    }, 5000));
+    return message || this.get('lastMessage');
   }
 
 

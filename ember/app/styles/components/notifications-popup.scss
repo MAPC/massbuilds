@@ -3,7 +3,7 @@
 
   position: fixed;
   bottom: -15px;
-  right: 30px + $width;
+  right: $width / 2;
   z-index: 999;
 
   .notification {
@@ -13,6 +13,7 @@
     max-width: $width;
     padding: 10px 20px;
 
+    color: $color_brand-primary;
     font-size: 14px;
     
     background: $color_bg-light;
@@ -21,10 +22,13 @@
     opacity: 0;
     transition: top .2s, opacity .2s;
 
-    &.error { border-color: $color_state-negative; }
+    &.error { 
+      color: $color_state-negative--dark;
+      border-color: $color_state-negative; 
+    }
 
     &.active {
-      top: -50px; 
+      top: -30px; 
 
       opacity: 1;
       transition: top .2s, opacity .2s;
