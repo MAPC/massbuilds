@@ -89,4 +89,14 @@
  
   button.submit-changes { margin-left: 10px; }
 
+  .required-note {
+    position: absolute;
+    bottom: -10px;
+
+    width: 100%;
+    
+    color: $color_state-negative;
+    font-size: 13px;
+    text-align: right;
+  }
 }

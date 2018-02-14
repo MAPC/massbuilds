@@ -68,14 +68,14 @@
 
               <div class="field">
                 <label for="prjarea">Project Area in Square Feet</label>
-                {{input value=editing.prjarea placeholder="Enter here" key-up=(action checkForUpdated 'prjarea')}}<span></span>
+                {{input value=editing.prjarea placeholder="Enter here" key-up=(action checkForUpdated 'prjarea')}}
               </div>
             </div>
 
             <div class="column">
               <div class="field">
                 <label for="height">Height (feet)</label>
-                {{input value=editing.height placeholder="Enter here" key-up=(action checkForUpdated 'height')}}<span>ft.</span>
+                {{input value=editing.height placeholder="Enter here" key-up=(action checkForUpdated 'height')}}
               </div>
 
               <div class="field">
@@ -395,14 +395,20 @@
       </div>
     {{/if}}
 
-    <div class="detail">
-      <h3>Last Updated</h3>
-      <p>{{format-date editing.updatedAt format='MMM. Do YYYY'}}</p>
-    </div>
+    {{#if editing.updatedAt}}
+      <div class="detail">
+        <h3>Last Updated</h3>
+        <p>{{format-date editing.updatedAt format='MMM. Do YYYY'}}</p>
+      </div>
+    {{/if}}
 
     <div class="detail">
       <h3 class="required">Description</h3>
       <p>{{textarea value=editing.descr class="required-field" placeholder="Enter Description" key-up=(action checkForUpdated 'descr')}}</p>
+    </div>
+
+    <div class="required-note">
+      * = required field
     </div>
   </div>
 </div>
