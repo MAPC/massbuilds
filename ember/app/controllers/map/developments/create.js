@@ -48,7 +48,7 @@ export default class extends Controller {
 
     newEdit.save().then(() => {
       this.get('notifications').show(`You have created a new development. It may be published after review from a moderator.`);
-      this.transitionToRoute('map.developments.for.user', this.get('currentUser.user.id'));
+      this.transitionToRoute('map.moderations.for.user', this.get('currentUser.user.id'));
     });
   }
 

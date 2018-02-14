@@ -149,6 +149,12 @@ export default class extends Controller {
 
 
   @action
+  hideFilters() {
+    this.set('showingFilters', false);
+  }
+
+
+  @action
   clearFilters() {
     Object.values(filters).forEach(filter => {
       if (filter.filter === 'discrete') {

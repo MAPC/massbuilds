@@ -8,7 +8,7 @@ export default class extends ModerationController {
   @service notifications
 
 
-  @computed('moderations.@each.approved')
+  @computed('moderations.[]', 'moderations.@each.approved')
   get filteredModerations() {
     return this.get('moderations')
                .filter(moderation => !moderation.get('approved'));
@@ -17,8 +17,12 @@ export default class extends ModerationController {
 
   @action
   approve(moderation) {
-    const development = moderation.get('development.name');
     const user = moderation.get('user.fullName');
+    let development = moderation.get('development.name');
+
+    if (!development) {
+      development = moderation.get('proposedChanges.name.newValue');
+    }
 
     this.get('notifications').show(`You have approved an edit from ${user} for ${development}`);
     

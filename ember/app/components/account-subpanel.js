@@ -33,6 +33,7 @@ export default class extends Component {
 
   @action
   closeMenu() {
+    this.sendAction('hideFilters');
     this.sendAction('toggleMenu');
   }
 

@@ -51,9 +51,9 @@ export default class extends DS.Model {
   @attr('number') otherRate
   @attr('number') latitude
   @attr('number') longitude
-  @attr('number') units1Bd
-  @attr('number') units2Bd
-  @attr('number') units3Bd
+  @attr('number') units1bd
+  @attr('number') units2bd
+  @attr('number') units3bd
   @attr('number') affrdUnit
   @attr('number') affU30
   @attr('number') aff3050

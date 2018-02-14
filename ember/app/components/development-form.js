@@ -24,9 +24,9 @@ export default class extends Component {
       'editing.singfamhu',
       'editing.smmultifam',
       'editing.lgmultifam',
-      'editing.units1Bd',
-      'editing.units2Bd',
-      'editing.units3Bd',
+      'editing.units1bd',
+      'editing.units2bd',
+      'editing.units3bd',
     ];
 
     this.affrdUnitFields = [

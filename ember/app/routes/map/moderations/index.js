@@ -22,7 +22,7 @@ export default Route.extend({
         edits,
         developments: RSVP.all(edits.map(edit => edit.belongsTo('development').reload())),
       }).then(model => {
-        return model.edits.sortBy('createdAt', 'desc');
+        return model.edits.sortBy('createdAt').reverse();
       });
     });
   },
