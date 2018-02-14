@@ -221,12 +221,13 @@ class Edit < ApplicationRecord
   end
 
   def update_development
+    binding.pry
     if development
       # Skip validations since the Edit model does this for us
       development.update_columns(proposed_changes)
     else
-      proposed_changes.merge(user_id: user.id)
-      development = Development.new(proposed_changes)
+      merged_changes = proposed_changes.merge(user_id: user.id)
+      development = Development.new(merged_changes)
       development.save
     end
     UserMailer.edit_approved_email(self)

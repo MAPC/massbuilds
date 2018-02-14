@@ -1,10 +1,14 @@
 import Component from '@ember/component';
 import { action, computed } from 'ember-decorators/object';
 import { reads } from 'ember-decorators/object/computed';
+import { service } from 'ember-decorators/service';
 import filters from 'massbuilds/utils/filters';
 
 
 export default class extends Component {
+
+  @service currentUser
+
 
   constructor() {
     super();
@@ -49,6 +53,14 @@ export default class extends Component {
   }
 
 
+  @computed('currentUser.user.role')
+  get hasPermissions() {
+    const role = this.get('currentUser.user.role');
+
+    return role !== null && role !== undefined;
+  }
+
+
   @computed('searchQuery')
   get searchList() {
     const searchQuery = this.get('searchQuery').toLowerCase().trim();
@@ -77,21 +89,31 @@ export default class extends Component {
   }
 
 
+  @computed('searchList')
+  get searchListCount() {
+    const searchList = this.get('searchList');
+
+    return Object.keys(searchList).reduce((a,key) => a + searchList[key].length, 0);
+  }
+
+
   @computed('searchList') 
   get searching() {
     const searchList = this.get('searchList');
 
-    return Object.keys(searchList).any(key => searchList[key].length > 0);
+    return Object.keys(searchList).any(key => searchList[key].length >= 0);
   }
 
 
   @action 
   selectItem(item) {
-    if (item.id) {
-      this.sendAction('viewDevelopment', item.id);
-    }
-    else {
-      this.sendAction('addDiscreteFilter', item);
+    if (item) {
+      if (item.id) {
+        this.sendAction('viewDevelopment', item.id);
+      }
+      else {
+        this.sendAction('addDiscreteFilter', item);
+      }
     }
 
     this.set('searchQuery', '');

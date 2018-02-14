@@ -8,7 +8,7 @@ class Development < ApplicationRecord
   validates :name, :status, :address, :yrcomp_est, :year_compl, :zip_code, :hu,
             :commsf, :descr, presence: true
   validates_inclusion_of :rdv, :asofright, :clusteros, :phased, :stalled, :mixed_use,
-                         :headqtrs, :ovr55, in: [true, false]
+                         :headqtrs, :ovr55, in: [true, false, nil]
   with_options if: :proposed?, presence: true do |proposed|
     proposed.validates :singfamhu
     proposed.validates :smmultifam

@@ -19,5 +19,20 @@
         {{/each}}
       {{/if}}
     {{/each-in}}
+
+    {{#if (and hasPermissions (lt searchListCount 6))}}
+      {{#link-to 'map.developments.create' click=(action selectItem)}}
+        <li class="create-new">
+          Can't find what you're looking for? Click here to submit
+          a development to the database.
+        </li>
+      {{/link-to}}
+    {{/if}}
+
+    {{#if (eq searchListCount 0)}}
+      <li class="no-results">
+        No results
+      </li>
+    {{/if}}
   </ul>
 {{/if}}
