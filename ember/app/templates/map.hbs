@@ -28,6 +28,8 @@
   {{/if}}
 
   {{map-legend showing=showingFilters}}
+
+  {{notifications-popup}}
   <!--/ floating components -->
 
   <div class="panel-layer left-panel-layer {{if showingLeftPanel 'active'}}">
@@ -56,7 +58,7 @@
       </div>
     {{/unless}}
 
-    {{#leaflet-map onLoad=(action setMapInstance) bounds=map.bounds as |layers|}}
+    {{#leaflet-map bounds=map.bounds as |layers|}}
       {{layers.tile url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
 
       {{#if (gt map.filteredData.length 0)}}

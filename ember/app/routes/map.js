@@ -7,6 +7,7 @@ import { filters, fromQueryParams } from 'massbuilds/utils/filters';
 export default class extends Route {
 
   @service map
+  @service notifications
 
 
   model(params) {
