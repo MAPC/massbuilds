@@ -12,7 +12,7 @@
       <label for="role-filter">Filter By: </label>
       <select name="role-filter" onchange={{action filterRole}}>
         <option value='all'>All Roles</option>
-        {{#each filterableRoles as |role|}}
+        {{#each roles as |role|}}
           <option value={{role}}>{{capitalize role}}</option>
         {{/each}}
       </select>
@@ -48,9 +48,6 @@
             </td>
             <td> 
               <select name="{{user.id}}-role" onchange={{action updateUser user}}>
-                {{#if (eq user.role 'admin')}}
-                  <option disabled selected='selected'>Admin</option>
-                {{/if}}
                 {{#each roles as |role|}}
                   <option value={{role}} selected={{if (eq user.role role) 'selected'}}>{{capitalize role}}</option>
                 {{/each}} 

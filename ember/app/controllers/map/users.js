@@ -7,9 +7,8 @@ export default class extends Controller {
   constructor() {
     super();
 
-    const roles = ['user', 'verified', 'municipal'];
+    const roles = ['user', 'verified', 'municipal', 'admin'];
     this.roles = roles;
-    this.filterableRoles = [...roles, 'admin'];
 
     this.searchQuery = '';
     this.roleFilter = 'all';
@@ -29,7 +28,7 @@ export default class extends Controller {
     const searchQuery = this.get('searchQuery').toLowerCase();
     const { min, max } = this.getProperties('min', 'max');
 
-    const searchable = ['lastName', 'firstName', 'email', 'fullName'];
+    const searchable = ['lastName', 'firstName', 'email', 'fullName', 'municipality'];
     let filteredUsers = Ember.copy(sortedUsers);
 
     if (roleFilter !== 'all') {
@@ -38,7 +37,7 @@ export default class extends Controller {
 
     if (searchQuery.length > 0) {
       filteredUsers = filteredUsers.filter(user => {
-        return searchable.any(attr => user.get(attr).toLowerCase().startsWith(searchQuery));
+        return searchable.any(attr => (user.get(attr) || '').toLowerCase().startsWith(searchQuery));
       });
     }
 
