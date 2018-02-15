@@ -19,6 +19,7 @@ table {
       padding: 5px;
 
       &:first-of-type {
+        padding-left: 15px;
         text-align: left;
         color: $color_font-medium; 
       }

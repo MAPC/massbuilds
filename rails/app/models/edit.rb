@@ -221,7 +221,6 @@ class Edit < ApplicationRecord
   end
 
   def update_development
-    binding.pry
     if development
       # Skip validations since the Edit model does this for us
       development.update_columns(proposed_changes)

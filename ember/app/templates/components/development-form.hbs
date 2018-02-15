@@ -19,11 +19,11 @@
 <div class="development-content">
   <div class="layout-column">
     <div class="development-header">
-      <h1 class="required">{{input value=editing.name class="required-field" placeholder="Development Name" key-up=(action checkForUpdated 'name')}}</h1>
+      <h1 class="required">{{input value=editing.name placeholder="Development Name" key-up=(action checkForUpdated 'name')}}</h1>
       <h2 class="required address-fields">
         <img src="/assets/images/map-pin.svg" onclick={{action findPosition}}> 
-        {{input value=editing.address class="required-field" placeholder="Development Street Address" key-up=(action checkForUpdated 'address')}}
-        {{input value=editing.zipCode class="required-field" placeholder="Zip Code" key-up=(action checkForUpdated 'zipCode')}}
+        {{input value=editing.address placeholder="Development Street Address" key-up=(action checkForUpdated 'address')}}
+        {{input value=editing.zipCode placeholder="Zip Code" key-up=(action checkForUpdated 'zipCode')}}
       </h2>
 
       <h2 class="project-url">
@@ -41,7 +41,7 @@
             <div class="column">
               <div class="field">
                 <label for="status" class="required">Status:</label>
-                <select name="status" class="required-field" onchange={{action checkForUpdated 'status'}}>
+                <select name="status" onchange={{action updateFieldRequirements}}>
                   {{#unless editing.status}}
                     <option disabled selected>Select Status</option>
                   {{/unless}}
@@ -91,7 +91,6 @@
               {{#unless (lte editing.onsitepark 0)}}
                 <div class="field">
                   <label for="parkType">Parking Type</label>
-                  {{editing.parkType}}
                   <select name="parkType" onchange={{action checkForUpdated 'parkType'}}>
                     {{#unless editing.parkType}}
                       <option disabled selected>Select Parking Type</option>
@@ -177,37 +176,37 @@
               </tr>
 
               <tr>
-                <td>Single Family</td>
+                <td><label for="singfamhu">Single Family</label></td>
                 <td>{{input value=editing.singfamhu placeholder=0 key-up=(action updateHu 'singfamhu')}}</td>
                 <td>{{round (mult 100 (div editing.singfamhu editing.hu))}}%</td>
               </tr>
 
               <tr>
-                <td>Small Multi-family</td>
+                <td><label for="smmultifam">Small Multi-family</label></td>
                 <td>{{input value=editing.smmultifam placeholder=0 key-up=(action updateHu 'smmultifam')}}</td>
                 <td>{{round (mult 100 (div editing.smmultifam editing.hu))}}%</td>
               </tr>
 
               <tr>
-                <td>Large Multi-family</td>
+                <td><label for="lgmultifam">Large Multi-family</label></td>
                 <td>{{input value=editing.lgmultifam placeholder=0 key-up=(action updateHu 'lgmultifam')}}</td>
                 <td>{{round (mult 100 (div editing.lgmultifam editing.hu))}}%</td>
               </tr>
 
               <tr>
-                <td>Studio/1 Bedroom</td>
+                <td><label for="units1bd">Studio/1 Bedroom</label></td>
                 <td>{{input value=editing.units1bd placeholder=0 key-up=(action updateHu 'units1bd')}}</td>
                 <td>{{round (mult 100 (div editing.units1bd editing.hu))}}%</td>
               </tr>
 
               <tr>
-                <td>2 Bedroom</td>
+                <td><label for="units2bd">2 Bedroom</label></td>
                 <td>{{input value=editing.units2bd placeholder=0 key-up=(action updateHu 'units2bd')}}</td>
                 <td>{{round (mult 100 (div editing.units2bd editing.hu))}}%</td>
               </tr>
 
               <tr>
-                <td>3 Bedroom</td>
+                <td><label for="units3bd">3 Bedroom</label></td>
                 <td>{{input value=editing.units3bd placeholder=0 key-up=(action updateHu 'units3bd')}}</td>
                 <td>{{round (mult 100 (div editing.units3bd editing.hu))}}%</td>
               </tr>
@@ -239,27 +238,27 @@
               </tr>
 
               <tr>
-                <td>Units &lt;30% AMI</td>
+                <td><label for="affU30">Units &lt;30% AMI</label></td>
                 <td>{{input value=editing.affU30 placeholder=0 key-up=(action updateAffrdUnit 'affU30')}}</td>
                 <td>{{round (mult 100 (div editing.affU30 editing.affrdUnit))}}%</td>
               </tr>
 
               <tr>
-                <td>Units 30-50% AMI</td>
-                <td>{{input value=editing.affU3050 placeholder=0 key-up=(action updateAffrdUnit 'affU3050')}}</td>
-                <td>{{round (mult 100 (div editing.affU3050 editing.affrdUnit))}}%</td>
+                <td><label for="aff3050">Units 30-50% AMI</label></td>
+                <td>{{input value=editing.aff3050 placeholder=0 key-up=(action updateAffrdUnit 'affU3050')}}</td>
+                <td>{{round (mult 100 (div editing.aff3050 editing.affrdUnit))}}%</td>
               </tr>
 
               <tr>
-                <td>Units 50-80% AMI</td>
-                <td>{{input value=editing.affU5080 placeholder=0 key-up=(action updateAffrdUnit 'affU5080')}}</td>
-                <td>{{round (mult 100 (div editing.affU5080 editing.affrdUnit))}}%</td>
+                <td><label for="aff5080">Units 50-80% AMI</label></td>
+                <td>{{input value=editing.aff5080 placeholder=0 key-up=(action updateAffrdUnit 'affU5080')}}</td>
+                <td>{{round (mult 100 (div editing.aff5080 editing.affrdUnit))}}%</td>
               </tr>
 
               <tr>
-                <td>Units 80-100% AMI</td>
-                <td>{{input value=editing.affU80p placeholder=0 key-up=(action updateAffrdUnit 'affU80p')}}</td>
-                <td>{{round (mult 100 (div editing.affU80p editing.affrdUnit))}}%</td>
+                <td><label for="aff80p">Units 80-100% AMI</label></td>
+                <td>{{input value=editing.aff80p placeholder=0 key-up=(action updateAffrdUnit 'affU80p')}}</td>
+                <td>{{round (mult 100 (div editing.aff80p editing.affrdUnit))}}%</td>
               </tr>
 
               <tr>
@@ -292,6 +291,11 @@
                 <label for="hotelrms">Hotel Rooms</label>
                 {{input value=editing.hotelrms placeholder="Enter here" key-up=(action checkForUpdated 'hotelrms')}}
               </div>
+
+              <div class="field">
+                <label for="publicsqft">Public Sqft.</label>
+                {{input value=editing.publicsqft placeholder="Enter here" key-up=(action checkForUpdated 'publicsqft')}}
+              </div>
             </div>
           </div>
 
@@ -323,50 +327,50 @@
               </tr>
 
               <tr>
-                <td>Retail</td>
+                <td><label for="retSqft">Retail</label></td>
                 <td>{{input value=editing.retSqft placeholder=0 key-up=(action updateCommsf 'retSqft')}}</td>
                 <td>{{round (mult 100 (div editing.retSqft editing.commsf))}}%</td>
               </tr>
 
               <tr>
-                <td>Office/Medical</td>
+                <td><label for="ofcmdSqft">Office/Medical</label></td>
                 <td>{{input value=editing.ofcmdSqft placeholder=0 key-up=(action updateCommsf 'ofcmdSqft')}}</td>
                 <td>{{round (mult 100 (div editing.ofcmdSqft editing.commsf))}}%</td>
               </tr>
 
               <tr>
-                <td>Industrial/Manufacturing</td>
+                <td><label for="indmfSqft">Industrial/Manufacturing</label></td>
                 <td>{{input value=editing.indmfSqft placeholder=0 key-up=(action updateCommsf 'indmfSqft')}}</td>
                 <td>{{round (mult 100 (div editing.indmfSqft editing.commsf))}}%</td>
               </tr>
 
               <tr>
-                <td>Warehouse/Shipping</td>
+                <td><label for="whsSqft">Warehouse/Shipping</label></td>
                 <td>{{input value=editing.whsSqft placeholder=0 key-up=(action updateCommsf 'whsSqft')}}</td>
                 <td>{{round (mult 100 (div editing.whsSqft editing.commsf))}}%</td>
               </tr>
 
               <tr>
-                <td>Research/Development</td>
+                <td><label for="rndSqft">Research/Development</label></td>
                 <td>{{input value=editing.rndSqft placeholder=0 key-up=(action updateCommsf 'rndSqft')}}</td>
                 <td>{{round (mult 100 (div editing.rndSqft editing.commsf))}}%</td>
               </tr>
 
               <tr>
-                <td>Educational/Institutional</td>
+                <td><label for="eiSqft">Educational/Institutional</label></td>
                 <td>{{input value=editing.eiSqft placeholder=0 key-up=(action updateCommsf 'eiSqft')}}</td>
                 <td>{{round (mult 100 (div editing.eiSqft editing.commsf))}}%</td>
               </tr>
 
               <tr>
-                <td>Hotel Room</td>
+                <td><label for="hotelSqft">Hotel Room</label></td>
                 <td>{{input value=editing.hotelSqft placeholder=0 key-up=(action updateCommsf 'hotelSqft')}}</td>
                 <td>{{round (mult 100 (div editing.hotelSqft editing.commsf))}}%</td>
               </tr>
 
               <tr>
-                <td>Other</td>
-                <td>{{input value=editing.otherSqft placeholder=0 key-up=(action updateCommsf 'otherSqft')}}</td>
+                <td><label for="otherRate">Other</label></td>
+                <td>{{input value=editing.otherRate placeholder=0 key-up=(action updateCommsf 'otherRate')}}</td>
                 <td>{{round (mult 100 (div editing.otherRate editing.commsf))}}%</td>
               </tr>
 

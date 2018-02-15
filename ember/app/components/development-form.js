@@ -31,9 +31,9 @@ export default class extends Component {
 
     this.affrdUnitFields = [
       'editing.affU30',
-      'editing.affU3050',
-      'editing.affU5080',
-      'editing.affU80p',
+      'editing.aff3050',
+      'editing.aff5080',
+      'editing.aff80p',
     ];
 
     this.commsfFields = [
@@ -44,7 +44,7 @@ export default class extends Component {
       'editing.rndSqft', 
       'editing.eiSqft', 
       'editing.hotelSqft', 
-      'editing.otherSqft',
+      'editing.otherRate',
     ];
 
     const base = [
@@ -62,7 +62,7 @@ export default class extends Component {
       'units1bd', 'units2bd', 'units3bd', 'affrdUnit', 'affU30',
       'aff3050', 'aff5080', 'aff80p', 'gqpop', 'retSqft', 
       'ofcmdSqft', 'indmfSqft', 'whsSqft', 'rndSqft', 'eiSqft',
-      'otherSqft', 'hotelSqft', 'hotelrms', 'publicsqft',
+      'otherRate', 'hotelSqft', 'hotelrms', 'publicsqft',
     ];
 
     this.criteria = { base, proposed, groundBroken };
@@ -72,6 +72,33 @@ export default class extends Component {
   @action
   update() {
     this.sendAction('updateModel', this.get('proposedChanges'));
+  }
+
+
+  @action
+  updateFieldRequirements() {
+    this.checkForUpdated('status');
+
+    const criteria = this.getCriteria(); 
+    const notRequired = this.get('criteria.groundBroken').filter(crit => criteria.indexOf(crit) === -1);
+
+    const selectLabel = x => document.querySelector(`label[for="${x}"]`);
+    
+    criteria.forEach(crit => {
+      const elem = selectLabel(crit);
+
+      if (elem) {
+        elem.classList.add('required');
+      }
+    });
+
+    notRequired.forEach(field => {
+      const elem = selectLabel(field);
+
+      if (elem) {
+        elem.classList.remove('required');
+      }
+    });
   }
 
 
@@ -176,8 +203,8 @@ export default class extends Component {
     }
   }
 
-  
-  checkCriteria() {
+
+  getCriteria() {
     let criteria = null;
 
     if (this.get('isGroundBroken')) {
@@ -190,7 +217,19 @@ export default class extends Component {
       criteria = this.get('criteria.base');
     }
 
-    const fulfilled = criteria.every(x => this.get(`editing.${x}`) !== null && this.get(`editing.${x}`) !== undefined);
+    return criteria;
+  }
+  
+
+  checkCriteria() {
+    const criteria = this.getCriteria();
+
+    const fulfilled = criteria.every(x => {
+      console.log(x, this.get(`editing.${x}`));
+      return this.get(`editing.${x}`) !== null && this.get(`editing.${x}`) !== undefined;
+    });
+
+    console.log(fulfilled);
 
     this.set('fulfilled', fulfilled);
   }

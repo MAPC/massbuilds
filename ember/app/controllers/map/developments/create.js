@@ -1,3 +1,4 @@
+import Ember from 'ember';
 import Controller from '@ember/controller';
 import { service } from 'ember-decorators/service';
 import Development from 'massbuilds/models/development';
@@ -13,23 +14,25 @@ export default class extends Controller {
 
   @computed('currentUser.user.role')
   get hasPublishPermissions() {
-    return this.get('currentUser.user.role') === 'user';
+    return this.get('currentUser.user.role') !== 'user';
   }
   
 
   @computed('hasPublishPermissions')
   get submitText() {
-    return this.get('hasPublishPermissions') ? 'Submit for Review' : 'Create Development';
+    return this.get('hasPublishPermissions') ? 'Create Development' : 'Submit for Review';
   }
 
 
   @action 
   createDevelopment(data) {
+    console.log('From Create: ', data);
+
     const model = this.get('model');
 
     data = castToModel(Development, data);
 
-    Object.keys(data).forEach(attr => model.set(attr, data[attr]));
+    Object.keys(data).forEach(attr => model.set(Ember.String.camelize(attr), data[attr]));
 
     model.save().then(development => {
       this.get('notifications').show(`You have created a new development called ${data.name}`);
@@ -40,6 +43,8 @@ export default class extends Controller {
 
   @action
   createEdit(data) {
+    console.log('From Edit: ', data);
+
     const newEdit = this.get('store').createRecord('edit', {
       user: this.get('currentUser.user'),
       approved: false,
