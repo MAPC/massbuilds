@@ -69,8 +69,22 @@
       cursor: default;
     }
 
-    &:not(.group-title):hover {
-      background: $color_bg-light--active; 
+    &.create-new {
+      font-size: 13px;
+
+      background: $color_bg-brand;
+      border-top: 1px solid $color_bg-medium;
+    }
+
+    &.no-results {
+      font-size: 10px; 
+
+      background: $color_bg-medium;
+      cursor: default;
+    }
+
+    &:not(.group-title):not(.no-results) {
+      &:hover { background: $color_bg-light--active; }
     }
 
     h4 {

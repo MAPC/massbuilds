@@ -6,6 +6,7 @@ $color_brand-primary--active: mix($color_mod, $color_brand-primary, 40);
 $color_bg-light: #FFFFFF;
 $color_bg-medium: #CCCCCC;
 $color_bg-dark: #091F2F;
+$color_bg-brand: mix($color_brand-primary, $color_bg-light, 10);
 
 $color_bg-light--active: mix(black, $color_bg-light, 5);
 $color_bg-light--accent: $color_bg-light--active;

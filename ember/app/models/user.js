@@ -14,8 +14,8 @@ export default class extends DS.Model {
 
   @attr('date') createdAt
 
-  @hasMany('edits') edits
-  @hasMany('developments') developments
+  @hasMany('edits', {async: true}) edits
+  @hasMany('developments', {async: true}) developments
 
   @computed('firstName', 'lastName')
   get fullName() {

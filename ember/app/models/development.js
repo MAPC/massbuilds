@@ -5,8 +5,8 @@ import { attr, belongsTo, hasMany } from 'ember-decorators/data';
 
 export default class extends DS.Model {
 
-  @belongsTo('user') user
-  @hasMany('edit') edits
+  @belongsTo('user', {async: true}) user
+  @hasMany('edit', {async: true}) edits
 
   @attr('string') name
   @attr('string') status
