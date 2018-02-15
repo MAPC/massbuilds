@@ -21,7 +21,7 @@ export default class extends ModerationController {
     let development = moderation.get('development.name');
 
     if (!development) {
-      development = moderation.get('proposedChanges.name.newValue');
+      development = moderation.get('proposedChanges.name');
     }
 
     this.get('notifications').show(`You have approved an edit from ${user} for ${development}`);
