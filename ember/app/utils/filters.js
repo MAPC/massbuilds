@@ -66,9 +66,9 @@ const filters = {
   'units3bd': { name: '3 Bedroom units', type: 'number', ...defaultMetric },
   'affrdUnit': { name: 'Affordable units', type: 'number', ...defaultMetric },
   'affU30': { name: 'Units <30% AMI', type: 'number', ...defaultMetric },
-  'affU3050': { name: 'Units 30-50% AMI', type: 'number', ...defaultMetric },
-  'affU5080': { name: 'Units 50-80% AMI', type: 'number', ...defaultMetric },
-  'affU80p': { name: 'Units 80-100% AMI', type: 'number', ...defaultMetric },
+  'aff3050': { name: 'Units 30-50% AMI', type: 'number', ...defaultMetric },
+  'aff5080': { name: 'Units 50-80% AMI', type: 'number', ...defaultMetric },
+  'aff80p': { name: 'Units 80-100% AMI', type: 'number', ...defaultMetric },
   'gqpop': { name: 'Group quarters pop.', type: 'number', ...defaultMetric },
 
   'asofright': { name: 'As of Right', type: 'boolean', ...defaultMetric },
@@ -144,9 +144,9 @@ const metricGroups = {
       metrics: [
         'affrdUnit',
         'affU30',
-        'affU3050',
-        'affU5080',
-        'affU80p',
+        'aff3050',
+        'aff5080',
+        'aff80p',
       ]
     },
     {

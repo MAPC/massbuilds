@@ -44,7 +44,7 @@ export default class extends Component {
       'editing.rndSqft', 
       'editing.eiSqft', 
       'editing.hotelSqft', 
-      'editing.otherRate',
+      'editing.otherSqft',
     ];
 
     const base = [
@@ -62,7 +62,7 @@ export default class extends Component {
       'units1bd', 'units2bd', 'units3bd', 'affrdUnit', 'affU30',
       'aff3050', 'aff5080', 'aff80p', 'gqpop', 'retSqft', 
       'ofcmdSqft', 'indmfSqft', 'whsSqft', 'rndSqft', 'eiSqft',
-      'otherRate', 'hotelSqft', 'hotelrms', 'publicsqft',
+      'otherSqft', 'hotelSqft', 'hotelrms', 'publicsqft',
     ];
 
     this.criteria = { base, proposed, groundBroken };
@@ -184,7 +184,7 @@ export default class extends Component {
       edited = !edited;
     }
     
-    if ((modeled || '').toString() !== (edited || '').toString()) {
+    if (String(modeled) !== String(edited)) {
       this.set(`proposedChanges.${fieldName}`, edited);
       this.set('changes', true);
 
@@ -223,13 +223,7 @@ export default class extends Component {
 
   checkCriteria() {
     const criteria = this.getCriteria();
-
-    const fulfilled = criteria.every(x => {
-      console.log(x, this.get(`editing.${x}`));
-      return this.get(`editing.${x}`) !== null && this.get(`editing.${x}`) !== undefined;
-    });
-
-    console.log(fulfilled);
+    const fulfilled = criteria.every(x => this.get(`editing.${x}`) !== null && this.get(`editing.${x}`) !== undefined);
 
     this.set('fulfilled', fulfilled);
   }

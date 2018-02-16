@@ -1,8 +1,13 @@
 import Ember from 'ember';
+import serializeKeys from 'massbuilds/utils/serialize-keys';
 import developmentSerialHash from 'massbuilds/utils/development-serial-hash';
 
 
 export default function castToModel(model, data) {
+  console.log(data);
+  const serialized = serializeKeys(data, Ember.String.camelize);
+  console.log(serialized);
+
   const attributes = Ember.get(model, 'attributes._values');
 
   const typeMap = Object.values(attributes)
@@ -17,15 +22,15 @@ export default function castToModel(model, data) {
     boolean: Boolean
   };
 
-  Object.keys(data).forEach(key => {
+  Object.keys(serialized).forEach(key => {
     const newKey = (developmentSerialHash[key] || Ember.String.underscore(key));
 
-    data[newKey] = typeCaster[typeMap[key]](data[key]);
+    serialized[newKey] = typeCaster[typeMap[key]](serialized[key]);
     
     if (newKey !== key) {
-      delete data[key];
+      delete serialized[key];
     }
   });
 
-  return data;
+  return serialized;
 }

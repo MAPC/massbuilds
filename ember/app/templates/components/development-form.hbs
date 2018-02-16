@@ -178,43 +178,85 @@
               <tr>
                 <td><label for="singfamhu">Single Family</label></td>
                 <td>{{input value=editing.singfamhu placeholder=0 key-up=(action updateHu 'singfamhu')}}</td>
-                <td>{{round (mult 100 (div editing.singfamhu editing.hu))}}%</td>
+                <td>
+                  {{#if (gt editing.hu 0)}}
+                    {{round (mult 100 (div editing.singfamhu editing.hu))}}%
+                  {{else}}
+                    0%
+                  {{/if}}
+                </td>
               </tr>
 
               <tr>
                 <td><label for="smmultifam">Small Multi-family</label></td>
                 <td>{{input value=editing.smmultifam placeholder=0 key-up=(action updateHu 'smmultifam')}}</td>
-                <td>{{round (mult 100 (div editing.smmultifam editing.hu))}}%</td>
+                <td>
+                  {{#if (gt editing.hu 0)}}
+                    {{round (mult 100 (div editing.smmultifam editing.hu))}}%
+                  {{else}}
+                    0%
+                  {{/if}}
+                </td>
               </tr>
 
               <tr>
                 <td><label for="lgmultifam">Large Multi-family</label></td>
                 <td>{{input value=editing.lgmultifam placeholder=0 key-up=(action updateHu 'lgmultifam')}}</td>
-                <td>{{round (mult 100 (div editing.lgmultifam editing.hu))}}%</td>
+                <td>
+                  {{#if (gt editing.hu 0)}}
+                    {{round (mult 100 (div editing.lgmultifam editing.hu))}}%
+                  {{else}}
+                    0%
+                  {{/if}}
+                </td>
               </tr>
 
               <tr>
                 <td><label for="units1bd">Studio/1 Bedroom</label></td>
                 <td>{{input value=editing.units1bd placeholder=0 key-up=(action updateHu 'units1bd')}}</td>
-                <td>{{round (mult 100 (div editing.units1bd editing.hu))}}%</td>
+                <td>
+                  {{#if (gt editing.hu 0)}}
+                    {{round (mult 100 (div editing.units1bd editing.hu))}}%
+                  {{else}}
+                    0%
+                  {{/if}}
+                </td>
               </tr>
 
               <tr>
                 <td><label for="units2bd">2 Bedroom</label></td>
                 <td>{{input value=editing.units2bd placeholder=0 key-up=(action updateHu 'units2bd')}}</td>
-                <td>{{round (mult 100 (div editing.units2bd editing.hu))}}%</td>
+                <td>
+                  {{#if (gt editing.hu 0)}}
+                    {{round (mult 100 (div editing.units2bd editing.hu))}}%
+                  {{else}}
+                    0%
+                  {{/if}}
+                </td>
               </tr>
 
               <tr>
                 <td><label for="units3bd">3 Bedroom</label></td>
                 <td>{{input value=editing.units3bd placeholder=0 key-up=(action updateHu 'units3bd')}}</td>
-                <td>{{round (mult 100 (div editing.units3bd editing.hu))}}%</td>
+                <td>
+                  {{#if (gt editing.hu 0)}}
+                    {{round (mult 100 (div editing.units3bd editing.hu))}}%
+                  {{else}}
+                    0%
+                  {{/if}}
+                </td>
               </tr>
 
               <tr>
                 <td>Unknown</td>
                 <td>{{input value=editing.unknownhu placeholder=0 key-up=(action updateHu 'unknownhu')}}</td>
-                <td>{{round (mult 100 (div editing.unknownhu editing.hu))}}%</td>
+                <td>
+                  {{#if (gt editing.hu 0)}}
+                    {{round (mult 100 (div editing.unknownhu editing.hu))}}%
+                  {{else}}
+                    0%
+                  {{/if}}
+                </td>
               </tr>
             </table>
           </div>
@@ -240,31 +282,61 @@
               <tr>
                 <td><label for="affU30">Units &lt;30% AMI</label></td>
                 <td>{{input value=editing.affU30 placeholder=0 key-up=(action updateAffrdUnit 'affU30')}}</td>
-                <td>{{round (mult 100 (div editing.affU30 editing.affrdUnit))}}%</td>
+                <td>
+                  {{#if (gt editing.affrdUnit 0)}}
+                    {{round (mult 100 (div editing.affU30 editing.affrdUnit))}}%
+                  {{else}}
+                    0%
+                  {{/if}} 
+                </td>
               </tr>
 
               <tr>
                 <td><label for="aff3050">Units 30-50% AMI</label></td>
-                <td>{{input value=editing.aff3050 placeholder=0 key-up=(action updateAffrdUnit 'affU3050')}}</td>
-                <td>{{round (mult 100 (div editing.aff3050 editing.affrdUnit))}}%</td>
+                <td>{{input value=editing.aff3050 placeholder=0 key-up=(action updateAffrdUnit 'aff3050')}}</td>
+                <td>
+                  {{#if (gt editing.affrdUnit 0)}}
+                    {{round (mult 100 (div editing.aff3050 editing.affrdUnit))}}%
+                  {{else}}
+                    0%
+                  {{/if}} 
+                </td>
               </tr>
 
               <tr>
                 <td><label for="aff5080">Units 50-80% AMI</label></td>
-                <td>{{input value=editing.aff5080 placeholder=0 key-up=(action updateAffrdUnit 'affU5080')}}</td>
-                <td>{{round (mult 100 (div editing.aff5080 editing.affrdUnit))}}%</td>
+                <td>{{input value=editing.aff5080 placeholder=0 key-up=(action updateAffrdUnit 'aff5080')}}</td>
+                <td>
+                  {{#if (gt editing.affrdUnit 0)}}
+                    {{round (mult 100 (div editing.aff5080 editing.affrdUnit))}}%
+                  {{else}}
+                    0%
+                  {{/if}} 
+                </td>
               </tr>
 
               <tr>
                 <td><label for="aff80p">Units 80-100% AMI</label></td>
-                <td>{{input value=editing.aff80p placeholder=0 key-up=(action updateAffrdUnit 'affU80p')}}</td>
-                <td>{{round (mult 100 (div editing.aff80p editing.affrdUnit))}}%</td>
+                <td>{{input value=editing.aff80p placeholder=0 key-up=(action updateAffrdUnit 'aff80p')}}</td>
+                <td>
+                  {{#if (gt editing.affrdUnit 0)}}
+                    {{round (mult 100 (div editing.aff80p editing.affrdUnit))}}%
+                  {{else}}
+                    0%
+                  {{/if}} 
+                </td>
               </tr>
 
               <tr>
                 <td>Unknown</td>
                 <td>{{input value=editing.affUnknown placeholder=0 key-up=(action updateAffrdUnit 'affUnknown')}}</td>
-                <td>{{round (mult 100 (div editing.affUnknown editing.affrdUnit))}}%</td>
+                <td>
+                  {{#if (gt editing.affrdUnit 0)}}
+                    {{round (mult 100 (div editing.affUnknown editing.affrdUnit))}}%
+                  {{else}}
+                    0%
+                  {{/if}} 
+                </td>
               </tr>
             </table>
           </div>
@@ -313,7 +385,7 @@
               <label for="commsf" class="required">Commercial Square Footage</label>
 
               {{#if (and (not-eq editing.commsf null) (gte editing.commsf 0))}}
-                {{editing.commsf}}
+                {{editing.commsf}} sqft.
               {{else}}
                 Enter the floor area for each use type below
               {{/if}}
@@ -329,55 +401,109 @@
               <tr>
                 <td><label for="retSqft">Retail</label></td>
                 <td>{{input value=editing.retSqft placeholder=0 key-up=(action updateCommsf 'retSqft')}}</td>
-                <td>{{round (mult 100 (div editing.retSqft editing.commsf))}}%</td>
+                <td>
+                  {{#if (gt editing.commsf 0)}}
+                    {{round (mult 100 (div editing.retSqft editing.commsf))}}%
+                  {{else}}
+                    0%
+                  {{/if}}
+                </td>
               </tr>
 
               <tr>
                 <td><label for="ofcmdSqft">Office/Medical</label></td>
                 <td>{{input value=editing.ofcmdSqft placeholder=0 key-up=(action updateCommsf 'ofcmdSqft')}}</td>
-                <td>{{round (mult 100 (div editing.ofcmdSqft editing.commsf))}}%</td>
+                <td>
+                  {{#if (gt editing.commsf 0)}}
+                    {{round (mult 100 (div editing.ofcmdSqft editing.commsf))}}%
+                  {{else}}
+                    0%
+                  {{/if}}
+                </td>
               </tr>
 
               <tr>
                 <td><label for="indmfSqft">Industrial/Manufacturing</label></td>
                 <td>{{input value=editing.indmfSqft placeholder=0 key-up=(action updateCommsf 'indmfSqft')}}</td>
-                <td>{{round (mult 100 (div editing.indmfSqft editing.commsf))}}%</td>
+                <td>
+                  {{#if (gt editing.commsf 0)}}
+                    {{round (mult 100 (div editing.indmfSqft editing.commsf))}}%
+                  {{else}}
+                    0%
+                  {{/if}}
+                </td>
               </tr>
 
               <tr>
                 <td><label for="whsSqft">Warehouse/Shipping</label></td>
                 <td>{{input value=editing.whsSqft placeholder=0 key-up=(action updateCommsf 'whsSqft')}}</td>
-                <td>{{round (mult 100 (div editing.whsSqft editing.commsf))}}%</td>
+                <td>
+                  {{#if (gt editing.commsf 0)}}
+                    {{round (mult 100 (div editing.whsSqft editing.commsf))}}%
+                  {{else}}
+                    0%
+                  {{/if}}
+                </td>
               </tr>
 
               <tr>
                 <td><label for="rndSqft">Research/Development</label></td>
                 <td>{{input value=editing.rndSqft placeholder=0 key-up=(action updateCommsf 'rndSqft')}}</td>
-                <td>{{round (mult 100 (div editing.rndSqft editing.commsf))}}%</td>
+                <td>
+                  {{#if (gt editing.commsf 0)}}
+                    {{round (mult 100 (div editing.rndSqft editing.commsf))}}%
+                  {{else}}
+                    0%
+                  {{/if}}
+                </td>
               </tr>
 
               <tr>
                 <td><label for="eiSqft">Educational/Institutional</label></td>
                 <td>{{input value=editing.eiSqft placeholder=0 key-up=(action updateCommsf 'eiSqft')}}</td>
-                <td>{{round (mult 100 (div editing.eiSqft editing.commsf))}}%</td>
+                <td>
+                  {{#if (gt editing.commsf 0)}}
+                    {{round (mult 100 (div editing.eiSqft editing.commsf))}}%
+                  {{else}}
+                    0%
+                  {{/if}}
+                </td>
               </tr>
 
               <tr>
                 <td><label for="hotelSqft">Hotel Room</label></td>
                 <td>{{input value=editing.hotelSqft placeholder=0 key-up=(action updateCommsf 'hotelSqft')}}</td>
-                <td>{{round (mult 100 (div editing.hotelSqft editing.commsf))}}%</td>
+                <td>
+                  {{#if (gt editing.commsf 0)}}
+                    {{round (mult 100 (div editing.hotelSqft editing.commsf))}}%
+                  {{else}}
+                    0%
+                  {{/if}}
+                </td>
               </tr>
 
               <tr>
-                <td><label for="otherRate">Other</label></td>
-                <td>{{input value=editing.otherRate placeholder=0 key-up=(action updateCommsf 'otherRate')}}</td>
-                <td>{{round (mult 100 (div editing.otherRate editing.commsf))}}%</td>
+                <td><label for="otherSqft">Other</label></td>
+                <td>{{input value=editing.otherSqft placeholder=0 key-up=(action updateCommsf 'otherSqft')}}</td>
+                <td>
+                  {{#if (gt editing.commsf 0)}}
+                    {{round (mult 100 (div editing.otherSqft editing.commsf))}}%
+                  {{else}}
+                    0%
+                  {{/if}}
+                </td>
               </tr>
 
               <tr>
                 <td>Unknown</td>
                 <td>{{input value=editing.unkSqft placeholder=0 key-up=(action updateCommsf 'unkSqft')}}</td>
-                <td>{{round (mult 100 (div editing.unkSqft editing.commsf))}}%</td>
+                <td>
+                  {{#if (gt editing.commsf 0)}}
+                    {{round (mult 100 (div editing.unkSqft editing.commsf))}}%
+                  {{else}}
+                    0%
+                  {{/if}}
+                </td>
               </tr>
             </table>
           </div>

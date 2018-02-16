@@ -48,7 +48,6 @@ export default class extends DS.Model {
   @attr('number') otherSqft
   @attr('number') hotelSqft
   @attr('number') unkSqft
-  @attr('number') otherRate
   @attr('number') latitude
   @attr('number') longitude
   @attr('number') units1bd

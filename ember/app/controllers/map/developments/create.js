@@ -26,13 +26,13 @@ export default class extends Controller {
 
   @action 
   createDevelopment(data) {
-    console.log('From Create: ', data);
-
     const model = this.get('model');
-
     data = castToModel(Development, data);
 
     Object.keys(data).forEach(attr => model.set(Ember.String.camelize(attr), data[attr]));
+
+    model.set('state', 'MA');
+    model.set('user', this.get('currentUser.user'));
 
     model.save().then(development => {
       this.get('notifications').show(`You have created a new development called ${data.name}`);
@@ -43,7 +43,7 @@ export default class extends Controller {
 
   @action
   createEdit(data) {
-    console.log('From Edit: ', data);
+    data['state'] = 'MA';
 
     const newEdit = this.get('store').createRecord('edit', {
       user: this.get('currentUser.user'),
