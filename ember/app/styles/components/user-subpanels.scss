@@ -121,12 +121,21 @@
   &.account-subpanel {
     height: 98vh;
 
-    .subpanel-content { padding-top: 100px; }
+    .subpanel-content { 
+      padding-top: 100px; 
+
+      @include media('small') { padding-top: 70px; }
+    }
 
     .logo-image {
       width: 25%; 
       height: auto;
       margin-bottom: 30px;
+
+      @include media('small') { 
+        width: 20%; 
+        margin-bottom: 25px; 
+      }
     }
 
     .user-info {
@@ -160,6 +169,8 @@
       width: 90%;
       margin: 0 auto;
 
+      @include media('small') { width: 95%; }
+
       a {
         $cell_margin: 1px;
 
@@ -182,6 +193,11 @@
         &:hover {
           background: $color_brand-primary--active; 
           transition: background .15s;
+        }
+
+        @include media('small') { 
+          flex: 1 1 50%; 
+          max-width: calc(50% - 2px);
         }
 
         .icon-wrapper {
