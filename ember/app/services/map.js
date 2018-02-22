@@ -86,7 +86,7 @@ export default class extends Service {
       this.set('filteredData', []);
     }
     else {
-      this.get('notifications').show('Updating map');
+      this.get('notifications').show('Updating map', { duration: 2000 });
 
       this.set('pad', .1);
       this.get('store')

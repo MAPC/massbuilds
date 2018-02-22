@@ -15,12 +15,12 @@ export default class extends Service {
 
 
   @action
-  show(message, mode) {
+  show(message, opts = {}) {
     this.set('message', message);
-    this.set('mode', mode || null);
+    this.set('mode', opts.mode || null);
 
     Ember.run.cancel(this.get('timer'));
-    this.timer = Ember.run.later(this, () => this.set('message', null), 5000);
+    this.timer = Ember.run.later(this, () => this.set('message', null), opts.duration || 5000);
   }
 
 };
