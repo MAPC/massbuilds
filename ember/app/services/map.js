@@ -10,6 +10,7 @@ export const massLat = 42.177117;
 export default class extends Service {
 
   @service store
+  @service notifications
 
 
   constructor() {
@@ -85,6 +86,8 @@ export default class extends Service {
       this.set('filteredData', []);
     }
     else {
+      this.get('notifications').show('Updating map');
+
       this.set('pad', .1);
       this.get('store')
           .query('development', query)
