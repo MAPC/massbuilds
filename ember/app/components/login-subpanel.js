@@ -17,6 +17,7 @@ export default class extends Component {
     this.password = '';
 
     this.errorMessage = null;
+    this.isLoggingIn = false;
   }
 
 
@@ -24,7 +25,6 @@ export default class extends Component {
   get submittable() {
     return ['username','password'].every(field => this.get(field) !== '');
   }
-
 
 
   @action
@@ -36,10 +36,15 @@ export default class extends Component {
     const session = this.get('session');
     const { username, password } = this.getProperties('username', 'password');
 
+    this.set('isLoggingIn', true);
+
     session
     .authenticate('authenticator:devise', username, password)
     .catch(e => {
       this.set('errorMessage', 'Cannot login at this time.');
+    })
+    .finally(() => {
+      this.set('isLoggingIn', false);
     });
   }
 

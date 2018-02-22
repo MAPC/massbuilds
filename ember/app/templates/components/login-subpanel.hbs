@@ -21,7 +21,9 @@
   {{/if}}
 
   <div class="form-footer">
-    <button class="submit {{unless submittable 'disabled'}}" type="submit">Login</button>
+    {{#loading-spinner message="Logging In" isLoading=isLoggingIn}}
+      <button class="submit {{unless submittable 'disabled'}}" type="submit">Login</button>
+    {{/loading-spinner}} 
   </div>
 
 </form>

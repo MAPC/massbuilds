@@ -63,9 +63,9 @@
       margin-top: 20px;
     }
 
-    button.submit {
-      float: right;
+    .loading-spinner { float: right; }
 
+    button.submit {
       padding: 6px 16px;
 
       border: 1px solid $color_brand-primary;

@@ -1,0 +1,30 @@
+.component.loading-spinner {
+  @extend ._clear;
+
+  display: inline-block;
+
+  .loading-message {
+    display: none; 
+
+    .spinner {
+      @extend ._spinner;  
+
+      display: inline-block;
+      z-index: 5;
+
+      height: 12px;
+      width: 12px;
+      margin-right: 10px;
+
+      border: 1px solid $color_brand-primary;
+    }
+  }
+
+  .loading-button {}
+
+  .loading-wrapper.active {
+    .loading-message { display: block; }
+    .loading-button { visibility: hidden; }
+  }
+
+}
