@@ -191,13 +191,18 @@ export default class extends Component {
       edited = !edited;
     }
     
-    if (String(modeled) !== String(edited)) {
+    if (
+      (
+        modeled === undefined
+        && (edited !== '' && edited !== null && edited !== undefined)
+      )
+      || (
+        modeled !== undefined
+        && String(modeled) !== String(edited)
+      )
+    ) {
       this.set(`proposedChanges.${fieldName}`, edited);
       this.set('changes', true);
-
-      // If we have updated data, check to see if all fields for the 
-      // current status have been filled out.
-      this.checkCriteria();
     }
     else {
       const proposedChanges = this.get('proposedChanges');
@@ -208,6 +213,8 @@ export default class extends Component {
         this.set('changes', false);
       }
     }
+
+    this.checkCriteria();
   }
 
 
@@ -230,7 +237,16 @@ export default class extends Component {
 
   checkCriteria() {
     const criteria = this.getCriteria();
-    const fulfilled = criteria.every(x => this.get(`editing.${x}`) !== null && this.get(`editing.${x}`) !== undefined);
+
+    const fulfilled = criteria.every(criterion => {
+      const val = this.get(`editing.${criterion}`);
+
+      return (
+        val !== null 
+        && val !== undefined
+        && val !== ''
+      );
+    });
 
     this.set('fulfilled', fulfilled);
   }
