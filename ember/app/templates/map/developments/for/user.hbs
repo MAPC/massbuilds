@@ -12,7 +12,7 @@
     <h3>Listed below are all of the developments you have created</h3>
   </div>
 
-  {{#if model}}
+  {{#if developments}}
     <ul class="item-list">
       <li class="list-header">
         <div>Name</div>
@@ -20,7 +20,7 @@
         <div>Status</div>
       </li>
       <div class='list-body'>
-        {{#each model as |development|}} 
+        {{#each developments as |development|}} 
           <li>
             <div> 
               {{#link-to 'map.developments.development' development}}{{development.name}}{{/link-to}}

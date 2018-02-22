@@ -23,4 +23,4 @@ export default class extends Service {
     this.timer = Ember.run.later(this, () => this.set('message', null), opts.duration || 5000);
   }
 
-};
+}

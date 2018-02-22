@@ -30,7 +30,6 @@ export default class extends Route {
 
 
   afterModel(model) {
-    console.log(model);
     if (model.get('length') > 0) {
       this.get('map').set('data', model);
     }

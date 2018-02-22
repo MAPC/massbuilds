@@ -1,13 +1,16 @@
 .route.developments-for-user {
+
+  width: 800px;
+
   ul.item-list {
     li {
       & > div {
         &:first-of-type { 
-          flex: 1 0 25%; 
+          flex: 1 0 35%; 
 
           font-weight: 600;
         } 
-        &:nth-of-type(2) { flex: 1 0 60%; } 
+        &:nth-of-type(2) { flex: 1 0 50%; } 
         &:last-of-type { flex: 1 0 15%; } 
       }
     }  

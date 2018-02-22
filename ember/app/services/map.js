@@ -1,6 +1,6 @@
 import Service from '@ember/service';
 import L from 'npm:leaflet';
-import { computed, action } from 'ember-decorators/object';
+import { computed } from 'ember-decorators/object';
 import { service } from 'ember-decorators/service';
 
 export const massLng = -71.525258;
