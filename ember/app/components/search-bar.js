@@ -16,7 +16,6 @@ export default class extends Component {
     this.classNames = ['component', 'search-bar'];
 
     this.sortOrder = ['municipal', 'nhood', 'devlper', 'name', 'address'];
-    this.searchQuery = '';
   }
 
 
@@ -115,6 +114,12 @@ export default class extends Component {
       }
     }
 
+    this.set('searchQuery', '');
+  }
+
+
+  @action
+  clearSearch() {
     this.set('searchQuery', '');
   }
 

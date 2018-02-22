@@ -27,6 +27,7 @@ export default class extends Controller {
     });
 
     this.searchPlaceholder = 'Search by Town/City, Developer, Address...';
+    this.searchQuery = '';
 
     this.showingFilters = false;
     this.showingMenu = false;
@@ -107,12 +108,16 @@ export default class extends Controller {
 
   @computed('showingFilters', 'showingDevelopment', 'showingUsers', 'showingModerations')
   get showingLeftPanel() {
-    return (
+    const showing = (
       this.get('showingFilters') 
       || this.get('showingDevelopment')
       || this.get('showingUsers')
       || this.get('showingModerations')
     );
+
+    this.set('searchQuery', '');
+
+    return showing;
   }
 
 

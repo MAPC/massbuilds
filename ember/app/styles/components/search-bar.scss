@@ -33,6 +33,30 @@
       transition: $transition_border;
     }
   }
+
+  .clear-search {
+    @extend ._vertical-center;
+
+    top: 45%;
+    left: initial;
+    right: 10px;
+
+    color: $color_brand-primary;
+
+    opacity: .1;
+    cursor: default;
+    transition: opacity .15s;
+
+    &.active {
+      opacity: .5;
+      cursor: pointer;
+
+      &:hover {
+        opacity: .85; 
+        transition: opacity .15s;
+      }
+    }
+  }
   
   .search-input-wrapper.searching > .search-input {
     border-radius: 0 5px 0 0; 

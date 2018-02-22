@@ -4,10 +4,7 @@ import developmentSerialHash from 'massbuilds/utils/development-serial-hash';
 
 
 export default function castToModel(model, data) {
-  console.log(data);
   const serialized = serializeKeys(data, Ember.String.camelize);
-  console.log(serialized);
-
   const attributes = Ember.get(model, 'attributes._values');
 
   const typeMap = Object.values(attributes)
