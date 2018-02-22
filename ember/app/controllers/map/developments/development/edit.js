@@ -44,13 +44,14 @@ export default class extends Controller {
  
 
   @action
-  createEdit(proposedChanges) {
-    const newEdit = this.get('store').createRecord('edit', {
-      development: this.get('model'),
-      user: this.get('currentUser.user'),
-      approved: this.get('hasPublishPermissions'),
-      proposedChanges: castToModel(Development, proposedChanges),
-    });
+  createEdit(changes) {
+    const development = this.get('model');
+    const user = this.get('currentUser.user');
+    const approved = this.get('hasPublishPermissions');
+    const proposedChanges = castToModel(Development, changes);
+
+    const editSchema = { user, development, approved, proposedChanges };
+    const newEdit = this.get('store').createRecord('edit', editSchema);
 
     if (newEdit) {
       this.set('isCreating', true);
@@ -58,10 +59,17 @@ export default class extends Controller {
       newEdit
         .save()
         .then(() => {
-          const action = this.get('hasPublishPermissions') ? 'published edits' : 'submitted edits for review';
-          const developmentName = this.get('model.name');
+          const action = approved ? 'published edits' : 'submitted edits for review';
+          const developmentName = development.get('name');
 
           this.get('notifications').show(`You have ${action} to ${developmentName}.`)
+
+          if (approved) {
+            Object.keys(proposedChanges)
+                  .forEach(attr => 
+                    development.set(Ember.String.camelize(attr), proposedChanges[attr])
+                  );
+          }
 
           this.transitionToRoute('map.developments.development.index', this.get('model'));
         })
