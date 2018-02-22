@@ -1,6 +1,8 @@
 <section class="route map-developments-create map-developments-development">
   {{development-form
     updateModel=(if hasPublishPermissions (action createDevelopment) (action createEdit))
+    isLoading=isCreating
+    loadingSpinnerText=loadingSpinnerText
     submitText=submitText
     model=model
     mode='create'

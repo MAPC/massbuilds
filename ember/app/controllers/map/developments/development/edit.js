@@ -33,6 +33,14 @@ export default class extends Controller {
 
     return hasPermissions ? 'Publish Changes' : 'Submit for Review';
   }
+
+
+  @computed('hasPublishPermissions')
+  get loadingSpinnerText() {
+    const hasPermissions = this.get('hasPublishPermissions') ;
+
+    return hasPermissions ? 'Publishing' : 'Submitting';
+  }
  
 
   @action
@@ -44,14 +52,23 @@ export default class extends Controller {
       proposedChanges: castToModel(Development, proposedChanges),
     });
 
-    newEdit.save().then(() => {
-      const action = this.get('hasPublishPermissions') ? 'published edits' : 'submitted edits for review';
-      const developmentName = this.get('model.name');
+    if (newEdit) {
+      this.set('isCreating', true);
 
-      this.get('notifications').show(`You have ${action} to ${developmentName}.`)
+      newEdit
+        .save()
+        .then(() => {
+          const action = this.get('hasPublishPermissions') ? 'published edits' : 'submitted edits for review';
+          const developmentName = this.get('model.name');
 
-      this.transitionToRoute('map.developments.development.index', this.get('model'));
-    });
+          this.get('notifications').show(`You have ${action} to ${developmentName}.`)
+
+          this.transitionToRoute('map.developments.development.index', this.get('model'));
+        })
+        .finally(() => {
+          this.set('isCreating', false);
+        });
+    }
   }
 
 }

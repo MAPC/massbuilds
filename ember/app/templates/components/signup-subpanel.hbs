@@ -39,7 +39,9 @@
   {{/if}}
 
   <div class="form-footer">
-    <button class='submit {{unless submittable 'disabled'}}' type="submit">Signup</button>
+    {{#loading-spinner message=loadingText isLoading=isCreating}}
+      <button class='submit {{unless submittable 'disabled'}}' type="submit">Signup</button>
+    {{/loading-spinner}}
   </div>
 
 </form>

@@ -3,8 +3,16 @@
 
   display: inline-block;
 
+  margin-left: 10px;
+
   .loading-message {
     display: none; 
+
+    padding: 5px 12px;
+
+    background: darken($color_bg-light, 3);
+    border: 1px solid $color_bg-medium;
+    border-radius: 5px;
 
     .spinner {
       @extend ._spinner;  
@@ -20,11 +28,9 @@
     }
   }
 
-  .loading-button {}
-
   .loading-wrapper.active {
     .loading-message { display: block; }
-    .loading-button { visibility: hidden; }
+    .loading-button { display: none; }
   }
 
 }

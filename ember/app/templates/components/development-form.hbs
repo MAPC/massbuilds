@@ -12,7 +12,9 @@
   {{/if}}
 
   {{#if (and fulfilled changes)}}
-    <button onclick={{action update}} class='submit-changes styled'>{{submitText}}</button>
+    {{#loading-spinner message=loadingSpinnerText isLoading=isLoading}}
+      <button onclick={{action update}} class='submit-changes styled'>{{submitText}}</button>
+    {{/loading-spinner}}
   {{/if}}
 </div>
 

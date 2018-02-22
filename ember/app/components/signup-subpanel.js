@@ -92,17 +92,26 @@ export default class extends Component {
     if (noErrors) {
       const userSchema = { firstName, lastName, email, password };
 
+      this.set('loadingText', 'Signing Up');
+      this.set('isCreating', true);
+
       this.get('store')
       .createRecord('user', userSchema)
       .save()
       .then(() => {
+        this.set('loadingText', 'Logging In')
+
         this.get('session')
         .authenticate('authenticator:devise', email, password)
         .catch(e => {
           this.set('errorMessage', 'Account was created, but cannot be logged in at this time.');
+        })
+        .finally(() => {
+          this.set('isCreating', false);
         });
       })
       .catch(e => {
+        this.set('isCreating', false);
         this.set('errorMessage', 'Not able to sign up at this time.');
       });
     }

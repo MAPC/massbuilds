@@ -1,6 +1,8 @@
 <section class="route map-developments-development-edit">
   {{development-form
     updateModel=(action createEdit)
+    isLoading=isCreating
+    loadingSpinnerText=loadingSpinnerText
     submitText=submitText
     model=model
     mode='edit'

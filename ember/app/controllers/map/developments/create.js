@@ -24,6 +24,12 @@ export default class extends Controller {
   }
 
 
+  @computed('hasPublishPermissions')
+  get loadingSpinnerText() {
+    return this.get('hasPublishPermissions') ? 'Creating Development' : 'Submitting Development';
+  }
+
+
   @action 
   createDevelopment(data) {
     const model = this.get('model');
@@ -34,10 +40,17 @@ export default class extends Controller {
     model.set('state', 'MA');
     model.set('user', this.get('currentUser.user'));
 
-    model.save().then(development => {
-      this.get('notifications').show(`You have created a new development called ${data.name}`);
-      this.transitionToRoute('map.developments.development', development);
-    });
+    this.set('isCreating', true);
+
+    model
+      .save()
+      .then(development => {
+        this.get('notifications').show(`You have created a new development called ${data.name}.`);
+        this.transitionToRoute('map.developments.development', development);
+      })
+      .finally(() => {
+        this.set('isCreating', false);
+      });
   }
 
 
@@ -51,10 +64,19 @@ export default class extends Controller {
       proposedChanges: castToModel(Development, data),
     });
 
-    newEdit.save().then(() => {
-      this.get('notifications').show(`You have created a new development. It may be published after review from a moderator.`);
-      this.transitionToRoute('map.moderations.for.user', this.get('currentUser.user.id'));
-    });
+    if (newEdit) {
+      this.set('isCreating', true);
+
+      newEdit
+        .save()
+        .then(() => {
+          this.get('notifications').show(`You have created a new development. It may be published after review from a moderator.`);
+          this.transitionToRoute('map.moderations.for.user', this.get('currentUser.user.id'));
+        })
+        .finally(() => {
+          this.set('isCreating', false);
+        });
+    }
   }
 
 }
