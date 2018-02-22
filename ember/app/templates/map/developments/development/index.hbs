@@ -39,7 +39,10 @@
               <div class="column">
                 <div class="field">
                   <label for="status">Status:</label>
-                  {{capitalize model.status}}
+
+                  <span style="color: {{status-color model.status}}">
+                    {{capitalize model.status}}
+                  </span>
                 </div>
 
                 <div class="field">
