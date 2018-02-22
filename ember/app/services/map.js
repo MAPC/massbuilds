@@ -78,10 +78,7 @@ export default class extends Service {
 
 
   filterByQuery(query) {
-    if (
-      Object.keys(query.filter).length === 0
-      && this.get('stored.length') > 0
-    ) {
+    if (Object.keys(query.filter).length === 0) {
       this.set('pad', 0);
       this.set('filteredData', []);
     }
