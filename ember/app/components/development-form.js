@@ -66,6 +66,8 @@ export default class extends Component {
     ];
 
     this.criteria = { base, proposed, groundBroken };
+
+    Ember.run.later(this, () => this.updateFieldRequirements(), 500);
   }
 
 
@@ -76,9 +78,14 @@ export default class extends Component {
 
 
   @action
-  updateFieldRequirements() {
+  updateStatus() {
     this.checkForUpdated('status');
+    this.updateFieldRequirements();
+  }
 
+
+  @action
+  updateFieldRequirements() {
     const criteria = this.getCriteria(); 
     const notRequired = this.get('criteria.groundBroken').filter(crit => criteria.indexOf(crit) === -1);
 

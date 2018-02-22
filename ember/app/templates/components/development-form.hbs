@@ -43,7 +43,7 @@
             <div class="column">
               <div class="field">
                 <label for="status" class="required">Status:</label>
-                <select name="status" onchange={{action updateFieldRequirements}}>
+                <select name="status" onchange={{action updateStatus}}>
                   {{#unless editing.status}}
                     <option disabled selected>Select Status</option>
                   {{/unless}}
