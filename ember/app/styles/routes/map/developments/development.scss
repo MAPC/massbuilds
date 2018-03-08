@@ -216,6 +216,11 @@
 
       border-bottom: 1px solid $color_bg-medium;
     }
+
+    .loading-message {
+      background: none;
+      border: none;
+    }
   }
 
 }

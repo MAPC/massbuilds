@@ -520,10 +520,16 @@
       <p>{{input value=editing.devlper placeholder="Enter Developer Name" key-up=(action checkForUpdated 'devlper')}}</p>
     </div>
 
-    {{#if editing.user}}
+    {{#if model.user}}
       <div class="detail">
         <h3>Entry Created By</h3>
-        <p>{{editing.user.fullName}}</p>
+        <p>
+          {{#if (eq model.user.fullName 'undefined undefined')}}
+            {{loading-spinner message="Loading Creator" isLoading=true}}
+          {{else}}
+            {{model.user.fullName}}
+          {{/if}}
+        </p>
       </div>
     {{/if}}
 
