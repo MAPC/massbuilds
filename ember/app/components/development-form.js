@@ -54,7 +54,7 @@ export default class extends Component {
 
     const proposed = [
       ...base,
-      'singfamhu', 'smmultifam', 'lgmultifam', 'onsitepark',
+      'singfamhu', 'smmultifam', 'lgmultifam',
     ];
 
     const groundBroken = [

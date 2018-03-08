@@ -13,7 +13,6 @@ class Development < ApplicationRecord
     proposed.validates :singfamhu
     proposed.validates :smmultifam
     proposed.validates :lgmultifam
-    proposed.validates :onsitepark
   end
   with_options if: :groundbroken?, presence: :true do |groundbroken|
     groundbroken.validates :singfamhu
@@ -37,8 +36,6 @@ class Development < ApplicationRecord
     groundbroken.validates :other_sqft
     groundbroken.validates :hotel_sqft
     groundbroken.validates :hotelrms
-    groundbroken.validates :onsitepark
-    groundbroken.validates :publicsqft
   end
 
 
