@@ -48,7 +48,7 @@ export default class extends Component {
     ];
 
     const base = [
-      'name', 'status', 'address', 'yrcompEst', 'yearCompl',
+      'name', 'status', 'address', 'yearCompl',
       'zipCode', 'hu', 'commsf', 'descr',
     ];
 

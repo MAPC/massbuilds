@@ -5,10 +5,10 @@ class Development < ApplicationRecord
   belongs_to :user
   include PgSearch
   pg_search_scope :search_by_name_and_location, against: [:name, :municipal, :address], using: { tsearch: { any_word: true } }
-  validates :name, :status, :address, :yrcomp_est, :year_compl, :zip_code, :hu,
+  validates :name, :status, :address, :year_compl, :zip_code, :hu,
             :commsf, :descr, presence: true
   validates_inclusion_of :rdv, :asofright, :clusteros, :phased, :stalled, :mixed_use,
-                         :headqtrs, :ovr55, in: [true, false, nil]
+                         :headqtrs, :ovr55, :yrcomp_est, in: [true, false, nil]
   with_options if: :proposed?, presence: true do |proposed|
     proposed.validates :singfamhu
     proposed.validates :smmultifam

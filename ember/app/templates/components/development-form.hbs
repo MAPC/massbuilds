@@ -54,13 +54,13 @@
               </div>
 
               <div class="field">
-                <label for="yearCompl" class="required">Year Complete (Known)</label>
+                <label for="yearCompl" class="required">Year Completed</label>
                 {{input value=editing.yearCompl class="required-field" placeholder="Enter here" key-up=(action checkForUpdated 'yearCompl')}}
               </div>
 
               <div class="field">
-                <label for="yrcompEst" class="required">Year Complete (Estimate)</label>
-                {{input value=editing.yrcompEst class="required-field" placeholder="Enter here" key-up=(action checkForUpdated 'yrcompEst')}}
+                <label for="yrcompEst" class="required">Complete Date Estimated?</label>
+                {{input type="checkbox" checked=editing.yrcompEst click=(action checkForUpdated 'yrcompEst')}}
               </div>
 
               <div class="field">

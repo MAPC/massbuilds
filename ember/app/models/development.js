@@ -21,7 +21,6 @@ export default class extends DS.Model {
   @attr('string') parcelId
   @attr('string') municipal
   @attr('string') devlper
-  @attr('string') yrcompEst
 
   @attr('number') height
   @attr('number') stories
@@ -69,6 +68,7 @@ export default class extends DS.Model {
   @attr('boolean') stalled
   @attr('boolean') headqtrs
   @attr('boolean') mixedUse
+  @attr('boolean', { default: false }) yrcompEst
 
   @attr('date') createdAt
   @attr('date') updatedAt

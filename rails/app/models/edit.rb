@@ -24,7 +24,7 @@ class Edit < ApplicationRecord
     {
       "title": "Edit",
       "type": "object",
-      "required": ["name", "status", "address", "yrcomp_est", "year_compl", "zip_code", "hu", "commsf", "descr"],
+      "required": ["name", "status", "address", "year_compl", "zip_code", "hu", "commsf", "descr"],
       "properties": {
         "name": {
           "type": "string"
@@ -33,7 +33,7 @@ class Edit < ApplicationRecord
           "type": "number"
         },
         "yrcomp_est": {
-          "type": "string"
+          "type": "boolean"
         },
         "status": {
           "type": "string"

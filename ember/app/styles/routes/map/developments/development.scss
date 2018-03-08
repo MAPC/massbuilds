@@ -1,6 +1,7 @@
 .route.map-developments-development {
 
-  min-width: 800px;
+  min-width: 860px;
+  max-width: 1050px;
   padding: 0 10px;
 
   .development-content {
@@ -156,6 +157,12 @@
         flex: 1 0 40%; 
 
         color: $color_brand-primary--active;
+
+        small {
+          color: $color_font-medium;
+          font-size: .7em; 
+          opacity: .6;
+        }
       }
     }
   }

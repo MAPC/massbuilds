@@ -46,17 +46,13 @@
                 </div>
 
                 <div class="field">
-                  {{#if (eq model.status 'completed')}}
-                    <label for="yearCompl">Year Completed</label>
-                    {{model.yearCompl}}
-                  {{else}}
-                    <label for="yrcompEst">Yr. Compl. Est.</label>
+                  <label for="yearCompl">
+                    Year Completed 
                     {{#if model.yrcompEst}}
-                      {{model.yrcompEst}}
-                    {{else}}
-                      {{model.yearCompl}}
+                      <small>(Estimated)</small>
                     {{/if}}
-                  {{/if}}
+                  </label>
+                  {{model.yearCompl}}
                 </div>
 
                 <div class="field">
@@ -416,6 +412,5 @@
       </div>
     </div>
   </div>
-
 
 </section>
