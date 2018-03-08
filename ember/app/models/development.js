@@ -60,14 +60,14 @@ export default class extends DS.Model {
   @attr('number') affUnknown
   @attr('number') publicsqft
 
-  @attr('boolean') rdv
-  @attr('boolean') asofright
-  @attr('boolean') ovr55
-  @attr('boolean') clusteros
-  @attr('boolean') phased
-  @attr('boolean') stalled
-  @attr('boolean') headqtrs
-  @attr('boolean') mixedUse
+  @attr('boolean', { default: false }) rdv
+  @attr('boolean', { default: false }) asofright
+  @attr('boolean', { default: false }) ovr55
+  @attr('boolean', { default: false }) clusteros
+  @attr('boolean', { default: false }) phased
+  @attr('boolean', { default: false }) stalled
+  @attr('boolean', { default: false }) headqtrs
+  @attr('boolean', { default: false }) mixedUse
   @attr('boolean', { default: false }) yrcompEst
 
   @attr('date') createdAt
