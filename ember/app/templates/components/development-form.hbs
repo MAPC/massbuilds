@@ -214,6 +214,20 @@
               </tr>
 
               <tr>
+                <td>Unknown</td>
+                <td>{{input value=editing.unknownhu placeholder=0 key-up=(action updateHu 'unknownhu')}}</td>
+                <td>
+                  {{#if (gt editing.hu 0)}}
+                    {{round (mult 100 (div editing.unknownhu editing.hu))}}%
+                  {{else}}
+                    0%
+                  {{/if}}
+                </td>
+              </tr>
+
+              <hr class="delimiter">
+
+              <tr>
                 <td><label for="units1bd">Studio/1 Bedroom</label></td>
                 <td>{{input value=editing.units1bd placeholder=0 key-up=(action updateHu 'units1bd')}}</td>
                 <td>
@@ -243,18 +257,6 @@
                 <td>
                   {{#if (gt editing.hu 0)}}
                     {{round (mult 100 (div editing.units3bd editing.hu))}}%
-                  {{else}}
-                    0%
-                  {{/if}}
-                </td>
-              </tr>
-
-              <tr>
-                <td>Unknown</td>
-                <td>{{input value=editing.unknownhu placeholder=0 key-up=(action updateHu 'unknownhu')}}</td>
-                <td>
-                  {{#if (gt editing.hu 0)}}
-                    {{round (mult 100 (div editing.unknownhu editing.hu))}}%
                   {{else}}
                     0%
                   {{/if}}

@@ -11,7 +11,7 @@ table {
       td { color: $color_font-dark !important; }
     } 
 
-    &:nth-of-type(2n+1):not(.table-header) { 
+    &:nth-of-type(2n+1):not(.table-header,.delimiting-row) { 
       background: lighten($color_bg-light--active, 3); 
     }
 
@@ -24,5 +24,16 @@ table {
         color: $color_font-medium; 
       }
     }
+  }
+
+  hr { 
+    margin: 0;
+    display: block;
+
+    width: 286%; 
+    height: 2px;
+
+    background-color: $color_bg-medium;
+    border: none;
   }
 }
