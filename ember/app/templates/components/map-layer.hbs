@@ -3,7 +3,7 @@
     {{#layers.circle 
       lat=datum.latitude 
       lng=datum.longitude
-      color=(status-color datum.status)
+      color=(if faded '#888' (status-color datum.status))
       onClick=(action 'view' datum.id)
       opacity=(if faded 0.3 1)
       radius=4
