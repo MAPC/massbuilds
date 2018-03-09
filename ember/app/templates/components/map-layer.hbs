@@ -15,8 +15,7 @@
           {{capitalize datum.status}}
         </h5>
         <h5>
-          <span>Year of Completion: </span>
-          2012
+          <span>{{if datum.yrcompEst 'Estimated'}} Year of Completion: </span>
           {{datum.yearCompl}}
         </h5>
       {{/circle.tooltip}}
