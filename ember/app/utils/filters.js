@@ -44,7 +44,7 @@ const filters = {
   'descr': { name: 'Description', type: 'string', ...defaultMetric },
 
   'yearCompl': { name: 'Year completed', type: 'number', ...defaultMetric },
-  'yrcomplEst': { name: 'Estimated completion year',  type: 'boolean', ...defaultMetric },
+  'yrcompEst': { name: 'Estimated completion year',  type: 'boolean', ...defaultMetric },
   'prjarea': { name: 'Project area size', type: 'number', unit: 'sqft', ...defaultMetric },
   'publicsqft': { name: 'Public sqft', type: 'number', ...defaultMetric },
   'onsitepark': { name: 'Parking spaces', type: 'number', ...defaultMetric },
@@ -102,7 +102,7 @@ const metricGroups = {
         'status',
         'totalCost',
         'yearCompl',
-        'yrcomplEst',
+        'yrcompEst',
         'rdv',
         'phased',
         'stalled',
