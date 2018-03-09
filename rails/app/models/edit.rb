@@ -9,15 +9,15 @@ class Edit < ApplicationRecord
   private
 
   def proposed_required_attributes
-    ["singfamhu", "smmultifam", "lgmultifam", "onsitepark"]
+    ["singfamhu", "smmultifam", "lgmultifam"]
   end
 
   def groundbroken_required_attributes
-    ["singfamhu", "smmultifam", "lgmultifam", "units_1bd", "units_2bd",
-     "units_3bd", "affrd_unit", "aff_u30", "aff_30_50", "aff_50_80",
+    ["singfamhu", "smmultifam", "lgmultifam",
+     "affrd_unit", "aff_u30", "aff_30_50", "aff_50_80",
      "aff_80p", "gqpop", "ret_sqft", "ofcmd_sqft", "indmf_sqft", "whs_sqft",
      "rnd_sqft", "ei_sqft", "other_sqft", "hotel_sqft", "hotelrms",
-     "onsitepark", "publicsqft"]
+     "publicsqft"]
   end
 
   def base_schema

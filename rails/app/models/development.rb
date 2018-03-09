@@ -18,9 +18,6 @@ class Development < ApplicationRecord
     groundbroken.validates :singfamhu
     groundbroken.validates :smmultifam
     groundbroken.validates :lgmultifam
-    groundbroken.validates :units_1bd
-    groundbroken.validates :units_2bd
-    groundbroken.validates :units_3bd
     groundbroken.validates :affrd_unit
     groundbroken.validates :aff_u30
     groundbroken.validates :aff_30_50

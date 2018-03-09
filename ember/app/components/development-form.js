@@ -56,8 +56,7 @@ export default class extends Component {
 
     const groundBroken = [
       ...proposed,
-      'units1bd', 'units2bd', 'units3bd', 'affrdUnit', 'affU30',
-      'aff3050', 'aff5080', 'aff80p', 'gqpop', 'retSqft', 
+      'affrdUnit', 'affU30', 'aff3050', 'aff5080', 'aff80p', 'gqpop', 'retSqft', 
       'ofcmdSqft', 'indmfSqft', 'whsSqft', 'rndSqft', 'eiSqft',
       'otherSqft', 'hotelSqft', 'hotelrms', 'publicsqft',
     ];
