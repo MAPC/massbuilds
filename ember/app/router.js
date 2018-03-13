@@ -19,7 +19,7 @@ Router.map(function() {
         this.route('user', { path: '/:user_id' });
       });
     });
-    this.route('users');
+    this.route('users', function() {});
     this.route('moderations', function() {
       this.route('for', function() {
         this.route('user', { path: '/:user_id' });

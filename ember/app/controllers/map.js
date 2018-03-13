@@ -39,7 +39,10 @@ export default class extends Controller {
 
   @computed('target.currentRouteName')
   get showingUsers() {
-    return this.get('target.currentRouteName') === 'map.users';
+    return [
+      'map.users.index',
+      'map.users.verify',
+    ].indexOf(this.get('target.currentRouteName')) !== -1;
   }
 
 

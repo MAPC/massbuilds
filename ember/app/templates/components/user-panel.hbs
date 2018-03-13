@@ -1,6 +1,7 @@
 {{#if session.isAuthenticated}}
   {{removePanelParam}}
   {{account-subpanel 
+    verifiableUsers=verifiableUsers
     hideFilters=(action hideFilters)
     toggleMenu=(action toggleMenu)
   }}

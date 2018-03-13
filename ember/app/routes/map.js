@@ -1,3 +1,4 @@
+import RSVP from 'rsvp';
 import Route from '@ember/routing/route';
 import { action } from 'ember-decorators/object';
 import { service } from 'ember-decorators/service';
@@ -19,10 +20,15 @@ export default class extends Route {
     }
 
     this.get('map').filterByQuery(query);
+
+    return RSVP.hash({
+      verifiableUsers: this.get('store').query('user', { request_verified_status: true })
+    });
   }
 
 
-  afterModel() {
+  afterModel(model) {
+    console.log(model);
     this.controllerFor('map').set('filterParams', this.get('filterParams'));
   }
 

@@ -1,0 +1,68 @@
+<section class="route users">
+
+  <div class="left-panel-links">
+    {{#link-to 'map'}}
+      <img src="/assets/images/chevrons-left.svg">
+      Close
+    {{/link-to}}
+  </div>
+
+  <div class="user-filters">
+    <div class="user-filter">
+      <label for="role-filter">Filter By: </label>
+      <select name="role-filter" onchange={{action filterRole}}>
+        <option value='all'>All Roles</option>
+        {{#each roles as |role|}}
+          <option value={{role}}>{{capitalize role}}</option>
+        {{/each}}
+      </select>
+    </div>
+  </div>
+
+  {{input value=searchQuery placeholder='Search by First/Last Name or Email'}}
+
+  <div class="table-wrapper">
+    {{#if filteredUsers}}
+      <table class="users-table">
+        <tr class="table-header">
+          <td>Name</td>
+          <td>Email</td>
+          <td>Municipality</td>
+          <td>Date Joined</td>
+          <td>Role</td>
+        </tr>
+
+        {{#each filteredUsers as |user|}}
+          <tr>
+            <td>{{user.fullName}}</td>
+            <td>{{user.email}}</td>
+            <td>
+              {{#if (and user.municipality (eq user.role 'municipal'))}}
+                {{user.municipality}}
+              {{else}}
+                -
+              {{/if}}
+            </td>
+            <td>
+              {{format-date user.createdAt format='MM/DD/YY'}}
+            </td>
+            <td> 
+              <select name="{{user.id}}-role" onchange={{action updateUser user}}>
+                {{#each roles as |role|}}
+                  <option value={{role}} selected={{if (eq user.role role) 'selected'}}>{{capitalize role}}</option>
+                {{/each}} 
+              </select>
+            </td>
+          </tr>
+        {{/each}}
+      </table>
+    {{else}}
+      <div class="no-users">
+        No 
+        {{unless (eq roleFilter 'all') roleFilter}} 
+        users found
+      </div>
+    {{/if}}
+  </div>
+
+</section>

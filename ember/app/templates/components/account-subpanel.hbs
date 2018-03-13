@@ -66,13 +66,25 @@
         Moderations
       {{/link-to}}
 
-      {{#link-to 'map.users' click=(action closeMenu)}} 
+      {{#link-to 'map.users.index' click=(action closeMenu)}} 
         <div class="icon-wrapper">
           <img src="/assets/images/user.svg"> 
         </div>
 
         Manage Users
       {{/link-to}}
+
+      {{#if verifiableUsers}}
+        {{#link-to 'map.users.verify' click=(action closeMenu)}}
+          <span class="tile-badge">{{verifiableUsers.length}}</span>
+
+          <div class="icon-wrapper">
+            <img src="/assets/images/user.svg">
+          </div>
+
+          Verify Users
+        {{/link-to}}
+      {{/if}}
     {{/if}}
   </div>
   
