@@ -12,6 +12,8 @@ export default class extends DS.Model {
   @attr('string') municipality
   @attr('string') role
 
+  @attr('boolean') requestVerifiedStatus
+
   @attr('date') createdAt
 
   @hasMany('edits', {async: true}) edits

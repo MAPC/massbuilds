@@ -33,10 +33,30 @@
       &.error {
         input { border-color: $color_state-negative; } 
       }
+
+      &.labeled {
+        padding: 3px 10px;
+
+        background: $color_bg-light--accent; 
+
+        .loading-spinner {
+          float: none; 
+
+          margin: 10px 0;
+
+          background: $color_bg-light;
+        }
+      }
+
+      label {
+        color: $color_font-medium;
+        font-size: 11px;
+      }
     }
 
     input {
-      width: 100%; 
+      &:not([type="checkbox"]) { width: 100%; }
+
       margin: 5px auto;
       padding: 8px 16px;
       padding-left: 40px;
@@ -50,6 +70,8 @@
         border-color: $color_brand-primary--active;
         transition: border-color .2s;
       }
+
+      &[type="checkbox"] { margin-left: 10px; }
     }
 
     .error-message {

@@ -7,6 +7,7 @@ export default class extends Component {
 
   @service session
   @service store
+  @service ajax
 
 
   constructor() {
@@ -18,11 +19,47 @@ export default class extends Component {
     this.lastName = '';
     this.username = '';
     this.password = '';
+    this.municipality = null;
     this.confirmPassword = '';
 
     this.errorMessage = null;
+
+    this.munis = [];
+    this.isFetching = false;
+    this.muniFailure = false;
+    this.requestingMunicipal = false;
   }
 
+
+  @action
+  fetchMunis() {
+    const carto = "https://mapc-admin.carto.com/api/v2/sql?q=";
+    const query = "SELECT DISTINCT(municipal) FROM table_datakeys_bg10";
+
+    if (this.get('munis.length') === 0) {
+      this.set('isFetching', true);
+
+      this.get('ajax')
+          .request(carto + query)
+          .then(result => {
+            this.set('munis', result.rows.map(row => row.municipal).sort());
+          })
+          .catch(e => {
+            this.set('muniFailure', true);
+            this.set('errorMessage', "Unable to select a municipality at this time.");
+          })
+          .finally(() => {
+            this.set('isFetching', false);
+          });
+    }
+  }
+
+
+  @action
+  updateMunicipality(muni) {
+    this.set('municipality', muni);
+  }
+ 
 
   @computed('fullName', 'username', 'password', 'confirmPassword')
   get submittable() {
@@ -48,6 +85,9 @@ export default class extends Component {
     const email = this.get('username');
     const { firstName, lastName } = this.getProperties('firstName', 'lastName');
     const { password, confirmPassword } = this.getProperties('password', 'confirmPassword');
+    const requestingMunicipal = this.get('requestingMunicipal');
+    const municipality = requestingMunicipal ? this.get('municipality') : null;
+    const requestVerifiedStatus = !!municipality;
 
 
     /**
@@ -59,7 +99,7 @@ export default class extends Component {
     }
 
     if (firstName && lastName) {
-      const nameRegex = /^[A-Za-z\-\']+$/;
+      const nameRegex = /^[A-Za-z\-']+$/;
 
       if ([firstName,lastName].any(name => !nameRegex.test(name))) {
         noErrors = false; 
@@ -90,7 +130,7 @@ export default class extends Component {
      */
 
     if (noErrors) {
-      const userSchema = { firstName, lastName, email, password };
+      const userSchema = { firstName, lastName, email, password, municipality, requestVerifiedStatus };
 
       this.set('loadingText', 'Signing Up');
       this.set('isCreating', true);

@@ -31,6 +31,29 @@
     {{input placeholder="Confirm Password" type="password" value=confirmPassword}}
   </div>
 
+  <hr>
+
+  {{#unless muniFailure}}
+    <div class="input-wrapper labeled">
+      <label>Are you a member of city/town, state, or regional government?</label>
+      {{input type="checkbox" checked=requestingMunicipal click=(action fetchMunis)}}
+    </div>
+
+    {{#if requestingMunicipal}}
+      <div class="input-wrapper labeled">
+        <label>Choose the municipality you are associated with</label>
+        
+        {{#loading-spinner message="Loading Municipalities" isLoading=isFetching}}
+          <select onchange={{action updateMunicipality value="target.value"}}>
+            <option disabled selected>Select Municipality</option>
+            {{#each munis as |muni|}}
+              <option value={{muni}}>{{muni}}</option>
+            {{/each}}
+          </select>
+        {{/loading-spinner}}
+      </div>
+    {{/if}}
+  {{/unless}}
 
   {{#if errorMessage}}
     <div class="error-message">
