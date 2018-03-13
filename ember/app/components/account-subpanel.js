@@ -6,6 +6,7 @@ import { service } from 'ember-decorators/service';
 export default class extends Component {
 
   @service session
+  @service cookies
   @service currentUser
 
 
@@ -13,6 +14,7 @@ export default class extends Component {
     super();
 
     this.classNames = ['component', 'subpanel', 'account-subpanel']
+    this.removedUpdater = 0;
   }
 
 
@@ -22,6 +24,19 @@ export default class extends Component {
     const verifiedRoles = ['admin', 'municipal', 'verified'];
 
     return verifiedRoles.indexOf(userRole) !== -1;
+  }
+
+
+  @computed('removedUpdater')
+  get removedDenialMessage() {
+    return this.get('cookies').read()['removed_muni_denial_message'];
+  }
+
+
+  @action 
+  removeDenialMessage() {
+    this.get('cookies').write('removed_muni_denial_message', true);
+    this.set('removedUpdater', Math.random());
   }
 
 

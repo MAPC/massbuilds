@@ -10,6 +10,24 @@
         {{verified-mark}}
       {{/if}}
     </h3>
+
+    {{#unless verified}}
+      {{#if currentUser.user.municipality}}
+        {{#if currentUser.user.requestVerifiedStatus}}
+          <h4 class="tag">Reviewing request for {{currentUser.user.municipality}} membership</h4>
+        {{else}}
+          {{#unless removedDenialMessage}}
+            <h4 class="tag inactive">
+              Request for {{currentUser.user.municipality}} membership denied <span onclick={{action removeDenialMessage}}>X</span>
+            </h4>
+          {{/unless}}
+        {{/if}}
+      {{/if}}
+    {{else}}
+      {{#if (eq currentUser.user.role 'municipal')}}
+        <h4 class="tag active">Member of {{currentUser.user.municipality}}</h4>
+      {{/if}}
+    {{/unless}}
   </div>
 
   <div class="user-actions">

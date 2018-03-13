@@ -161,6 +161,8 @@
     }
 
     .user-info {
+      margin-bottom: 30px;
+
       text-align: center; 
       
       .user-image {
@@ -173,6 +175,7 @@
       }
 
       h3 {
+        margin-bottom: 0;
         font-size: 30px; 
 
         .verified-mark {
