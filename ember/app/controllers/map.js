@@ -86,7 +86,7 @@ export default class extends Controller {
                 Ember.set(found, 'inflector', metricParts[0]);
                 Ember.set(found, 'value', metricParts[1]);
               }
-              else if (found.type === 'bool') {
+              else if (found.type === 'boolean') {
                 Ember.set(found, 'value', value == 'true');
               }
             }
@@ -103,6 +103,7 @@ export default class extends Controller {
 
   @computed('activeFilters.length')
   get filtering() {
+    console.log(this.get('activeFilters'));
     const filtering = this.get('activeFilters.length') > 0;
 
     return filtering;
@@ -187,7 +188,7 @@ export default class extends Controller {
       if (filter.filter === 'metric') {
         switch(filter.type) {
           case 'number':
-            value = `${filter.inflector};${filter.value}`;
+            value = (filter.value) ? `${filter.inflector};${filter.value}` : undefined;
             break;
           case 'boolean':
             value = (filter.value) ? true : undefined;

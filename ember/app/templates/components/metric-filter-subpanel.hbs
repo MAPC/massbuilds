@@ -22,7 +22,7 @@
 
             {{else if (eq metric.type 'boolean')}}
 
-              {{input type="checkbox" name=metric.col checked=(if metric.value 'checked') change=(action toggleCheckbox metric)}}
+              {{input type="checkbox" name=metric.col checked=(if (eq metric.value true) 'checked') change=(action toggleCheckbox metric)}}
 
             {{else if (eq metric.type 'date')}}
 

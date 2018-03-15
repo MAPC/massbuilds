@@ -10,7 +10,7 @@ const { decamelize } = Ember.String;
 
 const defaultMetric = {
   filter: 'metric',
-  value: 0,
+  value: null,
   inflector: 'eq',
 };
 

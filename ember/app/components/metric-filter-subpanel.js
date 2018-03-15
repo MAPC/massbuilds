@@ -1,3 +1,4 @@
+import Ember from 'ember';
 import Component from '@ember/component';
 import { computed, action } from 'ember-decorators/object';
 import filters, { metricGroups } from 'massbuilds/utils/filters';
@@ -15,7 +16,7 @@ export default class extends Component {
     });
   }
 
-  @computed('viewing.name', 'activeFilters')
+  @computed('viewing.name', 'activeFilters.[]')
   get subgroups() {
     const subgroups = metricGroups[this.get('viewing.name')];
     const activeFilters = this.get('activeFilters');
@@ -25,7 +26,7 @@ export default class extends Component {
         title: subgroup.title,
         metrics: subgroup.metrics.map(metric => {
           let active = activeFilters.filter(x => x.col === metric)[0];
-           
+
           return active || filters[metric];
         }),
       };
@@ -37,7 +38,8 @@ export default class extends Component {
 
   @action
   toggleCheckbox(metric) {
-    Ember.set(metric, 'value', !(metric.value == true));
+    const value = !(metric.value == true);
+    Ember.set(metric, 'value', value);
 
     this.updateFilter(metric);
   }
@@ -63,6 +65,7 @@ export default class extends Component {
 
   @action
   updateFilter(filter) {
+    this.set(`${filter.col}.value`, filter.value);
     this.sendAction('update', { [filter.col]: filter });
   }
   
