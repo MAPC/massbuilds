@@ -6,7 +6,7 @@
       color=(if faded '#888' (status-color datum.status))
       onClick=(action 'view' datum.id)
       opacity=(if faded 0.3 1)
-      radius=4
+      radius=radius
       as |circle|
     }} 
       {{#circle.tooltip className='massbuilds-tooltip'}}

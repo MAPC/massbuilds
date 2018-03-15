@@ -25,7 +25,6 @@
             <img src="/assets/images/link.svg">
             <a href={{model.prjUrl}}>{{model.prjUrl}}</a>
           </h2>
-
         {{/if}}
 
       </div>
@@ -57,41 +56,59 @@
 
                 <div class="field">
                   <label for="totalCost">Cost</label>
-                  ${{number-format model.totalCost}}
+                  {{#if model.totalCost}}
+                    ${{number-format model.totalCost}}
+                  {{else}}
+                    <span class="unknown">Unknown</span>
+                  {{/if}}
                 </div>
 
                 <div class="field">
                   <label for="prjarea">Project Area</label>
-                  {{number-format model.prjarea decimals=0}} sqft.
+                  {{#if model.prjarea}}
+                    {{number-format model.prjarea decimals=0}} sqft.
+                  {{else}}
+                    <span class="unknown">Unknown</span>
+                  {{/if}}
                 </div>
               </div>
 
               <div class="column">
                 <div class="field">
                   <label for="height">Height</label>
-                  {{number-format model.height decimals=0}} ft.
+                  {{#if model.height}}
+                    {{number-format model.height decimals=0}} ft.
+                  {{else}}
+                    <span class="unknown">Unknown</span>
+                  {{/if}}
                 </div>
 
                 <div class="field">
                   <label for="stories">Stories</label>
-                  {{model.stories}}
+                  {{#if model.stories}}
+                    {{model.stories}}
+                  {{else}}
+                    <span class="unknown">Unknown</span>
+                  {{/if}}
                 </div>
 
                 <div class="field">
                   <label for="onsitepark">Parking Spaces</label>
-                  {{number-format model.onsitepark decimals=0}}
+                  {{#if model.onsitepark}}
+                    {{number-format model.onsitepark decimals=0}}
+                  {{else}}
+                    <span class="unknown">Unknown</span>
+                  {{/if}}
                 </div>
 
-                {{#unless (lte model.onsitepark 0)}}
-                  <div class="field">
-                    <label for="parkType">Parking Type</label>
-                    {{#if model.parkType}}
-                      {{model.parkType}}
-                    {{else}}
-                      N/A
-                    {{/if}}
-                  </div>
-                {{/unless}}
+                <div class="field">
+                  <label for="parkType">Parking Type</label>
+                  {{#if model.parkType}}
+                    {{model.parkType}}
+                  {{else}}
+                    <span class="unknown">Unknown</span>
+                  {{/if}}
+                </div>
               </div>
             </div>
 

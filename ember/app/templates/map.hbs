@@ -66,6 +66,7 @@
         {{map-layer 
           data=map.filteredData
           layers=layers 
+          radius=60
           viewDevelopment=(action viewDevelopment)
         }}
       {{/if}}
@@ -73,6 +74,7 @@
       {{map-layer 
         data=map.stored 
         layers=layers 
+        radius=10
         faded=activeFilters
         viewDevelopment=(action viewDevelopment)
       }}
