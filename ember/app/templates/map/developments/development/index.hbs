@@ -417,7 +417,7 @@
         </p>
       </div>
 
-      {{#if (eq currentUser.user.role 'admin')}}
+      {{#if hasDeletePermissions}}
         <div class="actions">
           <button class="styled negative" onclick={{action deleteDevelopment}}>Delete Development</button>
         </div>

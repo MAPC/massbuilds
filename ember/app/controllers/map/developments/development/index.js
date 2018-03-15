@@ -46,6 +46,22 @@ export default class extends Controller {
   }
 
 
+  @computed('currentUser.user.role', 'model.municipal')
+  get hasDeletePermissions() {
+    const role = this.get('currentUser.user.role');
+    const userMuni = this.get('currentUser.user.municipality');
+    const developmentMuni = this.get('model.municipal');
+
+    return (
+      role === 'admin'
+      || (
+        role === 'municipal' 
+        && userMuni.toLowerCase() === developmentMuni.toLowerCase()
+      )
+    );
+  }
+
+
   @action
   deleteDevelopment() {
     const name = this.get('model.name');
