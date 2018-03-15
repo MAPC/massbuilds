@@ -11,14 +11,13 @@ export default class extends Controller {
     const model = this.get('model');
     const moderations = [];
 
+    console.log(model);
+
     model.forEach(record => {
       const changes = Ember.copy(record.get('proposedChanges'));
-      console.log(filters);
 
       for (let col in changes) {
         const emberCol = Ember.String.camelize(col);
-
-        console.log(emberCol);
 
         changes[emberCol] = {
           name: filters[emberCol].name,

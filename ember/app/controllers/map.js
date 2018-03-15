@@ -103,7 +103,6 @@ export default class extends Controller {
 
   @computed('activeFilters.length')
   get filtering() {
-    console.log(this.get('activeFilters'));
     const filtering = this.get('activeFilters.length') > 0;
 
     return filtering;

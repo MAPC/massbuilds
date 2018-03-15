@@ -12,7 +12,7 @@
     <h3>Listed below are all of the moderations you have created</h3>
   </div> 
 
-  {{#if model}}
+  {{#if (gt moderations.length 0)}}
     <ul class="item-list">
       <li class="list-header">
         <div class="row">
@@ -69,6 +69,16 @@
                   </li>
                 {{/each-in}}
               </ul>
+              <div class="actions">
+                <button class="styled negative" onclick={{action delete moderation}}>
+                  Delete 
+                  {{#if moderation.changes.name.newValue}}
+                    Development
+                  {{else}}
+                    Moderation
+                  {{/if}}
+                </button>
+              </div>
             </div>
           </li>
         {{/each}}

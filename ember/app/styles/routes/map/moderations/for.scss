@@ -80,4 +80,11 @@
     em { color: $color_font-medium; }
   }
 
+  .actions {
+    padding-top: 10px;
+
+    text-align: right; 
+
+    button + button { margin-left: 15px; }
+  }
 }
