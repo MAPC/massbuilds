@@ -416,6 +416,12 @@
           {{model.descr}}
         </p>
       </div>
+
+      {{#if (eq currentUser.user.role 'admin')}}
+        <div class="actions">
+          <button class="styled negative" onclick={{action deleteDevelopment}}>Delete Development</button>
+        </div>
+      {{/if}}
     </div>
   </div>
 

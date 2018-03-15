@@ -7,6 +7,8 @@ export default class extends Controller {
 
   @service map
   @service session
+  @service currentUser
+  @service notifications
 
 
   @computed('model.rdv', 'model.phased', 'model.stalled', 'model.asofright', 'model.mixedUse')
@@ -41,6 +43,20 @@ export default class extends Controller {
   @action
   findPosition() {
     this.get('map').returnToPoint();
+  }
+
+
+  @action
+  deleteDevelopment() {
+    const name = this.get('model.name');
+
+    this.get('model')
+        .destroyRecord()
+        .then(() => {
+          this.get('notifications').show(`You have deleted ${name}.`);
+
+          this.transitionToRoute('map');
+        });
   }
 
 

@@ -9,7 +9,8 @@ export default class extends Route {
 
 
   model(params) {
-    return this.store.findRecord('development', params.development_id);
+    return this.store.findRecord('development', params.development_id)
+                     .catch(() => this.transitionTo('map'));
   }
 
 
