@@ -46,10 +46,6 @@ namespace :db do
   task add_tod_service_area: :environment do
     ActiveRecord::Base.connection.execute "IMPORT FOREIGN SCHEMA editor LIMIT TO (tod_service_area_poly) FROM SERVER dblive95 INTO public;"
   end
-
-  task add_neighborhoods_poly: :environment do
-    ActiveRecord::Base.connection.execute "IMPORT FOREIGN SCHEMA editor LIMIT TO (neighborhoods_poly) FROM SERVER dblive95 INTO public;"
-  end
 end
 
 Rake::Task["db:create"].enhance do
