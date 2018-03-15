@@ -185,7 +185,16 @@ export default class extends Controller {
       let value = filter;
 
       if (filter.filter === 'metric') {
-        value = (filter.type === 'number') ? `${filter.inflector};${filter.value}` : filter.value;
+        switch(filter.type) {
+          case 'number':
+            value = `${filter.inflector};${filter.value}`;
+            break;
+          case 'boolean':
+            value = (filter.value) ? true : undefined;
+            break;
+          default: 
+            value = filter.value;
+        }
       }
 
       this.set(col, value);
