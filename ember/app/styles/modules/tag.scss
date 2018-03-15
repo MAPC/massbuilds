@@ -12,4 +12,20 @@
   &.active {
     background: $color_brand-secondary; 
   }
+
+  &.inactive {
+    background: $color_state-negative; 
+
+    span {
+      display: inline-block;
+
+      margin-left: 10px;
+
+      color: $color_state-negative--dark; 
+      
+      cursor: pointer;
+
+      &:hover { color: darken($color_state-negative--dark, 10); }
+    }
+  }
 }

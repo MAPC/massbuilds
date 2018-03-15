@@ -114,7 +114,6 @@ const metricGroups = {
         'height',
         'stories',
         'onsitepark',
-        'parkType',
       ]
     },
     {
@@ -198,7 +197,6 @@ const blacklist = [
   'parcelId',
   'programs',
   'user',
-  'state',
 ];
 
 
