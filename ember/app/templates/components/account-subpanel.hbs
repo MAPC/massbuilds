@@ -74,11 +74,10 @@
         Manage Users
       {{/link-to}}
 
-      {{#if verifiableUsers}}
+      {{#if (gt verifiableUsers.count 0)}}
         {{#link-to 'map.users.verify' click=(action closeMenu)}}
-          <span class="tile-badge">{{verifiableUsers.length}}</span>
-
           <div class="icon-wrapper">
+            <span class="tile-badge">{{verifiableUsers.count}}</span>
             <img src="/assets/images/user.svg">
           </div>
 

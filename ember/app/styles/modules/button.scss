@@ -12,4 +12,10 @@ button.styled {
     background: $color_brand-primary; 
     transition: background .15s;
   }
+
+  &.negative {
+    background: $color_state-negative;
+
+    &:hover { background: $color_state-negative--dark; }
+  }
 }

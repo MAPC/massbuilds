@@ -12,7 +12,7 @@ export default class extends Controller {
 
 
   constructor() {
-    super();
+    super(...arguments);
     
     const filterParams = Object.keys(filters);
     const boundingParams = ['minLat', 'minLng', 'maxLat', 'maxLng'];

@@ -1,0 +1,21 @@
+.route.users-verify {
+
+  width: 860px;
+
+  ul.item-list {
+    li {
+      & > div {
+        &:first-of-type { 
+          flex: 1 0 30%; 
+
+          font-weight: 600;
+        } 
+        &:nth-of-type(2) { flex: 1 0 30%; } 
+        &:nth-of-type(3) { flex: 1 0 20%; } 
+        &:nth-of-type(4) { flex: 1 0 10%; } 
+        &:nth-of-type(5) { flex: 1 0 10%; } 
+      }
+    }  
+  }
+
+}

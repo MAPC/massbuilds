@@ -20,15 +20,10 @@ export default class extends Route {
     }
 
     this.get('map').filterByQuery(query);
-
-    return RSVP.hash({
-      verifiableUsers: this.get('store').query('user', { request_verified_status: true })
-    });
   }
 
 
   afterModel(model) {
-    console.log(model);
     this.controllerFor('map').set('filterParams', this.get('filterParams'));
   }
 
@@ -56,6 +51,8 @@ export default class extends Route {
 
   setupController(controller, model) {
     this._super(controller, model);
+
+    controller.set('model', model);
     controller.set('filterParams', this.get('filterParams'));
   }
 

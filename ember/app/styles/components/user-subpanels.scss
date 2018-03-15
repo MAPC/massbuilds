@@ -225,6 +225,20 @@
           max-width: calc(50% - 2px);
         }
 
+        .tile-badge {
+          position: absolute;
+          right: -6px;
+          top: -9px;
+
+          padding: 3px 7px;
+
+          font-size: 10px;
+          text-align: center;
+  
+          background: $color_state-negative;
+          border-radius: 50%;
+        }
+
         .icon-wrapper {
           $icon_size: 40px;
 

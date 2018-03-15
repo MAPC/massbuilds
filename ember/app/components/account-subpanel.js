@@ -8,6 +8,7 @@ export default class extends Component {
   @service session
   @service cookies
   @service currentUser
+  @service verifiableUsers
 
 
   constructor() {

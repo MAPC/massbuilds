@@ -1,0 +1,42 @@
+<section class="route table-panel users-verify">
+
+  <div class="left-panel-links">
+    {{#link-to 'map'}}
+      <img src="/assets/images/chevrons-left.svg">
+      Close
+    {{/link-to}}
+  </div>
+
+  <div class="panel-headers">
+    <h1>Verify Users</h1>
+    <h3>Listed below are all of the users that have requested municipal accounts</h3>
+  </div> 
+
+  {{#if (gt users.length 0)}}
+    <ul class="item-list">
+      <li class="list-header">
+        <div>Name</div>
+        <div>Email</div>
+        <div>Municipality</div>
+        <div></div>
+        <div></div>
+      </li>
+      <div class='list-body'>
+        {{#each users as |user|}} 
+          <li>
+            <div>{{user.fullName}}</div>
+            <div>{{user.email}}</div>
+            <div>{{user.municipality}}</div>
+            <div><button class="styled negative" onclick={{action denyUser user}}>Deny</button></div> 
+            <div><button class="styled" onclick={{action approveUser user}}>Approve</button></div> 
+          </li>
+        {{/each}}
+      </div>
+    </ul>
+  {{else}}
+    <div class="no-records">
+      No users have requested municipal membership.
+    </div>
+  {{/if}}
+
+</section>

@@ -8,7 +8,7 @@ class UsersController < ApplicationController
 
     if params[:email]
       @users = User.where(email: params[:email]).first
-    elsif params[:request_verified_status] && current_user.role == 'admin'
+    elsif params[:request_verified_status]
       @users = User.where(request_verified_status: true)
     else
       @users = User.all
@@ -16,6 +16,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       format.jsonapi { render jsonapi: @users }
+      format.all { render json: @users }
     end
   end
 
