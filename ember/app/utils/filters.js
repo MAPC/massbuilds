@@ -40,7 +40,7 @@ const filters = {
   // Key Info
 
   'status': { name: 'Status', type: 'string', options: Object.keys(statusColors), ...defaultMetric },
-  'parkType': { name: 'Parking type', type: 'string', options: ['garage', 'underground', 'surface'], ...defaultMetric },
+  'parkType': { name: 'Parking type', type: 'string', options: ['garage', 'underground', 'surface', 'other'], ...defaultMetric },
   'descr': { name: 'Description', type: 'string', ...defaultMetric },
 
   'yearCompl': { name: 'Year completed', type: 'number', ...defaultMetric },

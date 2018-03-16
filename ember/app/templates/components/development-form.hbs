@@ -90,19 +90,17 @@
                 {{input value=editing.onsitepark placeholder="Enter here" key-up=(action checkForUpdated 'onsitepark')}}
               </div>
 
-              {{#unless (lte editing.onsitepark 0)}}
-                <div class="field">
-                  <label for="parkType">Parking Type</label>
-                  <select name="parkType" onchange={{action checkForUpdated 'parkType'}}>
-                    {{#unless editing.parkType}}
-                      <option disabled selected>Select Parking Type</option>
-                    {{/unless}}
-                    {{#each filters.parkType.options as |option|}}
-                      <option value={{option}} selected={{if (eq option editing.parkType) 'selected'}}>{{capitalize option}}</option>
-                    {{/each}}
-                  </select>
-                </div>
-              {{/unless}}
+              <div class="field">
+                <label for="parkType">Parking Type</label>
+                <ul class="multi-check-options">
+                  {{#each filters.parkType.options as |option|}}
+                    <li>
+                      {{input type="checkbox" class="field-parkType" name=option checked=(contains option selectedParkTypes) click=(action checkForUpdated 'parkType')}}
+                      {{capitalize option}}
+                    </li>
+                  {{/each}}
+                </ul>
+              </div>
             </div>
           </div>
 

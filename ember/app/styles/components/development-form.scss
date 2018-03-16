@@ -60,6 +60,12 @@
   }
 
   .column {
+    ul { 
+      flex: 1 0 40%;
+
+      margin: 0;
+    }
+
     input {
       max-width: 50%;
       padding: 0 8px;

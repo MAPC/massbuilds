@@ -20,6 +20,8 @@ export default class extends Component {
     this.filters = filters;
     this.fulfilled = false;
 
+    this.selectedParkTypes = (this.editing.parkType || '').split(',').filter(x => x);
+
     this.huFields = [
       'editing.singfamhu',
       'editing.smmultifam',
@@ -173,14 +175,20 @@ export default class extends Component {
 
 
   checkForUpdated(fieldName) {
-    const strings = ['status', 'parkType'];
-
     const modeled = this.get(`model.${fieldName}`);
     let edited = this.get(`editing.${fieldName}`);
 
-    if (strings.indexOf(fieldName) !== -1) {
+    if (fieldName === 'status') {
       edited = document.querySelector(`select[name="${fieldName}"]`).value;
       this.set(`editing.${fieldName}`, edited);
+    }
+    else if (fieldName === 'parkType') {
+      edited = Array.from(document.querySelectorAll(`input.field-${fieldName}`))
+                    .filter(x => x.checked)
+                    .map(x => x.name);
+
+      this.set('selectedParkTypes', edited);
+      this.set(`editing.${fieldName}`, edited.join(','));
     }
 
     if (typeof edited === 'boolean') {
