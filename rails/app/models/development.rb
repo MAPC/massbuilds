@@ -43,9 +43,25 @@ class Development < ApplicationRecord
   after_save :update_neighborhood
 
   def self.to_csv
+
+    excluded_attrs = [
+      'other_rate',
+      'affordable',
+      'latitude',
+      'longitude',
+      'parcel_id',
+      'programs',
+      'forty_b',
+      'residential',
+      'commercial',
+      'd_n_transit'
+    ]
+
     attributes = self.column_names
+    attributes = attributes.select{ |attr| !(excluded_attrs.include? attr) }
+
     CSV.generate(headers: true) do |csv|
-      csv << self.column_names
+      csv << attributes
       all.each do |development|
         csv << attributes.map{ |attr| development.send(attr.gsub(/\,/,";")) }
       end
