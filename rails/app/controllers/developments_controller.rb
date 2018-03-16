@@ -20,7 +20,7 @@ class DevelopmentsController < ApplicationController
         scope = 'trunc' if params[:trunc]
         render jsonapi: @developments, scope: scope
       end
-      format.csv { send_data @developments.to_csv, filename: "massbuild-developments-#{Date.today}.csv" }
+      format.csv { send_data @developments.to_csv, filename: "massbuilds-#{Time.now.strftime("%Y%m%d")}.csv" }
       format.zip do
         file_name = @developments.to_shp(@developments.to_sql)
         send_file Rails.root.join('public', "#{file_name}.zip")
