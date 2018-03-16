@@ -70,7 +70,7 @@ class Development < ApplicationRecord
 
   def self.to_shp(sql)
     database = Rails.configuration.database_configuration[Rails.env]
-    file_name = "export-#{Time.now.to_i}"
+    file_name = "massbuilds-shp-#{Time.now.strftime("%Y%m%d")}"
     arguments = []
     arguments << "-f #{Rails.root.join('public', file_name)}"
     arguments << "-h #{database['host']}" if database['host']
@@ -95,6 +95,7 @@ class Development < ApplicationRecord
 
   def self.zip(file_name)
     Zip::File.open(Rails.root.join('public', "#{file_name}.zip").to_s, Zip::File::CREATE) do |zipfile|
+      zipfile.add("#{file_name}.prj", Rails.root.join('public', 'ma_municipalities_wgs84.prj'))
       zipfile.add("#{file_name}.shp", Rails.root.join('public', "#{file_name}.shp"))
       zipfile.add("#{file_name}.shx", Rails.root.join('public', "#{file_name}.shx"))
       zipfile.add("#{file_name}.dbf", Rails.root.join('public', "#{file_name}.dbf"))

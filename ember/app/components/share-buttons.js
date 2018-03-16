@@ -1,14 +1,10 @@
 import Component from '@ember/component';
 import { action } from 'ember-decorators/object';
-import { service } from 'ember-decorators/service';
 import config from 'massbuilds/config/environment';
 import url from 'npm:url';
 
 
 export default class extends Component {
-
-
-  @service ajax
 
 
   constructor() {
@@ -66,12 +62,6 @@ export default class extends Component {
 
 
   @action
-  toGeoJSON() {
-  
-  }
-
-
-  @action
   toCSV() {
     this.download('csv', 'massbuilds.csv');
   }
@@ -92,9 +82,7 @@ export default class extends Component {
     fileLink.download = filename;
 
     body.appendChild(fileLink);
-
     fileLink.click();
-
     body.removeChild(fileLink);
   }
 

@@ -65,16 +65,16 @@
       {{#if (gt map.filteredData.length 0)}}
         {{map-layer 
           data=map.filteredData
-          layers=layers 
           radius=60
+          layers=layers
           viewDevelopment=(action viewDevelopment)
         }}
       {{/if}}
 
       {{map-layer 
         data=map.stored 
-        layers=layers 
         radius=10
+        layers=layers
         faded=activeFilters
         viewDevelopment=(action viewDevelopment)
       }}

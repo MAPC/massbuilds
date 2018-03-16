@@ -16,7 +16,8 @@
 # Ignore Byebug command history file.
 .byebug_history
 
-/public/export*
+/public/massbuilds-shp-*
+/public/export-*
 
 .env
 
