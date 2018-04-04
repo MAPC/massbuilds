@@ -9,4 +9,4 @@ export default class extends Component {
     this.classNames = ['component', 'loading-spinner'];
   }
 
-};
+}

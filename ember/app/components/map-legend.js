@@ -1,5 +1,4 @@
 import Component from '@ember/component';
-import { computed } from 'ember-decorators/object';
 import statusColors from 'massbuilds/utils/status-colors';
 
 

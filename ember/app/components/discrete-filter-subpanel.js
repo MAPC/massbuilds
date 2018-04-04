@@ -1,7 +1,6 @@
 import Ember from 'ember';
 import Component from '@ember/component';
 import { action, computed } from 'ember-decorators/object';
-import { oneWay } from 'ember-decorators/object/computed';
 import { service } from 'ember-decorators/service';
 import discreteMap from 'massbuilds/utils/discrete-map';
 

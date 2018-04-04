@@ -11,8 +11,6 @@ export default class extends Controller {
     const model = this.get('model');
     const moderations = [];
 
-    console.log(model);
-
     model.forEach(record => {
       const changes = Ember.copy(record.get('proposedChanges'));
 

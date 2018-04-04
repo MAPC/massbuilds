@@ -1,4 +1,3 @@
-import RSVP from 'rsvp';
 import Route from '@ember/routing/route';
 import { action } from 'ember-decorators/object';
 import { service } from 'ember-decorators/service';
@@ -23,7 +22,7 @@ export default class extends Route {
   }
 
 
-  afterModel(model) {
+  afterModel() {
     this.controllerFor('map').set('filterParams', this.get('filterParams'));
   }
 

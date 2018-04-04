@@ -10,7 +10,7 @@ export function capitalize(params) {
     input = params || '';
   }
 
-  return input.split(/[\s\_]+/)
+  return input.split(/[\s_]+/)
               .map(x => x.capitalize())
               .join(' ');
 }

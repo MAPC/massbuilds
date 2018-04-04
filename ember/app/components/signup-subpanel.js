@@ -44,7 +44,7 @@ export default class extends Component {
           .then(result => {
             this.set('munis', result.rows.map(row => row.municipal).sort());
           })
-          .catch(e => {
+          .catch(() => {
             this.set('muniFailure', true);
             this.set('errorMessage', "Unable to select a municipality at this time.");
           })
@@ -143,14 +143,14 @@ export default class extends Component {
 
         this.get('session')
         .authenticate('authenticator:devise', email, password)
-        .catch(e => {
+        .catch(() => {
           this.set('errorMessage', 'Account was created, but cannot be logged in at this time.');
         })
         .finally(() => {
           this.set('isCreating', false);
         });
       })
-      .catch(e => {
+      .catch(() => {
         this.set('isCreating', false);
         this.set('errorMessage', 'Not able to sign up at this time.');
       });

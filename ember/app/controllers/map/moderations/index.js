@@ -44,4 +44,4 @@ export default class extends ModerationController {
     elem.parentNode.removeChild(elem);
   }
 
-};
+}

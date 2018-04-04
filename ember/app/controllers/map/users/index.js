@@ -1,3 +1,4 @@
+import Ember from 'ember';
 import Controller from '@ember/controller';
 import { action, computed } from 'ember-decorators/object';
 
@@ -24,7 +25,6 @@ export default class extends Controller {
     const sortedUsers = this.get('sortedUsers');
     const roleFilter = this.get('roleFilter');
     const searchQuery = this.get('searchQuery').toLowerCase();
-    const { min, max } = this.getProperties('min', 'max');
 
     const searchable = ['lastName', 'firstName', 'email', 'fullName', 'municipality'];
     let filteredUsers = Ember.copy(sortedUsers);

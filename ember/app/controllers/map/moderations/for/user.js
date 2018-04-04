@@ -10,14 +10,11 @@ export default class extends ModerationController {
 
   @action
   delete(moderation) {
-    const id = moderation.get('id');
-    const elem = document.querySelector(`li[data-mod-id="${id}"]`);
     const development = moderation.get('proposedChanges.name');
 
     this.get('notifications').show(`You have deleted a submission for ${development}.`);
 
     moderation.destroyRecord().then(() => this.get('store').unloadRecord(moderation));
-
     this.get('moderations').removeObject(moderation);
   }
 

@@ -1,3 +1,4 @@
+import Ember from 'ember';
 import Component from '@ember/component';
 import filters from 'massbuilds/utils/filters';
 import { service } from 'ember-decorators/service';

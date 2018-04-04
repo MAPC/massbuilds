@@ -64,14 +64,9 @@ export default class extends Component {
   get searchList() {
     const searchQuery = this.get('searchQuery').toLowerCase().trim();
     const sortOrder = this.get('sortOrder');
-    const developments = this.get('developments');
-    const addressRegex =  /^\d{1,9}\w? (\w )?[a-zA-Z]+/i;
     let filtered = {};
 
     if (searchQuery.length >= 2) {
-      if (addressRegex.test(searchQuery)) { 
-      }
-
       sortOrder.forEach(col => {
         let name = filters[col].name;
 
