@@ -19,20 +19,38 @@ namespace :import do
     Rake::Task["import:development_municipalities"].invoke
   end
 
+  desc 'Updates the values of a column using the JFMD2018ZF.csv file'
+  task :repopulate_column, [:col] => [:environment] do |t, args|
+    csv_text = File.read(Rails.root.join('lib', 'import', 'joined_final_massbuilds_data_2018_zip_fixed.csv'))
+    csv = CSV.parse(csv_text, headers: true, encoding: 'ISO-8859-1')
+
+    id = 1
+    csv.each do |row|
+      Development.find(id).update_attribute(args[:col], row[args[:col]])
+
+      id += 1
+    end
+  end
+
   desc 'Import previous development data'
   task development_data: :environment do
     csv_text = File.read(Rails.root.join('lib', 'import', 'joined_final_massbuilds_data_2018_zip_fixed.csv'))
     csv = CSV.parse(csv_text, headers: true, encoding: 'ISO-8859-1')
+
+    def to_bool(x)
+      return x.to_s.downcase == "true"
+    end
+
     csv.each do |row|
       development = Development.new(
         id: row['project_id'], # in export make sure we use project_id for this
         user_id: row["creator_id"],
-        rdv: row["rdv"],
-        asofright: row["asofright"],
-        ovr55: row["ovr55"],
-        clusteros: row["clusteros"],
-        phased: row["phased"],
-        stalled: row["stalled"],
+        rdv: to_bool(row["rdv"]),
+        asofright: to_bool(row["asofright"]),
+        ovr55: to_bool(row["ovr55"]),
+        clusteros: to_bool(row["clusteros"]),
+        phased: to_bool(row["phased"]),
+        stalled: to_bool(row["stalled"]),
         name: row["name"],
         status: row["status"],
         descr: row["descr"],
@@ -48,7 +66,7 @@ namespace :import do
         smmultifam: row["smmultifam"],
         lgmultifam: row["lgmultifam"],
         hu: row["hu"],
-        yrcomp_est: row["yrcomp_est"],
+        yrcomp_est: to_bool(row["yrcomp_est"]),
         gqpop: row["gqpop"],
         rptdemp: row["rptdemp"],
         estemp: row["estemp"],
@@ -69,7 +87,7 @@ namespace :import do
         latitude: row["latitude"],
         longitude: row["longitude"],
         parcel_id: row["parcel_id"],
-        mixed_use: row["mixed_use"],
+        mixed_use: to_bool(row["mixed_use"]),
         programs: row["programs"],
         forty_b: row["forty_b"],
         residential: row["residential"],
@@ -84,7 +102,7 @@ namespace :import do
         aff_30_50: row["aff_30_50"],
         aff_50_80: row["aff_50_80"],
         aff_80p: row["aff_80p"],
-        headqtrs: row["headqtrs"],
+        headqtrs: to_bool(row["headqtrs"]),
         park_type: row["park_type"],
         publicsqft: row["publicsqft"],
         devlper: row["devlper"],

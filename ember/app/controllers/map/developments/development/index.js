@@ -23,13 +23,15 @@ export default class extends Controller {
     });
   }
 
+
   @computed('model.parkType')
   get parkTypes() {
-    return this.get('model.parkType')
+    return (this.get('model.parkType') || '')
                .split(',')
                .map(capitalize)
                .join(', ');
   }
+
 
   @computed('model.ovr55', 'model.private')
   get residentialAttributes() {
