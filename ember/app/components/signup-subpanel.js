@@ -160,10 +160,4 @@ export default class extends Component {
     }
   }
 
-
-  @action
-  showLoginPanel() {
-    this.sendAction('showLoginPanel');
-  }
-
 }

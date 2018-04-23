@@ -9,11 +9,11 @@
     {{signup-subpanel}}
   {{else}}
     {{#if (eq panel 'reset-password')}}
-      {{password-reset-subpanel}}
-    {{else}}
-      {{login-subpanel 
-        showSignupPanel=showSignupPanel
+      {{password-reset-subpanel
+        redirect=showLoginForm 
       }}
+    {{else}}
+      {{login-subpanel}}
     {{/if}}
   {{/if}}
 {{/if}}
