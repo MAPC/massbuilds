@@ -1,7 +1,7 @@
 {{#each data as |datum|}}
   {{#if (and datum.latitude datum.longitude)}}
     {{#layers.circle 
-      lat=datum.latitude 
+      lat=datum.latitude
       lng=datum.longitude
       color=(if faded '#888' (status-color datum.status))
       onClick=(action 'view' datum.id)
