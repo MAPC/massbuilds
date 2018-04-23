@@ -43,7 +43,7 @@ namespace :import do
 
     csv.each do |row|
       development = Development.new(
-        id: row['project_id'], # in export make sure we use project_id for this
+        #id: row['project_id'], # in export make sure we use project_id for this
         user_id: row["creator_id"],
         rdv: to_bool(row["rdv"]),
         asofright: to_bool(row["asofright"]),
