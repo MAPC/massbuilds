@@ -8,8 +8,12 @@
   {{#if (eq panel 'signup')}}
     {{signup-subpanel}}
   {{else}}
-    {{login-subpanel 
-      showSignupPanel=showSignupPanel
-    }}
+    {{#if (eq panel 'reset-password')}}
+      {{password-reset-subpanel}}
+    {{else}}
+      {{login-subpanel 
+        showSignupPanel=showSignupPanel
+      }}
+    {{/if}}
   {{/if}}
 {{/if}}
