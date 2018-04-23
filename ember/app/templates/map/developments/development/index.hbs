@@ -224,7 +224,7 @@
             <div class="table-wrapper">
               <h3 class="field">
                 <label for="affrdUnit">Affordable Units</label>
-                {{#if model.affrdUnit}}
+                {{#if (or model.affrdUnit (eq model.affrdUnit 0))}}
                   {{number-format model.affrdUnit decimals=0}} Units
                 {{else}}
                   Unknown
