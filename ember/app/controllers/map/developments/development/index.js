@@ -42,6 +42,12 @@ export default class extends Controller {
   }
 
 
+  @computed('model.nTransit')
+  get transitOptions() {
+    return (this.get('model.nTransit') || []).join(', ');
+  }
+
+
   @computed('model.headqtrs')
   get commercialAttributes() {
     return this.attributesFor({

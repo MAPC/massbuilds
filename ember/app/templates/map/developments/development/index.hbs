@@ -112,12 +112,23 @@
               </div>
             </div>
 
-            {{#if keyAttributes}}
-              <p class="attributes">
-                <label>Attributes:</label>
-                {{keyAttributes}}
-              </p>
-            {{/if}}
+            <div class="attributes-wrapper">
+              {{#if transitOptions}}
+                <p class="attributes">
+                  <label> 
+                    Nearest Public Transit Option{{if (not-eq model.nTransit.length 1) 's'}}:
+                  </label>
+                  {{transitOptions}}
+                </p>
+              {{/if}}
+
+              {{#if keyAttributes}}
+                <p class="attributes">
+                  <label>Attributes:</label>
+                  {{keyAttributes}}
+                </p>
+              {{/if}}
+            </div>
           </article>
 
           <article>

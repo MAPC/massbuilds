@@ -72,6 +72,8 @@ export default class extends DS.Model {
 
   @attr('date') createdAt
   @attr('date') updatedAt
+
+  @attr nTransit // []String
   
 
   @computed('address', 'municipal', 'state', 'zipCode')

@@ -169,11 +169,20 @@
 
   span.unknown { color: $color_font-medium; }
 
+  .attributes-wrapper {
+    padding: 10px 0; 
+  }
+
   .attributes {
     margin-bottom: 0;
-    padding: 15px;
+    padding: 0 15px;
 
     text-align: left; 
+
+    & + .attributes { 
+      margin-top: 0; 
+      padding-top: 5px; 
+    }
 
     label {
       display: inline-block; 
