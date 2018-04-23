@@ -91,7 +91,7 @@ class Development < ApplicationRecord
 
   def geocode
     return if point.present?
-    result = Faraday.get "http://34.229.32.63/v1/search?text=#{address},#{state},#{zip_code}&sources=oa"
+    result = Faraday.get "http://pelias.mapc.org/v1/search?text=#{address},#{state},#{zip_code}&sources=oa"
     self.point = "POINT (#{JSON.parse(result.body)['features'][0]['geometry']['coordinates'][0]} #{JSON.parse(result.body)['features'][0]['geometry']['coordinates'][1]})"
     self.municipal = "#{JSON.parse(result.body)['features'][0]['properties']['locality']}"
   end
