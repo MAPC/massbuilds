@@ -11,7 +11,7 @@ export default class extends Component {
   constructor() {
     super();
 
-    this.classNames = ['component', 'subpanel', 'login-subpanel'];
+    this.classNames = ['component', 'subpanel', 'form-subpanel', 'login-subpanel'];
 
     this.username = '';
     this.password = '';

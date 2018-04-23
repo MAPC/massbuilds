@@ -13,7 +13,7 @@ export default class extends Component {
   constructor() {
     super();
 
-    this.classNames = ['component', 'subpanel', 'signup-subpanel'];
+    this.classNames = ['component', 'subpanel', 'form-subpanel', 'signup-subpanel'];
 
     this.firstName = '';
     this.lastName = '';

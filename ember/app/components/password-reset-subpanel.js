@@ -11,10 +11,11 @@ export default class extends Component {
   constructor() {
     super();
 
-    this.classNames = ['component', 'subpanel', 'password-reset-subpanel', 'signup-subpanel'];
+    this.classNames = ['component', 'subpanel', 'form-subpanel', 'password-reset-subpanel'];
 
     this.username = '';
 
+    this.errorMessage = null;
     this.isResetting = false;
     this.loadingText = 'Resetting Password';
   }
@@ -27,21 +28,23 @@ export default class extends Component {
   @action
   resetPassword() {
     if (this.get('submittable') && !this.get('isResetting')) {
+      this.set('isResetting', true);
+      this.set('errorMessage', null);
+
       const email = this.get('username');
-      this.set('isCreating', true);
 
       this.get('ajax').post(`${config.host}/password_resets`, {
         body: { email },
       })
-      .then(result => {
+      .then(() => {
         this.get('notifications').show(`You have successfully reset your password for ${email}! Please check your email.`);
         this.sendAction('redirect');
       })
       .catch(() => {
-        // Maybe errors? 
+        this.set('errorMessage', 'We could not reset your password at this time.');
       })
       .finally(() => {
-        this.set('isCreating', false);
+        this.set('isResetting', false);
       });
     }
   }
