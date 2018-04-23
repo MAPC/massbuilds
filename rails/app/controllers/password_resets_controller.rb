@@ -2,7 +2,7 @@ class PasswordResetsController < ApplicationController
   skip_after_action :verify_authorized
   def create
     password = Devise.friendly_token.first(8)
-    user = User.find_by_id(password_reset_params[:id])
+    user = User.find_by_email(password_reset_params[:email])
     if user.try(:reset_password, password, password)
       email_password_to(user, password)
       respond_to do |format|
