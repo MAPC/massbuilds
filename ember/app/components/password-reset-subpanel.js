@@ -34,7 +34,9 @@ export default class extends Component {
       const email = this.get('username');
 
       this.get('ajax').post(`${config.host}/password_resets`, {
-        body: { email },
+        contentType: 'application/vnd.api+json',
+        accept: 'application/vnd.api+json',
+        data: { email },
       })
       .then(() => {
         this.get('notifications').show(`You have successfully reset your password for ${email}! Please check your email.`);

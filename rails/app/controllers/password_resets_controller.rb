@@ -19,7 +19,7 @@ class PasswordResetsController < ApplicationController
   private
 
   def password_reset_params
-    ActiveModelSerializers::Deserialization.jsonapi_parse(params, only: [:id])
+    params.permit(:email)
   end
 
   def email_password_to(user, password)
