@@ -23,11 +23,16 @@ export default class extends ModerationController {
     if (!development) {
       development = moderation.get('proposedChanges.name');
     }
-
-    this.get('notifications').show(`You have approved an edit from ${user} for ${development}`);
     
     moderation.set('approved', true);
-    moderation.save();
+    moderation
+      .save()
+      .then(development => {
+        this.get('notifications').show(`You have approved an edit from ${user} for ${development}`);
+      })
+      .catch(() => {
+        this.get('notifications').error("Couldn't approve edit at this time.");
+      });
   }
 
 
@@ -38,7 +43,7 @@ export default class extends ModerationController {
     const development = moderation.get('development.name');
     const user = moderation.get('user.fullName');
 
-    this.get('notifications').show(`You have denied an edit from ${user} for ${development}`, 'error');
+    this.get('notifications').error(`You have denied an edit from ${user} for ${development}`);
     
     moderation.destroyRecord();
     elem.parentNode.removeChild(elem);
