@@ -8,10 +8,10 @@ class UserPolicy < ApplicationPolicy
   end
 
   def update?
-    user&.admin? || (record == user)
+    !user&.disabled? && (user&.admin? || (record == user))
   end
 
   def destroy?
-    user&.admin? || (record == user)
+    !user&.disabled? && (user&.admin? || (record == user))
   end
 end
