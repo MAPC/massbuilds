@@ -73,7 +73,8 @@ class Development < ApplicationRecord
 
   def self.to_shp(sql)
     database = Rails.configuration.database_configuration[Rails.env]
-    file_name = "massbuilds-shp-#{Time.now.strftime("%Y%m%d")}"
+    hash = Digest::SHA1.hexdigest("#{Time.now.to_i}#{rand}")[0,6]
+    file_name = "massbuilds-shp-#{Time.now.strftime("%Y%m%d")}-#{hash}"
     arguments = []
     arguments << "-f #{Rails.root.join('public', file_name)}"
     arguments << "-h #{database['host']}" if database['host']

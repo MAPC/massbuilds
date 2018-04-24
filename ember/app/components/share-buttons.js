@@ -15,6 +15,11 @@ export default class extends Component {
 
     this.linkTimer = null;
     this.linkMessage = null;
+
+    this.downloading = {
+      shp: false,
+      csv: false,
+    };
   }
 
 
@@ -48,7 +53,7 @@ export default class extends Component {
     copier.select();
 
     if (document.execCommand('copy')) {
-      this.notifyLinkShared();
+      this.notify('Copied Link');
     }
 
     body.removeChild(copier);
@@ -68,28 +73,42 @@ export default class extends Component {
 
 
   download(ext, filename) {
-    const filter = this.get('filterParams');
+    if (!this.get(`downloading.${ext}`)) {
+      const filter = this.get('filterParams');
 
-    const body = document.querySelector('body');
-    const fileLink = document.createElement('a');
-    let endpoint = encodeURI(url.resolve(config.host, `developments.${ext}`));
+      const body = document.querySelector('body');
+      const fileLink = document.createElement('a');
+      let endpoint = encodeURI(url.resolve(config.host, `developments.${ext}`));
 
-    if (Object.keys(filter).length > 0) {
-      endpoint += ('?filter=' + JSON.stringify(filter));
+      if (Object.keys(filter).length > 0) {
+        endpoint += ('?filter=' + JSON.stringify(filter));
+      }
+
+      fileLink.href = endpoint;
+      fileLink.download = filename;
+
+      this.disable(ext);
+      this.notify('Your download will start in a moment');
+
+      body.appendChild(fileLink);
+      fileLink.click();
+      body.removeChild(fileLink);
     }
-
-    fileLink.href = endpoint;
-    fileLink.download = filename;
-
-    body.appendChild(fileLink);
-    fileLink.click();
-    body.removeChild(fileLink);
   }
 
 
-  notifyLinkShared() {
+  disable(fileType) {
+    this.set(`downloading.${fileType}`, true);
+
+    setTimeout(() => {
+      this.set(`downloading.${fileType}`, false);
+    }, 2000);
+  }
+
+
+  notify(message) {
     const timer = this.get('linkTimer');
-    this.set('linkMessage', 'Copied Link');
+    this.set('linkMessage', message);
     
     if (timer)  {
       clearTimeout(timer);
