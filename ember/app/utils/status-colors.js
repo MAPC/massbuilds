@@ -17,20 +17,21 @@ const statusColors = {
 */
 
 /* Cools */
-/*
 const statusColors = {
   'completed': '#33a02c',
   'in_construction': '#b2df8a',
   'planning': '#1f78b4',
   'projected': '#a6cee3',
 };
-*/
 
+
+/* Colorful
 const statusColors = {
   'completed': '#57C282' ,
   'in_construction': '#ED5393',
   'planning': '#E89C3F',
   'projected': '#53BAED',
 };
+*/
 
 export default statusColors;
