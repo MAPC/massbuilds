@@ -21,6 +21,7 @@ gem 'pg_search'
 gem 'rubyzip'
 gem 'json-schema'
 gem 'faraday'
+gem 'mailgun'
 
 group :development, :test do
   gem 'pry-byebug'

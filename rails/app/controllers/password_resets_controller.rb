@@ -1,5 +1,6 @@
 class PasswordResetsController < ApplicationController
   skip_after_action :verify_authorized
+  skip_before_action :authenticate_user!
   def create
     password = Devise.friendly_token.first(8)
     user = User.find_by_email(password_reset_params[:email])
