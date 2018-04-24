@@ -1,3 +1,4 @@
+import Ember from 'ember';
 import Service from '@ember/service';
 import L from 'npm:leaflet';
 import { computed } from 'ember-decorators/object';
@@ -30,13 +31,13 @@ export default class extends Service {
     this.storedBounds = null;
 
     this.get('store').query('development', { trunc: true }).then(results => {
-      this.set('stored', results);
+      this.set('stored', results.toArray());
       this.set('storedBounds', L.latLngBounds(results.map(result => L.latLng([result.get('latitude'), result.get('longitude')]))));
     });
   }
 
 
-  @computed('stored', 'filteredData.length', 'viewing', 'boundsUpdater')
+  @computed('stored.length', 'filteredData.length', 'viewing', 'boundsUpdater')
   get bounds() {
     const viewing = this.get('viewing');
     let data = [];
@@ -52,12 +53,12 @@ export default class extends Service {
     }
 
     const storedBounds = this.get('storedBounds');
-    let latLngs = [];
 
     if (data.get('length') === this.get('stored.length') && storedBounds != null) {
       return storedBounds;
     }
 
+    let latLngs = [];
     if (data.get('length') > 0) {
       latLngs = data.map(datum => L.latLng([datum.get('latitude'), datum.get('longitude') + mod]));
     }
@@ -93,5 +94,13 @@ export default class extends Service {
           });
     }
   }
+
+  remove(development) {
+    this.get('stored').removeObject(development);
+  }
     
+  add(development) {
+    this.get('stored').pushObject(development);
+  }
+
 } 

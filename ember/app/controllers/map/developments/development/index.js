@@ -80,13 +80,13 @@ export default class extends Controller {
 
   @action
   deleteDevelopment() {
-    const name = this.get('model.name');
+    const model = this.get('model');
+    const name = model.get('name');
 
-    this.get('model')
-        .destroyRecord()
+    model.destroyRecord()
         .then(() => {
           this.get('notifications').show(`You have deleted ${name}.`);
-
+          this.get('map').remove(model);
           this.transitionToRoute('map');
         });
   }

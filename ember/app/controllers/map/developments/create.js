@@ -8,6 +8,7 @@ import { action, computed } from 'ember-decorators/object';
 
 export default class extends Controller {
 
+  @service map
   @service currentUser
   @service notifications
 
@@ -41,12 +42,17 @@ export default class extends Controller {
     model.set('user', this.get('currentUser.user'));
 
     this.set('isCreating', true);
+    this.get('notifications').show('Creating Development. This may take a few minutes.');
 
     model
       .save()
       .then(development => {
+        this.get('map').add(development);
         this.get('notifications').show(`You have created a new development called ${data.name}.`);
         this.transitionToRoute('map.developments.development', development);
+      })
+      .catch(() => {
+        this.get('notifications').error('Could not create development at this time. Please try again later.');
       })
       .finally(() => {
         this.set('isCreating', false);

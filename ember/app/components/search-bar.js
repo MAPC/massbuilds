@@ -22,31 +22,31 @@ export default class extends Component {
   @reads('model') developments
 
 
-  @computed('developments')
+  @computed('developments.[]')
   get municipal() {
     return this.uniqueValuesFor('municipal');
   }
 
 
-  @computed('developments')
+  @computed('developments.[]')
   get devlper() {
     return this.uniqueValuesFor('devlper');
   }
 
 
-  @computed('developments')
+  @computed('developments.[]')
   get nhood() {
     return this.uniqueValuesFor('nhood');
   }
 
 
-  @computed('developments')
+  @computed('developments.[]')
   get name() {
     return this.valuesFor('name');
   }
 
 
-  @computed('developments')
+  @computed('developments.[]')
   get address() {
     return this.valuesFor('address');
   }
