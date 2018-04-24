@@ -1,6 +1,7 @@
 import Component from '@ember/component';
-import { action, computed } from 'ember-decorators/object';
+import config from 'massbuilds/config/environment';
 import { service } from 'ember-decorators/service';
+import { action, computed } from 'ember-decorators/object';
 
 
 export default class extends Component {
@@ -39,13 +40,19 @@ export default class extends Component {
     this.set('isLoggingIn', true);
 
     session
-    .authenticate('authenticator:devise', username, password)
-    .catch(() => {
-      this.set('errorMessage', 'Cannot login at this time.');
-    })
-    .finally(() => {
-      this.set('isLoggingIn', false);
-    });
+      .authenticate('authenticator:devise', username, password)
+      .catch(e => {
+        console.log(e);
+        if (e.message && e.message === 'Disabled user') {
+          this.set('errorMessage', `This account was disabled by an admin. Please contact ${config.admin.email} for more information.`);
+        }
+        else {
+          this.set('errorMessage', 'Cannot login at this time.');
+        }
+      })
+      .finally(() => {
+        this.set('isLoggingIn', false);
+      });
   }
 
 

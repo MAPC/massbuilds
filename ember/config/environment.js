@@ -27,6 +27,9 @@ module.exports = function(environment) {
     },
     'ember-simple-auth': {
       authenticationRoute: 'map',
+    },
+    admin: {
+      email: 'sphilbrick@mapc.org',
     }
   };
 

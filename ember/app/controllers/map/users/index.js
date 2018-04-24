@@ -7,7 +7,7 @@ export default class extends Controller {
   constructor() {
     super();
 
-    this.roles = ['user', 'verified', 'municipal', 'admin'];
+    this.roles = ['user', 'verified', 'municipal', 'admin', 'disabled'];
 
     this.searchQuery = '';
     this.roleFilter = 'all';
