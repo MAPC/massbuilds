@@ -1,5 +1,5 @@
 .component {
-  &.login-subpanel, &.signup-subpanel {
+  &.form-subpanel {
 
     height: 95vh;
     padding-top: 100px;
@@ -116,6 +116,18 @@
       border: none; 
     }
 
+    a {
+      display: inline-block;
+
+      margin-left: 7px;
+
+      color: $color_brand-primary--active;
+
+      cursor: pointer;
+
+      &:hover { color: $color_brand-primary; }
+    }
+
     .auth-switch {
       position: absolute;
       bottom: 15px;
@@ -125,19 +137,14 @@
       font-size: 14px;
       text-align: center;
       color: $color_font-medium;
-      
-      a {
-        display: inline-block;
-
-        margin-left: 7px;
-
-        color: $color_brand-primary--active;
-
-        cursor: pointer;
-
-        &:hover { color: $color_brand-primary; }
-      }
     }
+  }
+
+  &.login-subpanel {
+    .form-footer a {
+      font-size: 12px; 
+      text-decoration: underline;
+    } 
   }
 
   &.account-subpanel {

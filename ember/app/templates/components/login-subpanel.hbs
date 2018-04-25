@@ -24,6 +24,8 @@
     {{#loading-spinner message="Logging In" isLoading=isLoggingIn}}
       <button class="submit {{unless submittable 'disabled'}}" type="submit">Login</button>
     {{/loading-spinner}} 
+
+    {{link-to 'Forgot password?' (query-params panel='reset-password')}}
   </div>
 
 </form>
