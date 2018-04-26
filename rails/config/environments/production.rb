@@ -77,8 +77,8 @@ Rails.application.configure do
 
   config.action_mailer.delivery_method = :mailgun
   config.action_mailer.mailgun_settings = {
-    api_key: Rails.application.secrets.mailgun_api_key,
-    domain: 'mailgun2.mapc.org'
+    'api_key' => Rails.application.secrets.mailgun_api_key,
+    'domain' => 'mailgun2.mapc.org'
   }
 
   if ENV["RAILS_LOG_TO_STDOUT"].present?
