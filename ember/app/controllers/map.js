@@ -233,4 +233,9 @@ export default class extends Controller {
   }
 
 
+  @action
+  showLoginForm() {
+    this.transitionToRoute('map', { queryParams: { panel: null } });
+  }
+
 }
