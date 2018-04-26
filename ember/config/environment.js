@@ -42,7 +42,7 @@ module.exports = function(environment) {
   }
 
   if (environment === 'production') {
-    ENV['host'] = 'https://api.massbuilds.com';
+    ENV['host'] = 'http://api.launch.ericyoungberg.com';
   }
 
   if (environment === 'test') {
