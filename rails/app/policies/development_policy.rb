@@ -12,7 +12,11 @@ class DevelopmentPolicy < ApplicationPolicy
   end
 
   def update?
-    !user&.disabled? && (user&.admin? || (user&.verified? && user.developments.include?(record)) || (user&.municipal? && user.developments.include?(record)))
+    if !user&.disabled? && (user&.admin? || (user&.verified? && user.developments.include?(record)) || (user&.municipal? && user.developments.include?(record)))
+      true
+    else
+      [:flag]
+    end
   end
 
   def destroy?

@@ -69,12 +69,13 @@ export default class extends DS.Model {
   @attr('boolean', { default: false }) headqtrs
   @attr('boolean', { default: false }) mixedUse
   @attr('boolean', { default: false }) yrcompEst
+  @attr('boolean', { default: false }) flag
 
   @attr('date') createdAt
   @attr('date') updatedAt
 
   @attr nTransit // []String
-  
+
 
   @computed('address', 'municipal', 'state', 'zipCode')
   get fullAddress() {
