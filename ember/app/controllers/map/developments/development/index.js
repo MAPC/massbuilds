@@ -71,7 +71,7 @@ export default class extends Controller {
     return (
       role === 'admin'
       || (
-        role === 'municipal' 
+        role === 'municipal'
         && userMuni.toLowerCase() === developmentMuni.toLowerCase()
       )
     );
@@ -89,6 +89,16 @@ export default class extends Controller {
           this.get('map').remove(model);
           this.transitionToRoute('map');
         });
+  }
+
+  @action
+  flagDevelopment() {
+    const model = this.get('model');
+    model.set('flag', true);
+    model.save()
+      .then(() => {
+        this.get('notifications').show('This development has been flagged for review by our team.');
+      });
   }
 
 

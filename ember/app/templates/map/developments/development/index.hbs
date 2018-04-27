@@ -445,11 +445,10 @@
         </p>
       </div>
 
-      {{#if hasDeletePermissions}}
-        <div class="actions">
-          <button class="styled negative" onclick={{action deleteDevelopment}}>Delete Development</button>
-        </div>
-      {{/if}}
+      <div class="actions">
+        {{#if hasDeletePermissions}}<button class="styled negative" onclick={{action deleteDevelopment}}>Delete Development</button>{{/if}}
+        {{#if session.isAuthenticated}}<button class="styled negative" onClick={{action flagDevelopment}}>Report Development for Review</button>{{/if}}
+      </div>
     </div>
   </div>
 
