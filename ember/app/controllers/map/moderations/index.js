@@ -16,8 +16,7 @@ export default class extends ModerationController {
 
   @computed('developments.[]')
   get filteredFlags() {
-    return this.store.findAll('development');
-                      // .filter(development => development.get('flag') === true);
+    return this.store.query('development', { trunc: true, filter: { flag: true } });
   }
 
   @action
