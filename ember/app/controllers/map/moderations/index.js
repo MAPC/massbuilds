@@ -14,6 +14,11 @@ export default class extends ModerationController {
                .filter(moderation => !moderation.get('approved'));
   }
 
+  @computed('developments.[]')
+  get filteredFlags() {
+    return this.store.findAll('development');
+                      // .filter(development => development.get('flag') === true);
+  }
 
   @action
   approve(moderation) {
@@ -23,7 +28,7 @@ export default class extends ModerationController {
     if (!development) {
       development = moderation.get('proposedChanges.name');
     }
-    
+
     moderation.set('approved', true);
     moderation
       .save()
@@ -44,7 +49,7 @@ export default class extends ModerationController {
     const user = moderation.get('user.fullName');
 
     this.get('notifications').error(`You have denied an edit from ${user} for ${development}`);
-    
+
     moderation.destroyRecord();
     elem.parentNode.removeChild(elem);
   }

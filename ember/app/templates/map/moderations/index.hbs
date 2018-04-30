@@ -8,6 +8,32 @@
   </div>
 
   <div class="panel-headers">
+    <h1>Flags</h1>
+    <h3>Listed below are all user-created flags for you to review</h3>
+  </div>
+
+  {{#if filteredFlags}}
+    <ul class="item-list">
+      <li class="list-header">
+        <div class="row">
+          <div>Development</div>
+        </div>
+      </li>
+      <div class='list-body'>
+        {{#each filteredFlags as |flagged-development|}}
+          <li data-mod-id={{flagged-development.id}}>
+            <div class="row">
+              <div>
+                {{#link-to 'map.developments.development' flagged-development}}{{flagged-development.name}}{{/link-to}}
+              </div>
+            </div>
+          </li>
+        {{/each}}
+      </div>
+    </ul>
+  {{/if}}
+
+  <div class="panel-headers">
     <h1>Moderations</h1>
     <h3>Listed below are all user-created edits for you to moderate</h3>
   </div>
@@ -23,10 +49,10 @@
         </div>
       </li>
       <div class='list-body'>
-        {{#each filteredModerations as |moderation|}} 
+        {{#each filteredModerations as |moderation|}}
           <li data-mod-id={{moderation.id}}>
             <div class="row">
-              <div> 
+              <div>
                 {{#if moderation.development}}
                   {{#link-to 'map.developments.development' moderation.development}}{{moderation.development.name}}{{/link-to}}
                 {{else}}
@@ -34,23 +60,23 @@
                 {{/if}}
               </div>
               <div>
-                {{moderation.user.fullName}} 
+                {{moderation.user.fullName}}
                 <small>&#60;{{moderation.user.email}}&#62;</small>
               </div>
               <div>{{format-date moderation.createdAt format="MMM Do YYYY"}}</div>
-              <div><button class="view-button" onclick={{action toggleViewModeration moderation.id}}>View Moderation</button></div> 
+              <div><button class="view-button" onclick={{action toggleViewModeration moderation.id}}>View Moderation</button></div>
             </div>
             <div class='moderation-details'>
               <ul>
-                {{#each-in moderation.changes as |k change|}} 
+                {{#each-in moderation.changes as |k change|}}
                   <li>
-                    <b>{{change.name}}</b> has been changed 
+                    <b>{{change.name}}</b> has been changed
 
                     {{#unless moderation.approved}}
-                      from 
+                      from
 
                       <span>
-                        {{#if (and (not-eq change.oldValue null) (not-eq change.oldValue undefined))}} 
+                        {{#if (and (not-eq change.oldValue null) (not-eq change.oldValue undefined))}}
                           {{change.oldValue}}
                         {{else}}
                           <em>no value</em>
@@ -58,7 +84,7 @@
                       </span>
                     {{/unless}}
 
-                    to 
+                    to
 
                     <span>
                       {{#if (and (not-eq change.newValue null) (not-eq change.newValue undefined))}}
