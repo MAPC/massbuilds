@@ -1,7 +1,7 @@
 class DevelopmentSerializer < ActiveModel::Serializer
   belongs_to :user
 
-  [:id, :name, :status, :address, :year_compl, :yrcomp_est, :nhood, :municipal, :devlper, :latitude, :longitude].each { |attr| attribute attr }
+  [:id, :name, :status, :address, :year_compl, :yrcomp_est, :nhood, :municipal, :devlper, :latitude, :longitude, :flag].each { |attr| attribute attr }
   [:user_id, :rdv, :asofright, :ovr55, :clusteros, :phased, :stalled,
     :descr, :prj_url, :state, :zip_code, :height,
     :stories, :prjarea, :singfamhu, :smmultifam, :lgmultifam,
@@ -11,7 +11,7 @@ class DevelopmentSerializer < ActiveModel::Serializer
     :hotel_sqft, :other_rate, :affordable, :parcel_id, :mixed_use, :point,
     :programs, :forty_b, :residential, :commercial, :units_1bd,
     :units_2bd, :units_3bd, :affrd_unit, :aff_u30, :aff_30_50, :aff_50_80,
-    :aff_80p, :headqtrs, :park_type, :publicsqft, :unknownhu, :unk_sqft, :flag, :aff_unknown, :updated_at].each { |attr| attribute attr, unless: :truncated? }
+    :aff_80p, :headqtrs, :park_type, :publicsqft, :unknownhu, :unk_sqft, :aff_unknown, :updated_at].each { |attr| attribute attr, unless: :truncated? }
 
   def truncated?
     scope == 'trunc'
