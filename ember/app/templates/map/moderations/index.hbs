@@ -8,32 +8,6 @@
   </div>
 
   <div class="panel-headers">
-    <h1>Flags</h1>
-    <h3>Listed below are all user-created flags for you to review</h3>
-  </div>
-
-  {{#if filteredFlags}}
-    <ul class="item-list">
-      <li class="list-header">
-        <div class="row">
-          <div>Development</div>
-        </div>
-      </li>
-      <div class='list-body'>
-        {{#each filteredFlags as |flagged-development|}}
-          <li data-mod-id={{flagged-development.id}}>
-            <div class="row">
-              <div>
-                {{#link-to 'map.developments.development' flagged-development}}{{flagged-development.name}}{{/link-to}}
-              </div>
-            </div>
-          </li>
-        {{/each}}
-      </div>
-    </ul>
-  {{/if}}
-
-  <div class="panel-headers">
     <h1>Moderations</h1>
     <h3>Listed below are all user-created edits for you to moderate</h3>
   </div>
@@ -108,6 +82,36 @@
   {{else}}
     <div class="no-records">
       There are no edits for you to moderate.
+    </div>
+  {{/if}}
+
+  <div class="panel-headers">
+    <h1>Flags</h1>
+    <h3>Listed below are all user-created flags for you to review</h3>
+  </div>
+
+  {{#if filteredFlags}}
+    <ul class="item-list">
+      <li class="list-header">
+        <div class="row">
+          <div>Development</div>
+        </div>
+      </li>
+      <div class='list-body'>
+        {{#each filteredFlags as |flagged-development|}}
+          <li data-mod-id={{flagged-development.id}}>
+            <div class="row">
+              <div>
+                {{#link-to 'map.developments.development' flagged-development}}{{flagged-development.name}}{{/link-to}}
+              </div>
+            </div>
+          </li>
+        {{/each}}
+      </div>
+    </ul>
+  {{else}}
+    <div class="no-records">
+      There are no flags for you to review.
     </div>
   {{/if}}
 
