@@ -131,25 +131,15 @@ class DevelopmentsController < ApplicationController
       end
 
       filter_hash.values.each do |filter|
-        if filter_hash.keys.first == 'flag'
-          column = 'flag'
-        else
-          column = filter['col']
-        end
+        column = filter['col']
 
         if filter['filter'] == 'discrete'
           sql << '(' + filter['value'].map { |_| "#{column} = ?" }.join(' OR ') + ')'
           values = [*values, *filter['value']]
 
         else # metric
-          if filter == ('true' || 'false')
-            type = 'boolean'
-            value = filter
-          else
-            type = filter['type']
-            value = filter['value']
-          end
-
+          type = filter['type']
+          value = filter['value']
           inflector = (type == 'boolean' || type == 'string') ? '=' : filter['inflector']
 
           unless (
