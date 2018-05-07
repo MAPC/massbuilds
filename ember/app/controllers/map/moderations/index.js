@@ -63,4 +63,13 @@ export default class extends ModerationController {
     elem.parentNode.removeChild(elem);
   }
 
+  @action
+  unflag(development) {
+    development.set('flag', false);
+    development.save()
+      .then(() => {
+        this.get('notifications').show('This development has been unflagged.');
+      });
+  }
+
 }

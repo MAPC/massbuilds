@@ -99,13 +99,18 @@
       </li>
       <div class='list-body'>
         {{#each filteredFlags as |flagged-development|}}
+        {{#if flagged-development.flag}}
           <li data-mod-id={{flagged-development.id}}>
             <div class="row">
               <div>
                 {{#link-to 'map.developments.development' flagged-development}}{{flagged-development.name}}{{/link-to}}
               </div>
+              <div class="actions">
+                <button class="styled" onclick={{action unflag flagged-development}}>Unflag</button>
+              </div>
             </div>
           </li>
+        {{/if}}
         {{/each}}
       </div>
     </ul>
