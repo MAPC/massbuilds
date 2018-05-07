@@ -1,0 +1,11 @@
+  .route.faq {
+    main {
+      width: 85%;
+      max-width: 700px;
+      min-height: 95vh;
+      margin: 0 auto;
+      padding: 20px 0 80px;
+
+      @include media('medium') { width: 92%; }
+    }
+  }
