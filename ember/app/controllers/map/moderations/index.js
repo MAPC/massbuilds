@@ -67,8 +67,12 @@ export default class extends ModerationController {
   unflag(development) {
     development.set('flag', false);
     development.save()
-      .then(() => {
+    .then(() => {
         this.get('notifications').show('This development has been unflagged.');
+      })
+    .catch(() => {
+        development.set('flag', true);
+        this.get('notifications').show('This development must pass validations before being unflagged.');
       });
   }
 
