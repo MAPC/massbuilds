@@ -20,6 +20,10 @@ module.exports = function(deployTarget) {
   }
 
   if (deployTarget === 'production') {
+    ENV.rsync = {
+      dest: 'massbuilds@live.mapc.org:/var/www/massbuilds/ember',
+      delete: false,
+    };
   }
 
   return ENV;
