@@ -27,8 +27,7 @@ module Massbuilds
 
     known_hosts = [
       'http://localhost:4200', 
-      'http://staging2.massbuilds.com',
-      'http://massbuilds.com',
+      'https://staging2.massbuilds.com',
       'http://launch.ericyoungberg.com',
       'https://massbuilds.com'
     ]
