@@ -42,7 +42,7 @@ module.exports = function(environment) {
   }
 
   if (environment === 'production') {
-    ENV['host'] = 'http://api.launch.ericyoungberg.com';
+    ENV['host'] = 'https://api.launch.ericyoungberg.com';
   }
 
   if (environment === 'test') {

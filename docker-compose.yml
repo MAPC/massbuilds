@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  
+  ember:
+    build: 
+      context: ember
+      dockerfile: $PWD/ember/Dockerfile
+    volumes:
+      - ./:/opt/src
+    ports:
+      - "4200:4200"

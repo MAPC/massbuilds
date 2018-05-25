@@ -29,6 +29,7 @@ module Massbuilds
       'http://localhost:4200', 
       'https://staging2.massbuilds.com',
       'http://launch.ericyoungberg.com',
+      'https://launch.ericyoungberg.com',
       'https://massbuilds.com'
     ]
 
