@@ -1,12 +1,33 @@
-version: '3'
+version: '3.1'
 
 services:
-  
-  ember:
-    build: 
-      context: ember
-      dockerfile: $PWD/ember/Dockerfile
+
+  frontend:
+    build: ./ember
     volumes:
-      - ./:/opt/src
+      - ./ember:/opt/src
+      - /opt/src/node_modules
     ports:
       - "4200:4200"
+  
+  
+  backend: 
+    build: ./rails
+    volumes:
+      - ./rails:/usr/src/app
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    links:
+      - "db:db"
+  
+  db:
+    image: mdillon/postgis:9.5
+    ports: 
+      - "5454:5432"
+    volumes:
+      - ./volumes/db:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: hoopla
