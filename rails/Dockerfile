@@ -1,4 +1,4 @@
-FROM ruby:2.4.2-alpine
+FROM ruby:2.4.2
 MAINTAINER Eric Youngberg <eyoungberg@mapc.org>
 
 WORKDIR /usr/src/app
@@ -9,14 +9,8 @@ COPY Gemfile* ./
 
 RUN set -ex \
     ; \
-    apk update \
-    && apk add --no-cache \
-      tzdata \
-      nodejs \
-      build-base \
-      libxml2-dev \
-      libxslt-dev \
-      postgresql-dev \
+    apt-get update -qq \
+    && apt-get install -y --no-install-recommends nodejs \
     ; \
     bundle install
 
