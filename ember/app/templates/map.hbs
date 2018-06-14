@@ -58,11 +58,10 @@
         </div>
       </div>
     {{/unless}}
-    {{#mapbox-map
+    {{mapbox-map
       activeFilters=activeFilters
       viewDevelopment=(action viewDevelopment)
     }}
-    {{/mapbox-map}}
   </div>
 
   <div class="panel-layer right-panel-layer {{if showingRightPanel 'active'}}">
