@@ -20,4 +20,4 @@ RUN set -ex \
     ; \
     bundle install
 
-CMD ["rails", "server", "-b", "0.0.0.0"]
+CMD rm -f tmp/pids/server.pid && rails server -b 0.0.0.0
