@@ -1,17 +1,15 @@
-.ember-view.leaflet-container {
-
-  .leaflet-control-container {
-    position: absolute;
-    bottom: 0;
-
-    .leaflet-top {
-      top: initial;
-      bottom: 15px;
-    }
-
-    .leaflet-left { left: 150px; }
+.ember-view.mapboxgl-map {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  .mapboxgl-popup-content {
+    padding: 0;
   }
-
+  .mapboxgl-popup-tip {
+    border-top-color: $color_brand-primary;
+  }
   .massbuilds-tooltip {
     padding: 8px 16px;
 
@@ -22,7 +20,7 @@
       margin-bottom: 5px;
 
       font-size: 16px;
-    } 
+    }
 
     h5 {
       display: inline-block;
@@ -33,7 +31,7 @@
       font-size: 14px;
       line-height: 14px;
 
-      &:last-of-type { 
+      &:last-of-type {
         margin-left: 5px;
         padding-left: 10px;
 
@@ -45,5 +43,4 @@
       span { color: $color_font-medium; }
     }
   }
-
 }
