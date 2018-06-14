@@ -22,6 +22,7 @@ gem 'rubyzip'
 gem 'json-schema'
 gem 'faraday'
 gem 'mailgun-ruby'
+gem 'fast_jsonapi'
 
 group :development, :test do
   gem 'pry-byebug'

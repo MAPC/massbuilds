@@ -17,12 +17,14 @@ module.exports = function(defaults) {
     },
 
     babel: {
-      loose: true, 
+      loose: true,
       plugins: [
         'transform-object-rest-spread',
       ]
     }
   });
+
+  app.import('node_modules/mapbox-gl/dist/mapbox-gl.css');
 
   // Use `app.import` to add additional libraries to the generated
   // output files.

@@ -1,0 +1,46 @@
+.ember-view.mapboxgl-map {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  .mapboxgl-popup-content {
+    padding: 0;
+  }
+  .mapboxgl-popup-tip {
+    border-top-color: $color_brand-primary;
+  }
+  .massbuilds-tooltip {
+    padding: 8px 16px;
+
+    border: 1px solid $color_brand-primary;
+
+    h4 {
+      margin: 0;
+      margin-bottom: 5px;
+
+      font-size: 16px;
+    }
+
+    h5 {
+      display: inline-block;
+
+      margin: 0;
+      padding: 0;
+
+      font-size: 14px;
+      line-height: 14px;
+
+      &:last-of-type {
+        margin-left: 5px;
+        padding-left: 10px;
+
+        font-weight: 400;
+
+        border-left: 1px solid $color_bg-medium;
+      }
+
+      span { color: $color_font-medium; }
+    }
+  }
+}
