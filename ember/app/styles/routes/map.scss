@@ -159,6 +159,11 @@
       background: rgba($color_bg-light, .7);
 
     }
+
+    & {
+      width: 100%;
+      height: 100vh;
+    }
   }
 
 }
