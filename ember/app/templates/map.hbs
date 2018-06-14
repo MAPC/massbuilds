@@ -28,7 +28,14 @@
     {{share-buttons filterParams=filterParams}}
   {{/if}}
 
-  {{map-legend showing=showingFilters}}
+  <div class="legend-wrapper">
+    {{map-legend showing=showingFilters}}
+
+    <div class="info-links">
+      {{link-to 'FAQ' 'faq'}}
+      {{link-to 'Glossary' 'glossary'}}
+    </div>
+  </div>
 
   {{notifications-popup}}
   <!--/ floating components -->

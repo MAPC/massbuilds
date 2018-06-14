@@ -5,10 +5,13 @@ services:
   frontend:
     build: ./ember
     volumes:
-      - ./ember:/opt/src
-      - /opt/src/node_modules
+      - ./ember/app:/opt/src/app
+      - ./ember/config:/opt/src/config
+      - ./ember/public:/opt/src/public
+      - ./ember/tests:/opt/src/tests
     ports:
       - "4200:4200"
+      - "7020:7020"
   
   
   backend: 
