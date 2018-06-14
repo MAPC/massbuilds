@@ -58,27 +58,6 @@
         </div>
       </div>
     {{/unless}}
-{{!--
-    {{#leaflet-map bounds=map.bounds as |layers|}}
-      {{layers.tile url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
-
-      {{#if (gt map.filteredData.length 0)}}
-        {{map-layer
-          data=map.filteredData
-          radius=60
-          layers=layers
-          viewDevelopment=(action viewDevelopment)
-        }}
-      {{/if}}
-
-      {{map-layer
-        data=map.stored
-        radius=10
-        layers=layers
-        faded=activeFilters
-        viewDevelopment=(action viewDevelopment)
-      }}
-    {{/leaflet-map}} --}}
     {{#mapbox-map
       activeFilters=activeFilters
       viewDevelopment=(action viewDevelopment)

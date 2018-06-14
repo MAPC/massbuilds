@@ -14,7 +14,6 @@ class DevelopmentsController < ApplicationController
                     else
                       Development.where(filtered_params)
                     end
-    puts @developments[0].latitude
     respond_to do |format|
       format.jsonapi do
         scope = 'trunc' if params[:trunc]
