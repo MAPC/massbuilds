@@ -9,11 +9,6 @@ export default class extends Component {
 
   @service map
 
-  constructor() {
-    super();
-    this.get('map').addObserver('stored', this, 'draw');
-  }
-
   didInsertElement() {
     this.mapboxglMap = new mapboxgl.Map({
       container: this.get('element'),
@@ -22,6 +17,7 @@ export default class extends Component {
     });
     this.mapboxglMap.on('load', () => {
       const mapService = this.get('map');
+      mapService.addObserver('stored', this, 'draw');
       mapService.addObserver('filteredData', this, 'draw');
       mapService.addObserver('stored', this, 'zoom');
       mapService.addObserver('filteredData', this, 'zoom');
