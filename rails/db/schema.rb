@@ -17,7 +17,7 @@ ActiveRecord::Schema.define(version: 20180308155408) do
   enable_extension "postgis"
   enable_extension "postgres_fdw"
 
-  create_table "allpoints_final2", primary_key: "gid", id: :integer, default: nil, force: :cascade do |t|
+  create_table "allpoints_final2", primary_key: "gid", id: :serial, force: :cascade do |t|
     t.decimal "id"
     t.integer "muni_id"
     t.string "muni", limit: 18

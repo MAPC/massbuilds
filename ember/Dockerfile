@@ -1,16 +1,13 @@
-FROM node:8-alpine
-MAINTAINER Eric Youngberg <eyoungberg@mapc.org>
+RUN node:alpine
 
+VOLUME /opt/src
 WORKDIR /opt/src
-EXPOSE 4200
 
-COPY package* ./
+COPY package.json .
+COPY package-lock.json .
 
-RUN set -ex \
-    ; \
-    npm install -g ember-cli \
-    && npm install
+RUN set -ex; \
+    \
+    npm install
 
-VOLUME /opt/src/node_modules
-
-CMD ["npm", "run", "start"]
+CMD ['npm', 'run', 'start']
