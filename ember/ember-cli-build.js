@@ -20,7 +20,10 @@ module.exports = function(defaults) {
       loose: true,
       plugins: [
         'transform-object-rest-spread',
-      ]
+      ],
+    },
+    'ember-cli-babel': {
+      includePolyfill: true,
     }
   });
 
