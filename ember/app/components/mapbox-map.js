@@ -31,6 +31,9 @@ export default class extends Component {
         this.draw(mapService);
         this.focus(mapService);
       }
+      if (mapService.viewing) {
+        this.focus(mapService);
+      }
     });
   }
 
@@ -73,8 +76,9 @@ export default class extends Component {
 
   jumpTo(mapService) {
     const dev = mapService.get('viewing');
-    const coordinates = [dev.get('longitude'), dev.get('latitude')];
-    console.log(coordinates);
+    const coordinates = [dev.get('longitude') - .00125, dev.get('latitude')];
+    const bounds = new mapboxgl.LngLatBounds([coordinates, coordinates]);
+    this.mapboxglMap.fitBounds(bounds, { padding: 40, maxZoom: 18 });
   }
 
   focus(mapService) {
