@@ -50,19 +50,20 @@ export default class extends Component {
           (northEast[0] - southWest[0]) * ratio + southWest[0],
           (northEast[1] - southWest[1]) * 0.5 + southWest[1],
         ];
-          this.mapboxglMap.getSource('selector').setData({
-            type: 'FeatureCollection',
-            features: [{
-              type: 'Feature',
-              properties: {
-              },
-              geometry: {
-                type: 'Point',
-                coordinates: coordinates,
-              },
-            }],
-          });
+        this.mapboxglMap.getSource('selector').setData({
+          type: 'FeatureCollection',
+          features: [{
+            type: 'Feature',
+            properties: {
+            },
+            geometry: {
+              type: 'Point',
+              coordinates: coordinates,
+            },
+          }],
+        });
         this.get('map').setSelectedCoordinates(coordinates);
+        console.log(coordinates);
       }
     });
   }
