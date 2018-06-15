@@ -235,6 +235,7 @@ export default class extends Controller {
   @action
   viewDevelopment(id) {
     this.set('showingFilters', false);
+    this.get('map').setFocusedDevelopment(id);
     this.transitionToRoute('map.developments.development', id);
   }
 

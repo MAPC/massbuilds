@@ -26,6 +26,7 @@ export default class extends Component {
       mapService.addObserver('filteredData', this, 'focus');
       mapService.addObserver('baseMap', this, 'setStyle');
       mapService.addObserver('zoomCommand', this, 'actOnZoomCommand');
+      mapService.addObserver('viewing', this, 'jumpTo');
       if (mapService.stored.length) {
         this.draw(mapService);
         this.focus(mapService);
@@ -68,6 +69,12 @@ export default class extends Component {
         coordinates: [dev.get('longitude'), dev.get('latitude')],
       },
     }));
+  }
+
+  jumpTo(mapService) {
+    const dev = mapService.get('viewing');
+    const coordinates = [dev.get('longitude'), dev.get('latitude')];
+    console.log(coordinates);
   }
 
   focus(mapService) {
@@ -235,10 +242,13 @@ export default class extends Component {
     this.mapboxglMap.on('click', 'all', (e) => {
       this.sendAction('viewDevelopment', e.features[0].properties.id);
     });
+
     const popup = new mapboxgl.Popup({
       closeButton: false,
       closeOnClick: false,
     });
+
+    let popupId = null;
 
     const openPopup = (e) => {
       // Change the cursor style as a UI indicator.
@@ -246,7 +256,7 @@ export default class extends Component {
 
       const coordinates = e.features[0].geometry.coordinates.slice();
       const properties = e.features[0].properties;
-
+      popupId = properties.id;
       const formattedStatus = properties.status
           .split('_')
           .map(w => w.capitalize())
@@ -281,12 +291,23 @@ export default class extends Component {
     const closePopup = () => {
       this.mapboxglMap.getCanvas().style.cursor = '';
       popup.remove();
+      popupId = null;
+    };
+
+    const updatePopup = (e) => {
+      if (popupId != e.features[0].properties.id) {
+        closePopup();
+        openPopup(e);
+      }
     };
 
     this.mapboxglMap.on('mouseenter', 'all', openPopup);
     this.mapboxglMap.on('mouseenter', 'filtered', openPopup);
+    this.mapboxglMap.on('mousemove', 'all', updatePopup);
+    this.mapboxglMap.on('mousemove', 'filtered', updatePopup);
     this.mapboxglMap.on('mouseleave', 'all', closePopup);
     this.mapboxglMap.on('mouseleave', 'filtered', closePopup);
+
   }
 
 };
