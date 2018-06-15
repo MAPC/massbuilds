@@ -32,6 +32,7 @@ export default class extends Service {
     this.storedBounds = null;
 
     this.zoomCommand = null;
+    this.selectionMode = false;
 
     this.get('store').query('development', { trunc: true }).then(results => {
       this.set('stored', results.toArray());
@@ -39,6 +40,13 @@ export default class extends Service {
     });
   }
 
+  setSelectionMode(selectionMode) {
+    this.set('selectionMode', selectionMode);
+  }
+
+  setSelectedCoordinates(coordinates) {
+    this.set('selectedCoordinates', coordinates);
+  }
 
   // @computed('stored.length', 'filteredData.length', 'viewing', 'boundsUpdater')
   // get bounds() {

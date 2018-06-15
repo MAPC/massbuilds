@@ -27,12 +27,42 @@ export default class extends Component {
       mapService.addObserver('baseMap', this, 'setStyle');
       mapService.addObserver('zoomCommand', this, 'actOnZoomCommand');
       mapService.addObserver('viewing', this, 'jumpTo');
+      mapService.addObserver('selectionMode', this, 'draw');
+      mapService.addObserver('selectionMode', this, 'drawSelector');
       if (mapService.stored.length) {
         this.draw(mapService);
         this.focus(mapService);
       }
       if (mapService.viewing) {
         this.focus(mapService);
+      }
+
+    });
+    this.mapboxglMap.on('render', () => {
+      if (this.mapboxglMap && this.mapboxglMap.getSource('selector')) {
+        const bounds = this.mapboxglMap.getBounds();
+        const northEast = bounds.getNorthEast().toArray();
+        const southWest = bounds.getSouthWest().toArray();
+        const leftPanelWidth = parseInt(Ember.$('.left-panel-layer').css('width'));
+        const mapWidth = parseInt(this.$().css('width'));
+        const ratio = (((mapWidth - leftPanelWidth) / 2) + leftPanelWidth) / mapWidth;
+        const coordinates = [
+          (northEast[0] - southWest[0]) * ratio + southWest[0],
+          (northEast[1] - southWest[1]) * 0.5 + southWest[1],
+        ];
+          this.mapboxglMap.getSource('selector').setData({
+            type: 'FeatureCollection',
+            features: [{
+              type: 'Feature',
+              properties: {
+              },
+              geometry: {
+                type: 'Point',
+                coordinates: coordinates,
+              },
+            }],
+          });
+        this.get('map').setSelectedCoordinates(coordinates);
       }
     });
   }
@@ -54,6 +84,42 @@ export default class extends Component {
       this.mapboxglMap.zoomOut();
     }
     mapService.set('zoomCommand', null);
+  }
+
+  drawSelector(mapService) {
+    const selectionMode = mapService.get('selectionMode');
+    if (selectionMode && !this.mapboxglMap.getLayer('selector')) {
+      this.mapboxglMap.addLayer({
+        id: 'selector',
+        type: 'circle',
+        source: {
+          type: 'geojson',
+          data: {
+            type: 'FeatureCollection',
+            features: [{
+              type: 'Feature',
+              properties: {
+              },
+              geometry: {
+                type: 'Point',
+                coordinates: [0, 0],
+              },
+            }],
+          },
+        },
+        paint: {
+          'circle-color': '#f00',
+          'circle-radius': 10,
+          'circle-opacity': 0.2,
+          'circle-stroke-width': 3,
+          'circle-stroke-color': '#f00',
+          'circle-stroke-opacity': 1,
+        },
+      });
+    } else if (this.mapboxglMap.getLayer('selector')) {
+      this.mapboxglMap.removeLayer('selector');
+      this.mapboxglMap.removeSource('selector');
+    }
   }
 
   generateFeatures(developments) {
@@ -92,7 +158,7 @@ export default class extends Component {
     this.mapboxglMap.fitBounds(fitBounds, { padding: 40 });
   }
 
-  generatePaintProperties(selected, highContrast) {
+  generatePaintProperties(selected, highContrast, isMuted) {
     if (selected) {
       if (highContrast) {
         return {
@@ -104,7 +170,7 @@ export default class extends Component {
             10, 3,
             16, 8,
           ],
-          'circle-opacity': 0.8,
+          'circle-opacity': isMuted ? 0.3 : 0.8,
           'circle-stroke-width': [
             'interpolate',
             ['linear'],
@@ -113,7 +179,7 @@ export default class extends Component {
             16, 1.5,
           ],
           'circle-stroke-color': '#000',
-          'circle-stroke-opacity': 1,
+          'circle-stroke-opacity': isMuted ? 0.4 : 1,
         };
       } else {
         return {
@@ -128,7 +194,7 @@ export default class extends Component {
           'circle-opacity': 0.2,
           'circle-stroke-width': 3,
           'circle-stroke-color': ['get', 'color'],
-          'circle-stroke-opacity': 1,
+          'circle-stroke-opacity': isMuted ? 0.3 : 1,
         };
       }
     } else {
@@ -172,6 +238,8 @@ export default class extends Component {
         ? mapService.get('remainder')
         : mapService.stored);
     const highContrast = mapService.get('baseMap') != 'light';
+    const isMuted = mapService.get('muteExistingDevelopments');
+    // const activeCircleStrokeOpacity = isMuted ? 0.3 : 1;
 
     if (this.mapboxglMap.getLayer('all')) {
       this.mapboxglMap.getSource('all').setData({
@@ -180,7 +248,8 @@ export default class extends Component {
       });
       Object.entries(this.generatePaintProperties(
         mapService.get('filteredData').length == 0,
-        highContrast
+        highContrast,
+        isMuted
       )).forEach(([property, value]) => {
         this.mapboxglMap.setPaintProperty('all', property, value);
       });
@@ -197,7 +266,8 @@ export default class extends Component {
         },
         paint: this.generatePaintProperties(
           mapService.get('filteredData').length == 0,
-          highContrast
+          highContrast,
+          isMuted
         ),
       });
     }
@@ -211,6 +281,7 @@ export default class extends Component {
           type: 'FeatureCollection',
           features: filteredFeatures,
         });
+        this.mapboxglMap.setPaintProperty('filtered', 'circle-stroke-opacity', activeCircleStrokeOpacity);
       } else {
         this.mapboxglMap.addLayer({
           id: 'filtered',
@@ -222,7 +293,7 @@ export default class extends Component {
               features: filteredFeatures,
             }
           },
-          paint: this.generatePaintProperties(true, highContrast),
+          paint: this.generatePaintProperties(true, highContrast, isMuted),
         });
       }
     } else if (this.mapboxglMap.getLayer('filtered')) {
@@ -311,7 +382,6 @@ export default class extends Component {
     this.mapboxglMap.on('mousemove', 'filtered', updatePopup);
     this.mapboxglMap.on('mouseleave', 'all', closePopup);
     this.mapboxglMap.on('mouseleave', 'filtered', closePopup);
-
   }
 
 };
