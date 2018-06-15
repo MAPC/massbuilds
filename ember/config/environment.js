@@ -38,7 +38,7 @@ module.exports = function(environment) {
   }
 
   if (environment === 'staging') {
-    ENV['host'] = 'https://api.staging.massbuilds.com';
+    ENV['host'] = 'http://api.staging.massbuilds.com';
   }
 
   if (environment === 'production') {
