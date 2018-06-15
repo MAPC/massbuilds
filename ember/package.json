@@ -11,7 +11,7 @@
   },
   "repository": "https://github.com/mapc/massbuilds",
   "scripts": {
-    "stage": "ember build --staging && rsync -r dist/* massbuilds@prep.mapc.org:/var/www/massbuilds/ember/",
+    "stage": "ember build --environment=staging && rsync -r dist/* massbuilds@prep.mapc.org:/var/www/massbuilds/ember/",
     "build": "ember build",
     "start": "ember server",
     "test": "ember test"
