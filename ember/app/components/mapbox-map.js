@@ -2,18 +2,31 @@ import Component from '@ember/component';
 import { service } from 'ember-decorators/service';
 import statusColors from 'massbuilds/utils/status-colors';
 import mapboxgl from 'npm:mapbox-gl';
+import pointInPolygon from 'npm:@turf/boolean-point-in-polygon';
+import centerOfMass from 'npm:@turf/center-of-mass';
 
 mapboxgl.accessToken = 'pk.eyJ1IjoiaWhpbGwiLCJhIjoiY2plZzUwMTRzMW45NjJxb2R2Z2thOWF1YiJ9.szIAeMS4c9YTgNsJeG36gg';
 
 export default class extends Component {
 
+  @service store
   @service map
+
+  constructor() {
+    super();
+    this.previousCoordinatesKey = null;
+    this.previousParcel = null;
+    this.lastRequest = null;
+  }
 
   didInsertElement() {
     this.mapboxglMap = new mapboxgl.Map({
       container: this.get('element'),
       style: 'mapbox://styles/mapbox/light-v9',
       maxBounds: [[-74.5, 40], [-68, 44]],
+      dragRotate: false,
+      pitchWithRotate: false,
+      touchZoomRotate: false,
     });
     this.mapboxglMap.on('load', () => {
       const mapService = this.get('map');
@@ -36,20 +49,26 @@ export default class extends Component {
       if (mapService.viewing) {
         this.focus(mapService);
       }
-
+      if (mapService.selectionMode) {
+        this.drawSelector(mapService);
+      }
     });
-    this.mapboxglMap.on('render', () => {
-      if (this.mapboxglMap && this.mapboxglMap.getSource('selector')) {
-        const bounds = this.mapboxglMap.getBounds();
-        const northEast = bounds.getNorthEast().toArray();
-        const southWest = bounds.getSouthWest().toArray();
-        const leftPanelWidth = parseInt(Ember.$('.left-panel-layer').css('width'));
-        const mapWidth = parseInt(this.$().css('width'));
-        const ratio = (((mapWidth - leftPanelWidth) / 2) + leftPanelWidth) / mapWidth;
-        const coordinates = [
-          (northEast[0] - southWest[0]) * ratio + southWest[0],
-          (northEast[1] - southWest[1]) * 0.5 + southWest[1],
-        ];
+    this.mapboxglMap.on('render', () => this.updateSelection());
+  }
+
+  updateSelection() {
+    if (this.mapboxglMap && this.mapboxglMap.getSource('selector')) {
+      const bounds = this.mapboxglMap.getBounds();
+      const northEast = bounds.getNorthEast().toArray();
+      const southWest = bounds.getSouthWest().toArray();
+      const leftPanelWidth = parseInt(Ember.$('.left-panel-layer').css('width'));
+      const mapWidth = parseInt(this.$().css('width'));
+      const ratio = (((mapWidth - leftPanelWidth) / 2) + leftPanelWidth) / mapWidth;
+      const coordinates = [
+        (northEast[0] - southWest[0]) * ratio + southWest[0],
+        (northEast[1] - southWest[1]) * 0.5 + southWest[1],
+      ];
+      if (this.get('previousCoordinatesKey') != coordinates.toString()) {
         this.mapboxglMap.getSource('selector').setData({
           type: 'FeatureCollection',
           features: [{
@@ -63,7 +82,62 @@ export default class extends Component {
           }],
         });
         this.get('map').setSelectedCoordinates(coordinates);
-        console.log(coordinates);
+        const previousParcel = this.get('previousParcel');
+        if ((Date.now() - this.get('lastRequest') > 250) &&
+            (this.mapboxglMap.getLayer('parcel')) &&
+            (!previousParcel || !pointInPolygon.default({ type: 'Point', coordinates: coordinates }, previousParcel.get('geojson')))) {
+          this.getNewParcel(coordinates);
+        }
+
+        this.set('previousCoordinatesKey', coordinates.toString());
+      }
+    }
+  }
+
+  getNewParcel(coordinates) {
+    this.set('lastRequest', Date.now());
+    this.get('store').query('parcel', { lng: coordinates[0], lat: coordinates[1] }).then((results) => {
+      const parcels = results.toArray();
+      const newCoordinates = this.get('map').get('selectedCoordinates');
+      if (parcels.length) {
+        const parcel = parcels[0];
+        if (pointInPolygon.default({ type: 'Point', coordinates: newCoordinates }, parcel.get('geojson'))) {
+          this.mapboxglMap.getSource('parcel').setData({
+            type: 'FeatureCollection',
+            features: [{
+              type: 'Feature',
+              properties: {
+              },
+              geometry: parcel.get('geojson'),
+            }],
+          });
+          const center = centerOfMass.default(parcel.get('geojson'));
+          console.log(center);
+          this.mapboxglMap.getSource('parcel_label').setData({
+            type: 'FeatureCollection',
+            features: [{
+              type: 'Feature',
+              properties: {
+                site_addr: parcel.get('site_addr') ? parcel.get('site_addr') : '[ADDRESS UNKNOWN]',
+                muni: parcel.get('muni') ? parcel.get('muni').toUpperCase() : '',
+              },
+              geometry: center.geometry,
+            }],
+          });
+          this.set('previousParcel', parcel);
+        } else {
+          this.getNewParcel(newCoordinates);
+        }
+      } else {
+        this.set('previousParcel', null);
+        this.mapboxglMap.getSource('parcel').setData({
+          type: 'FeatureCollection',
+          features: [],
+        });
+        this.mapboxglMap.getSource('parcel_label').setData({
+          type: 'FeatureCollection',
+          features: [],
+        });
       }
     });
   }
@@ -97,29 +171,62 @@ export default class extends Component {
           type: 'geojson',
           data: {
             type: 'FeatureCollection',
-            features: [{
-              type: 'Feature',
-              properties: {
-              },
-              geometry: {
-                type: 'Point',
-                coordinates: [0, 0],
-              },
-            }],
+            features: [],
           },
         },
         paint: {
-          'circle-color': '#f00',
+          'circle-color': '#FF9800',
           'circle-radius': 10,
           'circle-opacity': 0.2,
           'circle-stroke-width': 3,
-          'circle-stroke-color': '#f00',
+          'circle-stroke-color': '#FF9800',
           'circle-stroke-opacity': 1,
         },
       });
+      this.mapboxglMap.addLayer({
+        id: 'parcel',
+        type: 'line',
+        source: {
+          type: 'geojson',
+          data: {
+            type: 'FeatureCollection',
+            features: [],
+          },
+        },
+        paint: {
+          'line-color': '#7a7a7a',
+          'line-width': 1,
+        },
+      });
+      this.mapboxglMap.addLayer({
+        id: 'parcel_label',
+        type: 'symbol',
+        source: {
+          type: 'geojson',
+          data: {
+            type: 'FeatureCollection',
+            features: [],
+          },
+        },
+        layout: {
+          'text-field': '{site_addr},\n{muni}',
+          'text-size': 12,
+          'text-justify': 'left',
+          'text-max-width': 20,
+          'text-font': ['Open Sans Bold'],
+        },
+        paint: {
+          'text-color': '#7a7a7a',
+        },
+      });
+      // this.updateSelection();
     } else if (this.mapboxglMap.getLayer('selector')) {
       this.mapboxglMap.removeLayer('selector');
       this.mapboxglMap.removeSource('selector');
+      this.mapboxglMap.removeLayer('parcel');
+      this.mapboxglMap.removeSource('parcel');
+      this.mapboxglMap.removeLayer('parcel_label');
+      this.mapboxglMap.removeSource('parcel_label');
     }
   }
 
@@ -239,8 +346,7 @@ export default class extends Component {
         ? mapService.get('remainder')
         : mapService.stored);
     const highContrast = mapService.get('baseMap') != 'light';
-    const isMuted = mapService.get('muteExistingDevelopments');
-    // const activeCircleStrokeOpacity = isMuted ? 0.3 : 1;
+    const isMuted = mapService.get('selectionMode');
 
     if (this.mapboxglMap.getLayer('all')) {
       this.mapboxglMap.getSource('all').setData({

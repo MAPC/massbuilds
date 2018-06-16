@@ -33,6 +33,7 @@ export default class extends Service {
 
     this.zoomCommand = null;
     this.selectionMode = false;
+    this.selectedCoordinates = [0, 0];
 
     this.get('store').query('development', { trunc: true }).then(results => {
       this.set('stored', results.toArray());

@@ -1,12 +1,12 @@
 .component.development-form {
 
-  input, textarea { 
+  input, textarea {
     padding: 2px 8px;
     margin: 2px;
 
-    background: mix($color_bg-light--active, $color_brand-primary, 90); 
+    background: mix($color_bg-light--active, $color_brand-primary, 90);
     border: none;
-    outline: none; 
+    outline: none;
     transition: background .15s;
 
     &:focus, &:active {
@@ -41,26 +41,26 @@
   }
 
   .development-header {
-    h1 > input { width: 100%; } 
+    h1 > input { width: 100%; }
     h2 > input { width: 90%; }
 
-    .address-fields {
-      input {
-        &:first-of-type { width: 70%; } 
-        &:last-of-type { 
-          width: 20%;
-        }
-      }  
+    .location-fields {
+      // input {
+      //   &:first-of-type { width: 70%; }
+      //   &:last-of-type {
+      //     width: 20%;
+      //   }
+      // }
     }
 
-    .project-url > input { 
-      width: 50%; 
-      font-size: 14px; 
+    .project-url > input {
+      width: 50%;
+      font-size: 14px;
     }
   }
 
   .column {
-    ul { 
+    ul {
       flex: 1 0 40%;
 
       margin: 0;
@@ -75,10 +75,10 @@
       border: none;
       border-bottom: 1px solid rgba($color_brand-primary--active, 0);
 
-      & + span { 
+      & + span {
         display: inline-block;
 
-        margin-left: 6px; 
+        margin-left: 6px;
       }
     }
   }
@@ -88,13 +88,13 @@
       margin-left: 3px;
       margin-right: 0;
 
-      color: $color_font-medium; 
+      color: $color_font-medium;
       font-size: 13px;
     }
   }
 
   h3.field label { left: 10px; }
- 
+
   button.submit-changes { margin-left: 10px; }
 
   .required-note {
@@ -102,7 +102,7 @@
     bottom: -10px;
 
     width: 100%;
-    
+
     color: $color_state-negative;
     font-size: 13px;
     text-align: right;
