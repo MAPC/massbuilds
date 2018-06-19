@@ -209,7 +209,6 @@
   }
 
   .detail {
-
     font-size: 15px;
 
     & + .detail { margin-top: 20px; }
@@ -236,8 +235,18 @@
 
   .actions {
     position: absolute;
-    bottom: -10px;
+    bottom: -20px;
     right: 0;
+
+    font-size: 13px;
+
+    button {
+      width: 100%;
+
+      & + button {
+        margin-top: 10px; 
+      }  
+    }
   }
 
 }

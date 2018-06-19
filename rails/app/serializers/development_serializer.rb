@@ -1,5 +1,6 @@
 class DevelopmentSerializer
   include FastJsonapi::ObjectSerializer
+  set_type :development
 
   belongs_to :user
 
