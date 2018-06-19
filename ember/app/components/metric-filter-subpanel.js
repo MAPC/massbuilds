@@ -45,9 +45,7 @@ export default class extends Component {
 
   @action 
   updateMetricInflector(metricSelected) {
-    console.log(metricSelected.name.replace('-inf', ''));
     const filter = this.get(metricSelected.name.replace('-inf', ''));
-    console.log(filter);
     this.set(`${filter.col}.inflector`, metricSelected.value);
 
     this.updateFilter(filter);
@@ -65,8 +63,8 @@ export default class extends Component {
 
   @action
   updateFilter(filter) {
-    this.set(`${filter.col}.value`, filter.value);
-    this.sendAction('update', { [filter.col]: filter });
+    this.set(`${filter.col}.value`, filter.value || null);
+    this.sendAction('update', { [filter.col]: { ...filter } });
   }
   
 

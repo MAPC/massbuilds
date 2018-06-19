@@ -15,10 +15,9 @@ export default class extends Controller {
     super(...arguments);
     
     const filterParams = Object.keys(filters);
-    const boundingParams = ['minLat', 'minLng', 'maxLat', 'maxLng'];
     const otherParams = ['panel'];
 
-    this.queryParams = [...filterParams, ...boundingParams, ...otherParams];
+    this.queryParams = [...filterParams, ...otherParams];
 
     Object.values(filters).forEach(filter => {
       if (filter.filter === 'discrete') {
@@ -94,6 +93,9 @@ export default class extends Controller {
               Ember.set(found, 'value', value);
             }
           }
+        }
+        else {
+          Ember.set(filters[col], 'value', null);
         }
 
         return found;
