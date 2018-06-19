@@ -1,7 +1,8 @@
-RUN node:alpine
+FROM node:8-alpine
+MAINTAINER Eric Youngberg <eyoungberg@mapc.org>
 
-VOLUME /opt/src
 WORKDIR /opt/src
+EXPOSE 4200
 
 COPY . .
 

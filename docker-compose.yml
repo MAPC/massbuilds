@@ -1,4 +1,4 @@
-version: '3.1'
+version: '3'
 
 services:
 
@@ -25,7 +25,7 @@ services:
       - "db:db"
 
   db:
-    image: mdillon/postgis
+    image: mdillon/postgis:9.5
     volumes:
       - ./volumes/db:/var/lib/postgresql/data
     env_file: 
