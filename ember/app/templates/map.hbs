@@ -11,11 +11,11 @@
       </button>
     </div>
 
-    {{search-bar 
+    {{search-bar
       addDiscreteFilter=(action addDiscreteFilter)
       viewDevelopment=(action viewDevelopment)
       searchQuery=searchQuery
-      placeholder=searchPlaceholder 
+      placeholder=searchPlaceholder
       model=map.stored
     }}
   </div>
@@ -28,14 +28,21 @@
     {{share-buttons filterParams=filterParams}}
   {{/if}}
 
-  {{map-legend showing=showingFilters}}
+  <div class="legend-wrapper">
+    {{map-legend showing=showingFilters}}
+
+    <div class="info-links">
+      {{link-to 'Glossary' 'glossary'}}
+      {{link-to 'FAQ' 'faq'}}
+    </div>
+  </div>
 
   {{notifications-popup}}
   <!--/ floating components -->
 
   <div class="panel-layer left-panel-layer {{if showingLeftPanel 'active'}}">
     {{#if showingFilters}}
-      {{filter-panel 
+      {{filter-panel
         update=(action updateFilter)
         activeFilters=activeFilters
       }}
@@ -58,27 +65,10 @@
         </div>
       </div>
     {{/unless}}
-
-    {{#leaflet-map bounds=map.bounds as |layers|}}
-      {{layers.tile url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
-
-      {{#if (gt map.filteredData.length 0)}}
-        {{map-layer 
-          data=map.filteredData
-          radius=60
-          layers=layers
-          viewDevelopment=(action viewDevelopment)
-        }}
-      {{/if}}
-
-      {{map-layer 
-        data=map.stored 
-        radius=10
-        layers=layers
-        faded=activeFilters
-        viewDevelopment=(action viewDevelopment)
-      }}
-    {{/leaflet-map}}
+    {{mapbox-map
+      activeFilters=activeFilters
+      viewDevelopment=(action viewDevelopment)
+    }}
   </div>
 
   <div class="panel-layer right-panel-layer {{if showingRightPanel 'active'}}">

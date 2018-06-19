@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import Service from '@ember/service';
-import L from 'npm:leaflet';
+import mapboxgl from 'npm:mapbox-gl';
 import { computed } from 'ember-decorators/object';
 import { service } from 'ember-decorators/service';
 
@@ -32,7 +32,7 @@ export default class extends Service {
 
     this.get('store').query('development', { trunc: true }).then(results => {
       this.set('stored', results.toArray());
-      this.set('storedBounds', L.latLngBounds(results.map(result => L.latLng([result.get('latitude'), result.get('longitude')]))));
+      this.set('storedBounds', mapboxgl.LngLatBounds.convert(results.map(result => new mapboxgl.LngLat(result.get('longitude'), result.get('latitude')))));
     });
   }
 
@@ -60,14 +60,13 @@ export default class extends Service {
 
     let latLngs = [];
     if (data.get('length') > 0) {
-      latLngs = data.map(datum => L.latLng([datum.get('latitude'), datum.get('longitude') + mod]));
+      latLngs = data.map(datum => new mapboxgl.LngLat(datum.get('longitude') + mod, datum.get('latitude')));
     }
     else {
       latLngs = [this.get('lower'), this.get('upper')];
     }
 
-    const bounds = L.latLngBounds(latLngs)
-                    .pad(this.get('pad'));
+    const bounds = mapboxgl.LngLatBounds.convert(latLngs);
 
     return bounds;
   }
@@ -95,12 +94,20 @@ export default class extends Service {
     }
   }
 
+  @computed('stored', 'filteredData')
+  get remainder() {
+    const filtered = this.get('filteredData').reduce((obj, datum) =>
+      Object.assign(obj, { [datum.get('id')]: true })
+    , {});
+    return this.get('stored').filter((datum) => !filtered[datum.get('id')]);
+  }
+
   remove(development) {
     this.get('stored').removeObject(development);
   }
-    
+
   add(development) {
     this.get('stored').pushObject(development);
   }
 
-} 
+}

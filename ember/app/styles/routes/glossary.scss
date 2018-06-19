@@ -10,13 +10,6 @@
     @include media('medium') { width: 92%; }
   }
 
-  h1 {
-    display: inline-block;
-
-    font-size: 40px;
-    border-bottom: 6px solid $color_brand-primary;
-  }
-
   .terms-list {
     margin-top: 50px;
 
@@ -52,16 +45,6 @@
         & + p { margin-top: 15px; }
       }
     }
-  }
-
-  footer {
-    padding: 15px;
-
-    text-align: right;
-
-    background: $color_brand-primary;
-
-    img { width: 80px; }
   }
 
 }

@@ -38,11 +38,11 @@ module.exports = function(environment) {
   }
 
   if (environment === 'staging') {
-    ENV['host'] = 'http://api.staging2.massbuilds.com';
+    ENV['host'] = 'https://api.staging.massbuilds.com';
   }
 
   if (environment === 'production') {
-    ENV['host'] = 'https://api.massbuilds.com';
+    ENV['host'] = 'https://api.launch.ericyoungberg.com';
   }
 
   if (environment === 'test') {
