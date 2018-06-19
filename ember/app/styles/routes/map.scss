@@ -1,5 +1,4 @@
 .route.map {
-
   height: 100vh;
   width: 100%;
 
@@ -11,6 +10,41 @@
     left: 20px;
     z-index: 50;
     display: flex;
+  }
+
+  .legend-wrapper {
+    position: fixed;
+    bottom: 15px;
+    left: 15px;
+    z-index: 2;
+
+    .info-links {
+      display: inline-block;  
+      left: 50px;
+      top: 11px;
+
+      & > * {
+        display: block; 
+      
+        padding: 5px 10px;
+
+        font-weight: 600;
+        font-size: 12px;
+        text-align: center;
+
+        background: $color_bg-light;
+        border: 2px solid $color_bg-medium;
+        border-radius: 5px;
+        transition: background .15s;
+
+        &:first-of-type { margin-bottom: 5px; }
+
+        &:hover {
+          background: $color_bg-light--active; 
+          transition: background .15s;
+        }
+      }
+    }
   }
 
   .filter-actions {
