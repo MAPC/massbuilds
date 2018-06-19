@@ -12,9 +12,8 @@ services:
     ports:
       - "4200:4200"
       - "7020:7020"
-  
-  
-  backend: 
+
+  backend:
     build: ./rails
     volumes:
       - ./rails:/usr/src/app
@@ -24,13 +23,10 @@ services:
       - db
     links:
       - "db:db"
-  
+
   db:
-    image: mdillon/postgis:9.5
-    ports: 
-      - "5454:5432"
+    image: mdillon/postgis
     volumes:
       - ./volumes/db:/var/lib/postgresql/data
-    environment:
-      POSTGRES_USER: root
-      POSTGRES_PASSWORD: hoopla
+    env_file: 
+      - ./rails/.env

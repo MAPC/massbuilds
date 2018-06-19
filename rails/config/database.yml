@@ -23,8 +23,8 @@ default: &default
 
 development: &development
   <<: *default
-  host: <%= ENV.fetch('DEV_DATABASE_HOST') { 'localhost' } %>
-  password: <%= ENV.fetch('DEV_DATABASE_PASS') { nil } %>
+  host: <%= ENV.fetch('POSTGRES_DEV_HOST') { 'localhost' } %>
+  password: <%= ENV.fetch('POSTGRES_PASSWORD') { nil } %>
   database: massbuilds_development
 
   # The specified database role being used to connect to postgres.

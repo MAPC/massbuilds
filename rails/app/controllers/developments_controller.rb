@@ -14,11 +14,14 @@ class DevelopmentsController < ApplicationController
                     else
                       Development.where(filtered_params)
                     end
-
     respond_to do |format|
       format.jsonapi do
         scope = 'trunc' if params[:trunc]
-        render jsonapi: @developments, scope: scope
+        if scope == 'trunc'
+          render json: TruncatedDevelopmentSerializer.new(@developments).serialized_json
+        else
+          render json: DevelopmentSerializer.new(@developments).serialized_json
+        end
       end
       format.csv { send_data @developments.to_csv, filename: "massbuilds-#{Time.now.strftime("%Y%m%d")}.csv" }
       format.zip do
@@ -38,7 +41,7 @@ class DevelopmentsController < ApplicationController
   def show
     authorize @development
     respond_to do |format|
-      format.jsonapi { render jsonapi: @development }
+      format.jsonapi { render json: DevelopmentSerializer.new(@development).serialized_json }
     end
   end
 
@@ -49,10 +52,10 @@ class DevelopmentsController < ApplicationController
     @development.user = current_user
     if @development.save
       respond_to do |format|
-        format.jsonapi { render jsonapi: @development }
+        format.jsonapi { render json: DevelopmentSerializer.new(@development).serialized_json }
       end
     else
-      render jsonapi: @development.errors.full_messages, status: :bad_request
+      render json: DevelopmentSerializer.new(@development.errors.full_messages).serialized_json, status: :bad_request
     end
   end
 
@@ -61,7 +64,7 @@ class DevelopmentsController < ApplicationController
     authorize @development
     if @development.update(development_params)
       respond_to do |format|
-        format.jsonapi { render jsonapi: @development }
+        format.jsonapi { render json: DevelopmentSerializer.new(@development).serialized_json }
       end
     else
       respond_to do |format|
