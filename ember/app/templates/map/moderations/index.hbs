@@ -111,4 +111,39 @@
     </div>
   {{/if}}
 
+  <div class="panel-headers">
+    <h1>Flags</h1>
+    <h3>Listed below are all user-created flags for you to review</h3>
+  </div>
+
+  {{#if filteredFlags}}
+    <ul class="item-list">
+      <li class="list-header">
+        <div class="row">
+          <div>Development</div>
+        </div>
+      </li>
+      <div class='list-body'>
+        {{#each filteredFlags as |flagged-development|}}
+        {{#if flagged-development.flag}}
+          <li data-mod-id={{flagged-development.id}}>
+            <div class="row">
+              <div>
+                {{#link-to 'map.developments.development' flagged-development}}{{flagged-development.name}}{{/link-to}}
+              </div>
+              <div class="actions">
+                <button class="styled" onclick={{action unflag flagged-development}}>Unflag</button>
+              </div>
+            </div>
+          </li>
+        {{/if}}
+        {{/each}}
+      </div>
+    </ul>
+  {{else}}
+    <div class="no-records">
+      There are no flags for you to review.
+    </div>
+  {{/if}}
+
 </section>

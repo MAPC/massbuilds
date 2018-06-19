@@ -31,7 +31,7 @@
 
       <div class="metric-groups-wrapper">
         <div class="metric-groups">
-          <article> 
+          <article>
             <h4>Key Info</h4>
 
             <div class="row">
@@ -46,7 +46,7 @@
 
                 <div class="field">
                   <label for="yearCompl">
-                    Year Completed 
+                    Year Completed
                     {{#if model.yrcompEst}}
                       <small>(Estimated)</small>
                     {{/if}}
@@ -115,7 +115,7 @@
             <div class="attributes-wrapper">
               {{#if transitOptions}}
                 <p class="attributes">
-                  <label> 
+                  <label>
                     Nearest Public Transit Option{{if (not-eq model.nTransit.length 1) 's'}}:
                   </label>
                   {{transitOptions}}
@@ -348,7 +348,7 @@
                       <td>{{round (mult 100 (div model.retSqft model.commsf))}}%</td>
                     </tr>
                   {{/if}}
-   
+
                   {{#if model.ofcmdSqft}}
                     <tr>
                       <td>Office/Medical</td>

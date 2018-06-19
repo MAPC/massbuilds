@@ -62,7 +62,10 @@ class DevelopmentsController < ApplicationController
   # PATCH/PUT /developments/1
   def update
     authorize @development
-    if @development.update(development_params)
+
+    validate = !development_params[:flag]
+    @development.attributes = development_params
+    if @development.save(validate: validate)
       respond_to do |format|
         format.jsonapi { render json: DevelopmentSerializer.new(@development).serialized_json }
       end
