@@ -23,7 +23,7 @@ default: &default
 
 development: &development
   <<: *default
-  host: <%= ENV.fetch('POSTGRES_DEV_HOST') { 'localhost' } %>
+  host: <%= ENV.fetch('POSTGRES_DEV_HOST') { nil } %>
   password: <%= ENV.fetch('POSTGRES_PASSWORD') { nil } %>
   database: massbuilds_development
 
