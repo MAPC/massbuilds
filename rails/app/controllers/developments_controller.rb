@@ -20,7 +20,7 @@ class DevelopmentsController < ApplicationController
         if scope == 'trunc'
           render json: TruncatedDevelopmentSerializer.new(@developments).serialized_json
         else
-          render json: DevelopmentSerializer.new(@developments).serialized_json
+          render json: FullDevelopmentSerializer.new(@developments).serialized_json
         end
       end
       format.csv { send_data @developments.to_csv, filename: "massbuilds-#{Time.now.strftime("%Y%m%d")}.csv" }
@@ -41,7 +41,7 @@ class DevelopmentsController < ApplicationController
   def show
     authorize @development
     respond_to do |format|
-      format.jsonapi { render json: DevelopmentSerializer.new(@development).serialized_json }
+      format.jsonapi { render json: FullDevelopmentSerializer.new(@development).serialized_json }
     end
   end
 
@@ -52,10 +52,10 @@ class DevelopmentsController < ApplicationController
     @development.user = current_user
     if @development.save
       respond_to do |format|
-        format.jsonapi { render json: DevelopmentSerializer.new(@development).serialized_json }
+        format.jsonapi { render json: FullDevelopmentSerializer.new(@development).serialized_json }
       end
     else
-      render json: DevelopmentSerializer.new(@development.errors.full_messages).serialized_json, status: :bad_request
+      render json: FullDevelopmentSerializer.new(@development.errors.full_messages).serialized_json, status: :bad_request
     end
   end
 
@@ -67,7 +67,7 @@ class DevelopmentsController < ApplicationController
     @development.attributes = development_params
     if @development.save(validate: validate)
       respond_to do |format|
-        format.jsonapi { render json: DevelopmentSerializer.new(@development).serialized_json }
+        format.jsonapi { render json: FullDevelopmentSerializer.new(@development).serialized_json }
       end
     else
       respond_to do |format|
