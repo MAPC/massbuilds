@@ -190,8 +190,6 @@ const metricGroups = {
 
 
 const blacklist = [
-  'latitude', 
-  'longitude',
   'mapcNotes',
   'tagline',
   'parcelId',
@@ -211,13 +209,13 @@ const inflectorMap = {
  * Cleanup
  */
 
-// Add any remaining undefined filters based upon model 
+// Add any remaining undefined filters based upon model
 // Assume they are 'metric' filters
 Object.values(Ember.get(Development, 'attributes')._values)
       .forEach(attr => {
         let type = attr.type;
         let name = decamelize(attr.name)
-                   .split('_')                   
+                   .split('_')
                    .join(' ')
                    .capitalize();
 
@@ -257,11 +255,11 @@ const fromQueryParams = params => {
 };
 
 
-export { 
-  metricGroups, 
-  filters, 
-  fromQueryParams, 
-  inflectorMap 
+export {
+  metricGroups,
+  filters,
+  fromQueryParams,
+  inflectorMap
 };
 
 export default filters;

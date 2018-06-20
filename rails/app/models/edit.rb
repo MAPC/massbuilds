@@ -24,7 +24,7 @@ class Edit < ApplicationRecord
     {
       "title": "Edit",
       "type": "object",
-      "required": ["name", "status", "address", "year_compl", "zip_code", "hu", "commsf", "descr"],
+      "required": ["name", "status", "latitude", "longitude", "year_compl", "hu", "commsf", "descr"],
       "properties": {
         "name": {
           "type": "string"

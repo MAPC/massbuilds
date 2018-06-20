@@ -48,8 +48,14 @@ export default class extends Component {
     ];
 
     const base = [
-      'name', 'status', 'address', 'yearCompl',
-      'zipCode', 'hu', 'commsf', 'descr',
+      'name',
+      'status',
+      'latitude',
+      'longitude',
+      'yearCompl',
+      'hu',
+      'commsf',
+      'descr',
     ];
 
     const proposed = [
@@ -78,6 +84,8 @@ export default class extends Component {
     const coordinates = mapService.get('selectedCoordinates');
     this.set('editing.longitude', coordinates[0]);
     this.set('editing.latitude', coordinates[1]);
+    this.checkForUpdated('latitude');
+    this.checkForUpdated('longitude');
   }
 
 
@@ -256,7 +264,9 @@ export default class extends Component {
 
     const fulfilled = criteria.every(criterion => {
       const val = this.get(`editing.${criterion}`);
-
+      console.log(criterion, val, val !== null
+        && val !== undefined
+        && val !== '');
       return (
         val !== null
         && val !== undefined

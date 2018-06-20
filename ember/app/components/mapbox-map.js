@@ -112,7 +112,6 @@ export default class extends Component {
             }],
           });
           const center = centerOfMass.default(parcel.get('geojson'));
-          console.log(center);
           this.mapboxglMap.getSource('parcel_label').setData({
             type: 'FeatureCollection',
             features: [{
@@ -196,6 +195,7 @@ export default class extends Component {
         paint: {
           'line-color': '#7a7a7a',
           'line-width': 1,
+          'line-dasharray': [4, 2],
         },
       });
       this.mapboxglMap.addLayer({
