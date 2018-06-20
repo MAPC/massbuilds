@@ -13,7 +13,7 @@ export default class extends Controller {
 
   constructor() {
     super(...arguments);
-    
+
     const filterParams = Object.keys(filters);
     const boundingParams = ['minLat', 'minLng', 'maxLat', 'maxLng'];
     const otherParams = ['panel'];
@@ -34,6 +34,8 @@ export default class extends Controller {
 
     this.updateChildren = 0;
     this.panel = null;
+
+    this.baseMap = 'light';
   }
 
 
@@ -77,7 +79,7 @@ export default class extends Controller {
             typeof value !== 'object'  // not object/array
             || value.length > 0        // if array, then make sure it has elements
           ) {
-            found = Ember.copy(filters[col]); 
+            found = Ember.copy(filters[col]);
 
             if (found.filter === 'metric') {
               if (found.type === 'number') {
@@ -112,7 +114,7 @@ export default class extends Controller {
   @computed('showingFilters', 'showingDevelopment', 'showingUsers', 'showingModerations')
   get showingLeftPanel() {
     const showing = (
-      this.get('showingFilters') 
+      this.get('showingFilters')
       || this.get('showingDevelopment')
       || this.get('showingUsers')
       || this.get('showingModerations')
@@ -138,12 +140,23 @@ export default class extends Controller {
     );
   }
 
+  @action
+  setBaseMap(baseMap) {
+    this.get('map').set('baseMap', baseMap);
+    this.set('baseMap', baseMap);
+  }
+
+  @action
+  setZoomCommand(cmd) {
+    // Zoom commands include: ['IN', 'OUT']
+    this.get('map').set('zoomCommand', cmd);
+  }
 
   @action
   toggleMenu() {
     if (this.get('currentUser.user') === undefined && !this.get('overrideRightPanel')) {
       this.set('overrideRightPanel', true);
-    } 
+    }
     else {
       this.toggleProperty('showingMenu');
     }
@@ -177,7 +190,7 @@ export default class extends Controller {
     this.get('target').send('refreshModel');
   }
 
- 
+
   @action
   updateFilter(updateValues) {
     Object.keys(updateValues).forEach(col => {
@@ -192,7 +205,7 @@ export default class extends Controller {
           case 'boolean':
             value = (filter.value) ? true : undefined;
             break;
-          default: 
+          default:
             value = filter.value;
         }
       }
@@ -205,7 +218,7 @@ export default class extends Controller {
   }
 
 
-  @action 
+  @action
   addDiscreteFilter(selected) {
     const filter = { [selected.col]: [selected.value] };
 
@@ -227,7 +240,7 @@ export default class extends Controller {
   }
 
 
-  @action 
+  @action
   setMapInstance(map) {
     this.set('map.instance', map.target);
   }

@@ -17,15 +17,39 @@ export default class extends Component {
     });
     this.mapboxglMap.on('load', () => {
       const mapService = this.get('map');
+      this.mapboxglMap.on('styledata', () => {
+        this.draw(mapService);
+      });
       mapService.addObserver('stored', this, 'draw');
       mapService.addObserver('filteredData', this, 'draw');
-      mapService.addObserver('stored', this, 'zoom');
-      mapService.addObserver('filteredData', this, 'zoom');
+      mapService.addObserver('stored', this, 'focus');
+      mapService.addObserver('filteredData', this, 'focus');
+      mapService.addObserver('baseMap', this, 'setStyle');
+      mapService.addObserver('zoomCommand', this, 'actOnZoomCommand');
       if (mapService.stored.length) {
         this.draw(mapService);
-        this.zoom(mapService);
+        this.focus(mapService);
       }
     });
+  }
+
+  setStyle(mapService) {
+    const newBaseMap = mapService.get('baseMap');
+    if (newBaseMap == 'light') {
+      this.mapboxglMap.setStyle('mapbox://styles/mapbox/light-v9');
+    } else if (newBaseMap == 'satellite') {
+      this.mapboxglMap.setStyle('mapbox://styles/ihill/cjin8f3kc0ytj2sr0rxw11a90');
+    }
+  }
+
+  actOnZoomCommand(mapService) {
+    const zoomCommand = mapService.get('zoomCommand');
+    if (zoomCommand == 'IN') {
+      this.mapboxglMap.zoomIn();
+    } else if (zoomCommand == 'OUT') {
+      this.mapboxglMap.zoomOut();
+    }
+    mapService.set('zoomCommand', null);
   }
 
   generateFeatures(developments) {
@@ -46,7 +70,7 @@ export default class extends Component {
     }));
   }
 
-  zoom(mapService) {
+  focus(mapService) {
     const data = mapService.get('filteredData').length
         ? mapService.get('filteredData')
         : mapService.get('stored');
@@ -57,34 +81,98 @@ export default class extends Component {
     this.mapboxglMap.fitBounds(fitBounds, { padding: 40 });
   }
 
+  generatePaintProperties(selected, highContrast) {
+    if (selected) {
+      if (highContrast) {
+        return {
+          'circle-color': ['get', 'color'],
+          'circle-radius': [
+            'interpolate',
+            ['linear'],
+            ['zoom'],
+            10, 3,
+            16, 8,
+          ],
+          'circle-opacity': 0.8,
+          'circle-stroke-width': [
+            'interpolate',
+            ['linear'],
+            ['zoom'],
+            10, 0.5,
+            16, 1.5,
+          ],
+          'circle-stroke-color': '#000',
+          'circle-stroke-opacity': 1,
+        };
+      } else {
+        return {
+          'circle-color': ['get', 'color'],
+          'circle-radius': [
+            'interpolate',
+            ['linear'],
+            ['zoom'],
+            10, 0,
+            16, 8,
+          ],
+          'circle-opacity': 0.2,
+          'circle-stroke-width': 3,
+          'circle-stroke-color': ['get', 'color'],
+          'circle-stroke-opacity': 1,
+        };
+      }
+    } else {
+      if (highContrast) {
+        return {
+          'circle-color': '#333',
+          'circle-radius': [
+            'interpolate',
+            ['linear'],
+            ['zoom'],
+            10, 3,
+            16, 8,
+          ],
+          'circle-opacity': 0.8,
+          'circle-stroke-width': [
+            'interpolate',
+            ['linear'],
+            ['zoom'],
+            10, 0.5,
+            16, 1.5,
+          ],
+          'circle-stroke-color': '#000',
+          'circle-stroke-opacity': 1,
+        };
+      } else {
+        return {
+          'circle-color': '#888',
+          'circle-radius': 0,
+          'circle-opacity': 0.2,
+          'circle-stroke-width': 3,
+          'circle-stroke-color': '#888',
+          'circle-stroke-opacity': 0.3,
+        };
+      }
+    }
+  }
+
   draw(mapService) {
     // All data
     const allFeatures = this.generateFeatures(mapService.get('filteredData').length
         ? mapService.get('remainder')
         : mapService.stored);
+    const highContrast = mapService.get('baseMap') != 'light';
 
     if (this.mapboxglMap.getLayer('all')) {
       this.mapboxglMap.getSource('all').setData({
         type: 'FeatureCollection',
         features: allFeatures,
       });
-      if (mapService.get('filteredData').length) {
-        this.mapboxglMap.setPaintProperty('all', 'circle-color', '#888');
-        this.mapboxglMap.setPaintProperty('all', 'circle-radius', 0);
-        this.mapboxglMap.setPaintProperty('all', 'circle-stroke-color', '#888');
-        this.mapboxglMap.setPaintProperty('all', 'circle-stroke-opacity', 0.3);
-      } else {
-        this.mapboxglMap.setPaintProperty('all', 'circle-color', ['get', 'color']);
-        this.mapboxglMap.setPaintProperty('all', 'circle-radius', [
-          'interpolate',
-          ['linear'],
-          ['zoom'],
-          10, 0,
-          16, 10,
-        ]);
-        this.mapboxglMap.setPaintProperty('all', 'circle-stroke-color', ['get', 'color']);
-        this.mapboxglMap.setPaintProperty('all', 'circle-stroke-opacity', 1);
-      }
+      Object.entries(this.generatePaintProperties(
+        mapService.get('filteredData').length == 0,
+        highContrast
+      )).forEach(([property, value]) => {
+        this.mapboxglMap.setPaintProperty('all', property, value);
+      });
     } else {
       this.mapboxglMap.addLayer({
         id: 'all',
@@ -96,20 +184,10 @@ export default class extends Component {
             features: allFeatures,
           },
         },
-        paint: {
-          'circle-color': (mapService.get('filteredData').length ? '#888' : ['get', 'color']),
-          'circle-radius': (mapService.get('filteredData').length ? 0 : [
-            'interpolate',
-            ['linear'],
-            ['zoom'],
-            10, 0,
-            16, 10,
-          ]),
-          'circle-opacity': 0.2,
-          'circle-stroke-width': 3,
-          'circle-stroke-color': (mapService.get('filteredData').length ? '#888' : ['get', 'color']),
-          'circle-stroke-opacity': (mapService.get('filteredData').length ? 0.3 : 1),
-        },
+        paint: this.generatePaintProperties(
+          mapService.get('filteredData').length == 0,
+          highContrast
+        ),
       });
     }
 
@@ -133,19 +211,7 @@ export default class extends Component {
               features: filteredFeatures,
             }
           },
-          paint: {
-            'circle-color': ['get', 'color'],
-            'circle-radius': [
-              'interpolate',
-              ['linear'],
-              ['zoom'],
-              10, 0,
-              16, 10,
-            ],
-            'circle-opacity': 0.2,
-            'circle-stroke-width': 3,
-            'circle-stroke-color': ['get', 'color'],
-          },
+          paint: this.generatePaintProperties(true, highContrast),
         });
       }
     } else if (this.mapboxglMap.getLayer('filtered')) {
