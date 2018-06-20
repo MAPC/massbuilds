@@ -72,7 +72,6 @@ export default class extends Controller {
   @action
   createEdit(data) {
     data['state'] = 'MA';
-    console.log(data);
     const newEdit = this.get('store').createRecord('edit', {
       user: this.get('currentUser.user'),
       approved: false,

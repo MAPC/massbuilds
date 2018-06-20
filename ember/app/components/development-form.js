@@ -264,9 +264,6 @@ export default class extends Component {
 
     const fulfilled = criteria.every(criterion => {
       const val = this.get(`editing.${criterion}`);
-      console.log(criterion, val, val !== null
-        && val !== undefined
-        && val !== '');
       return (
         val !== null
         && val !== undefined
