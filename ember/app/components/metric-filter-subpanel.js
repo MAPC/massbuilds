@@ -6,9 +6,7 @@ import filters, { metricGroups } from 'massbuilds/utils/filters';
 
 export default class extends Component {
 
-  constructor() {
-    super();
-
+  didReceiveAttrs() {
     this.get('subgroups').forEach(subgroup => {
       subgroup.metrics.forEach(metric => {
         this.set(metric.col, metric);
@@ -65,8 +63,8 @@ export default class extends Component {
 
   @action
   updateFilter(filter) {
-    this.set(`${filter.col}.value`, filter.value);
-    this.sendAction('update', { [filter.col]: filter });
+    this.set(`${filter.col}.value`, filter.value || null);
+    this.sendAction('update', { [filter.col]: { ...filter } });
   }
   
 
