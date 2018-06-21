@@ -25,3 +25,9 @@ ubuntu@i:/etc/postgresql/9.5/main$ sudo pg_ctlcluster 9.5 main restart -m fast
 ```
 
 Also make sure the foreign_database_username and foreign_database_password attributes are set in `secrets.yml`.
+
+You also may need to set your Postgres development environment database variables in .env:
+
+`POSTGRES_USER`: should be set to the development database postgres username
+`POSTGRES_DEV_HOST`: should be set to the host of the development database
+`POSTGRES_PASSWORD`: should be set to the password of the development database username

@@ -26,12 +26,12 @@ export default class extends Service {
     this.filteredData = [];
     this.baseMap = 'light';
 
-    this.boundsUpdater = 0;
-
     this.stored = [];
     this.storedBounds = null;
 
     this.zoomCommand = null;
+    this.selectionMode = false;
+    this.selectedCoordinates = [0, 0];
 
     this.get('store').query('development', { trunc: true }).then(results => {
       this.set('stored', results.toArray());
@@ -39,46 +39,17 @@ export default class extends Service {
     });
   }
 
-
-  @computed('stored.length', 'filteredData.length', 'viewing', 'boundsUpdater')
-  get bounds() {
-    const viewing = this.get('viewing');
-    let data = [];
-    let mod = 0;
-
-    if (viewing) {
-      data = [viewing];
-      mod = -.0024;
-    }
-    else {
-      const dataSource = (this.get('filteredData.length') > 0) ? 'filteredData' : 'stored';
-      data = this.get(dataSource);
-    }
-
-    const storedBounds = this.get('storedBounds');
-
-    if (data.get('length') === this.get('stored.length') && storedBounds != null) {
-      return storedBounds;
-    }
-
-    let latLngs = [];
-    if (data.get('length') > 0) {
-      latLngs = data.map(datum => new mapboxgl.LngLat(datum.get('longitude') + mod, datum.get('latitude')));
-    }
-    else {
-      latLngs = [this.get('lower'), this.get('upper')];
-    }
-
-    const bounds = mapboxgl.LngLatBounds.convert(latLngs);
-
-    return bounds;
+  setSelectionMode(selectionMode) {
+    this.set('selectionMode', selectionMode);
   }
 
-
-  returnToPoint() {
-    this.set('boundsUpdater', Math.random());
+  setSelectedCoordinates(coordinates) {
+    this.set('selectedCoordinates', coordinates);
   }
 
+  setViewing(dev) {
+    this.set('viewing', dev);
+  }
 
   filterByQuery(query) {
     if (Object.keys(query.filter).length === 0) {
@@ -95,6 +66,12 @@ export default class extends Service {
             this.set('filteredData', result);
           });
     }
+  }
+
+  setFocusedDevelopment(id) {
+    this.get('store').findRecord('development', id).then((dev) => {
+      this.set('focusedDevelopment', dev);
+    });
   }
 
   @computed('stored', 'filteredData')

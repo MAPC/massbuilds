@@ -18,7 +18,7 @@ export default class extends Controller {
   get hasPublishPermissions() {
     return this.get('currentUser.user.role') !== 'user';
   }
-  
+
 
   @computed('hasPublishPermissions')
   get submitText() {
@@ -32,7 +32,7 @@ export default class extends Controller {
   }
 
 
-  @action 
+  @action
   createDevelopment(data) {
     const model = this.get('model');
     data = castToModel(Development, data);
@@ -72,7 +72,6 @@ export default class extends Controller {
   @action
   createEdit(data) {
     data['state'] = 'MA';
-
     const newEdit = this.get('store').createRecord('edit', {
       user: this.get('currentUser.user'),
       approved: false,

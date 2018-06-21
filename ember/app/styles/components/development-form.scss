@@ -1,12 +1,19 @@
 .component.development-form {
+  $font_size-h1: 26px;
+  $font_size-h2: 18px;
 
-  input, textarea { 
+  label.hidden {
+    position: fixed;
+    top: -100%;
+  }
+
+  input, textarea {
     padding: 2px 8px;
     margin: 2px;
 
-    background: mix($color_bg-light--active, $color_brand-primary, 90); 
+    background: mix($color_bg-light--active, $color_brand-primary, 90);
     border: none;
-    outline: none; 
+    outline: none;
     transition: background .15s;
 
     &:focus, &:active {
@@ -15,7 +22,7 @@
     }
   }
 
-  h1:hover {
+  fieldset.primary:hover {
     color: $color_font-dark !important;
   }
 
@@ -41,26 +48,53 @@
   }
 
   .development-header {
-    h1 > input { width: 100%; } 
-    h2 > input { width: 90%; }
-
-    .address-fields {
-      input {
-        &:first-of-type { width: 70%; } 
-        &:last-of-type { 
-          width: 20%;
-        }
-      }  
+    .form-row {
+      margin-bottom: 0.2em;
+    }
+    .form-row.primary > input {
+      font-size: $font_size-h1;
+      width: 100%;
+    }
+    .form-row.secondary > input {
+      font-size: $font_size-h2;
+      width: 90%;
     }
 
-    .project-url > input { 
-      width: 50%; 
-      font-size: 14px; 
+    .form-row.secondary {
+      img {
+        width: 25px;
+        padding: 3px 10px 3px 0;
+        border-right: 1px solid #CCCCCC;
+        margin-right: 5px;
+      }
+    }
+
+    .form-row.location-fields {
+      display: flex;
+      align-items: center;
+      input {
+        width: 8em;
+        margin-right: 6px;
+      }
+      p {
+        flex: 1;
+        margin: 0;
+        padding: 0;
+        font-size: 15px;
+      }
+    }
+
+    .form-row.project-url {
+      display: flex;
+      align-items: center;
+      input {
+        width: 50%;
+      }
     }
   }
 
   .column {
-    ul { 
+    ul {
       flex: 1 0 40%;
 
       margin: 0;
@@ -75,10 +109,10 @@
       border: none;
       border-bottom: 1px solid rgba($color_brand-primary--active, 0);
 
-      & + span { 
+      & + span {
         display: inline-block;
 
-        margin-left: 6px; 
+        margin-left: 6px;
       }
     }
   }
@@ -88,21 +122,26 @@
       margin-left: 3px;
       margin-right: 0;
 
-      color: $color_font-medium; 
+      color: $color_font-medium;
       font-size: 13px;
     }
   }
 
   h3.field label { left: 10px; }
- 
-  button.submit-changes { margin-left: 10px; }
+
+  button.submit-changes {
+    margin-left: 10px;
+    &:disabled {
+      background-color: $color_button-disabled;
+    }
+  }
 
   .required-note {
     position: absolute;
     bottom: -10px;
 
     width: 100%;
-    
+
     color: $color_state-negative;
     font-size: 13px;
     text-align: right;
