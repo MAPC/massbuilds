@@ -104,7 +104,9 @@ export default class extends Component {
       const newCoordinates = this.get('map').get('selectedCoordinates');
       if (parcels.length) {
         const parcel = parcels[0];
-        if (pointInPolygon.default({ type: 'Point', coordinates: newCoordinates }, parcel.get('geojson'))) {
+        if (pointInPolygon.default({ type: 'Point', coordinates: newCoordinates }, parcel.get('geojson'))
+            && this.mapboxglMap.getSource('parcel')
+            && this.mapboxglMap.getSource('parcel_label')) {
           this.mapboxglMap.getSource('parcel').setData({
             type: 'FeatureCollection',
             features: [{
@@ -165,6 +167,7 @@ export default class extends Component {
 
   drawSelector(mapService) {
     const selectionMode = mapService.get('selectionMode');
+    const highContrast = mapService.get('baseMap') != 'light';
     if (selectionMode && !this.mapboxglMap.getLayer('selector')) {
       this.mapboxglMap.addLayer({
         id: 'selector',
@@ -176,14 +179,21 @@ export default class extends Component {
             features: [],
           },
         },
-        paint: {
+        paint: (mapService.get('baseMap') != 'light' ? {
+          'circle-color': '#FF9800',
+          'circle-radius': 10,
+          'circle-opacity': 0.8,
+          'circle-stroke-width': 1.5,
+          'circle-stroke-color': '#000',
+          'circle-stroke-opacity': 1,
+        } : {
           'circle-color': '#FF9800',
           'circle-radius': 10,
           'circle-opacity': 0.2,
           'circle-stroke-width': 3,
           'circle-stroke-color': '#FF9800',
           'circle-stroke-opacity': 1,
-        },
+        }),
       });
       this.mapboxglMap.addLayer({
         id: 'parcel',
@@ -196,8 +206,8 @@ export default class extends Component {
           },
         },
         paint: {
-          'line-color': '#7a7a7a',
-          'line-width': 1,
+          'line-color': highContrast ? '#fff' : '#7a7a7a',
+          'line-width': highContrast ? 2 : 1,
           'line-dasharray': [4, 2],
         },
       });
@@ -219,7 +229,9 @@ export default class extends Component {
           'text-font': ['Open Sans Bold'],
         },
         paint: {
-          'text-color': '#7a7a7a',
+          'text-color': highContrast ? '#fff' : '#7a7a7a',
+          'text-halo-color': '#000',
+          'text-halo-width': highContrast ? 1 : 0,
         },
       });
     } else if (this.mapboxglMap.getLayer('selector')) {

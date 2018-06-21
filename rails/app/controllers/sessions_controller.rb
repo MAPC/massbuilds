@@ -6,8 +6,6 @@ class SessionsController < Devise::SessionsController
 
     user_from_email = User.where(email: params[:user][:email])
     if user_from_email.length > 0
-      puts user_from_email
-      puts user_from_email.first
       disabled_user = user_from_email.first.role == 'disabled'
       if disabled_user
         if request.format.json?
@@ -35,4 +33,5 @@ class SessionsController < Devise::SessionsController
     skip_authorization
     super
   end
+
 end
