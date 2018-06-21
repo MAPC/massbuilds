@@ -4,16 +4,21 @@ class SessionsController < Devise::SessionsController
   def create
     skip_authorization
 
-    disabled_user = User.where(email: params[:user][:email]).first.role == 'disabled'
-    if disabled_user
-      if request.format.json?
-        data = {
-          message: 'Disabled user',
-        }
-
-        render json: data, status: 401 and return
+    user_from_email = User.where(email: params[:user][:email])
+    if user_from_email.length > 0
+      puts user_from_email
+      puts user_from_email.first
+      disabled_user = user_from_email.first.role == 'disabled'
+      if disabled_user
+        if request.format.json?
+          data = {
+            message: 'Disabled user',
+          }
+          render json: data, status: 401 and return
+        end
       end
     end
+
 
     super do |user|
       if request.format.json?
