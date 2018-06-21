@@ -24,11 +24,14 @@ export default class extends Service {
     this.instance = null;
     this.viewing = null;
     this.filteredData = [];
+    this.baseMap = 'light';
 
     this.boundsUpdater = 0;
 
     this.stored = [];
     this.storedBounds = null;
+
+    this.zoomCommand = null;
 
     this.get('store').query('development', { trunc: true }).then(results => {
       this.set('stored', results.toArray());
