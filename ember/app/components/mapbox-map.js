@@ -241,6 +241,7 @@ export default class extends Component {
       this.mapboxglMap.removeSource('parcel');
       this.mapboxglMap.removeLayer('parcel_label');
       this.mapboxglMap.removeSource('parcel_label');
+      this.set('previousCoordinatesKey', null);
     }
   }
 
