@@ -3,13 +3,13 @@ import Controller from '@ember/controller';
 import { action, computed } from 'ember-decorators/object';
 import { service } from 'ember-decorators/service';
 import filters from 'massbuilds/utils/filters';
-
+import { alias } from 'ember-decorators/object/computed';
 
 export default class extends Controller {
 
   @service map
   @service currentUser
-
+  @alias('map.baseMap') baseMap
 
   constructor() {
     super(...arguments);
@@ -34,8 +34,6 @@ export default class extends Controller {
 
     this.updateChildren = 0;
     this.panel = null;
-
-    this.baseMap = 'light';
   }
 
 
@@ -142,8 +140,7 @@ export default class extends Controller {
 
   @action
   setBaseMap(baseMap) {
-    this.get('map').set('baseMap', baseMap);
-    this.set('baseMap', baseMap);
+    this.set('map.baseMap', baseMap);
   }
 
   @action
