@@ -83,9 +83,12 @@ export default class extends Component {
         });
         this.get('map').setSelectedCoordinates(coordinates);
         const previousParcel = this.get('previousParcel');
-        if ((Date.now() - this.get('lastRequest') > 250) &&
-            (this.mapboxglMap.getLayer('parcel')) &&
-            (!previousParcel || !pointInPolygon.default({ type: 'Point', coordinates: coordinates }, previousParcel.get('geojson')))) {
+        if ((Date.now() - this.get('lastRequest') > 250)
+            && this.mapboxglMap.getLayer('parcel')
+            && (
+              !previousParcel
+              || !pointInPolygon.default({ type: 'Point', coordinates: coordinates }, previousParcel.get('geojson'))
+            )) {
           this.getNewParcel(coordinates);
         }
 
@@ -219,7 +222,6 @@ export default class extends Component {
           'text-color': '#7a7a7a',
         },
       });
-      // this.updateSelection();
     } else if (this.mapboxglMap.getLayer('selector')) {
       this.mapboxglMap.removeLayer('selector');
       this.mapboxglMap.removeSource('selector');

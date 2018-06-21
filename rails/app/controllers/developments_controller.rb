@@ -55,7 +55,6 @@ class DevelopmentsController < ApplicationController
         format.jsonapi { render json: FullDevelopmentSerializer.new(@development).serialized_json }
       end
     else
-      puts @development.errors.full_messages
       respond_to do |format|
         format.jsonapi { head :bad_request }
       end

@@ -1,4 +1,6 @@
 .component.development-form {
+  $font_size-h1: 26px;
+  $font_size-h2: 18px;
 
   label.hidden {
     position: fixed;
@@ -87,7 +89,6 @@
       align-items: center;
       input {
         width: 50%;
-        // font-size: 14px;
       }
     }
   }
