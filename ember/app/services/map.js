@@ -26,8 +26,6 @@ export default class extends Service {
     this.filteredData = [];
     this.baseMap = 'light';
 
-    // this.boundsUpdater = 0;
-
     this.stored = [];
     this.storedBounds = null;
 
@@ -49,47 +47,9 @@ export default class extends Service {
     this.set('selectedCoordinates', coordinates);
   }
 
-  // @computed('stored.length', 'filteredData.length', 'viewing', 'boundsUpdater')
-  // get bounds() {
-  //   const viewing = this.get('viewing');
-  //   let data = [];
-  //   let mod = 0;
-
-  //   if (viewing) {
-  //     data = [viewing];
-  //     mod = -.0024;
-  //   }
-  //   else {
-  //     const dataSource = (this.get('filteredData.length') > 0) ? 'filteredData' : 'stored';
-  //     data = this.get(dataSource);
-  //   }
-
-  //   const storedBounds = this.get('storedBounds');
-
-  //   if (data.get('length') === this.get('stored.length') && storedBounds != null) {
-  //     return storedBounds;
-  //   }
-
-  //   let latLngs = [];
-  //   if (data.get('length') > 0) {
-  //     latLngs = data.map(datum => new mapboxgl.LngLat(datum.get('longitude') + mod, datum.get('latitude')));
-  //   }
-  //   else {
-  //     latLngs = [this.get('lower'), this.get('upper')];
-  //   }
-
-  //   const bounds = mapboxgl.LngLatBounds.convert(latLngs);
-
-  //   return bounds;
-  // }
-
   setViewing(dev) {
     this.set('viewing', dev);
   }
-
-  // returnToPoint() {
-  //   this.set('boundsUpdater', Math.random());
-  // }
 
   filterByQuery(query) {
     if (Object.keys(query.filter).length === 0) {
