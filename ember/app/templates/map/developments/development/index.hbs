@@ -15,436 +15,441 @@
   </div>
 
   <div class="development-content">
-    <div class="layout-column">
-      <div class="development-header">
-        <h1 onclick={{action findPosition}}>{{model.name}}</h1>
-        <h2><img src="/assets/images/map-pin.svg" onclick={{action findPosition}}> {{model.fullAddress}}</h2>
+    <div class="layout-column scroll-wrapper">
+      <div class="scroll-content">
+        <div class="development-header">
+          <h1 onclick={{action findPosition}}>{{model.name}}</h1>
+          <h2><img src="/assets/images/map-pin.svg" onclick={{action findPosition}}> {{model.fullAddress}}</h2>
 
-        {{#if model.prjUrl}}
-          <h2 class="project-url">
-            <img src="/assets/images/link.svg">
-            <a href={{model.prjUrl}}>{{model.prjUrl}}</a>
-          </h2>
-        {{/if}}
+          {{#if model.prjUrl}}
+            <h2 class="project-url">
+              <img src="/assets/images/link.svg">
+              <a href={{model.prjUrl}}>{{model.prjUrl}}</a>
+            </h2>
+          {{/if}}
 
-      </div>
+        </div>
 
-      <div class="metric-groups-wrapper">
-        <div class="metric-groups">
-          <article> 
-            <h4>Key Info</h4>
+        <div class="metric-groups-wrapper">
+          <div class="metric-groups">
+            <article>
+              <h4>Key Info</h4>
 
-            <div class="row">
-              <div class="column">
-                <div class="field">
-                  <label for="status">Status:</label>
+              <div class="row">
+                <div class="column">
+                  <div class="field">
+                    <label for="status">Status:</label>
 
-                  <span style="color: {{status-color model.status}}">
-                    {{capitalize model.status}}
-                  </span>
-                </div>
+                    <span style="color: {{status-color model.status}}">
+                      {{capitalize model.status}}
+                    </span>
+                  </div>
 
-                <div class="field">
-                  <label for="yearCompl">
-                    Year Completed 
-                    {{#if model.yrcompEst}}
-                      <small>(Estimated)</small>
+                  <div class="field">
+                    <label for="yearCompl">
+                      Year Completed
+                      {{#if model.yrcompEst}}
+                        <small>(Estimated)</small>
+                      {{/if}}
+                    </label>
+                    {{model.yearCompl}}
+                  </div>
+
+                  <div class="field">
+                    <label for="totalCost">Cost</label>
+                    {{#if model.totalCost}}
+                      ${{number-format model.totalCost}}
+                    {{else}}
+                      <span class="unknown">Unknown</span>
                     {{/if}}
-                  </label>
-                  {{model.yearCompl}}
+                  </div>
+
+                  <div class="field">
+                    <label for="prjarea">Project Area</label>
+                    {{#if model.prjarea}}
+                      {{number-format model.prjarea decimals=0}} sqft.
+                    {{else}}
+                      <span class="unknown">Unknown</span>
+                    {{/if}}
+                  </div>
                 </div>
 
-                <div class="field">
-                  <label for="totalCost">Cost</label>
-                  {{#if model.totalCost}}
-                    ${{number-format model.totalCost}}
-                  {{else}}
-                    <span class="unknown">Unknown</span>
+                <div class="column">
+                  <div class="field">
+                    <label for="height">Height</label>
+                    {{#if model.height}}
+                      {{number-format model.height decimals=0}} ft.
+                    {{else}}
+                      <span class="unknown">Unknown</span>
+                    {{/if}}
+                  </div>
+
+                  <div class="field">
+                    <label for="stories">Stories</label>
+                    {{#if model.stories}}
+                      {{model.stories}}
+                    {{else}}
+                      <span class="unknown">Unknown</span>
+                    {{/if}}
+                  </div>
+
+                  <div class="field">
+                    <label for="onsitepark">Parking Spaces</label>
+                    {{#if model.onsitepark}}
+                      {{number-format model.onsitepark decimals=0}}
+                    {{else}}
+                      <span class="unknown">Unknown</span>
+                    {{/if}}
+                  </div>
+
+                  <div class="field">
+                    <label for="parkType">Parking Type</label>
+                    {{#if parkTypes}}
+                      {{parkTypes}}
+                    {{else}}
+                      <span class="unknown">Unknown</span>
+                    {{/if}}
+                  </div>
+                </div>
+              </div>
+
+              <div class="attributes-wrapper">
+                {{#if transitOptions}}
+                  <p class="attributes">
+                    <label>
+                      Nearest Public Transit Option{{if (not-eq model.nTransit.length 1) 's'}}:
+                    </label>
+                    {{transitOptions}}
+                  </p>
+                {{/if}}
+
+                {{#if keyAttributes}}
+                  <p class="attributes">
+                    <label>Attributes:</label>
+                    {{keyAttributes}}
+                  </p>
+                {{/if}}
+              </div>
+            </article>
+
+            <article>
+              <h4>Residential</h4>
+
+              <div class="row">
+                <div class="column">
+                  {{#if (gt model.gqpop 0)}}
+                    <div class="field">
+                      <label for="gqpop">Group Quarters Pop.</label>
+                      {{number-format model.gqpop decimals=0}}
+                    </div>
                   {{/if}}
                 </div>
-
-                <div class="field">
-                  <label for="prjarea">Project Area</label>
-                  {{#if model.prjarea}}
-                    {{number-format model.prjarea decimals=0}} sqft.
-                  {{else}}
-                    <span class="unknown">Unknown</span>
-                  {{/if}}
+                <div class="column">
                 </div>
               </div>
 
-              <div class="column">
-                <div class="field">
-                  <label for="height">Height</label>
-                  {{#if model.height}}
-                    {{number-format model.height decimals=0}} ft.
-                  {{else}}
-                    <span class="unknown">Unknown</span>
-                  {{/if}}
-                </div>
-
-                <div class="field">
-                  <label for="stories">Stories</label>
-                  {{#if model.stories}}
-                    {{model.stories}}
-                  {{else}}
-                    <span class="unknown">Unknown</span>
-                  {{/if}}
-                </div>
-
-                <div class="field">
-                  <label for="onsitepark">Parking Spaces</label>
-                  {{#if model.onsitepark}}
-                    {{number-format model.onsitepark decimals=0}}
-                  {{else}}
-                    <span class="unknown">Unknown</span>
-                  {{/if}}
-                </div>
-
-                <div class="field">
-                  <label for="parkType">Parking Type</label>
-                  {{#if parkTypes}}
-                    {{parkTypes}}
-                  {{else}}
-                    <span class="unknown">Unknown</span>
-                  {{/if}}
-                </div>
-              </div>
-            </div>
-
-            <div class="attributes-wrapper">
-              {{#if transitOptions}}
-                <p class="attributes">
-                  <label> 
-                    Nearest Public Transit Option{{if (not-eq model.nTransit.length 1) 's'}}:
-                  </label>
-                  {{transitOptions}}
-                </p>
-              {{/if}}
-
-              {{#if keyAttributes}}
+              {{#if residentialAttributes}}
                 <p class="attributes">
                   <label>Attributes:</label>
-                  {{keyAttributes}}
+                  {{residentialAttributes}}
                 </p>
               {{/if}}
-            </div>
-          </article>
 
-          <article>
-            <h4>Residential</h4>
+              <div class="table-wrapper">
+                <h3 class="field">
+                  <label for="hu">Tot. Housing Units</label>
+                  {{#if model.hu}}
+                    {{number-format model.hu decimals=0}} Units
+                  {{else}}
+                    No Housing Units
+                  {{/if}}
+                </h3>
 
-            <div class="row">
-              <div class="column">
-                {{#if (gt model.gqpop 0)}}
-                  <div class="field">
-                    <label for="gqpop">Group Quarters Pop.</label>
-                    {{number-format model.gqpop decimals=0}}
-                  </div>
-                {{/if}}
-              </div>
-              <div class="column">
-              </div>
-            </div>
-
-            {{#if residentialAttributes}}
-              <p class="attributes">
-                <label>Attributes:</label>
-                {{residentialAttributes}}
-              </p>
-            {{/if}}
-
-            <div class="table-wrapper">
-              <h3 class="field">
-                <label for="hu">Tot. Housing Units</label>
                 {{#if model.hu}}
-                  {{number-format model.hu decimals=0}} Units
-                {{else}}
-                  No Housing Units
-                {{/if}}
-              </h3>
-
-              {{#if model.hu}}
-                <table class="housing-units">
-                  <tr class="table-header">
-                    <td>Unit Type</td>
-                    <td>Quantity</td>
-                    <td>Percentage</td>
-                  </tr>
-
-                  {{#if model.singfamhu}}
-                    <tr>
-                      <td>Single Family</td>
-                      <td>{{number-format model.singfamhu decimals=0}}</td>
-                      <td>{{round (mult 100 (div model.singfamhu model.hu))}}%</td>
+                  <table class="housing-units">
+                    <tr class="table-header">
+                      <td>Unit Type</td>
+                      <td>Quantity</td>
+                      <td>Percentage</td>
                     </tr>
-                  {{/if}}
 
-                  {{#if model.smmultifam}}
-                    <tr>
-                      <td>Small Multi-family</td>
-                      <td>{{number-format model.smmultifam decimals=0}}</td>
-                      <td>{{round (mult 100 (div model.smmultifam model.hu))}}%</td>
-                    </tr>
-                  {{/if}}
+                    {{#if model.singfamhu}}
+                      <tr>
+                        <td>Single Family</td>
+                        <td>{{number-format model.singfamhu decimals=0}}</td>
+                        <td>{{round (mult 100 (div model.singfamhu model.hu))}}%</td>
+                      </tr>
+                    {{/if}}
 
-                  {{#if model.lgmultifam}}
-                    <tr>
-                      <td>Large Multi-family</td>
-                      <td>{{number-format model.lgmultifam decimals=0}}</td>
-                      <td>{{round (mult 100 (div model.lgmultifam model.hu))}}%</td>
-                    </tr>
-                  {{/if}}
+                    {{#if model.smmultifam}}
+                      <tr>
+                        <td>Small Multi-family</td>
+                        <td>{{number-format model.smmultifam decimals=0}}</td>
+                        <td>{{round (mult 100 (div model.smmultifam model.hu))}}%</td>
+                      </tr>
+                    {{/if}}
 
-                  {{#if model.units1bd}}
-                    <tr>
-                      <td>Studio/1 Bedroom</td>
-                      <td>{{number-format model.units1bd decimals=0}}</td>
-                      <td>{{round (mult 100 (div model.units1bd model.hu))}}%</td>
-                    </tr>
-                  {{/if}}
+                    {{#if model.lgmultifam}}
+                      <tr>
+                        <td>Large Multi-family</td>
+                        <td>{{number-format model.lgmultifam decimals=0}}</td>
+                        <td>{{round (mult 100 (div model.lgmultifam model.hu))}}%</td>
+                      </tr>
+                    {{/if}}
 
-                  {{#if model.units2bd}}
-                    <tr>
-                      <td>2 Bedroom</td>
-                      <td>{{number-format model.units2bd decimals=0}}</td>
-                      <td>{{round (mult 100 (div model.units2bd model.hu))}}%</td>
-                    </tr>
-                  {{/if}}
+                    {{#if model.units1bd}}
+                      <tr>
+                        <td>Studio/1 Bedroom</td>
+                        <td>{{number-format model.units1bd decimals=0}}</td>
+                        <td>{{round (mult 100 (div model.units1bd model.hu))}}%</td>
+                      </tr>
+                    {{/if}}
 
-                  {{#if model.units3bd}}
-                    <tr>
-                      <td>3 Bedroom</td>
-                      <td>{{number-format model.units3bd decimals=0}}</td>
-                      <td>{{round (mult 100 (div model.units3bd model.hu))}}%</td>
-                    </tr>
-                  {{/if}}
+                    {{#if model.units2bd}}
+                      <tr>
+                        <td>2 Bedroom</td>
+                        <td>{{number-format model.units2bd decimals=0}}</td>
+                        <td>{{round (mult 100 (div model.units2bd model.hu))}}%</td>
+                      </tr>
+                    {{/if}}
 
-                  {{#if model.unknownhu}}
-                    <tr>
-                      <td>Unknown</td>
-                      <td>{{number-format model.unknownhu decimals=0}}</td>
-                      <td>{{round (mult 100 (div model.unknownhu model.hu))}}%</td>
-                    </tr>
-                  {{/if}}
+                    {{#if model.units3bd}}
+                      <tr>
+                        <td>3 Bedroom</td>
+                        <td>{{number-format model.units3bd decimals=0}}</td>
+                        <td>{{round (mult 100 (div model.units3bd model.hu))}}%</td>
+                      </tr>
+                    {{/if}}
 
-                </table>
-              {{/if}}
-            </div>
+                    {{#if model.unknownhu}}
+                      <tr>
+                        <td>Unknown</td>
+                        <td>{{number-format model.unknownhu decimals=0}}</td>
+                        <td>{{round (mult 100 (div model.unknownhu model.hu))}}%</td>
+                      </tr>
+                    {{/if}}
 
-            <div class="table-wrapper">
-              <h3 class="field">
-                <label for="affrdUnit">Affordable Units</label>
-                {{#if (or model.affrdUnit (eq model.affrdUnit 0))}}
-                  {{number-format model.affrdUnit decimals=0}} Units
-                {{else}}
-                  Unknown
-                {{/if}}
-              </h3>
-
-              {{#if model.affrdUnit}}
-                <table class="affordable-units">
-                  <tr class="table-header">
-                    <td>Unit Type</td>
-                    <td>Quantity</td>
-                    <td>Percentage</td>
-                  </tr>
-
-                  {{#if model.affU30}}
-                    <tr>
-                      <td>Units &lt;30% AMI</td>
-                      <td>{{number-format model.affU30 decimals=0}}</td>
-                      <td>{{round (mult 100 (div model.affU30 model.affrdUnit))}}%</td>
-                    </tr>
-                  {{/if}}
-
-                  {{#if model.affU3050}}
-                    <tr>
-                      <td>Units 30-50% AMI</td>
-                      <td>{{number-format model.affU3050 decimals=0}}</td>
-                      <td>{{round (mult 100 (div model.affU3050 model.affrdUnit))}}%</td>
-                    </tr>
-                  {{/if}}
-
-                  {{#if model.affU5080}}
-                    <tr>
-                      <td>Units 50-80% AMI</td>
-                      <td>{{number-format model.affU5080 decimals=0}}</td>
-                      <td>{{round (mult 100 (div model.affU5080 model.affrdUnit))}}%</td>
-                    </tr>
-                  {{/if}}
-
-                  {{#if model.affU80p}}
-                    <tr>
-                      <td>Units 80-100% AMI</td>
-                      <td>{{number-format model.affU80p decimals=0}}</td>
-                      <td>{{round (mult 100 (div model.affU80p model.affrdUnit))}}%</td>
-                    </tr>
-                  {{/if}}
-                </table>
-              {{/if}}
-            </div>
-          </article>
-
-          <article>
-            <h4>Commercial</h4>
-
-            <div class="row">
-              <div class="column">
-                {{#if model.estemp}}
-                  <div class="field">
-                    <label for="estemp">Estimated Employment</label>
-                    {{number-format model.estemp decimals=0}}
-                  </div>
-                {{/if}}
-
-                {{#if model.rptdemp}}
-                  <div class="field">
-                    <label for="rptdemp">Reported Employment</label>
-                    {{number-format model.rptdemp decimals=0}}
-                  </div>
+                  </table>
                 {{/if}}
               </div>
 
-              <div class="column">
-                {{#if model.hotelrms}}
-                  <div class="field">
-                    <label for="hotelrms">Hotel Rooms</label>
-                    {{number-format model.hotelrms decimals=0}}
-                  </div>
+              <div class="table-wrapper">
+                <h3 class="field">
+                  <label for="affrdUnit">Affordable Units</label>
+                  {{#if (or model.affrdUnit (eq model.affrdUnit 0))}}
+                    {{number-format model.affrdUnit decimals=0}} Units
+                  {{else}}
+                    Unknown
+                  {{/if}}
+                </h3>
+
+                {{#if model.affrdUnit}}
+                  <table class="affordable-units">
+                    <tr class="table-header">
+                      <td>Unit Type</td>
+                      <td>Quantity</td>
+                      <td>Percentage</td>
+                    </tr>
+
+                    {{#if model.affU30}}
+                      <tr>
+                        <td>Units &lt;30% AMI</td>
+                        <td>{{number-format model.affU30 decimals=0}}</td>
+                        <td>{{round (mult 100 (div model.affU30 model.affrdUnit))}}%</td>
+                      </tr>
+                    {{/if}}
+
+                    {{#if model.affU3050}}
+                      <tr>
+                        <td>Units 30-50% AMI</td>
+                        <td>{{number-format model.affU3050 decimals=0}}</td>
+                        <td>{{round (mult 100 (div model.affU3050 model.affrdUnit))}}%</td>
+                      </tr>
+                    {{/if}}
+
+                    {{#if model.affU5080}}
+                      <tr>
+                        <td>Units 50-80% AMI</td>
+                        <td>{{number-format model.affU5080 decimals=0}}</td>
+                        <td>{{round (mult 100 (div model.affU5080 model.affrdUnit))}}%</td>
+                      </tr>
+                    {{/if}}
+
+                    {{#if model.affU80p}}
+                      <tr>
+                        <td>Units 80-100% AMI</td>
+                        <td>{{number-format model.affU80p decimals=0}}</td>
+                        <td>{{round (mult 100 (div model.affU80p model.affrdUnit))}}%</td>
+                      </tr>
+                    {{/if}}
+                  </table>
                 {{/if}}
               </div>
-            </div>
+            </article>
 
-            {{#if commercialAttributes}}
-              <p class="attributes">
-                <label>Attributes:</label>
-                {{commercialAttributes}}
-              </p>
-            {{/if}}
+            <article>
+              <h4>Commercial</h4>
 
-            <div class="table-wrapper">
-              <h3 class="field">
-                <label for="commsf">Commercial Square Footage</label>
+              <div class="row">
+                <div class="column">
+                  {{#if model.estemp}}
+                    <div class="field">
+                      <label for="estemp">Estimated Employment</label>
+                      {{number-format model.estemp decimals=0}}
+                    </div>
+                  {{/if}}
+
+                  {{#if model.rptdemp}}
+                    <div class="field">
+                      <label for="rptdemp">Reported Employment</label>
+                      {{number-format model.rptdemp decimals=0}}
+                    </div>
+                  {{/if}}
+                </div>
+
+                <div class="column">
+                  {{#if model.hotelrms}}
+                    <div class="field">
+                      <label for="hotelrms">Hotel Rooms</label>
+                      {{number-format model.hotelrms decimals=0}}
+                    </div>
+                  {{/if}}
+                </div>
+              </div>
+
+              {{#if commercialAttributes}}
+                <p class="attributes">
+                  <label>Attributes:</label>
+                  {{commercialAttributes}}
+                </p>
+              {{/if}}
+
+              <div class="table-wrapper">
+                <h3 class="field">
+                  <label for="commsf">Commercial Square Footage</label>
+                  {{#if model.commsf}}
+                    {{number-format model.commsf decimals=0}} sqft.
+                  {{else}}
+                    No Commercial Usage
+                  {{/if}}
+                </h3>
+
                 {{#if model.commsf}}
-                  {{number-format model.commsf decimals=0}} sqft.
-                {{else}}
-                  No Commercial Usage
+                  <table class="commercial-makeup">
+                    <tr class="table-header">
+                      <td>Use Type</td>
+                      <td>Floor Area (sqft.)</td>
+                      <td>Percentage</td>
+                    </tr>
+
+                    {{#if model.retSqft}}
+                      <tr>
+                        <td>Retail</td>
+                        <td>{{number-format model.retSqft decimals=0}}</td>
+                        <td>{{round (mult 100 (div model.retSqft model.commsf))}}%</td>
+                      </tr>
+                    {{/if}}
+
+                    {{#if model.ofcmdSqft}}
+                      <tr>
+                        <td>Office/Medical</td>
+                        <td>{{number-format model.ofcmdSqft decimals=0}}</td>
+                        <td>{{round (mult 100 (div model.ofcmdSqft model.commsf))}}%</td>
+                      </tr>
+                    {{/if}}
+
+                    {{#if model.indmfSqft}}
+                      <tr>
+                        <td>Industrial/Manufacturing</td>
+                        <td>{{number-format model.indmfSqft decimals=0}}</td>
+                        <td>{{round (mult 100 (div model.indmfSqft model.commsf))}}%</td>
+                      </tr>
+                    {{/if}}
+
+                    {{#if model.whsSqft}}
+                      <tr>
+                        <td>Warehouse/Shipping</td>
+                        <td>{{number-format model.whsSqft decimals=0}}</td>
+                        <td>{{round (mult 100 (div model.whsSqft model.commsf))}}%</td>
+                      </tr>
+                    {{/if}}
+
+                    {{#if model.rndSqft}}
+                      <tr>
+                        <td>Research/Development</td>
+                        <td>{{number-format model.rndSqft decimals=0}}</td>
+                        <td>{{round (mult 100 (div model.rndSqft model.commsf))}}%</td>
+                      </tr>
+                    {{/if}}
+
+                    {{#if model.eiSqft}}
+                      <tr>
+                        <td>Educational/Institutional</td>
+                        <td>{{number-format model.eiSqft decimals=0}}</td>
+                        <td>{{round (mult 100 (div model.eiSqft model.commsf))}}%</td>
+                      </tr>
+                    {{/if}}
+
+                    {{#if model.hotelSqft}}
+                      <tr>
+                        <td>Hotel Room</td>
+                        <td>{{number-format model.hotelSqft decimals=0}}</td>
+                        <td>{{round (mult 100 (div model.hotelSqft model.commsf))}}%</td>
+                      </tr>
+                    {{/if}}
+
+                    {{#if model.otherSqft}}
+                      <tr>
+                        <td>Other</td>
+                        <td>{{number-format model.otherSqft decimals=0}}</td>
+                        <td>{{round (mult 100 (div model.otherSqft model.commsf))}}%</td>
+                      </tr>
+                    {{/if}}
+                  </table>
                 {{/if}}
-              </h3>
-
-              {{#if model.commsf}}
-                <table class="commercial-makeup">
-                  <tr class="table-header">
-                    <td>Use Type</td>
-                    <td>Floor Area (sqft.)</td>
-                    <td>Percentage</td>
-                  </tr>
-
-                  {{#if model.retSqft}}
-                    <tr>
-                      <td>Retail</td>
-                      <td>{{number-format model.retSqft decimals=0}}</td>
-                      <td>{{round (mult 100 (div model.retSqft model.commsf))}}%</td>
-                    </tr>
-                  {{/if}}
-   
-                  {{#if model.ofcmdSqft}}
-                    <tr>
-                      <td>Office/Medical</td>
-                      <td>{{number-format model.ofcmdSqft decimals=0}}</td>
-                      <td>{{round (mult 100 (div model.ofcmdSqft model.commsf))}}%</td>
-                    </tr>
-                  {{/if}}
-
-                  {{#if model.indmfSqft}}
-                    <tr>
-                      <td>Industrial/Manufacturing</td>
-                      <td>{{number-format model.indmfSqft decimals=0}}</td>
-                      <td>{{round (mult 100 (div model.indmfSqft model.commsf))}}%</td>
-                    </tr>
-                  {{/if}}
-
-                  {{#if model.whsSqft}}
-                    <tr>
-                      <td>Warehouse/Shipping</td>
-                      <td>{{number-format model.whsSqft decimals=0}}</td>
-                      <td>{{round (mult 100 (div model.whsSqft model.commsf))}}%</td>
-                    </tr>
-                  {{/if}}
-
-                  {{#if model.rndSqft}}
-                    <tr>
-                      <td>Research/Development</td>
-                      <td>{{number-format model.rndSqft decimals=0}}</td>
-                      <td>{{round (mult 100 (div model.rndSqft model.commsf))}}%</td>
-                    </tr>
-                  {{/if}}
-
-                  {{#if model.eiSqft}}
-                    <tr>
-                      <td>Educational/Institutional</td>
-                      <td>{{number-format model.eiSqft decimals=0}}</td>
-                      <td>{{round (mult 100 (div model.eiSqft model.commsf))}}%</td>
-                    </tr>
-                  {{/if}}
-
-                  {{#if model.hotelSqft}}
-                    <tr>
-                      <td>Hotel Room</td>
-                      <td>{{number-format model.hotelSqft decimals=0}}</td>
-                      <td>{{round (mult 100 (div model.hotelSqft model.commsf))}}%</td>
-                    </tr>
-                  {{/if}}
-
-                  {{#if model.otherSqft}}
-                    <tr>
-                      <td>Other</td>
-                      <td>{{number-format model.otherSqft decimals=0}}</td>
-                      <td>{{round (mult 100 (div model.otherSqft model.commsf))}}%</td>
-                    </tr>
-                  {{/if}}
-                </table>
-              {{/if}}
-            </div>
-          </article>
+              </div>
+            </article>
+          </div>
         </div>
       </div>
     </div>
 
-    <div class="layout-column">
-      {{#if model.devlper}}
-        <div class="detail">
-          <h3>Developer</h3>
-          <p>{{model.devlper}}</p>
+    <div class="layout-column with-actions">
+      <div class="scroll-wrapper">
+        <div class="scroll-content">
+          {{#if model.devlper}}
+            <div class="detail">
+              <h3>Developer</h3>
+              <p>{{model.devlper}}</p>
+            </div>
+          {{/if}}
+
+          {{#if model.user}}
+            <div class="detail">
+              <h3>Entry Created By</h3>
+              <p>
+                {{#if (eq model.user.fullName 'undefined undefined')}}
+                  {{loading-spinner message="Loading Creator" isLoading=true}}
+                {{else}}
+                  {{model.user.fullName}}
+                {{/if}}
+              </p>
+            </div>
+          {{/if}}
+
+          <div class="detail">
+            <h3>Last Updated</h3>
+            <p>{{format-date model.updatedAt format='MMM. Do YYYY'}}</p>
+          </div>
+
+          <div class="detail">
+            <h3>Description</h3>
+            <p>
+              {{model.descr}}
+            </p>
+          </div>
         </div>
-      {{/if}}
-
-      {{#if model.user}}
-        <div class="detail">
-          <h3>Entry Created By</h3>
-          <p>
-            {{#if (eq model.user.fullName 'undefined undefined')}}
-              {{loading-spinner message="Loading Creator" isLoading=true}}
-            {{else}}
-              {{model.user.fullName}}
-            {{/if}}
-          </p>
-        </div>
-      {{/if}}
-
-      <div class="detail">
-        <h3>Last Updated</h3>
-        <p>{{format-date model.updatedAt format='MMM. Do YYYY'}}</p>
       </div>
-
-      <div class="detail">
-        <h3>Description</h3>
-        <p>
-          {{model.descr}}
-        </p>
-      </div>
-
       {{#if hasDeletePermissions}}
         <div class="actions">
           <button class="styled negative" onclick={{action deleteDevelopment}}>Delete Development</button>
