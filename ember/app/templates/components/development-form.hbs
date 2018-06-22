@@ -11,32 +11,56 @@
     {{/link-to}}
   {{/if}}
 
-  {{#if (and fulfilled changes)}}
-    {{#loading-spinner message=loadingSpinnerText isLoading=isLoading}}
-      <button onclick={{action update}} class='submit-changes styled'>{{submitText}}</button>
-    {{/loading-spinner}}
-  {{/if}}
+  {{#loading-spinner message=loadingSpinnerText isLoading=isLoading}}
+    <button onclick={{action update}} class='submit-changes styled' disabled={{not (and fulfilled changes)}}>
+      {{submitText}}
+    </button>
+  {{/loading-spinner}}
 </div>
 
-<div class="development-content">
+<form class="development-content">
   <div class="layout-column">
     <div class="development-header">
-      <h1 class="required">{{input value=editing.name placeholder="Development Name" key-up=(action checkForUpdated 'name')}}</h1>
-      <h2 class="required address-fields">
-        <img src="/assets/images/map-pin.svg" onclick={{action findPosition}}> 
-        {{input value=editing.address placeholder="Development Street Address" key-up=(action checkForUpdated 'address')}}
-        {{input value=editing.zipCode placeholder="Zip Code" key-up=(action checkForUpdated 'zipCode')}}
-      </h2>
 
-      <h2 class="project-url">
+      <div class="form-row required primary">
+        <label for="development_name" class="hidden">Development Name</label>
+        {{input
+          id="development_name"
+          value=editing.name
+          placeholder="Development Name"
+          key-up=(action checkForUpdated 'name')
+        }}
+      </div>
+
+      <div class="form-row required secondary location-fields">
+        <img src="/assets/images/map-pin.svg">
+        <label for="development_latitude" class="hidden">Latitude</label>
+        {{input
+          id="development_latitude"
+          value=(to-fixed editing.latitude 6)
+          placeholder="Latitude"
+          readonly="readonly"
+        }}
+        <label for="development_longitude" class="hidden">Longitude</label>
+        {{input
+          id="development_longitude"
+          value=(to-fixed editing.longitude 6)
+          placeholder="Longitude"
+          readonly="readonly"
+        }}
+        <p>Drag map to set location</p>
+      </div>
+
+      <div class="form-row secondary project-url">
         <img src="/assets/images/link.svg">
         {{input value=editing.prjUrl placeholder="Project Website" key-up=(action checkForUpdated 'prjUrl')}}
-      </h2>
+      </div>
+
     </div>
 
     <div class="metric-groups-wrapper">
       <div class="metric-groups">
-        <article> 
+        <article>
           <h4>Key Info</h4>
 
           <div class="row">
@@ -289,7 +313,7 @@
                     {{round (mult 100 (div editing.affU30 editing.affrdUnit))}}%
                   {{else}}
                     0%
-                  {{/if}} 
+                  {{/if}}
                 </td>
               </tr>
 
@@ -301,7 +325,7 @@
                     {{round (mult 100 (div editing.aff3050 editing.affrdUnit))}}%
                   {{else}}
                     0%
-                  {{/if}} 
+                  {{/if}}
                 </td>
               </tr>
 
@@ -313,7 +337,7 @@
                     {{round (mult 100 (div editing.aff5080 editing.affrdUnit))}}%
                   {{else}}
                     0%
-                  {{/if}} 
+                  {{/if}}
                 </td>
               </tr>
 
@@ -325,7 +349,7 @@
                     {{round (mult 100 (div editing.aff80p editing.affrdUnit))}}%
                   {{else}}
                     0%
-                  {{/if}} 
+                  {{/if}}
                 </td>
               </tr>
 
@@ -337,7 +361,7 @@
                     {{round (mult 100 (div editing.affUnknown editing.affrdUnit))}}%
                   {{else}}
                     0%
-                  {{/if}} 
+                  {{/if}}
                 </td>
               </tr>
             </table>
@@ -549,4 +573,4 @@
       * = required field
     </div>
   </div>
-</div>
+</form>

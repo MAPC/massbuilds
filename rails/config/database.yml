@@ -25,6 +25,7 @@ development: &development
   <<: *default
   username: <%= ENV.fetch('POSTGRES_USER') { nil } %>
   host: <%= ENV.fetch('POSTGRES_DEV_HOST') { nil } %>
+  username: <%= ENV.fetch('POSTGRES_USER') { nil } %>
   password: <%= ENV.fetch('POSTGRES_PASSWORD') { nil } %>
   database: massbuilds_development
 

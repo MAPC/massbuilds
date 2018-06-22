@@ -2,30 +2,247 @@ import Component from '@ember/component';
 import { service } from 'ember-decorators/service';
 import statusColors from 'massbuilds/utils/status-colors';
 import mapboxgl from 'npm:mapbox-gl';
+import pointInPolygon from 'npm:@turf/boolean-point-in-polygon';
+import centerOfMass from 'npm:@turf/center-of-mass';
 
 mapboxgl.accessToken = 'pk.eyJ1IjoiaWhpbGwiLCJhIjoiY2plZzUwMTRzMW45NjJxb2R2Z2thOWF1YiJ9.szIAeMS4c9YTgNsJeG36gg';
 
 export default class extends Component {
 
+  @service store
   @service map
+
+  constructor() {
+    super();
+    this.previousCoordinatesKey = null;
+    this.previousParcel = null;
+    this.lastRequest = null;
+  }
 
   didInsertElement() {
     this.mapboxglMap = new mapboxgl.Map({
       container: this.get('element'),
       style: 'mapbox://styles/mapbox/light-v9',
       maxBounds: [[-74.5, 40], [-68, 44]],
+      dragRotate: false,
+      pitchWithRotate: false,
+      touchZoomRotate: false,
     });
     this.mapboxglMap.on('load', () => {
       const mapService = this.get('map');
+      this.mapboxglMap.on('styledata', () => {
+        this.draw(mapService);
+      });
       mapService.addObserver('stored', this, 'draw');
       mapService.addObserver('filteredData', this, 'draw');
-      mapService.addObserver('stored', this, 'zoom');
-      mapService.addObserver('filteredData', this, 'zoom');
+      mapService.addObserver('stored', this, 'focus');
+      mapService.addObserver('filteredData', this, 'focus');
+      mapService.addObserver('baseMap', this, 'setStyle');
+      mapService.addObserver('zoomCommand', this, 'actOnZoomCommand');
+      mapService.addObserver('viewing', this, 'jumpTo');
+      mapService.addObserver('selectionMode', this, 'draw');
+      mapService.addObserver('selectionMode', this, 'drawSelector');
       if (mapService.stored.length) {
         this.draw(mapService);
-        this.zoom(mapService);
+        this.focus(mapService);
+      }
+      if (mapService.viewing) {
+        this.focus(mapService);
+      }
+      if (mapService.selectionMode) {
+        this.drawSelector(mapService);
       }
     });
+    this.mapboxglMap.on('render', () => this.updateSelection());
+  }
+
+  updateSelection() {
+    if (this.mapboxglMap && this.mapboxglMap.getSource('selector')) {
+      const bounds = this.mapboxglMap.getBounds();
+      const northEast = bounds.getNorthEast().toArray();
+      const southWest = bounds.getSouthWest().toArray();
+      const leftPanelWidth = parseInt(Ember.$('.left-panel-layer').css('width'));
+      const mapWidth = parseInt(this.$().css('width'));
+      const ratio = (((mapWidth - leftPanelWidth) / 2) + leftPanelWidth) / mapWidth;
+      const coordinates = [
+        (northEast[0] - southWest[0]) * ratio + southWest[0],
+        (northEast[1] - southWest[1]) * 0.5 + southWest[1],
+      ];
+      if (this.get('previousCoordinatesKey') != coordinates.toString()) {
+        this.mapboxglMap.getSource('selector').setData({
+          type: 'FeatureCollection',
+          features: [{
+            type: 'Feature',
+            properties: {
+            },
+            geometry: {
+              type: 'Point',
+              coordinates: coordinates,
+            },
+          }],
+        });
+        this.get('map').setSelectedCoordinates(coordinates);
+        const previousParcel = this.get('previousParcel');
+        if ((Date.now() - this.get('lastRequest') > 250)
+            && this.mapboxglMap.getLayer('parcel')
+            && (
+              !previousParcel
+              || !pointInPolygon.default({ type: 'Point', coordinates: coordinates }, previousParcel.get('geojson'))
+            )) {
+          this.getNewParcel(coordinates);
+        }
+
+        this.set('previousCoordinatesKey', coordinates.toString());
+      }
+    }
+  }
+
+  getNewParcel(coordinates) {
+    this.set('lastRequest', Date.now());
+    this.get('store').query('parcel', { lng: coordinates[0], lat: coordinates[1] }).then((results) => {
+      const parcels = results.toArray();
+      const newCoordinates = this.get('map').get('selectedCoordinates');
+      if (parcels.length) {
+        const parcel = parcels[0];
+        if (pointInPolygon.default({ type: 'Point', coordinates: newCoordinates }, parcel.get('geojson'))
+            && this.mapboxglMap.getSource('parcel')
+            && this.mapboxglMap.getSource('parcel_label')) {
+          this.mapboxglMap.getSource('parcel').setData({
+            type: 'FeatureCollection',
+            features: [{
+              type: 'Feature',
+              properties: {
+              },
+              geometry: parcel.get('geojson'),
+            }],
+          });
+          const center = centerOfMass.default(parcel.get('geojson'));
+          this.mapboxglMap.getSource('parcel_label').setData({
+            type: 'FeatureCollection',
+            features: [{
+              type: 'Feature',
+              properties: {
+                site_addr: parcel.get('site_addr') ? parcel.get('site_addr') : '[ADDRESS UNKNOWN]',
+                muni: parcel.get('muni') ? parcel.get('muni').toUpperCase() : '',
+              },
+              geometry: center.geometry,
+            }],
+          });
+          this.set('previousParcel', parcel);
+        } else {
+          this.getNewParcel(newCoordinates);
+        }
+      } else {
+        this.set('previousParcel', null);
+        this.mapboxglMap.getSource('parcel').setData({
+          type: 'FeatureCollection',
+          features: [],
+        });
+        this.mapboxglMap.getSource('parcel_label').setData({
+          type: 'FeatureCollection',
+          features: [],
+        });
+      }
+    });
+  }
+
+  setStyle(mapService) {
+    const newBaseMap = mapService.get('baseMap');
+    if (newBaseMap == 'light') {
+      this.mapboxglMap.setStyle('mapbox://styles/mapbox/light-v9');
+    } else if (newBaseMap == 'satellite') {
+      this.mapboxglMap.setStyle('mapbox://styles/ihill/cjin8f3kc0ytj2sr0rxw11a90');
+    }
+  }
+
+  actOnZoomCommand(mapService) {
+    const zoomCommand = mapService.get('zoomCommand');
+    if (zoomCommand == 'IN') {
+      this.mapboxglMap.zoomIn();
+    } else if (zoomCommand == 'OUT') {
+      this.mapboxglMap.zoomOut();
+    }
+    mapService.set('zoomCommand', null);
+  }
+
+  drawSelector(mapService) {
+    const selectionMode = mapService.get('selectionMode');
+    const highContrast = mapService.get('baseMap') != 'light';
+    if (selectionMode && !this.mapboxglMap.getLayer('selector')) {
+      this.mapboxglMap.addLayer({
+        id: 'selector',
+        type: 'circle',
+        source: {
+          type: 'geojson',
+          data: {
+            type: 'FeatureCollection',
+            features: [],
+          },
+        },
+        paint: (mapService.get('baseMap') != 'light' ? {
+          'circle-color': '#FF9800',
+          'circle-radius': 10,
+          'circle-opacity': 0.8,
+          'circle-stroke-width': 1.5,
+          'circle-stroke-color': '#000',
+          'circle-stroke-opacity': 1,
+        } : {
+          'circle-color': '#FF9800',
+          'circle-radius': 10,
+          'circle-opacity': 0.2,
+          'circle-stroke-width': 3,
+          'circle-stroke-color': '#FF9800',
+          'circle-stroke-opacity': 1,
+        }),
+      });
+      this.mapboxglMap.addLayer({
+        id: 'parcel',
+        type: 'line',
+        source: {
+          type: 'geojson',
+          data: {
+            type: 'FeatureCollection',
+            features: [],
+          },
+        },
+        paint: {
+          'line-color': highContrast ? '#fff' : '#7a7a7a',
+          'line-width': highContrast ? 2 : 1,
+          'line-dasharray': [4, 2],
+        },
+      });
+      this.mapboxglMap.addLayer({
+        id: 'parcel_label',
+        type: 'symbol',
+        source: {
+          type: 'geojson',
+          data: {
+            type: 'FeatureCollection',
+            features: [],
+          },
+        },
+        layout: {
+          'text-field': '{site_addr},\n{muni}',
+          'text-size': 12,
+          'text-justify': 'left',
+          'text-max-width': 20,
+          'text-font': ['Open Sans Bold'],
+        },
+        paint: {
+          'text-color': highContrast ? '#fff' : '#7a7a7a',
+          'text-halo-color': '#000',
+          'text-halo-width': highContrast ? 1 : 0,
+        },
+      });
+    } else if (this.mapboxglMap.getLayer('selector')) {
+      this.mapboxglMap.removeLayer('selector');
+      this.mapboxglMap.removeSource('selector');
+      this.mapboxglMap.removeLayer('parcel');
+      this.mapboxglMap.removeSource('parcel');
+      this.mapboxglMap.removeLayer('parcel_label');
+      this.mapboxglMap.removeSource('parcel_label');
+      this.set('previousCoordinatesKey', null);
+    }
   }
 
   generateFeatures(developments) {
@@ -46,7 +263,14 @@ export default class extends Component {
     }));
   }
 
-  zoom(mapService) {
+  jumpTo(mapService) {
+    const dev = mapService.get('viewing');
+    const coordinates = [dev.get('longitude') - .00125, dev.get('latitude')];
+    const bounds = new mapboxgl.LngLatBounds([coordinates, coordinates]);
+    this.mapboxglMap.fitBounds(bounds, { padding: 40, maxZoom: 18 });
+  }
+
+  focus(mapService) {
     const data = mapService.get('filteredData').length
         ? mapService.get('filteredData')
         : mapService.get('stored');
@@ -57,34 +281,100 @@ export default class extends Component {
     this.mapboxglMap.fitBounds(fitBounds, { padding: 40 });
   }
 
+  generatePaintProperties(selected, highContrast, isMuted) {
+    if (selected) {
+      if (highContrast) {
+        return {
+          'circle-color': ['get', 'color'],
+          'circle-radius': [
+            'interpolate',
+            ['linear'],
+            ['zoom'],
+            10, 3,
+            16, 8,
+          ],
+          'circle-opacity': isMuted ? 0.3 : 0.8,
+          'circle-stroke-width': [
+            'interpolate',
+            ['linear'],
+            ['zoom'],
+            10, 0.5,
+            16, 1.5,
+          ],
+          'circle-stroke-color': '#000',
+          'circle-stroke-opacity': isMuted ? 0.4 : 1,
+        };
+      } else {
+        return {
+          'circle-color': ['get', 'color'],
+          'circle-radius': [
+            'interpolate',
+            ['linear'],
+            ['zoom'],
+            10, 0,
+            16, 8,
+          ],
+          'circle-opacity': 0.2,
+          'circle-stroke-width': 3,
+          'circle-stroke-color': ['get', 'color'],
+          'circle-stroke-opacity': isMuted ? 0.3 : 1,
+        };
+      }
+    } else {
+      if (highContrast) {
+        return {
+          'circle-color': '#333',
+          'circle-radius': [
+            'interpolate',
+            ['linear'],
+            ['zoom'],
+            10, 3,
+            16, 8,
+          ],
+          'circle-opacity': 0.8,
+          'circle-stroke-width': [
+            'interpolate',
+            ['linear'],
+            ['zoom'],
+            10, 0.5,
+            16, 1.5,
+          ],
+          'circle-stroke-color': '#000',
+          'circle-stroke-opacity': 1,
+        };
+      } else {
+        return {
+          'circle-color': '#888',
+          'circle-radius': 0,
+          'circle-opacity': 0.2,
+          'circle-stroke-width': 3,
+          'circle-stroke-color': '#888',
+          'circle-stroke-opacity': 0.3,
+        };
+      }
+    }
+  }
+
   draw(mapService) {
     // All data
     const allFeatures = this.generateFeatures(mapService.get('filteredData').length
         ? mapService.get('remainder')
         : mapService.stored);
+    const highContrast = mapService.get('baseMap') != 'light';
+    const isMuted = mapService.get('selectionMode');
 
     if (this.mapboxglMap.getLayer('all')) {
       this.mapboxglMap.getSource('all').setData({
         type: 'FeatureCollection',
         features: allFeatures,
       });
-      if (mapService.get('filteredData').length) {
-        this.mapboxglMap.setPaintProperty('all', 'circle-color', '#888');
-        this.mapboxglMap.setPaintProperty('all', 'circle-radius', 0);
-        this.mapboxglMap.setPaintProperty('all', 'circle-stroke-color', '#888');
-        this.mapboxglMap.setPaintProperty('all', 'circle-stroke-opacity', 0.3);
-      } else {
-        this.mapboxglMap.setPaintProperty('all', 'circle-color', ['get', 'color']);
-        this.mapboxglMap.setPaintProperty('all', 'circle-radius', [
-          'interpolate',
-          ['linear'],
-          ['zoom'],
-          10, 0,
-          16, 10,
-        ]);
-        this.mapboxglMap.setPaintProperty('all', 'circle-stroke-color', ['get', 'color']);
-        this.mapboxglMap.setPaintProperty('all', 'circle-stroke-opacity', 1);
-      }
+      Object.entries(this.generatePaintProperties(
+        mapService.get('filteredData').length == 0,
+        highContrast,
+        isMuted
+      )).forEach(([property, value]) => {
+        this.mapboxglMap.setPaintProperty('all', property, value);
+      });
     } else {
       this.mapboxglMap.addLayer({
         id: 'all',
@@ -96,20 +386,11 @@ export default class extends Component {
             features: allFeatures,
           },
         },
-        paint: {
-          'circle-color': (mapService.get('filteredData').length ? '#888' : ['get', 'color']),
-          'circle-radius': (mapService.get('filteredData').length ? 0 : [
-            'interpolate',
-            ['linear'],
-            ['zoom'],
-            10, 0,
-            16, 10,
-          ]),
-          'circle-opacity': 0.2,
-          'circle-stroke-width': 3,
-          'circle-stroke-color': (mapService.get('filteredData').length ? '#888' : ['get', 'color']),
-          'circle-stroke-opacity': (mapService.get('filteredData').length ? 0.3 : 1),
-        },
+        paint: this.generatePaintProperties(
+          mapService.get('filteredData').length == 0,
+          highContrast,
+          isMuted
+        ),
       });
     }
 
@@ -122,6 +403,7 @@ export default class extends Component {
           type: 'FeatureCollection',
           features: filteredFeatures,
         });
+        this.mapboxglMap.setPaintProperty('filtered', 'circle-stroke-opacity', activeCircleStrokeOpacity);
       } else {
         this.mapboxglMap.addLayer({
           id: 'filtered',
@@ -133,19 +415,7 @@ export default class extends Component {
               features: filteredFeatures,
             }
           },
-          paint: {
-            'circle-color': ['get', 'color'],
-            'circle-radius': [
-              'interpolate',
-              ['linear'],
-              ['zoom'],
-              10, 0,
-              16, 10,
-            ],
-            'circle-opacity': 0.2,
-            'circle-stroke-width': 3,
-            'circle-stroke-color': ['get', 'color'],
-          },
+          paint: this.generatePaintProperties(true, highContrast, isMuted),
         });
       }
     } else if (this.mapboxglMap.getLayer('filtered')) {
@@ -169,10 +439,13 @@ export default class extends Component {
     this.mapboxglMap.on('click', 'all', (e) => {
       this.sendAction('viewDevelopment', e.features[0].properties.id);
     });
+
     const popup = new mapboxgl.Popup({
       closeButton: false,
       closeOnClick: false,
     });
+
+    let popupId = null;
 
     const openPopup = (e) => {
       // Change the cursor style as a UI indicator.
@@ -180,7 +453,7 @@ export default class extends Component {
 
       const coordinates = e.features[0].geometry.coordinates.slice();
       const properties = e.features[0].properties;
-
+      popupId = properties.id;
       const formattedStatus = properties.status
           .split('_')
           .map(w => w.capitalize())
@@ -215,10 +488,20 @@ export default class extends Component {
     const closePopup = () => {
       this.mapboxglMap.getCanvas().style.cursor = '';
       popup.remove();
+      popupId = null;
+    };
+
+    const updatePopup = (e) => {
+      if (popupId != e.features[0].properties.id) {
+        closePopup();
+        openPopup(e);
+      }
     };
 
     this.mapboxglMap.on('mouseenter', 'all', openPopup);
     this.mapboxglMap.on('mouseenter', 'filtered', openPopup);
+    this.mapboxglMap.on('mousemove', 'all', updatePopup);
+    this.mapboxglMap.on('mousemove', 'filtered', updatePopup);
     this.mapboxglMap.on('mouseleave', 'all', closePopup);
     this.mapboxglMap.on('mouseleave', 'filtered', closePopup);
   }

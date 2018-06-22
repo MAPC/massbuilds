@@ -5,7 +5,7 @@ class Development < ApplicationRecord
   belongs_to :user
   include PgSearch
   pg_search_scope :search_by_name_and_location, against: [:name, :municipal, :address], using: { tsearch: { any_word: true } }
-  validates :name, :status, :address, :year_compl, :zip_code, :hu,
+  validates :name, :status, :latitude, :longitude, :year_compl, :hu,
             :commsf, :descr, presence: true
   validates_inclusion_of :rdv, :asofright, :clusteros, :phased, :stalled, :mixed_use,
                          :headqtrs, :ovr55, :yrcomp_est, in: [true, false, nil]
@@ -92,9 +92,14 @@ class Development < ApplicationRecord
 
   def geocode
     return if point.present?
-    result = Faraday.get "http://pelias.mapc.org/v1/search?text=#{address},#{state},#{zip_code}&sources=oa"
-    self.point = "POINT (#{JSON.parse(result.body)['features'][0]['geometry']['coordinates'][0]} #{JSON.parse(result.body)['features'][0]['geometry']['coordinates'][1]})"
-    self.municipal = "#{JSON.parse(result.body)['features'][0]['properties']['locality']}"
+    self.point = "POINT (#{longitude} #{latitude})"
+    result = Faraday.get "http://pelias.mapc.org/v1/reverse?point.lat=#{latitude}&point.lon=#{longitude}"
+    if result && JSON.parse(result.body)['features'].length > 0
+      properties = JSON.parse(result.body)['features'][0]['properties']
+      self.municipal = properties['locality']
+      self.address = properties['name']
+      self.zip_code = properties['postalcode']
+    end
   end
 
   def self.zip(file_name)

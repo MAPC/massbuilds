@@ -14,18 +14,18 @@
 
   .legend-wrapper {
     position: fixed;
+    display: flex;
     bottom: 15px;
     left: 15px;
     z-index: 2;
-
+    & > *:not(:last-child) {
+      margin-right: 5px;
+    }
     .info-links {
-      display: inline-block;  
-      left: 50px;
-      top: 11px;
-
+      align-self: flex-end;
       & > * {
-        display: block; 
-      
+        display: block;
+
         padding: 5px 10px;
 
         font-weight: 600;
@@ -40,7 +40,40 @@
         &:first-of-type { margin-bottom: 5px; }
 
         &:hover {
-          background: $color_bg-light--active; 
+          background: $color_bg-light--active;
+          transition: background .15s;
+        }
+      }
+    }
+    .map-button-pair {
+      border: 2px solid $color_bg-medium;
+      border-radius: 5px;
+      align-self: flex-end;
+      button.selector {
+        display: block;
+        padding: 6.75px 10px;
+        width: 100%;
+        border: none;
+
+        font-weight: 600;
+        font-size: 12px;
+        background-color: white;
+        &:first-child {
+          border-top-left-radius: 3px;
+          border-top-right-radius: 3px;
+        }
+        &:last-child {
+          border-bottom-left-radius: 3px;
+          border-bottom-right-radius: 3px;
+        }
+        &:not(:last-child) {
+          border-bottom: 2px solid $color_bg-medium;
+        }
+        &:disabled {
+          background-color: #ddd;
+        }
+        &:hover {
+          background: $color_bg-light--active;
           transition: background .15s;
         }
       }
