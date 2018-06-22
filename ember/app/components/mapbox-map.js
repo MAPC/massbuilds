@@ -57,7 +57,10 @@ export default class extends Component {
   }
 
   updateSelection() {
-    if (this.mapboxglMap && this.mapboxglMap.getSource('selector')) {
+    if (this.mapboxglMap
+        && this.mapboxglMap.getSource('selector')
+        && Ember.$('.left-panel-layer')
+        && this.$()) {
       const bounds = this.mapboxglMap.getBounds();
       const northEast = bounds.getNorthEast().toArray();
       const southWest = bounds.getSouthWest().toArray();
@@ -325,7 +328,7 @@ export default class extends Component {
     } else {
       if (highContrast) {
         return {
-          'circle-color': '#333',
+          'circle-color': '#888',
           'circle-radius': [
             'interpolate',
             ['linear'],
@@ -345,13 +348,19 @@ export default class extends Component {
           'circle-stroke-opacity': 1,
         };
       } else {
-        return {
+        return  {
           'circle-color': '#888',
-          'circle-radius': 0,
+          'circle-radius': [
+            'interpolate',
+            ['linear'],
+            ['zoom'],
+            10, 0,
+            16, 8,
+          ],
           'circle-opacity': 0.2,
           'circle-stroke-width': 3,
           'circle-stroke-color': '#888',
-          'circle-stroke-opacity': 0.3,
+          'circle-stroke-opacity': isMuted ? 0.3 : 1,
         };
       }
     }

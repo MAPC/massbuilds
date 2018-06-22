@@ -15,11 +15,12 @@
 
   input.search-input {
     width: $width;
-    padding: 8px 12px; 
+    padding: 8px 12px;
     padding-left: 32px;
 
     color: $color_font-medium;
     font-size: 14px;
+    line-height: 20px;
 
     border: 1px solid $color_brand-primary;
     border-radius: 0 5px 5px 0;
@@ -28,7 +29,7 @@
     transition: $transition_border;
 
     &:focus, &:active {
-      border-color: $color_brand-primary--active; 
+      border-color: $color_brand-primary--active;
 
       transition: $transition_border;
     }
@@ -52,23 +53,23 @@
       cursor: pointer;
 
       &:hover {
-        opacity: .85; 
+        opacity: .85;
         transition: opacity .15s;
       }
     }
   }
-  
+
   .search-input-wrapper.searching > .search-input {
-    border-radius: 0 5px 0 0; 
+    border-radius: 0 5px 0 0;
   }
 
 
   ul {
     margin: 0;
-    width: $width; 
+    width: $width;
     max-height: 70vh;
 
-    overflow: scroll; 
+    overflow: scroll;
     border: 1px solid $color_brand-primary;
     border-top: none;
     border-radius: 0 0px 5px 5px;
@@ -81,15 +82,15 @@
     cursor: pointer;
 
     & + li:not(.group-title) {
-      border-top: 1px solid $color_bg-medium; 
+      border-top: 1px solid $color_bg-medium;
     }
-  
+
     &.group-title {
       padding: 5px 15px;
 
       color: $color_font-light;
 
-      background: $color_bg-dark; 
+      background: $color_bg-dark;
       cursor: default;
     }
 
@@ -101,7 +102,7 @@
     }
 
     &.no-results {
-      font-size: 10px; 
+      font-size: 10px;
 
       background: $color_bg-medium;
       cursor: default;
@@ -120,7 +121,7 @@
       width: 100%;
       margin: 0;
 
-      font-size: 16px; 
+      font-size: 16px;
       font-weight: 600;
 
       overflow: hidden;
@@ -131,7 +132,7 @@
     p {
       margin: 0;
 
-      font-size: 11px; 
+      font-size: 11px;
     }
   }
 

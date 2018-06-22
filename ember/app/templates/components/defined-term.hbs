@@ -1,0 +1,10 @@
+<span class="defined-term" >
+  <span class="label" onclick={{action 'showDefinition'}}>
+    {{label}}
+  </span>
+  <div class="definition {{if (eq openDefinition key) 'active'}}">
+    {{#each definition as |paragraph|}}
+      <p>{{paragraph}}</p>
+    {{/each}}
+  </div>
+</span>

@@ -66,7 +66,9 @@
           <div class="row">
             <div class="column">
               <div class="field">
-                <label for="status" class="required">Status:</label>
+                <label for="status" class="required">
+                  {{defined-term key='STATUS'}}
+                </label>
                 <select name="status" onchange={{action updateStatus}}>
                   {{#unless editing.status}}
                     <option disabled selected>Select Status</option>

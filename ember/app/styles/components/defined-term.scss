@@ -1,0 +1,36 @@
+.defined-term {
+  display: inline-block;
+  .label::after {
+    content: ' ';
+    width: 100%;
+    border-bottom: 1px dashed #888;
+    position: absolute;
+  }
+  .label:hover {
+    cursor: pointer;
+    &::after {
+      border-color: #333;
+    }
+  }
+  .definition {
+    z-index: 9000;
+    border: 1px solid $color_brand-primary;
+    color: black;
+    font-size: 14px;
+    padding: 0.5em;
+    display: none;
+    background-color: white;
+    position: absolute;
+    left: 0;
+    width: 20em;
+    &.active {
+      display: block;
+    }
+    p:first-child {
+      margin-top: 0;
+    }
+    p:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
