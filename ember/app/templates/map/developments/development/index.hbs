@@ -26,7 +26,6 @@
             <a href={{model.prjUrl}}>{{model.prjUrl}}</a>
           </h2>
         {{/if}}
-
       </div>
 
       <div class="metric-groups-wrapper">
@@ -446,12 +445,16 @@
       </div>
 
       <div class="actions">
-        {{#if hasDeletePermissions}}
+        {{#if hasSuperPermissions}}
           <button class="styled negative" onclick={{action deleteDevelopment}}>Delete Development</button>
         {{/if}}
 
         {{#if model.flag}}
-
+          {{#if hasSuperPermissions}}
+            <button class="styled" onclick={{action unflagDevelopment}}>Unflag Development</button>
+          {{else}}
+            <p>This development has been flagged for review</p>
+          {{/if}} 
         {{else}}
           {{#if session.isAuthenticated}}
             <button class="styled negative" onclick={{action flagDevelopment}}>Report Development for Review</button>

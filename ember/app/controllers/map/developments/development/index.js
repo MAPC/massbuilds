@@ -63,7 +63,7 @@ export default class extends Controller {
 
 
   @computed('currentUser.user.role', 'model.municipal')
-  get hasDeletePermissions() {
+  get hasSuperPermissions() {
     const role = this.get('currentUser.user.role');
     const userMuni = this.get('currentUser.user.municipality');
     const developmentMuni = this.get('model.municipal');
@@ -99,6 +99,17 @@ export default class extends Controller {
     model.save()
       .then(() => {
         this.get('notifications').show('This development has been flagged for review by our team.');
+      });
+  }
+
+
+  @action
+  unflagDevelopment() {
+    const model = this.get('model');
+    model.set('flag', false);
+    model.save()
+      .then(() => {
+        this.get('notifications').show('This development has been unflagged.');
       });
   }
 

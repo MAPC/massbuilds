@@ -14,7 +14,7 @@ class FullDevelopmentSerializer
     :mixed_use, :point, :programs, :forty_b, :residential, :commercial,
     :units_1bd, :units_2bd, :units_3bd, :affrd_unit, :aff_u30, :aff_30_50,
     :aff_50_80, :aff_80p, :headqtrs, :park_type, :publicsqft, :unknownhu,
-    :unk_sqft, :aff_unknown, :updated_at].each { |attr| attribute attr }
+    :unk_sqft, :aff_unknown, :updated_at, :flag].each { |attr| attribute attr }
 
   attribute :latitude do |object|
     object.point.try :y

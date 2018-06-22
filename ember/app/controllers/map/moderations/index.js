@@ -14,6 +14,7 @@ export default class extends ModerationController {
                .filter(moderation => !moderation.get('approved'));
   }
 
+
   @computed('developments.[]')
   get filteredFlags() {
     return this.store.query('development', {
@@ -28,6 +29,17 @@ export default class extends ModerationController {
         },
     });
   }
+
+
+  @action
+  unflag(development) {
+    development.set('flag', false);
+    development.save()
+      .then(() => {
+        this.get('notifications').show(`${development.get('name')} has been unflagged.`);
+      });
+  }
+
 
   @action
   approve(moderation) {
