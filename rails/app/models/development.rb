@@ -63,10 +63,10 @@ class Development < ApplicationRecord
     CSV.generate(headers: true) do |csv|
       csv << attributes
       all.each do |development|
-        csv << attributes.map { |attr|
-          value = development.send(attr.gsub(/\,/,";"))
-          (value.is_a? String) ? value.gsub(/\n/,"").gsub(/\;/,",") : value
-        }
+        csv << attributes.map do |attr|
+          value = development.send(attr)
+          (value.is_a? String) ? value.gsub(/\n/,"").gsub(/\;/,",").gsub(/(^\d{5}$)/,"\"\\1\"") : value
+        end
       end
     end
   end
