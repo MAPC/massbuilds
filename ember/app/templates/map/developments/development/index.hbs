@@ -449,17 +449,19 @@
           <button class="styled negative" onclick={{action deleteDevelopment}}>Delete Development</button>
         {{/if}}
 
-        {{#if model.flag}}
-          {{#if hasSuperPermissions}}
-            <button class="styled" onclick={{action unflagDevelopment}}>Unflag Development</button>
+        {{#loading-spinner message=flaggingMessage isLoading=isSettingFlag}}
+          {{#if model.flag}}
+            {{#if hasSuperPermissions}}
+              <button class="styled" onclick={{action unflagDevelopment}}>Unflag Development</button>
+            {{else}}
+              <p>This development has been flagged for review</p>
+            {{/if}} 
           {{else}}
-            <p>This development has been flagged for review</p>
-          {{/if}} 
-        {{else}}
-          {{#if session.isAuthenticated}}
-            <button class="styled negative" onclick={{action flagDevelopment}}>Report Development for Review</button>
+            {{#if session.isAuthenticated}}
+                <button class="styled negative" onclick={{action flagDevelopment}}>Report Development for Review</button>
+            {{/if}}
           {{/if}}
-        {{/if}}
+        {{/loading-spinner}}
       </div>
     </div>
   </div>

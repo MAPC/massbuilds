@@ -32,16 +32,6 @@ export default class extends ModerationController {
 
 
   @action
-  unflag(development) {
-    development.set('flag', false);
-    development.save()
-      .then(() => {
-        this.get('notifications').show(`${development.get('name')} has been unflagged.`);
-      });
-  }
-
-
-  @action
   approve(moderation) {
     const user = moderation.get('user.fullName');
     let development = moderation.get('development.name');
@@ -66,8 +56,8 @@ export default class extends ModerationController {
   deny(moderation) {
     const id = moderation.get('id');
     const elem = document.querySelector(`li[data-mod-id="${id}"]`);
-    const development = moderation.get('development.name');
     const user = moderation.get('user.fullName');
+    const development = moderation.get('development.name');
 
     this.get('notifications').error(`You have denied an edit from ${user} for ${development}`);
 
@@ -75,17 +65,27 @@ export default class extends ModerationController {
     elem.parentNode.removeChild(elem);
   }
 
+
   @action
   unflag(development) {
+    const id = development.get('id');
+    this.set('unflagging', id);
+
     development.set('flag', false);
     development.save()
     .then(() => {
-        this.get('notifications').show('This development has been unflagged.');
-      })
+      this.get('notifications').show('This development has been unflagged.');
+
+      const elem = document.querySelector(`li[data-flag-id="${id}"]`);
+      elem.parentNode.removeChild(elem);
+    })
     .catch(() => {
-        development.set('flag', true);
-        this.get('notifications').show('This development must pass validations before being unflagged.');
-      });
+      development.set('flag', true);
+      this.get('notifications').error('This development must pass validations before being unflagged.');
+    })
+    .finally(() => {
+      this.set('unflagging', null);
+    });
   }
 
 }

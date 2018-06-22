@@ -58,7 +58,7 @@ export default class extends Controller {
 
   @action
   findPosition() {
-    this.get('map').returnToPoint();
+    // Supposed to be hooked up to location finder in the map service.
   }
 
 
@@ -75,6 +75,12 @@ export default class extends Controller {
         && userMuni.toLowerCase() === developmentMuni.toLowerCase()
       )
     );
+  }
+
+
+  @computed('isSettingFlag')
+  get flaggingMessage() {
+    return this.get('model.flag') ? 'Flagging' : 'Unflagging';
   }
 
 
@@ -96,9 +102,15 @@ export default class extends Controller {
   flagDevelopment() {
     const model = this.get('model');
     model.set('flag', true);
+
+    this.set('isSettingFlag', true);
+
     model.save()
       .then(() => {
         this.get('notifications').show('This development has been flagged for review by our team.');
+      })
+      .finally(() => {
+        this.set('isSettingFlag', false);
       });
   }
 
@@ -107,9 +119,19 @@ export default class extends Controller {
   unflagDevelopment() {
     const model = this.get('model');
     model.set('flag', false);
+
+    this.set('isSettingFlag', true);
+
     model.save()
       .then(() => {
         this.get('notifications').show('This development has been unflagged.');
+      })
+      .catch(() => {
+        model.set('flag', true);
+        this.get('notifications').error('This development must pass validations before being unflagged.');
+      })
+      .finally(() => {
+        this.set('isSettingFlag', false);
       });
   }
 

@@ -240,16 +240,14 @@
 
     font-size: 13px;
 
-    button {
+    button, .loading-spinner {
       width: 100%;
+      margin-left: 0;
+      text-align: center;
 
-      & + button {
+      & + button, .loading-wrapper {
         margin-top: 10px; 
       }  
     }
-  }
-
-  .styled.negative {
-    margin-top: 5px;
   }
 }
