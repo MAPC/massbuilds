@@ -41,6 +41,7 @@ class Development < ApplicationRecord
   after_save :update_county
   after_save :update_n_transit
   after_save :update_neighborhood
+  after_save :update_loc_id
 
   def self.to_csv
 
@@ -202,6 +203,22 @@ class Development < ApplicationRecord
     sql_result = ActiveRecord::Base.connection.exec_query(nhood_query).to_hash[0]
     return if sql_result.blank?
     self.nhood = sql_result['nhood_name']
+    self.save(validate: false)
+  end
+
+  def update_loc_id
+    return if loc_id.present?
+    loc_id_query = <<~SQL
+      SELECT parloc_id
+      FROM
+        (SELECT parloc_id, ST_TRANSFORM(parcels.geom, 4326) as shape FROM parcels) parcel,
+        (SELECT id, name, point FROM developments) development
+        WHERE ST_Intersects(point, parcel.shape)
+        AND id = #{id};
+    SQL
+    sql_result = ActiveRecord::Base.connection.exec_query(loc_id_query).to_hash[0]
+    return if sql_result.blank?
+    self.loc_id = sql_result['parloc_id']
     self.save(validate: false)
   end
 end
