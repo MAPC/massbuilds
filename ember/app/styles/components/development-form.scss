@@ -105,6 +105,10 @@
       align-self: flex-start;
     }
 
+    .field:not(:last-child) {
+      margin-bottom: 0.5rem;
+    }
+
     select {
       max-width: 50%;
     }

@@ -1,10 +1,18 @@
-<span class="defined-term" >
+<span class="defined-term {{if (eq openTerm key) 'active'}}">
   <span class="label" onclick={{action 'showDefinition'}}>
-    {{label}}
+    <span>{{label}}</span>
+    {{#if unitsShort}}
+      <span> ({{unitsShort}})</span>
+    {{/if}}
+    <div class="definition {{orientation}}">
+      <div class="header">
+        <span>{{label}}</span>
+      </div>
+      <div class="paragraphs">
+        {{#each definition as |paragraph|}}
+          <p>{{paragraph}}</p>
+        {{/each}}
+      </div>
+    </div>
   </span>
-  <div class="definition {{if (eq openDefinition key) 'active'}}">
-    {{#each definition as |paragraph|}}
-      <p>{{paragraph}}</p>
-    {{/each}}
-  </div>
 </span>

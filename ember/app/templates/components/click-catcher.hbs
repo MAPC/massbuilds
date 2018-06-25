@@ -1,5 +1,4 @@
 <div
-  class="click-catcher {{if active 'active'}}"
-  onclick={{action definition.catchClick}}>
-  {{definition.openDefinition}}
+  class="click-catcher {{if openTerm 'active'}}"
+  onclick={{action 'catchClick'}}>
 </div>

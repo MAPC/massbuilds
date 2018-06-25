@@ -38,11 +38,15 @@ const content = {
       definition: ['Enter total cost (can be estimate) of construction only of development, not including purchase price and other soft costs of project.'],
     },
     PROJECT_AREA: {
-      label: 'Project Area in Square Feet',
+      label: 'Project Area',
+      unitsShort: 'sq ft',
+      unitsLong: 'Square Feet',
       definition: ['Total area of development site only, not including areas on the site/parcel that are not developed.'],
     },
     HEIGHT: {
       label: 'Height',
+      unitsShort: 'ft',
+      unitsLong: 'Feet',
       definition: ['Total height of development in feet.'],
     },
     STORIES: {
@@ -109,7 +113,9 @@ const content = {
       definition: ['Enter total new hotel rooms on site, if known.'],
     },
     PUBLIC_AREA: {
-      label: 'Public Sqft',
+      label: 'Public Area',
+      unitsShort: 'sq ft',
+      unitsLong: 'Square Feet',
       definition: ['Total sqft created through the project that is designated for public use, ie., a new community room, publically accessible green space, a new park, etc.'],
     },
     COMPANY_HEADQUARTERS: {
@@ -117,7 +123,9 @@ const content = {
       definition: ['Check if the development will be used as company headquarters. Note in the Descriptions which company/companies, and any other information available (ie., if a company is locating global headquarters in the finished development).'],
     },
     COMMERCIAL_AREA: {
-      label: 'Commercial Square Footage',
+      label: 'Commercial Area',
+      unitsShort: 'sq ft',
+      unitsLong: 'Square Feet',
       definition: [
         'In the Retail field, enter total floor area dedicated to retail uses.',
         'In Office/Medical, enter floor area dedicated to office and health care uses.',

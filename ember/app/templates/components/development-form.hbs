@@ -80,7 +80,9 @@
               </div>
 
               <div class="field">
-                <label for="yearCompl" class="required">Year Completed</label>
+                <label for="yearCompl" class="required">
+                  {{defined-term key='YEAR_COMPLETE'}}
+                </label>
                 {{input value=editing.yearCompl class="required-field" placeholder="Enter here" key-up=(action checkForUpdated 'yearCompl')}}
               </div>
 
@@ -90,29 +92,39 @@
               </div>
 
               <div class="field">
-                <label for="totalCost">Cost of Construction</label>
+                <label for="totalCost">
+                  {{defined-term key='COST_OF_CONSTRUCTION'}}
+                </label>
                 ${{input value=editing.totalCost placeholder="Enter here" key-up=(action checkForUpdated 'totalCost')}}
               </div>
 
               <div class="field">
-                <label for="prjarea">Project Area in Square Feet</label>
+                <label for="prjarea">
+                  {{defined-term key='PROJECT_AREA'}}
+                </label>
                 {{input value=editing.prjarea placeholder="Enter here" key-up=(action checkForUpdated 'prjarea')}}
               </div>
             </div>
 
             <div class="column">
               <div class="field">
-                <label for="height">Height (feet)</label>
+                <label for="height">
+                  {{defined-term key='HEIGHT'}}
+                </label>
                 {{input value=editing.height placeholder="Enter here" key-up=(action checkForUpdated 'height')}}
               </div>
 
               <div class="field">
-                <label for="stories">Number of Stories</label>
+                <label for="stories">
+                  {{defined-term key='STORIES'}}
+                </label>
                 {{input value=editing.stories placeholder="Enter here" key-up=(action checkForUpdated 'stories')}}
               </div>
 
               <div class="field">
-                <label for="onsitepark">Number of Parking Spaces</label>
+                <label for="onsitepark">
+                  {{defined-term key='PARKING_SPACES'}}
+                </label>
                 {{input value=editing.onsitepark placeholder="Enter here" key-up=(action checkForUpdated 'onsitepark')}}
               </div>
 
@@ -134,12 +146,16 @@
             <label>Attributes:</label>
 
             <span>
-              <label for="rdv">Redevelopment: </label>
+              <label for="rdv">
+                {{defined-term key='REDEVELOPMENT'}}
+              </label>
               {{input type='checkbox' checked=editing.rdv click=(action checkForUpdated 'rdv')}}
             </span>,
 
             <span>
-              <label for="phased">Phased: </label>
+              <label for="phased">
+                {{defined-term key='PHASED'}}
+              </label>
               {{input type='checkbox' checked=editing.phased click=(action checkForUpdated 'phased')}}
             </span>,
 

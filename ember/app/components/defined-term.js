@@ -7,23 +7,25 @@ import content from './../content';
 export default class extends Component.extend({
   tagName: '',
 }) {
-  @service definition
-  @alias('definition.openDefinition') openDefinition
+  @service term
+  @alias('term.openTerm') openTerm
   constructor() {
-    super();
+    super(...arguments);
     const term = content.TERMS[this.key];
     if (term) {
       this.label = term.label; // String label
       this.definition = term.definition; // Array of paragraphs
+      this.unitsShort = term.unitsShort;
     } else {
       this.label = this.key || 'Undefined';
       this.definition = 'This term is not defined';
     }
+    this.orientation = 'top-left';
   }
 
   @action
   showDefinition() {
-    this.set('definition.openDefinition', this.get('key'));
-    console.log(this.get('definition.openDefinition'));
+    this.set('term.openTerm', this.get('key'));
   }
+
 };
