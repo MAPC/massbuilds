@@ -89,8 +89,8 @@ const content = {
       label: 'Age Restricted',
       definition: ['Check this box if there is an age restriction to residential development, ie. If the development is senior housing.'],
     },
-    TOTAL_HOUSING_UNITS: {
-      label: 'Total Number of Housing Units',
+    HOUSING_UNITS: {
+      label: 'Housing Units',
       definition: [
         'Input the total # of units in each type of housing, ie. If the project includes 20 single family community with 6 townhouses (totaling 12 units) and a building with 10 units, input 20 into Single Family and 12 in Small Multi-family, and 10 into Large Multi-family.',
         'Small Multi-family means attached single family homes or townhouses and multifamily homes under 6 units.Large Multi-family means structures with 6 or more units.',
@@ -141,7 +141,14 @@ const content = {
   }, // End of Glossary
 
   OTHER_TERMS: {
-
+    ESTIMATED_EMPLOYMENT: {
+      label: 'Estimated Employment',
+      definition: ['If new employment figures are given for a development, enter them into Estimated if the figures are estimates or Reported if they are officially reported new employment figures.'],
+    },
+    REPORTED_EMPLOYMENT: {
+      label: 'Reported Employment',
+      definition: ['If new employment figures are given for a development, enter them into Estimated if the figures are estimates or Reported if they are officially reported new employment figures.'],
+    },
   },
 };
 

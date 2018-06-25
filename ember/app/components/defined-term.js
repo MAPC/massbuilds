@@ -14,17 +14,14 @@ export default class extends Component.extend({
     const term = content.TERMS[this.key];
     if (term) {
       this.label = term.label; // String label
-      this.definition = term.definition; // Array of paragraphs
-      this.unitsShort = term.unitsShort;
     } else {
       this.label = this.key || 'Undefined';
-      this.definition = 'This term is not defined';
     }
-    this.orientation = 'top-left';
   }
 
   @action
-  showDefinition() {
+  showDefinition(e) {
+    this.set('term.element', e.target);
     this.set('term.openTerm', this.get('key'));
   }
 

@@ -15,8 +15,8 @@
   </div>
 
   <div class="development-content">
-    <div class="layout-column scroll-wrapper">
-      <div class="scroll-content">
+    <div class="layout-column">
+      {{#overflow-scroll}}
         <div class="development-header">
           <h1 onclick={{action findPosition}}>{{model.name}}</h1>
           <h2><img src="/assets/images/map-pin.svg" onclick={{action findPosition}}> {{model.fullAddress}}</h2>
@@ -38,7 +38,9 @@
               <div class="row">
                 <div class="column">
                   <div class="field">
-                    <label for="status">Status:</label>
+                    <label for="status">
+                      {{defined-term key="STATUS"}}
+                    </label>
 
                     <span style="color: {{status-color model.status}}">
                       {{capitalize model.status}}
@@ -47,7 +49,7 @@
 
                   <div class="field">
                     <label for="yearCompl">
-                      Year Completed
+                      {{defined-term key="YEAR_COMPLETE"}}
                       {{#if model.yrcompEst}}
                         <small>(Estimated)</small>
                       {{/if}}
@@ -56,7 +58,9 @@
                   </div>
 
                   <div class="field">
-                    <label for="totalCost">Cost</label>
+                    <label for="totalCost">
+                      {{defined-term key="COST_OF_CONSTRUCTION" labelOverride="Cost"}}
+                    </label>
                     {{#if model.totalCost}}
                       ${{number-format model.totalCost}}
                     {{else}}
@@ -65,7 +69,9 @@
                   </div>
 
                   <div class="field">
-                    <label for="prjarea">Project Area</label>
+                    <label for="prjarea">
+                      {{defined-term key="PROJECT_AREA"}}
+                    </label>
                     {{#if model.prjarea}}
                       {{number-format model.prjarea decimals=0}} sqft.
                     {{else}}
@@ -76,7 +82,9 @@
 
                 <div class="column">
                   <div class="field">
-                    <label for="height">Height</label>
+                    <label for="height">
+                      {{defined-term key="HEIGHT"}}
+                    </label>
                     {{#if model.height}}
                       {{number-format model.height decimals=0}} ft.
                     {{else}}
@@ -85,7 +93,9 @@
                   </div>
 
                   <div class="field">
-                    <label for="stories">Stories</label>
+                    <label for="stories">
+                      {{defined-term key="STORIES"}}
+                    </label>
                     {{#if model.stories}}
                       {{model.stories}}
                     {{else}}
@@ -94,7 +104,9 @@
                   </div>
 
                   <div class="field">
-                    <label for="onsitepark">Parking Spaces</label>
+                    <label for="onsitepark">
+                      {{defined-term key="PARKING_SPACES"}}
+                    </label>
                     {{#if model.onsitepark}}
                       {{number-format model.onsitepark decimals=0}}
                     {{else}}
@@ -139,7 +151,9 @@
                 <div class="column">
                   {{#if (gt model.gqpop 0)}}
                     <div class="field">
-                      <label for="gqpop">Group Quarters Pop.</label>
+                      <label for="gqpop">
+                        {{defined-term key="GROUP_QUARTERS_POPULATION"}}
+                      </label>
                       {{number-format model.gqpop decimals=0}}
                     </div>
                   {{/if}}
@@ -157,7 +171,9 @@
 
               <div class="table-wrapper">
                 <h3 class="field">
-                  <label for="hu">Tot. Housing Units</label>
+                  <label for="hu">
+                    {{defined-term key="HOUSING_UNITS"}}
+                  </label>
                   {{#if model.hu}}
                     {{number-format model.hu decimals=0}} Units
                   {{else}}
@@ -235,7 +251,9 @@
 
               <div class="table-wrapper">
                 <h3 class="field">
-                  <label for="affrdUnit">Affordable Units</label>
+                  <label for="affrdUnit">
+                    {{defined-term key="AFFORDABLE_UNITS"}}
+                  </label>
                   {{#if (or model.affrdUnit (eq model.affrdUnit 0))}}
                     {{number-format model.affrdUnit decimals=0}} Units
                   {{else}}
@@ -294,14 +312,18 @@
                 <div class="column">
                   {{#if model.estemp}}
                     <div class="field">
-                      <label for="estemp">Estimated Employment</label>
+                      <label for="estemp">
+                        {{defined-term key="ESTIMATED_EMPLOYMENT"}}
+                      </label>
                       {{number-format model.estemp decimals=0}}
                     </div>
                   {{/if}}
 
                   {{#if model.rptdemp}}
                     <div class="field">
-                      <label for="rptdemp">Reported Employment</label>
+                      <label for="rptdemp">
+                        {{defined-term key="REPORTED_EMPLOYMENT"}}
+                      </label>
                       {{number-format model.rptdemp decimals=0}}
                     </div>
                   {{/if}}
@@ -310,7 +332,9 @@
                 <div class="column">
                   {{#if model.hotelrms}}
                     <div class="field">
-                      <label for="hotelrms">Hotel Rooms</label>
+                      <label for="hotelrms">
+                        {{defined-term key="HOTEL_ROOMS"}}
+                      </label>
                       {{number-format model.hotelrms decimals=0}}
                     </div>
                   {{/if}}
@@ -326,7 +350,9 @@
 
               <div class="table-wrapper">
                 <h3 class="field">
-                  <label for="commsf">Commercial Square Footage</label>
+                  <label for="commsf">
+                    {{defined-term key="COMMERCIAL_AREA"}}
+                  </label>
                   {{#if model.commsf}}
                     {{number-format model.commsf decimals=0}} sqft.
                   {{else}}
@@ -411,45 +437,43 @@
             </article>
           </div>
         </div>
-      </div>
+      {{/overflow-scroll}}
     </div>
 
     <div class="layout-column with-actions">
-      <div class="scroll-wrapper">
-        <div class="scroll-content">
-          {{#if model.devlper}}
-            <div class="detail">
-              <h3>Developer</h3>
-              <p>{{model.devlper}}</p>
-            </div>
-          {{/if}}
-
-          {{#if model.user}}
-            <div class="detail">
-              <h3>Entry Created By</h3>
-              <p>
-                {{#if (eq model.user.fullName 'undefined undefined')}}
-                  {{loading-spinner message="Loading Creator" isLoading=true}}
-                {{else}}
-                  {{model.user.fullName}}
-                {{/if}}
-              </p>
-            </div>
-          {{/if}}
-
+      {{#overflow-scroll}}
+        {{#if model.devlper}}
           <div class="detail">
-            <h3>Last Updated</h3>
-            <p>{{format-date model.updatedAt format='MMM. Do YYYY'}}</p>
+            <h3>{{defined-term key="DEVELOPER"}}</h3>
+            <p>{{model.devlper}}</p>
           </div>
+        {{/if}}
 
+        {{#if model.user}}
           <div class="detail">
-            <h3>Description</h3>
+            <h3>Entry Created By</h3>
             <p>
-              {{model.descr}}
+              {{#if (eq model.user.fullName 'undefined undefined')}}
+                {{loading-spinner message="Loading Creator" isLoading=true}}
+              {{else}}
+                {{model.user.fullName}}
+              {{/if}}
             </p>
           </div>
+        {{/if}}
+
+        <div class="detail">
+          <h3>Last Updated</h3>
+          <p>{{format-date model.updatedAt format='MMM. Do YYYY'}}</p>
         </div>
-      </div>
+
+        <div class="detail">
+          <h3>{{defined-term key="DESCRIPTION"}}</h3>
+          <p>
+            {{model.descr}}
+          </p>
+        </div>
+      {{/overflow-scroll}}
       {{#if hasDeletePermissions}}
         <div class="actions">
           <button class="styled negative" onclick={{action deleteDevelopment}}>Delete Development</button>
