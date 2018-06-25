@@ -65,7 +65,7 @@ class Development < ApplicationRecord
       all.each do |development|
         csv << attributes.map do |attr|
           value = development.send(attr)
-          (value.is_a? String) ? value.gsub(/\n/,"").gsub(/\;/,",").gsub(/(^\d{5}$)/,"\"\\1\"") : value
+          (value.is_a? String) ? value.gsub(/\n/,"").gsub(/\;/,",").gsub(/(^\d{5}$)/,"=\"\\1\"") : value
         end
       end
     end
