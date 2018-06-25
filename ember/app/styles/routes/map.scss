@@ -83,8 +83,7 @@
   .filter-actions {
     display: flex;
     flex-direction: column;
-
-    height: 37px;
+    height: 37.5px;
 
     button {
       flex: 1 1 50%;
@@ -96,16 +95,18 @@
       border-color: $color_brand-primary;
       border-right: 0;
       border-radius: 0;
+      border-style: solid;
+
 
       transition: $transition_border;
 
       &.clear-filters {
-        background: $color_bg-medium;
+        background-color: $color_bg-medium;
+        border-width: 0px 0px 1px 1px;
       }
 
       &.filter-toggler {
-        border-bottom: 0;
-
+        border-width: 1px 0px 1px 1px;
         &.active {
           background: mix($color_brand-primary, $color_bg-light, 25);
           border-color: $color_brand-primary--active;
@@ -137,8 +138,7 @@
       img {
         @extend ._vertical-center;
 
-        max-width: 90%;
-        max-height: 70%;
+        height: 70%;
         margin: 0 auto;
       }
     }
@@ -200,8 +200,7 @@
 
   .left-panel-layer {
     left: -100%;
-
-    width: max-content;
+    position: absolute;
     padding-top: 80px;
 
     border-right-width: 1px;

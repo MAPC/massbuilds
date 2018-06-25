@@ -5,7 +5,7 @@
   padding: 0 10px;
 
   .development-content {
-    display: flex; 
+    display: flex;
 
     height: 85vh;
 
@@ -13,12 +13,28 @@
       &:first-of-type {
         display: flex;
         flex-direction: column;
-        flex: 1 0 73%; 
+        flex: 1 0 73%;
 
         margin-right: 2%;
-      } 
+      }
 
       &:nth-of-type(2) { flex: 1 0 25%; }
+    }
+
+    .with-actions {
+      display: flex;
+      flex-direction: column;
+    }
+    .with-actions .scroll-wrapper {
+      flex: 1;
+    }
+    .scroll-wrapper {
+      overflow-y: scroll;
+      border-top: 1px solid $color_brand-primary;
+      border-bottom: 1px solid $color_brand-primary;
+    }
+    .scroll-content {
+      padding: 10px 5px;
     }
   }
 
@@ -30,9 +46,9 @@
 
     cursor: pointer;
     transition: color .15s;
-    
-    &:hover { 
-      color: $color_brand-primary--active; 
+
+    &:hover {
+      color: $color_brand-primary--active;
       transition: color .15s;
     }
   }
@@ -48,13 +64,13 @@
       img:hover {
         cursor: pointer;
         opacity: .8;
-      } 
+      }
     }
 
     img {
       top: 3px;
 
-      height: 20px; 
+      height: 20px;
       margin-right: 5px;
       padding: 3px 10px;
       padding-left: 0;
@@ -64,7 +80,7 @@
 
     a {
       color: $color_brand-primary;
-      font-size: 14px; 
+      font-size: 14px;
 
       &:hover { text-decoration: underline; }
     }
@@ -79,7 +95,7 @@
     color: $color_font-medium;
     font-weight: 300;
     font-size: 14px;
-    text-align: center; 
+    text-align: center;
 
     &:after, &:before {
       content: '';
@@ -98,69 +114,42 @@
 
   .development-header { flex: 1 1 10%; }
 
-  .metric-groups-wrapper {
-    flex: 1 0 90%;
-
-    overflow: scroll;
-
-    &:after, &:before {
-      content: '';
-      position: absolute;
-      bottom: -2px;
-      z-index: 1;
-      display: block;
-
-      height: 0px;
-      width: 100%;
-
-      box-shadow: 0px 0px 50px 40px $color_bg-light;
-      overflow: hidden;
-    }
-
-    &:before {
-      top: 0px; 
-      bottom: initial;
-    }
-  }
-
   .metric-groups {
     max-height: 100%;
     padding-top: 40px;
     padding-bottom: 50px;
-
-    overflow: scroll;
   }
 
   article {
     & + article { margin-top: 40px; }
 
-    text-align: center; 
+    text-align: center;
 
     .row {
-      display: flex; 
+      display: flex;
 
-      .column { 
-        flex: 1 0 50%; 
-
-        padding: 0 10px;
-
+      .column {
+        flex: 1;
         text-align: left;
+      }
+      .column:not(:last-child) {
+        padding-right: 10px;
       }
     }
 
     .field {
-      display: flex; 
+      display: flex;
 
       text-align: left;
 
       label {
-        flex: 1 0 40%; 
+        flex: 1 0 40%;
 
         color: $color_brand-primary--active;
 
         small {
           color: $color_font-medium;
-          font-size: .7em; 
+          font-size: .7em;
           opacity: .6;
         }
       }
@@ -170,22 +159,22 @@
   span.unknown { color: $color_font-medium; }
 
   .attributes-wrapper {
-    padding: 10px 0; 
+    padding: 10px 0;
   }
 
   .attributes {
     margin-bottom: 0;
     padding: 0 15px;
 
-    text-align: left; 
+    text-align: left;
 
-    & + .attributes { 
-      margin-top: 0; 
-      padding-top: 5px; 
+    & + .attributes {
+      margin-top: 0;
+      padding-top: 5px;
     }
 
     label {
-      display: inline-block; 
+      display: inline-block;
 
       margin-right: 15px;
 
@@ -194,7 +183,7 @@
   }
 
   .table-wrapper {
-    width: 96%; 
+    width: 96%;
     margin: 20px auto 30px;
     border: 1px solid $color_bg-light--active;
 
@@ -202,7 +191,7 @@
       margin: 0;
       padding: 6px 8px;
 
-      font-size: 15px; 
+      font-size: 15px;
 
       background: $color_bg-light--active;
     }
@@ -217,8 +206,8 @@
     p { padding: 0 8px; }
 
     h3 {
-      margin: 0; 
-      margin-bottom: 10px; 
+      margin: 0;
+      margin-bottom: 10px;
       padding: 5px 8px;
 
       color: $color_font-medium;
@@ -235,9 +224,8 @@
   }
 
   .actions {
-    position: absolute;
-    bottom: -10px;
-    right: 0;
+    margin-top: 10px;
+    text-align: right;
   }
 
 }
