@@ -403,7 +403,13 @@ export default class extends Component {
           type: 'FeatureCollection',
           features: filteredFeatures,
         });
-        this.mapboxglMap.setPaintProperty('filtered', 'circle-stroke-opacity', activeCircleStrokeOpacity);
+        Object.entries(this.generatePaintProperties(
+          true,
+          highContrast,
+          isMuted
+        )).forEach(([property, value]) => {
+          this.mapboxglMap.setPaintProperty('filtered', property, value);
+        });
       } else {
         this.mapboxglMap.addLayer({
           id: 'filtered',
