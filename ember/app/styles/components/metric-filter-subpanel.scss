@@ -1,5 +1,5 @@
 .component.subpanel.metric-filter {
-
+  $metric_filter_font_size: 14px;
   padding: 15px;
   padding-right: 0px;
 
@@ -31,54 +31,54 @@
       margin: 0 0 15px;
 
       color: $color_font-medium;
-      font-size: 14px; 
+      font-size: $metric_filter_font_size;
     }
 
     .metric {
       & + .metric { margin-top: 5px; }
 
-      label { 
+      label {
         display: inline-block;
 
-        width: 53%;
+        width: 56%;
 
-        font-size: 13px; 
+        font-size: $metric_filter_font_size;
       }
 
       input {
-        font-size: 12px;
+        font-size: $metric_filter_font_size;
 
         background: none;
-        border: 0; 
+        border: 0;
         border-bottom: 1px solid $color_bg-medium;
-        outline: none; 
+        outline: none;
 
         &:active, &:focus {
-          border-color: $color_brand-primary--active; 
+          border-color: $color_brand-primary--active;
         }
       }
 
       select {
-        font-size: 12px;
+        font-size: $metric_filter_font_size;
 
-        background: none; 
+        background: none;
         border: 1px solid $color_bg-medium;
         outline: none;
       }
 
       &.number {
         input {
-          width: 16%; 
+          width: 16%;
 
           text-align: right;
-        } 
+        }
 
         .metric-unit {
           position: absolute;
           top: 5px;
           right: 0px;
 
-          font-size: 12px;
+          font-size: $metric_filter_font_size;
         }
       }
     }

@@ -1,10 +1,10 @@
 .component.subpanel.discrete-filter {
-
+  $discrete_filter_font_size: 14px;
   $height: 36px;
   $border_width: 3px;
 
   width: 100%;
-   
+
   .subviews {
     display: flex;
 
@@ -12,30 +12,21 @@
     height: $height;
 
     button {
-      flex: 1 0 50%; 
-
-      height: $height;
+      flex: 1 0 50%;
 
       border: 0;
       border-bottom: 1px solid $color_bg-medium;
-
-      transform: translateZ(0);
-      transition: border-width .2s, height .2s;
-
+      padding-bottom: $border-width - 1px;
       &:first-of-type { border-right: 1px solid $color_bg-medium; }
 
       &.active {
-        height: $height + $border_width;
-        border-bottom: $border_width solid $color_brand-primary; 
-
-        transition: border-width .2s, height .2s;
+        border-bottom: $border_width solid $color_brand-primary;
+        padding-bottom: 1px;
       }
-
-      span { @extend ._vertical-center; }
 
       img {
         top: 3px;
-        height: 15px; 
+        height: 15px;
         margin: 0 auto;
 
         & + em {
@@ -55,7 +46,7 @@
   .subview {
     input {
       height: $height;
-      width: 100%; 
+      width: 100%;
       padding: 4px 10px;
 
       font-size: 12px;
@@ -65,14 +56,14 @@
       border-bottom: 1px solid $color_bg-medium;
 
       outline: none;
-    } 
+    }
   }
-  
+
   .no-selections {
     padding: 25px 10px;
 
     color: $color_font-medium;
-    font-size: 14px; 
+    font-size: 14px;
     text-align: center;
   }
 
@@ -91,48 +82,61 @@
   }
 
   ul {
-    height: 65vh; 
+    height: 65vh;
     margin-top: 0;
     padding: 0 0 35px 10px;
 
     overflow-y: scroll;
 
-    li { 
+    li {
       width: 100%;
       padding: 3px 0;
       padding-right: 40px;
 
-      font-size: 15px;
+      font-size: $discrete_filter_font_size;
       text-overflow: ellipsis;
 
       white-space: nowrap;
       overflow: hidden;
 
       img.selected-filter {
-        height: 12px; 
+        height: 12px;
         width: auto;
       }
 
       span {
-        cursor: pointer; 
+        cursor: pointer;
 
         &:hover { color: $color_brand-primary--active; }
       }
 
-      &:first-of-type { 
-        padding-top: 10px; 
+      &:first-of-type {
+        padding-top: 10px;
 
         .discrete-value-actions { top: 60%; }
       }
 
       &.is-selected {
-        font-weight: 600; 
+        padding-left: 14px;
+        &:before {
+          @extend ._vertical-center;
+          $size: 7px;
 
+          content: '';
+          left: 0;
+          display: block;
+
+          width: $size;
+          height: $size;
+
+          background: $color_brand-primary;
+          border-radius: 50%;
+        }
         .discrete-value-actions button {
           transform: rotate(45deg);
 
           &:hover {
-            color: $color_state-negative; 
+            color: $color_state-negative;
           }
         }
       }
@@ -149,10 +153,10 @@
       font-size: 18px;
 
       background: none;
-      border: none; 
+      border: none;
 
       &:hover {
-        color: $color_brand-primary--active; 
+        color: $color_brand-primary--active;
       }
     }
   }
