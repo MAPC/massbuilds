@@ -28,7 +28,7 @@
     {{/if}}
 
     {{#if (and hasPermissions (lt searchListCount 6))}}
-      {{#link-to 'map.developments.create' click=(action selectItem)}}
+      {{#link-to 'map.developments.create'}}
         <li class="create-new">
           Can't find what you're looking for? <b>Click here</b> to submit
           a development to the database.
