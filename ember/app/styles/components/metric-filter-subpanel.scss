@@ -1,5 +1,4 @@
 .component.subpanel.metric-filter {
-  $metric_filter_font_size: 14px;
   padding: 15px;
   padding-right: 0px;
 
@@ -31,7 +30,7 @@
       margin: 0 0 15px;
 
       color: $color_font-medium;
-      font-size: $metric_filter_font_size;
+      font-size: $filter_font_size;
     }
 
     .metric {
@@ -42,11 +41,11 @@
 
         width: 56%;
 
-        font-size: $metric_filter_font_size;
+        font-size: $filter_font_size;
       }
 
       input {
-        font-size: $metric_filter_font_size;
+        font-size: $filter_font_size;
 
         background: none;
         border: 0;
@@ -59,7 +58,7 @@
       }
 
       select {
-        font-size: $metric_filter_font_size;
+        font-size: $filter_font_size;
 
         background: none;
         border: 1px solid $color_bg-medium;
@@ -78,7 +77,7 @@
           top: 5px;
           right: 0px;
 
-          font-size: $metric_filter_font_size;
+          font-size: $filter_font_size;
         }
       }
     }

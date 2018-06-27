@@ -1,5 +1,4 @@
 .component.subpanel.discrete-filter {
-  $discrete_filter_font_size: 14px;
   $height: 36px;
   $border_width: 3px;
 
@@ -84,7 +83,7 @@
   ul {
     height: 65vh;
     margin-top: 0;
-    padding: 0 0 35px 10px;
+    padding: 6px 0 35px 10px;
 
     overflow-y: scroll;
 
@@ -93,7 +92,7 @@
       padding: 3px 0;
       padding-right: 40px;
 
-      font-size: $discrete_filter_font_size;
+      font-size: $filter_font_size;
       text-overflow: ellipsis;
 
       white-space: nowrap;
@@ -108,12 +107,6 @@
         cursor: pointer;
 
         &:hover { color: $color_brand-primary--active; }
-      }
-
-      &:first-of-type {
-        padding-top: 10px;
-
-        .discrete-value-actions { top: 60%; }
       }
 
       &.is-selected {
