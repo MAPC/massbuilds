@@ -55,7 +55,7 @@ class Development < ApplicationRecord
       'forty_b',
       'residential',
       'commercial',
-      'd_n_transit'
+      'd_n_trnsit'
     ]
 
     attributes = self.column_names
