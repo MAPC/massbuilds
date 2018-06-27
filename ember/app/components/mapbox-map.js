@@ -42,14 +42,14 @@ export default class extends Component {
       mapService.addObserver('viewing', this, 'jumpTo');
       mapService.addObserver('selectionMode', this, 'draw');
       mapService.addObserver('selectionMode', this, 'drawSelector');
-      if (mapService.stored.length) {
+      if (mapService.get('stored').length) {
         this.draw(mapService);
         this.focus(mapService);
       }
-      if (mapService.viewing) {
-        this.focus(mapService);
+      if (mapService.get('viewing')) {
+        this.jumpTo(mapService);
       }
-      if (mapService.selectionMode) {
+      if (mapService.get('selectionMode')) {
         this.drawSelector(mapService);
       }
     });
@@ -268,9 +268,11 @@ export default class extends Component {
 
   jumpTo(mapService) {
     const dev = mapService.get('viewing');
-    const coordinates = [dev.get('longitude') - .00125, dev.get('latitude')];
-    const bounds = new mapboxgl.LngLatBounds([coordinates, coordinates]);
-    this.mapboxglMap.fitBounds(bounds, { padding: 40, maxZoom: 18 });
+    if (dev) {
+      const coordinates = [dev.get('longitude') - .00125, dev.get('latitude')];
+      const bounds = new mapboxgl.LngLatBounds([coordinates, coordinates]);
+      this.mapboxglMap.fitBounds(bounds, { padding: 40, maxZoom: 18 });
+    }
   }
 
   focus(mapService) {
