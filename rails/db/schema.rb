@@ -10,22 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180619125128) do
+ActiveRecord::Schema.define(version: 20180625194837) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "postgis"
   enable_extension "postgres_fdw"
-
-  create_table "allpoints_final2", primary_key: "gid", id: :integer, default: nil, force: :cascade do |t|
-    t.decimal "id"
-    t.integer "muni_id"
-    t.string "muni", limit: 18
-    t.string "parloc_id", limit: 20
-    t.decimal "fy", precision: 10
-    t.geometry "geom", limit: {:srid=>26986, :type=>"st_point"}
-    t.index ["geom"], name: "allpoints_final2_geom_idx", using: :gist
-  end
 
   create_table "developments", force: :cascade do |t|
     t.integer "user_id"
@@ -52,7 +42,6 @@ ActiveRecord::Schema.define(version: 20180619125128) do
     t.integer "hu"
     t.integer "gqpop"
     t.integer "rptdemp"
-    t.integer "estemp"
     t.integer "commsf"
     t.integer "hotelrms"
     t.integer "onsitepark"
