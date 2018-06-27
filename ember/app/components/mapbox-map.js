@@ -274,11 +274,13 @@ export default class extends Component {
     const data = mapService.get('filteredData').length
         ? mapService.get('filteredData')
         : mapService.get('stored');
-    const fitBounds = data.reduce(
-    (bounds, datum) => bounds.extend([datum.get('longitude'), datum.get('latitude')]),
-      new mapboxgl.LngLatBounds()
-    );
-    this.mapboxglMap.fitBounds(fitBounds, { padding: 40 });
+    if (data.toArray().length > 0) {
+      const fitBounds = data.reduce(
+      (bounds, datum) => bounds.extend([datum.get('longitude'), datum.get('latitude')]),
+        new mapboxgl.LngLatBounds()
+      );
+      this.mapboxglMap.fitBounds(fitBounds, { padding: 40 });
+    }
   }
 
   generatePaintProperties(selected, highContrast, isMuted) {
@@ -403,7 +405,13 @@ export default class extends Component {
           type: 'FeatureCollection',
           features: filteredFeatures,
         });
-        this.mapboxglMap.setPaintProperty('filtered', 'circle-stroke-opacity', activeCircleStrokeOpacity);
+        Object.entries(this.generatePaintProperties(
+          true,
+          highContrast,
+          isMuted
+        )).forEach(([property, value]) => {
+          this.mapboxglMap.setPaintProperty('filtered', property, value);
+        });
       } else {
         this.mapboxglMap.addLayer({
           id: 'filtered',
