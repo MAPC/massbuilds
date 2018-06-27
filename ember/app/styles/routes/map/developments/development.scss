@@ -20,6 +20,22 @@
 
       &:nth-of-type(2) { flex: 1 0 25%; }
     }
+
+    .with-actions {
+      display: flex;
+      flex-direction: column;
+    }
+    .with-actions .scroll-wrapper {
+      flex: 1;
+    }
+    .scroll-wrapper {
+      overflow-y: scroll;
+      border-top: 1px solid $color_brand-primary;
+      border-bottom: 1px solid $color_brand-primary;
+    }
+    .scroll-content {
+      padding: 10px 5px;
+    }
   }
 
   h1 {
@@ -98,37 +114,10 @@
 
   .development-header { flex: 1 1 10%; }
 
-  .metric-groups-wrapper {
-    flex: 1 0 90%;
-
-    overflow: scroll;
-
-    &:after, &:before {
-      content: '';
-      position: absolute;
-      bottom: -2px;
-      z-index: 1;
-      display: block;
-
-      height: 0px;
-      width: 100%;
-
-      box-shadow: 0px 0px 50px 40px $color_bg-light;
-      overflow: hidden;
-    }
-
-    &:before {
-      top: 0px;
-      bottom: initial;
-    }
-  }
-
   .metric-groups {
     max-height: 100%;
     padding-top: 40px;
     padding-bottom: 50px;
-
-    overflow: scroll;
   }
 
   article {
@@ -140,11 +129,11 @@
       display: flex;
 
       .column {
-        flex: 1 0 50%;
-
-        padding: 0 10px;
-
+        flex: 1;
         text-align: left;
+      }
+      .column:not(:last-child) {
+        padding-right: 10px;
       }
     }
 
@@ -234,9 +223,9 @@
   }
 
   .actions {
-    position: absolute;
-    bottom: -20px;
-    right: 0;
+    margin-top: 10px;
+    text-align: right;
+  }
 
     font-size: 13px;
 

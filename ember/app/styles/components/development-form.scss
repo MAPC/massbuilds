@@ -9,7 +9,7 @@
 
   input, textarea {
     padding: 2px 8px;
-    margin: 2px;
+    margin: 2px 0;
 
     background: mix($color_bg-light--active, $color_brand-primary, 90);
     border: none;
@@ -62,10 +62,11 @@
 
     .form-row.secondary {
       img {
-        width: 25px;
+        width: 14px;
         padding: 3px 10px 3px 0;
         border-right: 1px solid #CCCCCC;
         margin-right: 5px;
+        box-sizing: content-box;
       }
     }
 
@@ -100,9 +101,18 @@
       margin: 0;
     }
 
+    .field > * {
+      align-self: flex-start;
+    }
+
+    select {
+      max-width: 50%;
+    }
+
     input {
       max-width: 50%;
       padding: 0 8px;
+      margin-left: 5px;
 
       text-align: right;
 

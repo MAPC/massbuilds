@@ -19,46 +19,46 @@
 </div>
 
 <form class="development-content">
-  <div class="layout-column">
-    <div class="development-header">
+  <div class="layout-column scroll-wrapper">
+    <div class="scroll-content">
+      <div class="development-header">
 
-      <div class="form-row required primary">
-        <label for="development_name" class="hidden">Development Name</label>
-        {{input
-          id="development_name"
-          value=editing.name
-          placeholder="Development Name"
-          key-up=(action checkForUpdated 'name')
-        }}
+        <div class="form-row required primary">
+          <label for="development_name" class="hidden">Development Name</label>
+          {{input
+            id="development_name"
+            value=editing.name
+            placeholder="Development Name"
+            key-up=(action checkForUpdated 'name')
+          }}
+        </div>
+
+        <div class="form-row required secondary location-fields">
+          <img src="/assets/images/map-pin.svg">
+          <label for="development_latitude" class="hidden">Latitude</label>
+          {{input
+            id="development_latitude"
+            value=(to-fixed editing.latitude 6)
+            placeholder="Latitude"
+            readonly="readonly"
+          }}
+          <label for="development_longitude" class="hidden">Longitude</label>
+          {{input
+            id="development_longitude"
+            value=(to-fixed editing.longitude 6)
+            placeholder="Longitude"
+            readonly="readonly"
+          }}
+          <p>Drag map to set location</p>
+        </div>
+
+        <div class="form-row secondary project-url">
+          <img src="/assets/images/link.svg">
+          {{input value=editing.prjUrl placeholder="Project Website" key-up=(action checkForUpdated 'prjUrl')}}
+        </div>
+
       </div>
 
-      <div class="form-row required secondary location-fields">
-        <img src="/assets/images/map-pin.svg">
-        <label for="development_latitude" class="hidden">Latitude</label>
-        {{input
-          id="development_latitude"
-          value=(to-fixed editing.latitude 6)
-          placeholder="Latitude"
-          readonly="readonly"
-        }}
-        <label for="development_longitude" class="hidden">Longitude</label>
-        {{input
-          id="development_longitude"
-          value=(to-fixed editing.longitude 6)
-          placeholder="Longitude"
-          readonly="readonly"
-        }}
-        <p>Drag map to set location</p>
-      </div>
-
-      <div class="form-row secondary project-url">
-        <img src="/assets/images/link.svg">
-        {{input value=editing.prjUrl placeholder="Project Website" key-up=(action checkForUpdated 'prjUrl')}}
-      </div>
-
-    </div>
-
-    <div class="metric-groups-wrapper">
       <div class="metric-groups">
         <article>
           <h4>Key Info</h4>
@@ -373,11 +373,6 @@
 
           <div class="row">
             <div class="column">
-              <div class="field">
-                <label for="estemp">Estimated Employment</label>
-                {{input value=editing.estemp placeholder="Enter here" key-up=(action checkForUpdated 'estemp')}}
-              </div>
-
               <div class="field">
                 <label for="rptdemp">Reported Employment</label>
                 {{input value=editing.rptdemp placeholder="Enter here" key-up=(action checkForUpdated 'rptdemp')}}

@@ -41,6 +41,7 @@ class Development < ApplicationRecord
   after_save :update_county
   after_save :update_n_transit
   after_save :update_neighborhood
+  after_save :update_loc_id
 
   def self.to_csv
 
@@ -54,7 +55,7 @@ class Development < ApplicationRecord
       'forty_b',
       'residential',
       'commercial',
-      'd_n_transit'
+      'd_n_trnsit'
     ]
 
     attributes = self.column_names
@@ -63,10 +64,10 @@ class Development < ApplicationRecord
     CSV.generate(headers: true) do |csv|
       csv << attributes
       all.each do |development|
-        csv << attributes.map { |attr|
-          value = development.send(attr.gsub(/\,/,";"))
-          (value.is_a? String) ? value.gsub(/\n/,"").gsub(/\;/,",") : value
-        }
+        csv << attributes.map do |attr|
+          value = development.send(attr)
+          (value.is_a? String) ? value.gsub(/\n/,"").gsub(/\;/,",").gsub(/(^\d{5}$)/,"=\"\\1\"") : value
+        end
       end
     end
   end
@@ -202,6 +203,22 @@ class Development < ApplicationRecord
     sql_result = ActiveRecord::Base.connection.exec_query(nhood_query).to_hash[0]
     return if sql_result.blank?
     self.nhood = sql_result['nhood_name']
+    self.save(validate: false)
+  end
+
+  def update_loc_id
+    return if loc_id.present?
+    loc_id_query = <<~SQL
+      SELECT parloc_id
+      FROM
+        (SELECT parloc_id, ST_TRANSFORM(parcels.geom, 4326) as shape FROM parcels) parcel,
+        (SELECT id, name, point FROM developments) development
+        WHERE ST_Intersects(point, parcel.shape)
+        AND id = #{id};
+    SQL
+    sql_result = ActiveRecord::Base.connection.exec_query(loc_id_query).to_hash[0]
+    return if sql_result.blank?
+    self.loc_id = sql_result['parloc_id']
     self.save(validate: false)
   end
 end
