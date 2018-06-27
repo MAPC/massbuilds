@@ -24,9 +24,6 @@ export default class extends Component.extend({
       this.set('windowWidth', Ember.$(window).width());
       this.set('windowHeight', Ember.$(window).height());
     });
-    Ember.$('.click-catcher').on('mousewheel DOMMouseScroll', () => {
-      this.catchClick();
-    });
   }
 
   @computed('openTerm', 'termLabelElement')
