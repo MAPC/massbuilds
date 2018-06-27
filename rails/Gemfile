@@ -23,6 +23,7 @@ gem 'json-schema'
 gem 'faraday'
 gem 'mailgun-ruby'
 gem 'fast_jsonapi'
+gem 'parallel'
 
 group :development, :test do
   gem 'pry-byebug'

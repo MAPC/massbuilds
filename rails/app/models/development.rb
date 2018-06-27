@@ -211,7 +211,7 @@ class Development < ApplicationRecord
     loc_id_query = <<~SQL
       SELECT parloc_id
       FROM
-        (SELECT parloc_id, ST_TRANSFORM(parcels.geom, 4326) as shape FROM parcels) parcel,
+        (SELECT parloc_id, parcels.geom as shape FROM parcels) parcel,
         (SELECT id, name, point FROM developments) development
         WHERE ST_Intersects(point, parcel.shape)
         AND id = #{id};
