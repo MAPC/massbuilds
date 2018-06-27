@@ -29,7 +29,12 @@ export default class extends Controller {
     this.searchQuery = '';
 
     this.showingFilters = false;
-    this.showingMenu = !this.get('currentUser.user');
+    this.showingMenu = false;
+    this.get('currentUser').addObserver('alreadyLoggedIn', this, () => {
+      if (!this.get('currentUser.alreadyLoggedIn')) {
+        this.set('showingMenu', true);
+      }
+    });
 
     this.updateChildren = 0;
     this.panel = null;
