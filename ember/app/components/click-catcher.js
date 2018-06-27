@@ -2,7 +2,7 @@ import Component from '@ember/component';
 import { action, computed } from 'ember-decorators/object';
 import { service } from 'ember-decorators/service';
 import { alias } from 'ember-decorators/object/computed';
-import content from './../content';
+import content from 'massbuilds/content';
 
 export default class extends Component.extend({
   tagName: '',

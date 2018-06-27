@@ -1,5 +1,5 @@
 import Controller from '@ember/controller';
-import content from './../content';
+import content from 'massbuilds/content';
 
 export default class extends Controller {
   constructor() {

@@ -17,13 +17,13 @@
     font-size: 14px;
 
     display: none;
-    background-color: white;
+    background-color: $color_bg-light;
     position: absolute;
     width: 24rem;
     .header {
       padding: 0.5rem 0.5rem;
       background-color: $color_brand-primary;
-      color: white;
+      color: $color_bg-light;
       line-height: 1rem;
     }
     .scroll-wrapper {

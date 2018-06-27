@@ -149,9 +149,74 @@ const content = {
       label: 'Reported Employment',
       definition: ['If new employment figures are given for a development, enter them into Estimated if the figures are estimates or Reported if they are officially reported new employment figures.'],
     },
+    RETAIL_AREA: {
+      label: 'Retail',
+      unitsShort: 'sq ft',
+      unitsLong: 'Square Feet',
+      definition: ['The total floor area dedicated to retail uses.'],
+    },
+    OFFICE_MEDICAL_AREA: {
+      label: 'Office/Medical',
+      unitsShort: 'sq ft',
+      unitsLong: 'Square Feet',
+      definition: ['The floor area dedicated to office and health care uses.'],
+    },
+    INDUSTRIAL_MANUFACTURING_AREA: {
+      label: 'Industrial/Manufacturing',
+      unitsShort: 'sq ft',
+      unitsLong: 'Square Feet',
+      definition: ['The floor area dedicated to industrial and manufacturing uses.'],
+    },
+    WAREHOUSE_SHIPPING_AREA: {
+      label: 'Warehouse/Shipping',
+      unitsShort: 'sq ft',
+      unitsLong: 'Square Feet',
+      definition: ['The floor area dedicated to warehouse, wholesale, and trucking/shipping uses.'],
+    },
+    RESEARCH_DEVELOPMENT_AREA: {
+      label: 'Research/Development',
+      unitsShort: 'sq ft',
+      unitsLong: 'Square Feet',
+      definition: ['The floor area dedicated to research and development uses (including medical research).'],
+    },
+    EDUCATIONAL_INSTITUTIONAL_AREA: {
+      label: 'Educational/Institutional',
+      unitsShort: 'sq ft',
+      unitsLong: 'Square Feet',
+      definition: ['The floor area dedicated to education and institutional uses (schools, religious institutions, etc.).'],
+    },
+    HOTEL_ROOM_AREA: {
+      label: 'Hotel Room',
+      unitsShort: 'sq ft',
+      unitsLong: 'Square Feet',
+      definition: ['The floor area dedicated to hotel room uses.'],
+    },
+    OTHER_AREA: {
+      label: 'Other',
+      unitsShort: 'sq ft',
+      unitsLong: 'Square Feet',
+      definition: ['The floor area dedicated to other uses. Note the other uses in Description.'],
+    },
+    UNKNOWN_AREA: {
+      label: 'Unknown',
+      unitsShort: 'sq ft',
+      unitsLong: 'Square Feet',
+      definition: ['The floor area dedicated to nonresidential uses on site (not including parking) that are unknown.'],
+    },
+  },
+
+  GLOSSARY_OVERRIDES: {
+    COMMERCIAL_AREA: {
+      label: 'Commercial Area',
+      unitsShort: 'sq ft',
+      unitsLong: 'Square Feet',
+      definition: [
+        'The floor area for all commercial uses broken down by category.',
+      ],
+    },
   },
 };
 
-content['TERMS'] = Object.assign({}, content.GLOSSARY, content.OTHER_TERMS);
+content['TERMS'] = Object.assign({}, content.GLOSSARY, content.OTHER_TERMS, content.GLOSSARY_OVERRIDES);
 
 export default content;

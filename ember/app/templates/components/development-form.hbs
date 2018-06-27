@@ -462,7 +462,11 @@
               </tr>
 
               <tr>
-                <td><label for="retSqft">Retail</label></td>
+                <td>
+                  <label for="retSqft">
+                    {{defined-term key='RETAIL_AREA'}}
+                  </label>
+                </td>
                 <td>{{input value=editing.retSqft placeholder=0 key-up=(action updateCommsf 'retSqft')}}</td>
                 <td>
                   {{#if (gt editing.commsf 0)}}
@@ -474,7 +478,11 @@
               </tr>
 
               <tr>
-                <td><label for="ofcmdSqft">Office/Medical</label></td>
+                <td>
+                  <label for="ofcmdSqft">
+                    {{defined-term key='OFFICE_MEDICAL_AREA'}}
+                  </label>
+                </td>
                 <td>{{input value=editing.ofcmdSqft placeholder=0 key-up=(action updateCommsf 'ofcmdSqft')}}</td>
                 <td>
                   {{#if (gt editing.commsf 0)}}
@@ -486,7 +494,11 @@
               </tr>
 
               <tr>
-                <td><label for="indmfSqft">Industrial/Manufacturing</label></td>
+                <td>
+                  <label for="indmfSqft">
+                    {{defined-term key='INDUSTRIAL_MANUFACTURING_AREA'}}
+                  </label>
+                </td>
                 <td>{{input value=editing.indmfSqft placeholder=0 key-up=(action updateCommsf 'indmfSqft')}}</td>
                 <td>
                   {{#if (gt editing.commsf 0)}}
@@ -498,7 +510,11 @@
               </tr>
 
               <tr>
-                <td><label for="whsSqft">Warehouse/Shipping</label></td>
+                <td>
+                  <label for="whsSqft">
+                    {{defined-term key='WAREHOUSE_SHIPPING_AREA'}}
+                  </label>
+                </td>
                 <td>{{input value=editing.whsSqft placeholder=0 key-up=(action updateCommsf 'whsSqft')}}</td>
                 <td>
                   {{#if (gt editing.commsf 0)}}
@@ -510,7 +526,11 @@
               </tr>
 
               <tr>
-                <td><label for="rndSqft">Research/Development</label></td>
+                <td>
+                  <label for="rndSqft">
+                    {{defined-term key='RESEARCH_DEVELOPMENT_AREA'}}
+                  </label>
+                </td>
                 <td>{{input value=editing.rndSqft placeholder=0 key-up=(action updateCommsf 'rndSqft')}}</td>
                 <td>
                   {{#if (gt editing.commsf 0)}}
@@ -522,7 +542,11 @@
               </tr>
 
               <tr>
-                <td><label for="eiSqft">Educational/Institutional</label></td>
+                <td>
+                  <label for="eiSqft">
+                    {{defined-term key='EDUCATIONAL_INSTITUTIONAL_AREA'}}
+                  </label>
+                </td>
                 <td>{{input value=editing.eiSqft placeholder=0 key-up=(action updateCommsf 'eiSqft')}}</td>
                 <td>
                   {{#if (gt editing.commsf 0)}}
@@ -534,7 +558,11 @@
               </tr>
 
               <tr>
-                <td><label for="hotelSqft">Hotel Room</label></td>
+                <td>
+                  <label for="hotelSqft">
+                    {{defined-term key='HOTEL_ROOM_AREA'}}
+                  </label>
+                </td>
                 <td>{{input value=editing.hotelSqft placeholder=0 key-up=(action updateCommsf 'hotelSqft')}}</td>
                 <td>
                   {{#if (gt editing.commsf 0)}}
@@ -546,7 +574,11 @@
               </tr>
 
               <tr>
-                <td><label for="otherSqft">Other</label></td>
+                <td>
+                  <label for="otherSqft">
+                    {{defined-term key='OTHER_AREA'}}
+                  </label>
+                </td>
                 <td>{{input value=editing.otherSqft placeholder=0 key-up=(action updateCommsf 'otherSqft')}}</td>
                 <td>
                   {{#if (gt editing.commsf 0)}}
@@ -558,7 +590,9 @@
               </tr>
 
               <tr>
-                <td>Unknown</td>
+                <td>
+                  {{defined-term key='UNKNOWN_AREA'}}
+                </td>
                 <td>{{input value=editing.unkSqft placeholder=0 key-up=(action updateCommsf 'unkSqft')}}</td>
                 <td>
                   {{#if (gt editing.commsf 0)}}

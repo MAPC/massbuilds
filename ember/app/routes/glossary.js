@@ -1,5 +1,5 @@
 import Route from '@ember/routing/route';
-import content from './../content';
+import content from 'massbuilds/content';
 
 export default class extends Route {
   constructor() {
