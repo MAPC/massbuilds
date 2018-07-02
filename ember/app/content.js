@@ -141,6 +141,10 @@ const content = {
         'The floor area for all commercial uses broken down by category.',
       ],
     },
+    PARCEL_FISCAL_YEAR: {
+      label: 'Parcel Fiscal Year',
+      definition: ['Fiscal Year of the assessor\'s data from which the parcel\'s information was extracted.'],
+    },
   }, // End of Glossary
 
   OTHER_TERMS: {
