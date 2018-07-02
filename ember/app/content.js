@@ -137,6 +137,9 @@ const content = {
         'In Other, enter floor area dedicated to other uses. Note the other uses in Description. ',
         'In Unknown, enter floor area dedicated to nonresidential uses on site (not including parking) that are unknown. ',
       ],
+      definitionShort: [
+        'The floor area for all commercial uses broken down by category.',
+      ],
     },
   }, // End of Glossary
 
@@ -204,19 +207,8 @@ const content = {
       definition: ['The floor area dedicated to nonresidential uses on site (not including parking) that are unknown.'],
     },
   },
-
-  GLOSSARY_OVERRIDES: {
-    COMMERCIAL_AREA: {
-      label: 'Commercial Area',
-      unitsShort: 'sq ft',
-      unitsLong: 'Square Feet',
-      definition: [
-        'The floor area for all commercial uses broken down by category.',
-      ],
-    },
-  },
 };
 
-content['TERMS'] = Object.assign({}, content.GLOSSARY, content.OTHER_TERMS, content.GLOSSARY_OVERRIDES);
+content['TERMS'] = Object.assign({}, content.GLOSSARY, content.OTHER_TERMS);
 
 export default content;

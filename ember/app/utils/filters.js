@@ -83,14 +83,14 @@ const filters = {
   // Commercial
 
   'commsf': { name: 'Commercial sqft', glossaryKey: 'COMMERCIAL_AREA', type: 'number', ...defaultMetric },
-  'retSqft': { name: 'Retail sqft', type: 'number', ...defaultMetric },
-  'ofcmdSqft': { name: 'Ofce/Mdcl sqft', type: 'number', ...defaultMetric },
-  'indmfSqft': { name: 'Indus/Manuf sqft', type: 'number', ...defaultMetric },
-  'whsSqft': { name: 'Wrhse/Ship sqft', type: 'number', ...defaultMetric },
-  'rndSqft': { name: 'Rsrch/Dvlpnt sqft', type: 'number', ...defaultMetric },
-  'eiSqft': { name: 'Edu/Institu sqft', type: 'number', ...defaultMetric },
-  'otherSqft': { name: 'Other sqft', type: 'number', ...defaultMetric },
-  'hotelSqft': { name: 'Hotel room sqft', type: 'number', ...defaultMetric },
+  'retSqft': { name: 'Retail sqft', glossaryKey: 'RETAIL_AREA', type: 'number', ...defaultMetric },
+  'ofcmdSqft': { name: 'Ofce/Mdcl sqft', glossaryKey: 'OFFICE_MEDICAL_AREA', type: 'number', ...defaultMetric },
+  'indmfSqft': { name: 'Indus/Manuf sqft', glossaryKey: 'INDUSTRIAL_MANUFACTURING_AREA', type: 'number', ...defaultMetric },
+  'whsSqft': { name: 'Wrhse/Ship sqft', glossaryKey: 'WAREHOUSE_SHIPPING_AREA', type: 'number', ...defaultMetric },
+  'rndSqft': { name: 'Rsrch/Dvlpnt sqft', glossaryKey: 'RESEARCH_DEVELOPMENT_AREA', type: 'number', ...defaultMetric },
+  'eiSqft': { name: 'Edu/Institu sqft', glossaryKey: 'EDUCATIONAL_INSTITUTIONAL_AREA', type: 'number', ...defaultMetric },
+  'otherSqft': { name: 'Other sqft', glossaryKey: 'OTHER_AREA', type: 'number', ...defaultMetric },
+  'hotelSqft': { name: 'Hotel room sqft', glossaryKey: 'HOTEL_ROOM_AREA', type: 'number', ...defaultMetric },
   'hotelrms': { name: 'Hotel rooms', glossaryKey: 'HOTEL_ROOMS', type: 'number', ...defaultMetric },
   'rptdemp': { name: 'Reported emplmnt', glossaryKey: 'REPORTED_EMPLOYMENT', type: 'number', ...defaultMetric },
 

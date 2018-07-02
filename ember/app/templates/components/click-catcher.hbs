@@ -10,9 +10,15 @@
     </div>
     <div class="scroll-wrapper">
       <div class="paragraphs">
-        {{#each definition as |paragraph|}}
-          <p>{{paragraph}}</p>
-        {{/each}}
+        {{#if definitionShort}}
+          {{#each definitionShort as |paragraph|}}
+            <p>{{paragraph}}</p>
+          {{/each}}
+        {{else}}
+          {{#each definition as |paragraph|}}
+            <p>{{paragraph}}</p>
+          {{/each}}
+        {{/if}}
       </div>
     </div>
   </div>

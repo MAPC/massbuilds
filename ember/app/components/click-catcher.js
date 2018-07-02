@@ -60,6 +60,12 @@ export default class extends Component.extend({
   }
 
   @computed('openTerm')
+  get definitionShort() {
+    if (!this.get('openTerm')) { return ''; }
+    return content.TERMS[this.get('openTerm')].definitionShort;
+  }
+
+  @computed('openTerm')
   get unitsShort() {
     if (!this.get('openTerm')) { return ''; }
     return content.TERMS[this.get('openTerm')].unitsShort;
