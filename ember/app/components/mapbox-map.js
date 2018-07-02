@@ -23,7 +23,7 @@ export default class extends Component {
     this.mapboxglMap = new mapboxgl.Map({
       container: this.get('element'),
       style: 'mapbox://styles/mapbox/light-v9',
-      maxBounds: [[-74.5, 40], [-68, 44]],
+      maxBounds: [[-75.5, 39], [-67, 45]],
       dragRotate: false,
       pitchWithRotate: false,
       touchZoomRotate: false,
@@ -295,7 +295,7 @@ export default class extends Component {
       const leftPanel = Ember.$('.left-panel-layer');
       this.mapboxglMap.fitBounds(fitBounds, { padding: {
         top: 40,
-        left: (leftPanel ? parseInt(leftPanel.css('width')) + 40 : 40),
+        left: (this.get('map.showingLeftPanel') ? parseInt(leftPanel.css('width')) + 40 : 40),
         bottom: 40,
         right: 40,
       }});

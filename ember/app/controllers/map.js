@@ -127,6 +127,7 @@ export default class extends Controller {
     );
 
     this.set('searchQuery', '');
+    this.set('map.showingLeftPanel', showing);
 
     return showing;
   }
