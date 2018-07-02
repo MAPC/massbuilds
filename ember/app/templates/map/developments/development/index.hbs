@@ -34,7 +34,6 @@
           <div class="metric-groups">
             <article>
               <h4>Key Info</h4>
-
               <div class="row">
                 <div class="column">
                   <div class="field">
@@ -46,7 +45,6 @@
                       {{capitalize model.status}}
                     </span>
                   </div>
-
                   <div class="field">
                     <label for="yearCompl">
                       {{defined-term key="YEAR_COMPLETE"}}
@@ -465,11 +463,26 @@
           </p>
         </div>
       {{/overflow-scroll}}
-      {{#if hasDeletePermissions}}
-        <div class="actions">
+
+      <div class="actions">
+        {{#if hasSuperPermissions}}
           <button class="styled negative" onclick={{action deleteDevelopment}}>Delete Development</button>
-        </div>
-      {{/if}}
+        {{/if}}
+
+        {{#loading-spinner message=flaggingMessage isLoading=isSettingFlag}}
+          {{#if model.flag}}
+            {{#if hasSuperPermissions}}
+              <button class="styled" onclick={{action unflagDevelopment}}>Unflag Development</button>
+            {{else}}
+              <p>This development has been flagged for review</p>
+            {{/if}} 
+          {{else}}
+            {{#if session.isAuthenticated}}
+                <button class="styled negative" onclick={{action flagDevelopment}}>Report Development for Review</button>
+            {{/if}}
+          {{/if}}
+        {{/loading-spinner}}
+      </div>
     </div>
   </div>
 

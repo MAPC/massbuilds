@@ -64,7 +64,10 @@ class DevelopmentsController < ApplicationController
   # PATCH/PUT /developments/1
   def update
     authorize @development
-    if @development.update(development_params)
+
+    validate = !development_params[:flag]
+    @development.attributes = development_params
+    if @development.save(validate: validate)
       respond_to do |format|
         format.jsonapi { render json: FullDevelopmentSerializer.new(@development).serialized_json }
       end
@@ -105,7 +108,7 @@ class DevelopmentsController < ApplicationController
                     :latitude, :longitude, :parcel_id, :mixed_use, :point, :programs, :forty_b, :residential,
                     :commercial, :municipal, :devlper, :yrcomp_est, :units_1bd, :units_2bd, :units_3bd,
                     :affrd_unit, :aff_u30, :aff_30_50, :aff_50_80, :aff_80p, :headqtrs, :park_type, :publicsqft,
-                    :unknownhu, :aff_unknown, :unk_sqft)
+                    :unknownhu, :aff_unknown, :unk_sqft, :flag)
     end
 
     # Only allow a trusted parameter "white list" through.
@@ -121,7 +124,7 @@ class DevelopmentsController < ApplicationController
                                   latitude longitude parcel_id mixed_use point programs forty_b residential
                                   commercial municipal devlper yrcomp_est units_1bd units_2bd units_3bd
                                   affrd_unit aff_u30 aff_30_50 aff_50_80 aff_80p headqtrs park_type publicsqft
-                                  unknownhu aff_unknown unk_sqft])
+                                  unknownhu aff_unknown unk_sqft flag])
                         }
       end
     end

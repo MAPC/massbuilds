@@ -190,7 +190,6 @@
   }
 
   .detail {
-
     font-size: 15px;
 
     & + .detail { margin-top: 20px; }
@@ -218,6 +217,17 @@
   .actions {
     margin-top: 10px;
     text-align: right;
-  }
 
+    font-size: 13px;
+
+    button, .loading-spinner {
+      width: 100%;
+      margin-left: 0;
+      text-align: center;
+
+      & + button, .loading-wrapper {
+        margin-top: 10px; 
+      }  
+    }
+  }
 }

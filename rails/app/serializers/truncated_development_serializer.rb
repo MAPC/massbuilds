@@ -13,5 +13,4 @@ class TruncatedDevelopmentSerializer
   attribute :longitude do |object|
     object.point.try :x
   end
-
 end
