@@ -1,7 +1,6 @@
 .route.map-developments-development {
 
-  min-width: 860px;
-  max-width: 890px;
+  width: 890px;
   padding: 0 10px;
 
   .development-content {
@@ -226,8 +225,8 @@
       text-align: center;
 
       & + button, .loading-wrapper {
-        margin-top: 10px; 
-      }  
+        margin-top: 10px;
+      }
     }
   }
 }

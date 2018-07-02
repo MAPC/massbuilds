@@ -38,6 +38,7 @@ export default class extends Controller {
 
     this.updateChildren = 0;
     this.panel = null;
+    this.leftPanelWidth = 'filter-width';
   }
 
 
@@ -128,6 +129,18 @@ export default class extends Controller {
     this.set('searchQuery', '');
 
     return showing;
+  }
+
+  @computed('showingLeftPanel')
+  get leftPanelClass() {
+    if (this.get('showingLeftPanel')) {
+      const widthClass = this.get('showingFilters')
+          ? 'filter-width'
+          : 'development-width';
+      this.set('leftPanelWidth', widthClass)
+      return widthClass;
+    }
+    return this.get('leftPanelWidth');
   }
 
   @action

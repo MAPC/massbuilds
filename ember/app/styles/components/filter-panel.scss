@@ -56,6 +56,9 @@
     }
   }
 
-  .filters { width: 66.66%; }
+  .filters {
+    min-width: 66.66%;
+    flex: 1;
+  }
 
 }

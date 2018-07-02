@@ -33,6 +33,12 @@ export default class extends Component {
       this.mapboxglMap.on('styledata', () => {
         this.draw(mapService);
       });
+      this.mapboxglMap.on('zoom', (e) => {
+        // If a user attempts to abort a zoom, stop the animation.
+        if (e.originalEvent) {
+          this.mapboxglMap.stop();
+        }
+      });
       mapService.addObserver('stored', this, 'draw');
       mapService.addObserver('filteredData', this, 'draw');
       mapService.addObserver('stored', this, 'focus');
@@ -64,7 +70,9 @@ export default class extends Component {
       const bounds = this.mapboxglMap.getBounds();
       const northEast = bounds.getNorthEast().toArray();
       const southWest = bounds.getSouthWest().toArray();
-      const leftPanelWidth = parseInt(Ember.$('.left-panel-layer').css('width'));
+      const leftPanel = Ember.$('.left-panel-layer');
+      const leftPanelWidth = parseInt(leftPanel.css('width')) +
+          parseInt(leftPanel.css('left'));
       const mapWidth = parseInt(this.$().css('width'));
       const ratio = (((mapWidth - leftPanelWidth) / 2) + leftPanelWidth) / mapWidth;
       const coordinates = [
