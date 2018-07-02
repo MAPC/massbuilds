@@ -5,17 +5,17 @@
 </ul>
 
 <div class='filters'>
-  {{#if (eq viewing.type 'discrete')}} 
-    {{discrete-filter-subpanel 
+  {{#if (eq viewing.type 'discrete')}}
+    {{discrete-filter-subpanel
       update=(action update)
-      viewing=viewing 
+      viewing=viewing
       selectedValues=selectedValues
     }}
   {{else}}
-    {{metric-filter-subpanel 
+    {{metric-filter-subpanel
       update=(action update)
       viewing=viewing
       activeFilters=activeFilters
-    }} 
+    }}
   {{/if}}
 </div>

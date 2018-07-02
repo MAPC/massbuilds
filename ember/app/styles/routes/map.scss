@@ -181,7 +181,6 @@
 
     height: calc(100vh - 30px);
     top: 15px;
-    padding: 0 20px;
 
     background: $color_bg-light;
     border-style: solid;
@@ -212,19 +211,18 @@
   }
 
   .left-panel-layer {
-    left: -490px;
-    width: 490px;
+    left: -450px;
+    width: 450px;
     &.filter-width {
-      left: -490px;
-      width: 490px;
+      left: -450px;
+      width: 450px;
     }
     &.development-width {
-      left: -930px;
-      width: 930px;
+      left: -900px;
+      width: 900px;
     }
 
     position: absolute;
-    padding: 20px;
 
     &.active {
       left: 15px;
