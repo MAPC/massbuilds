@@ -25,12 +25,12 @@
 
   .subgroup {
     & + .subgroup { margin-top: 25px; }
+    font-size: $filter_font_size;
 
     h4 {
       margin: 0 0 15px;
 
       color: $color_font-medium;
-      font-size: $filter_font_size;
     }
 
     .metric {
@@ -40,12 +40,9 @@
         display: inline-block;
 
         width: 56%;
-
-        font-size: $filter_font_size;
       }
 
       input {
-        font-size: $filter_font_size;
 
         background: none;
         border: 0;
@@ -58,7 +55,6 @@
       }
 
       select {
-        font-size: $filter_font_size;
 
         background: none;
         border: 1px solid $color_bg-medium;
@@ -76,8 +72,6 @@
           position: absolute;
           top: 5px;
           right: 0px;
-
-          font-size: $filter_font_size;
         }
       }
     }
