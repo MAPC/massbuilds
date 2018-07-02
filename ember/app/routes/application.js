@@ -12,6 +12,10 @@ export default Route.extend(ApplicationRouteMixin, {
     return this._loadCurrentUser();
   },
 
+  afterModel() {
+    this.get('currentUser')
+        .set('alreadyLoggedIn', !!this.get('session.data.authenticated.email'));
+  },
 
   sessionAuthenticated() {
     this._super(...arguments);

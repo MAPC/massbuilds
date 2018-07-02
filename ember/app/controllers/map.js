@@ -30,6 +30,11 @@ export default class extends Controller {
 
     this.showingFilters = false;
     this.showingMenu = false;
+    this.get('currentUser').addObserver('alreadyLoggedIn', this, () => {
+      if (!this.get('currentUser.alreadyLoggedIn')) {
+        this.set('showingMenu', true);
+      }
+    });
 
     this.updateChildren = 0;
     this.panel = null;
@@ -125,21 +130,6 @@ export default class extends Controller {
     return showing;
   }
 
-
-  @computed('showingMenu', 'currentUser.user', 'overrideRightPanel')
-  get showingRightPanel() {
-    let loginOverride = this.get('currentUser.user') === undefined;
-
-    if (this.get('overrideRightPanel')) {
-      loginOverride = false;
-    }
-
-    return (
-      this.get('showingMenu')
-      || loginOverride
-    );
-  }
-
   @action
   setBaseMap(baseMap) {
     this.set('map.baseMap', baseMap);
@@ -153,12 +143,7 @@ export default class extends Controller {
 
   @action
   toggleMenu() {
-    if (this.get('currentUser.user') === undefined && !this.get('overrideRightPanel')) {
-      this.set('overrideRightPanel', true);
-    }
-    else {
-      this.toggleProperty('showingMenu');
-    }
+    this.toggleProperty('showingMenu');
   }
 
 
