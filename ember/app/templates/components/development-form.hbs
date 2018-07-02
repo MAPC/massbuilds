@@ -19,8 +19,8 @@
 </div>
 
 <form class="development-content">
-  <div class="layout-column scroll-wrapper">
-    <div class="scroll-content">
+  <div class="layout-column">
+    {{#overflow-scroll}}
       <div class="development-header">
 
         <div class="form-row required primary">
@@ -66,7 +66,9 @@
           <div class="row">
             <div class="column">
               <div class="field">
-                <label for="status" class="required">Status:</label>
+                <label for="status" class="required">
+                  {{defined-term key='STATUS'}}
+                </label>
                 <select name="status" onchange={{action updateStatus}}>
                   {{#unless editing.status}}
                     <option disabled selected>Select Status</option>
@@ -78,7 +80,9 @@
               </div>
 
               <div class="field">
-                <label for="yearCompl" class="required">Year Completed</label>
+                <label for="yearCompl" class="required">
+                  {{defined-term key='YEAR_COMPLETE'}}
+                </label>
                 {{input value=editing.yearCompl class="required-field" placeholder="Enter here" key-up=(action checkForUpdated 'yearCompl')}}
               </div>
 
@@ -88,29 +92,39 @@
               </div>
 
               <div class="field">
-                <label for="totalCost">Cost of Construction</label>
+                <label for="totalCost">
+                  {{defined-term key='COST_OF_CONSTRUCTION'}}
+                </label>
                 ${{input value=editing.totalCost placeholder="Enter here" key-up=(action checkForUpdated 'totalCost')}}
               </div>
 
               <div class="field">
-                <label for="prjarea">Project Area in Square Feet</label>
+                <label for="prjarea">
+                  {{defined-term key='PROJECT_AREA'}}
+                </label>
                 {{input value=editing.prjarea placeholder="Enter here" key-up=(action checkForUpdated 'prjarea')}}
               </div>
             </div>
 
             <div class="column">
               <div class="field">
-                <label for="height">Height (feet)</label>
+                <label for="height">
+                  {{defined-term key='HEIGHT'}}
+                </label>
                 {{input value=editing.height placeholder="Enter here" key-up=(action checkForUpdated 'height')}}
               </div>
 
               <div class="field">
-                <label for="stories">Number of Stories</label>
+                <label for="stories">
+                  {{defined-term key='STORIES'}}
+                </label>
                 {{input value=editing.stories placeholder="Enter here" key-up=(action checkForUpdated 'stories')}}
               </div>
 
               <div class="field">
-                <label for="onsitepark">Number of Parking Spaces</label>
+                <label for="onsitepark">
+                  {{defined-term key='PARKING_SPACES'}}
+                </label>
                 {{input value=editing.onsitepark placeholder="Enter here" key-up=(action checkForUpdated 'onsitepark')}}
               </div>
 
@@ -132,27 +146,37 @@
             <label>Attributes:</label>
 
             <span>
-              <label for="rdv">Redevelopment: </label>
+              <label for="rdv">
+                {{defined-term key='REDEVELOPMENT'}}
+              </label>
               {{input type='checkbox' checked=editing.rdv click=(action checkForUpdated 'rdv')}}
             </span>,
 
             <span>
-              <label for="phased">Phased: </label>
+              <label for="phased">
+                {{defined-term key='PHASED'}}
+              </label>
               {{input type='checkbox' checked=editing.phased click=(action checkForUpdated 'phased')}}
             </span>,
 
             <span>
-              <label for="stalled">Stalled: </label>
+              <label for="stalled">
+                {{defined-term key='STALLED'}}
+              </label>
               {{input type='checkbox' checked=editing.stalled click=(action checkForUpdated 'stalled')}}
             </span>,
 
             <span>
-              <label for="asofright">As of Right: </label>
+              <label for="asofright">
+                {{defined-term key='AS_OF_RIGHT'}}
+              </label>
               {{input type='checkbox' checked=editing.asofright click=(action checkForUpdated 'asofright')}}
             </span>,
 
             <span>
-              <label for="mixedUse">Mixed Use: </label>
+              <label for="mixedUse">
+                {{defined-term key='MIXED_USE'}}
+              </label>
               {{input type='checkbox' checked=editing.mixedUse click=(action checkForUpdated 'mixedUse')}}
             </span>
           </p>
@@ -164,7 +188,9 @@
           <div class="row">
             <div class="column">
               <div class="field">
-                <label for="gqpop">Group Quarters Population</label>
+                <label for="gqpop">
+                  {{defined-term key='GROUP_QUARTERS_POPULATION'}}
+                </label>
                 {{input value=editing.gqpop placeholder="Enter here" key-up=(action checkForUpdated 'gqpop')}}
               </div>
             </div>
@@ -176,14 +202,18 @@
             <label>Attributes:</label>
 
             <span>
-              <label for="ovr55">Age Restricted: </label>
+              <label for="ovr55">
+                {{defined-term key='AGE_RESTRICTED'}}
+              </label>
               {{input type='checkbox' checked=editing.ovr55 click=(action checkForUpdated 'ovr55')}}
             </span>
           </p>
 
           <div class="table-wrapper">
             <h3 class="field">
-              <label for="hu" class="required">Total # of Housing Units</label>
+              <label for="hu" class="required">
+                {{defined-term key='HOUSING_UNITS'}}
+              </label>
 
               {{#if (and (not-eq editing.hu null) (gte editing.hu 0))}}
                 {{editing.hu}} Unit{{unless (eq editing.hu 1) 's'}}
@@ -289,7 +319,9 @@
 
           <div class="table-wrapper">
             <h3 class="field">
-              <label for="affrdUnit">Affordable Units</label>
+              <label for="affrdUnit">
+                {{defined-term key='AFFORDABLE_UNITS'}}
+              </label>
 
               {{#if (and (not-eq editing.affrdUnit null) (gte editing.affrdUnit 0))}}
                 {{editing.affrdUnit}} Unit{{unless (eq editing.affrdUnit 1) 's'}}
@@ -374,19 +406,25 @@
           <div class="row">
             <div class="column">
               <div class="field">
-                <label for="rptdemp">Reported Employment</label>
+                <label for="rptdemp">
+                  {{defined-term key='REPORTED_EMPLOYMENT'}}
+                </label>
                 {{input value=editing.rptdemp placeholder="Enter here" key-up=(action checkForUpdated 'rptdemp')}}
               </div>
             </div>
 
             <div class="column">
               <div class="field">
-                <label for="hotelrms">Hotel Rooms</label>
+                <label for="hotelrms">
+                  {{defined-term key='HOTEL_ROOMS'}}
+                </label>
                 {{input value=editing.hotelrms placeholder="Enter here" key-up=(action checkForUpdated 'hotelrms')}}
               </div>
 
               <div class="field">
-                <label for="publicsqft">Public Sqft.</label>
+                <label for="publicsqft">
+                  {{defined-term key='PUBLIC_AREA'}}
+                </label>
                 {{input value=editing.publicsqft placeholder="Enter here" key-up=(action checkForUpdated 'publicsqft')}}
               </div>
             </div>
@@ -396,14 +434,18 @@
             <label>Attributes:</label>
 
             <span>
-              <label for="headqtrs">Company Headquarters: </label>
+              <label for="headqtrs">
+                {{defined-term key='COMPANY_HEADQUARTERS'}}
+              </label>
               {{input type='checkbox' checked=editing.headqtrs click=(action checkForUpdated 'headqtrs')}}
             </span>
           </p>
 
           <div class="table-wrapper">
             <h3 class="field">
-              <label for="commsf" class="required">Commercial Square Footage</label>
+              <label for="commsf" class="required">
+                {{defined-term key='COMMERCIAL_AREA'}}
+              </label>
 
               {{#if (and (not-eq editing.commsf null) (gte editing.commsf 0))}}
                 {{editing.commsf}} sqft.
@@ -420,7 +462,11 @@
               </tr>
 
               <tr>
-                <td><label for="retSqft">Retail</label></td>
+                <td>
+                  <label for="retSqft">
+                    {{defined-term key='RETAIL_AREA'}}
+                  </label>
+                </td>
                 <td>{{input value=editing.retSqft placeholder=0 key-up=(action updateCommsf 'retSqft')}}</td>
                 <td>
                   {{#if (gt editing.commsf 0)}}
@@ -432,7 +478,11 @@
               </tr>
 
               <tr>
-                <td><label for="ofcmdSqft">Office/Medical</label></td>
+                <td>
+                  <label for="ofcmdSqft">
+                    {{defined-term key='OFFICE_MEDICAL_AREA'}}
+                  </label>
+                </td>
                 <td>{{input value=editing.ofcmdSqft placeholder=0 key-up=(action updateCommsf 'ofcmdSqft')}}</td>
                 <td>
                   {{#if (gt editing.commsf 0)}}
@@ -444,7 +494,11 @@
               </tr>
 
               <tr>
-                <td><label for="indmfSqft">Industrial/Manufacturing</label></td>
+                <td>
+                  <label for="indmfSqft">
+                    {{defined-term key='INDUSTRIAL_MANUFACTURING_AREA'}}
+                  </label>
+                </td>
                 <td>{{input value=editing.indmfSqft placeholder=0 key-up=(action updateCommsf 'indmfSqft')}}</td>
                 <td>
                   {{#if (gt editing.commsf 0)}}
@@ -456,7 +510,11 @@
               </tr>
 
               <tr>
-                <td><label for="whsSqft">Warehouse/Shipping</label></td>
+                <td>
+                  <label for="whsSqft">
+                    {{defined-term key='WAREHOUSE_SHIPPING_AREA'}}
+                  </label>
+                </td>
                 <td>{{input value=editing.whsSqft placeholder=0 key-up=(action updateCommsf 'whsSqft')}}</td>
                 <td>
                   {{#if (gt editing.commsf 0)}}
@@ -468,7 +526,11 @@
               </tr>
 
               <tr>
-                <td><label for="rndSqft">Research/Development</label></td>
+                <td>
+                  <label for="rndSqft">
+                    {{defined-term key='RESEARCH_DEVELOPMENT_AREA'}}
+                  </label>
+                </td>
                 <td>{{input value=editing.rndSqft placeholder=0 key-up=(action updateCommsf 'rndSqft')}}</td>
                 <td>
                   {{#if (gt editing.commsf 0)}}
@@ -480,7 +542,11 @@
               </tr>
 
               <tr>
-                <td><label for="eiSqft">Educational/Institutional</label></td>
+                <td>
+                  <label for="eiSqft">
+                    {{defined-term key='EDUCATIONAL_INSTITUTIONAL_AREA'}}
+                  </label>
+                </td>
                 <td>{{input value=editing.eiSqft placeholder=0 key-up=(action updateCommsf 'eiSqft')}}</td>
                 <td>
                   {{#if (gt editing.commsf 0)}}
@@ -492,7 +558,11 @@
               </tr>
 
               <tr>
-                <td><label for="hotelSqft">Hotel Room</label></td>
+                <td>
+                  <label for="hotelSqft">
+                    {{defined-term key='HOTEL_ROOM_AREA'}}
+                  </label>
+                </td>
                 <td>{{input value=editing.hotelSqft placeholder=0 key-up=(action updateCommsf 'hotelSqft')}}</td>
                 <td>
                   {{#if (gt editing.commsf 0)}}
@@ -504,7 +574,11 @@
               </tr>
 
               <tr>
-                <td><label for="otherSqft">Other</label></td>
+                <td>
+                  <label for="otherSqft">
+                    {{defined-term key='OTHER_AREA'}}
+                  </label>
+                </td>
                 <td>{{input value=editing.otherSqft placeholder=0 key-up=(action updateCommsf 'otherSqft')}}</td>
                 <td>
                   {{#if (gt editing.commsf 0)}}
@@ -516,7 +590,9 @@
               </tr>
 
               <tr>
-                <td>Unknown</td>
+                <td>
+                  {{defined-term key='UNKNOWN_AREA'}}
+                </td>
                 <td>{{input value=editing.unkSqft placeholder=0 key-up=(action updateCommsf 'unkSqft')}}</td>
                 <td>
                   {{#if (gt editing.commsf 0)}}
@@ -530,12 +606,14 @@
           </div>
         </article>
       </div>
-    </div>
+    {{/overflow-scroll}}
   </div>
 
   <div class="layout-column">
     <div class="detail">
-      <h3>Developer</h3>
+      <h3>
+        {{defined-term key='DEVELOPER'}}
+      </h3>
       <p>{{input value=editing.devlper placeholder="Enter Developer Name" key-up=(action checkForUpdated 'devlper')}}</p>
     </div>
 
@@ -560,7 +638,9 @@
     {{/if}}
 
     <div class="detail">
-      <h3 class="required">Description</h3>
+      <h3 class="required">
+        {{defined-term key='DESCRIPTION'}}
+      </h3>
       <p>{{textarea value=editing.descr class="required-field" placeholder="Enter Description" key-up=(action checkForUpdated 'descr')}}</p>
     </div>
 

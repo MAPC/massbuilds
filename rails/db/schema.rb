@@ -17,6 +17,16 @@ ActiveRecord::Schema.define(version: 20180625194837) do
   enable_extension "postgis"
   enable_extension "postgres_fdw"
 
+  create_table "allpoints_final2", primary_key: "gid", id: :integer, default: nil, force: :cascade do |t|
+    t.decimal "id"
+    t.integer "muni_id"
+    t.string "muni", limit: 18
+    t.string "parloc_id", limit: 20
+    t.decimal "fy", precision: 10
+    t.geometry "geom", limit: {:srid=>26986, :type=>"st_point"}
+    t.index ["geom"], name: "allpoints_final2_geom_idx", using: :gist
+  end
+
   create_table "developments", force: :cascade do |t|
     t.integer "user_id"
     t.boolean "rdv"
@@ -91,6 +101,7 @@ ActiveRecord::Schema.define(version: 20180625194837) do
     t.string "county"
     t.string "nhood"
     t.text "n_transit", default: [], array: true
+    t.boolean "flag"
   end
 
   create_table "edits", force: :cascade do |t|
