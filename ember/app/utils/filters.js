@@ -166,7 +166,6 @@ const metricGroups = {
       title: 'General',
       metrics: [
         'commsf',
-        'estemp',
         'rptdemp',
       ]
     },
