@@ -9,7 +9,6 @@ export default class extends Component {
 
   @service map
 
-
   constructor() {
     super();
 

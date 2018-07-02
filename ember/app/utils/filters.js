@@ -39,56 +39,62 @@ const filters = {
 
   // Key Info
 
-  'status': { name: 'Status', type: 'string', options: Object.keys(statusColors), ...defaultMetric },
+  'status': { name: 'Status', glossaryKey: 'STATUS', type: 'string', options: Object.keys(statusColors), ...defaultMetric },
+  'totalCost': { name: 'Total cost', glossaryKey: 'COST_OF_CONSTRUCTION', type: 'number', ...defaultMetric },
   'parkType': { name: 'Parking type', type: 'string', options: ['garage', 'underground', 'surface', 'other'], ...defaultMetric },
-  'descr': { name: 'Description', type: 'string', ...defaultMetric },
+  'descr': { name: 'Description', glossaryKey: 'DESCRIPTION', type: 'string', ...defaultMetric },
 
-  'yearCompl': { name: 'Year completed', type: 'number', ...defaultMetric },
-  'yrcompEst': { name: 'Estimated completion year',  type: 'boolean', ...defaultMetric },
-  'prjarea': { name: 'Project area size', type: 'number', unit: 'sqft', ...defaultMetric },
-  'publicsqft': { name: 'Public sqft', type: 'number', ...defaultMetric },
-  'onsitepark': { name: 'Parking spaces', type: 'number', ...defaultMetric },
-  'dNTrnsit': { name: 'Dist. to transit', type: 'number', ...defaultMetric },
-  'height': { name: 'Height', type: 'number', unit: 'ft', ...defaultMetric },
+  'phased': { name: 'Phased', glossaryKey: 'PHASED', type: 'boolean', ...defaultMetric },
+  'stalled': { name: 'Stalled', glossaryKey: 'STALLED', type: 'boolean', ...defaultMetric },
+  'stories': { name: 'Stories', glossaryKey: 'STORIES', type: 'number', ...defaultMetric },
+  'mixedUse': { name: 'Mixed use', glossaryKey: 'MIXED_USE', type: 'boolean', ...defaultMetric },
 
-  'clusteros': { name: 'Cluster dvlpmnt.', type: 'boolean', ...defaultMetric },
+  'yearCompl': { name: 'Year complete', glossaryKey: 'YEAR_COMPLETE', type: 'number', ...defaultMetric },
+  'yrcompEst': { name: 'Completion year is estimated',  type: 'boolean', ...defaultMetric },
+  'prjarea': { name: 'Project area', glossaryKey: 'PROJECT_AREA', type: 'number', unit: 'sqft', ...defaultMetric },
+  'publicsqft': { name: 'Public area', glossaryKey: 'PUBLIC_AREA', type: 'number', ...defaultMetric },
+  'onsitepark': { name: 'Parking spaces', glossaryKey: 'PARKING_SPACES', type: 'number', ...defaultMetric },
+  'dNTrnsit': { name: 'Distance to transit', type: 'number', ...defaultMetric },
+  'height': { name: 'Height', glossaryKey: 'HEIGHT', type: 'number', unit: 'ft', ...defaultMetric },
+
+  'clusteros': { name: 'Cluster development.', type: 'boolean', ...defaultMetric },
   'floodzone': { name: 'In flood zone', type: 'boolean', ...defaultMetric },
-  'rdv': { name: 'Redevelopment', type: 'boolean', ...defaultMetric },
+  'rdv': { name: 'Redevelopment', glossaryKey: 'REDEVELOPMENT', type: 'boolean', ...defaultMetric },
 
   // Residential
 
-  'hu': { name: 'Total housing units', type: 'number', ...defaultMetric },
+  'hu': { name: 'Total housing units', glossaryKey: 'HOUSING_UNITS', type: 'number', ...defaultMetric },
   'singfamhu': { name: 'Single-family units', type: 'number', ...defaultMetric },
-  'smmultifam': { name: 'Sm multifam. units', type: 'number', ...defaultMetric },
-  'lgmultifam': { name: 'Lg multifam. units', type: 'number', ...defaultMetric },
-  'units1bd': { name: 'Studio/1 BR units', type: 'number', ...defaultMetric },
+  'smmultifam': { name: 'Small multifamily units', type: 'number', ...defaultMetric },
+  'lgmultifam': { name: 'Large multifamily units', type: 'number', ...defaultMetric },
+  'units1bd': { name: 'Studio/1 bedroom units', type: 'number', ...defaultMetric },
   'units2bd': { name: '2 Bedroom units', type: 'number', ...defaultMetric },
   'units3bd': { name: '3 Bedroom units', type: 'number', ...defaultMetric },
-  'affrdUnit': { name: 'Affordable units', type: 'number', ...defaultMetric },
+  'affrdUnit': { name: 'Affordable units', glossaryKey: 'AFFORDABLE_UNITS', type: 'number', ...defaultMetric },
   'affU30': { name: 'Units <30% AMI', type: 'number', ...defaultMetric },
   'aff3050': { name: 'Units 30-50% AMI', type: 'number', ...defaultMetric },
   'aff5080': { name: 'Units 50-80% AMI', type: 'number', ...defaultMetric },
   'aff80p': { name: 'Units 80-100% AMI', type: 'number', ...defaultMetric },
-  'gqpop': { name: 'Group quarters pop.', type: 'number', ...defaultMetric },
+  'gqpop': { name: 'Group quarters population', type: 'number', ...defaultMetric },
 
-  'asofright': { name: 'As of Right', type: 'boolean', ...defaultMetric },
-  'ovr55': { name: 'Age restricted', type: 'boolean', ...defaultMetric },
+  'asofright': { name: 'As of Right', glossaryKey: 'AS_OF_RIGHT', type: 'boolean', ...defaultMetric },
+  'ovr55': { name: 'Age restricted', glossaryKey: 'AGE_RESTRICTED', type: 'boolean', ...defaultMetric },
 
   // Commercial
 
-  'commsf': { name: 'Commercial sqft', type: 'number', ...defaultMetric },
-  'retSqft': { name: 'Retail sqft', type: 'number', ...defaultMetric },
-  'ofcmdSqft': { name: 'Ofce/Mdcl sqft', type: 'number', ...defaultMetric },
-  'indmfSqft': { name: 'Indus/Manuf sqft', type: 'number', ...defaultMetric },
-  'whsSqft': { name: 'Wrhse/Ship sqft', type: 'number', ...defaultMetric },
-  'rndSqft': { name: 'Rsrch/Dvlpnt sqft', type: 'number', ...defaultMetric },
-  'eiSqft': { name: 'Edu/Institu sqft', type: 'number', ...defaultMetric },
-  'otherSqft': { name: 'Other sqft', type: 'number', ...defaultMetric },
-  'hotelSqft': { name: 'Hotel room sqft', type: 'number', ...defaultMetric },
-  'hotelrms': { name: 'Hotel rooms', type: 'number', ...defaultMetric },
-  'rptdemp': { name: 'Reported emplmnt', type: 'number', ...defaultMetric },
+  'commsf': { name: 'Commercial area', glossaryKey: 'COMMERCIAL_AREA', type: 'number', ...defaultMetric },
+  'retSqft': { name: 'Retail', glossaryKey: 'RETAIL_AREA', type: 'number', ...defaultMetric },
+  'ofcmdSqft': { name: 'Office/Medical', glossaryKey: 'OFFICE_MEDICAL_AREA', type: 'number', ...defaultMetric },
+  'indmfSqft': { name: 'Industrial/Manufacturing', glossaryKey: 'INDUSTRIAL_MANUFACTURING_AREA', type: 'number', ...defaultMetric },
+  'whsSqft': { name: 'Warehouse/Shipping', glossaryKey: 'WAREHOUSE_SHIPPING_AREA', type: 'number', ...defaultMetric },
+  'rndSqft': { name: 'Research/Development', glossaryKey: 'RESEARCH_DEVELOPMENT_AREA', type: 'number', ...defaultMetric },
+  'eiSqft': { name: 'Educational/Institutional', glossaryKey: 'EDUCATIONAL_INSTITUTIONAL_AREA', type: 'number', ...defaultMetric },
+  'otherSqft': { name: 'Other', glossaryKey: 'OTHER_AREA', type: 'number', ...defaultMetric },
+  'hotelSqft': { name: 'Hotel room', glossaryKey: 'HOTEL_ROOM_AREA', type: 'number', ...defaultMetric },
+  'hotelrms': { name: 'Hotel rooms', glossaryKey: 'HOTEL_ROOMS', type: 'number', ...defaultMetric },
+  'rptdemp': { name: 'Reported employment', glossaryKey: 'REPORTED_EMPLOYMENT', type: 'number', ...defaultMetric },
 
-  'headqtrs': { name: 'Company HQ', type: 'boolean', ...defaultMetric },
+  'headqtrs': { name: 'Company HQ', glossaryKey: 'COMPANY_HEADQUARTERS', type: 'boolean', ...defaultMetric },
 
 };
 
@@ -160,7 +166,6 @@ const metricGroups = {
       title: 'General',
       metrics: [
         'commsf',
-        'estemp',
         'rptdemp',
       ]
     },

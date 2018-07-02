@@ -1,0 +1,22 @@
+.defined-term {
+  display: inline-block;
+  .label::after {
+    content: ' ';
+    width: 100%;
+    border-bottom: 1px dashed $color_font-medium;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+  }
+  .label:hover {
+    cursor: pointer;
+    &::after {
+      border-color: $color_font-dark;
+    }
+  }
+  &.active {
+    .label::after {
+      border-bottom: 1px solid $color_brand-primary;
+    }
+  }
+}

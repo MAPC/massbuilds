@@ -6,7 +6,7 @@
   </button>
   <button onclick={{action changeView 'selected'}} class="{{if (eq view 'selected') 'active'}}">
     <span>
-      <img src="/assets/images/check-square.svg"> 
+      <img src="/assets/images/check-square.svg">
       <em>
         {{#if selectedValues}}
           {{selectedValues.length}}
@@ -23,7 +23,7 @@
 {{#if (eq view 'selected')}}
   <div class="subview discrete-selected">
     {{#if selected}}
-      <ul> 
+      <ul>
         {{#each selected as |value|}}
           <li class="is-selected">
             <span onclick={{action deselect value}}>
@@ -48,12 +48,8 @@
 
     <div class="list-wrapper">
       <ul class="discrete-value-list">
-        {{#each filteredValues as |value|}} 
+        {{#each filteredValues as |value|}}
           <li class="{{if value.isSelected 'is-selected'}}">
-            {{#if value.isSelected}} 
-              <img src="/assets/images/filter.svg" class="selected-filter">
-            {{/if}}
-            
             <span onclick={{action select value.value}}>
               {{value.value}}
             </span>

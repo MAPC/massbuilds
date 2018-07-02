@@ -102,7 +102,7 @@ class DevelopmentsController < ApplicationController
       params.permit(:user_id, :rdv, :asofright, :ovr55, :clusteros, :phased, :stalled, :name, :status,
                     :descr, :prj_url, :address, :state, :zip_code, :height,
                     :stories, :year_compl, :prjarea, :singfamhu, :smmultifam, :lgmultifam, :hu, :gqpop,
-                    :rptdemp, :estemp, :commsf, :hotelrms, :onsitepark, :total_cost,
+                    :rptdemp, :commsf, :hotelrms, :onsitepark, :total_cost,
                     :ret_sqft, :ofcmd_sqft, :indmf_sqft,
                     :whs_sqft, :rnd_sqft, :ei_sqft, :other_sqft, :hotel_sqft, :other_rate, :affordable,
                     :latitude, :longitude, :parcel_id, :mixed_use, :point, :programs, :forty_b, :residential,
@@ -118,7 +118,7 @@ class DevelopmentsController < ApplicationController
                          only: %i[user_id rdv asofright ovr55 clusteros phased stalled name status
                                   descr prj_url address state zip_code height
                                   stories year_compl prjarea singfamhu smmultifam lgmultifam hu gqpop
-                                  rptdemp estemp commsf hotelrms onsitepark total_cost
+                                  rptdemp commsf hotelrms onsitepark total_cost
                                   ret_sqft ofcmd_sqft indmf_sqft
                                   whs_sqft rnd_sqft ei_sqft other_sqft hotel_sqft other_rate affordable
                                   latitude longitude parcel_id mixed_use point programs forty_b residential

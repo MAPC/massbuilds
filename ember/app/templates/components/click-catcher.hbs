@@ -1,0 +1,25 @@
+<div
+  class="click-catcher {{if openTerm 'active'}}"
+  onclick={{action 'catchClick'}}>
+  <div
+    class="definition {{orientation}}"
+    style="top: {{top}}; left: {{left}}; bottom: {{bottom}};"
+  >
+    <div class="header">
+      <span>{{label}}</span>
+    </div>
+    <div class="scroll-wrapper">
+      <div class="paragraphs">
+        {{#if definitionShort}}
+          {{#each definitionShort as |paragraph|}}
+            <p>{{paragraph}}</p>
+          {{/each}}
+        {{else}}
+          {{#each definition as |paragraph|}}
+            <p>{{paragraph}}</p>
+          {{/each}}
+        {{/if}}
+      </div>
+    </div>
+  </div>
+</div>

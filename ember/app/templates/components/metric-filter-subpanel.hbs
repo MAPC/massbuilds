@@ -7,11 +7,17 @@
 
         {{#each subgroup.metrics as |metric|}}
           <div class="metric {{metric.type}}">
-            <label for={{metric.col}}>{{metric.name}}</label>
+            <label for={{metric.col}}>
+              {{#if metric.glossaryKey}}
+                {{defined-term key=metric.glossaryKey labelOverride=metric.name}}
+              {{else}}
+                {{metric.name}}
+              {{/if}}
+            </label>
 
             {{#if (eq metric.type 'string')}}
 
-              <select name={{metric.col}} onchange={{action updateMetricOption value="target"}}> 
+              <select name={{metric.col}} onchange={{action updateMetricOption value="target"}}>
                 {{#unless metric.value}}
                   <option disabled selected=selected>Select to filter</option>
                 {{/unless}}

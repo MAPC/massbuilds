@@ -7,7 +7,7 @@ class FullDevelopmentSerializer
   [:id, :name, :status, :address, :year_compl, :yrcomp_est, :nhood, :municipal,
     :devlper, :user_id, :rdv, :asofright, :ovr55, :clusteros, :phased, :stalled,
     :descr, :prj_url, :state, :zip_code, :height, :stories, :prjarea,
-    :singfamhu, :smmultifam, :lgmultifam, :hu, :gqpop, :rptdemp, :estemp,
+    :singfamhu, :smmultifam, :lgmultifam, :hu, :gqpop, :rptdemp,
     :commsf, :hotelrms, :onsitepark, :total_cost, :ret_sqft, :rpa_name,
     :county, :n_transit, :ofcmd_sqft, :indmf_sqft, :whs_sqft, :rnd_sqft,
     :ei_sqft, :other_sqft, :hotel_sqft, :other_rate, :affordable, :parcel_id,

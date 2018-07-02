@@ -108,9 +108,6 @@ class Edit < ApplicationRecord
         "rptdemp": {
           "type": "number"
         },
-        "estemp": {
-          "type": "number"
-        },
         "hotelrms": {
           "type": "number"
         },

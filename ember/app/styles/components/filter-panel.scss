@@ -1,13 +1,14 @@
 .component.filter-panel {
+  $dot-size: 7px;
   display: flex;
 
-  width: 375px;
+  width: 450px;
 
   border-top: 1px solid $color_brand-primary;
 
   .filter-group-list {
     margin: 0;
-    padding: 0; 
+    padding: 0;
 
     li {
       padding: 8px;
@@ -27,19 +28,26 @@
 
       &:last-of-type { border-bottom-width: 0; }
 
-      &.viewing { border-right-width: 0; }
+      &.viewing {
+        border-right: 1px solid transparent;
+        border-left: 2px solid $color_brand-primary;
+        padding-left: 23px;
+        &.active:before {
+          left: $dot-size - 2px;
+        }
+      }
 
       &.active {
         &:before {
           @extend ._vertical-center;
-          $size: 7px;
+
 
           content: '';
-          left: $size;
+          left: $dot-size;
           display: block;
 
-          width: $size;
-          height: $size;
+          width: $dot-size;
+          height: $dot-size;
 
           background: $color_brand-primary;
           border-radius: 50%;
