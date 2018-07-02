@@ -282,7 +282,13 @@ export default class extends Component {
       (bounds, datum) => bounds.extend([datum.get('longitude'), datum.get('latitude')]),
         new mapboxgl.LngLatBounds()
       );
-      this.mapboxglMap.fitBounds(fitBounds, { padding: 40 });
+      const leftPanel = Ember.$('.left-panel-layer');
+      this.mapboxglMap.fitBounds(fitBounds, { padding: {
+        top: 40,
+        left: (leftPanel ? parseInt(leftPanel.css('width')) + 40 : 40),
+        bottom: 40,
+        right: 40,
+      }});
     }
   }
 
