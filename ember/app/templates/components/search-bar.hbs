@@ -27,7 +27,7 @@
       </li>
     {{/if}}
 
-    {{#if (and hasPermissions (lt searchListCount 6))}}
+    {{#if (and hasPermissions (lt searchListCount 6) (not (eq appCtrl.currentRouteName 'map.developments.create')))}}
       {{#link-to 'map.developments.create'}}
         <li class="create-new">
           Can't find what you're looking for? <b>Click here</b> to submit
