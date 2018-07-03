@@ -9,14 +9,12 @@ export default class extends Component {
 
   @service currentUser
 
-
   constructor() {
     super();
 
     this.classNames = ['component', 'search-bar'];
     this.sortOrder = ['municipal', 'nhood', 'devlper', 'name', 'address'];
     this.appCtrl = Ember.getOwner(this).lookup('controller:application');
-    console.log(this.appCtrl.currentRouteName);
   }
 
 
@@ -78,7 +76,6 @@ export default class extends Component {
                             });
       });
     }
-
     return filtered;
   }
 

@@ -1,6 +1,6 @@
 <div class="search-input-wrapper {{if searching 'searching'}}">
   <img src="/assets/images/search.svg" class="search-icon">
-  {{input class="search-input" value=searchQuery placeholder=placeholder}}
+  {{input class="search-input" value=searchQuery placeholder=placeholder autocomplete="off"}}
   <span class="clear-search {{if searching 'active'}}" onclick={{action clearSearch}}>x</span>
 </div>
 

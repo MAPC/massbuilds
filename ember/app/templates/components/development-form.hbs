@@ -1,23 +1,26 @@
-<div class="left-panel-links">
-  {{#if (eq mode 'edit')}}
-    {{#link-to 'map.developments.development.index' model.id}}
-      <img src="/assets/images/chevrons-left.svg">
-      Cancel
-    {{/link-to}}
-  {{else}}
-    {{#link-to 'map'}}
-      <img src="/assets/images/chevrons-left.svg">
-      Cancel
-    {{/link-to}}
-  {{/if}}
+<div class="development-panel-header">
+  <h1>Create Development</h1>
 
-  {{#loading-spinner message=loadingSpinnerText isLoading=isLoading}}
-    <button onclick={{action update}} class='submit-changes styled' disabled={{not (and fulfilled changes)}}>
-      {{submitText}}
-    </button>
-  {{/loading-spinner}}
+  <div class="left-panel-links">
+    {{#if (eq mode 'edit')}}
+      {{#link-to 'map.developments.development.index' model.id}}
+        <img src="/assets/images/chevrons-left.svg">
+        Cancel
+      {{/link-to}}
+    {{else}}
+      {{#link-to 'map'}}
+        <img src="/assets/images/chevrons-left.svg">
+        Cancel
+      {{/link-to}}
+    {{/if}}
+
+    {{#loading-spinner message=loadingSpinnerText isLoading=isLoading}}
+      <button onclick={{action update}} class='submit-changes styled' disabled={{not (and fulfilled changes)}}>
+        {{submitText}}
+      </button>
+    {{/loading-spinner}}
+  </div>
 </div>
-
 <form class="development-content">
   <div class="layout-column">
     {{#overflow-scroll}}
@@ -49,7 +52,7 @@
             placeholder="Longitude"
             readonly="readonly"
           }}
-          <p>Drag map to set location</p>
+          <p><em>Drag map to set location</em></p>
         </div>
 
         <div class="form-row secondary project-url">
@@ -210,18 +213,20 @@
           </p>
 
           <div class="table-wrapper">
-            <h3 class="field">
-              <label for="hu" class="required">
-                {{defined-term key='HOUSING_UNITS'}}
-              </label>
-
-              {{#if (and (not-eq editing.hu null) (gte editing.hu 0))}}
-                {{editing.hu}} Unit{{unless (eq editing.hu 1) 's'}}
-              {{else}}
-                Enter quantity of each unit type below
-              {{/if}}
-            </h3>
-
+            <div class="table-heading">
+              <h3 class="field">
+                <label for="hu" class="required">
+                  {{defined-term key='HOUSING_UNITS'}}
+                </label>
+              </h3>
+              <span>
+                {{#if (and (not-eq editing.hu null) (gte editing.hu 0))}}
+                  <em>{{editing.hu}} Unit{{unless (eq editing.hu 1) 's'}}</em>
+                {{else}}
+                  <em>Enter quantity of each unit type below</em>
+                {{/if}}
+              </span>
+            </div>
             <table class="housing-units">
               <tr class="table-header">
                 <td>Unit Type</td>
@@ -318,17 +323,20 @@
           </div>
 
           <div class="table-wrapper">
-            <h3 class="field">
-              <label for="affrdUnit">
-                {{defined-term key='AFFORDABLE_UNITS'}}
-              </label>
-
-              {{#if (and (not-eq editing.affrdUnit null) (gte editing.affrdUnit 0))}}
-                {{editing.affrdUnit}} Unit{{unless (eq editing.affrdUnit 1) 's'}}
-              {{else}}
-                Enter quantity of each unit type below
-              {{/if}}
-            </h3>
+            <div class="table-heading">
+              <h3 class="field">
+                <label for="affrdUnit">
+                  {{defined-term key='AFFORDABLE_UNITS'}}
+                </label>
+              </h3>
+              <span>
+                {{#if (and (not-eq editing.affrdUnit null) (gte editing.affrdUnit 0))}}
+                  <em>{{editing.affrdUnit}} Unit{{unless (eq editing.affrdUnit 1) 's'}}</em>
+                {{else}}
+                  <em>Enter quantity of each unit type below</em>
+                {{/if}}
+              </span>
+            </div>
 
             <table class="affordable-units">
               <tr class="table-header">
@@ -442,17 +450,20 @@
           </p>
 
           <div class="table-wrapper">
-            <h3 class="field">
-              <label for="commsf" class="required">
-                {{defined-term key='COMMERCIAL_AREA'}}
-              </label>
-
-              {{#if (and (not-eq editing.commsf null) (gte editing.commsf 0))}}
-                {{editing.commsf}} sqft.
-              {{else}}
-                Enter the floor area for each use type below
-              {{/if}}
-            </h3>
+            <div class="table-heading">
+              <h3 class="field">
+                <label for="commsf" class="required">
+                  {{defined-term key='COMMERCIAL_AREA'}}
+                </label>
+              </h3>
+              <span>
+                {{#if (and (not-eq editing.commsf null) (gte editing.commsf 0))}}
+                  <em>{{editing.commsf}} sqft.</em>
+                {{else}}
+                  <em>Enter the floor area for each use type below</em>
+                {{/if}}
+              </span>
+            </div>
 
             <table class="commercial-makeup">
               <tr class="table-header">

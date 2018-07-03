@@ -1,0 +1,22 @@
+<div class="search-input-wrapper {{if searchListCount 'searching'}}">
+  <img src="/assets/images/search.svg" class="search-icon">
+  {{input class="search-input" value=searchQuery placeholder=placeholder autocomplete="off"}}
+  <span class="clear-search {{if searchListCount 'active'}}" onclick={{action clearSearch}}>x</span>
+</div>
+
+{{#if searchListCount}}
+  <ul class="search-list">
+    {{#each-in searchList as |groupTitle group|}}
+      <li onclick={{action selectItem item}}>
+        <h5>{{item.value}}</h5>
+        <p>{{item.name}}</p>
+      </li>
+    {{/each-in}}
+
+    {{#if (eq searchListCount 0)}}
+      <li class="no-results">
+        No results
+      </li>
+    {{/if}}
+  </ul>
+{{/if}}

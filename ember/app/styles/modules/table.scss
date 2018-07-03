@@ -9,28 +9,28 @@ table {
 
       border-bottom: 1px solid $color_brand-primary;
       td { color: $color_font-dark !important; }
-    } 
-
-    &:nth-of-type(2n+1):not(.table-header,.delimiting-row) { 
-      background: lighten($color_bg-light--active, 3); 
     }
 
-    td { 
+    &:nth-of-type(2n+1):not(.table-header,.delimiting-row) {
+      background: lighten($color_bg-light--active, 3);
+    }
+
+    td {
       padding: 5px;
 
       &:first-of-type {
         padding-left: 15px;
         text-align: left;
-        color: $color_font-medium; 
+        color: $color_font-medium;
       }
     }
   }
 
-  hr { 
+  hr {
     margin: 0;
     display: block;
 
-    width: 286%; 
+    width: 286%;
     height: 2px;
 
     background-color: $color_bg-medium;

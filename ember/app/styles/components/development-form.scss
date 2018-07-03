@@ -1,6 +1,7 @@
 .component.development-form {
-  $font_size-h1: 26px;
-  $font_size-h2: 18px;
+  $font_size-h1: 20px;
+  $font_size-h2: 14px;
+  font-size: 14px;
 
   label.hidden {
     position: fixed;
@@ -34,15 +35,12 @@
     display: block;
 
     color: $color_state-negative;
-    font-size: 13px;
   }
 
   textarea {
     width: 100%;
     min-height: 200px;
     padding: 8px;
-
-    font-size: 12px;
 
     resize: vertical;
   }
@@ -81,7 +79,6 @@
         flex: 1;
         margin: 0;
         padding: 0;
-        font-size: 15px;
       }
     }
 
@@ -135,9 +132,6 @@
     span > label {
       margin-left: 3px;
       margin-right: 0;
-
-      color: $color_font-medium;
-      font-size: 13px;
     }
   }
 
@@ -157,7 +151,6 @@
     width: 100%;
 
     color: $color_state-negative;
-    font-size: 13px;
     text-align: right;
   }
 }
