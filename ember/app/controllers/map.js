@@ -41,6 +41,13 @@ export default class extends Controller {
     this.leftPanelWidth = 'filter-width';
   }
 
+  @computed('target.currentRouteName')
+  get showingGoto() {
+    return [
+      'map.developments.create',
+      'map.developments.development.edit',
+    ].indexOf(this.get('target.currentRouteName')) !== -1;
+  }
 
   @computed('target.currentRouteName')
   get showingUsers() {

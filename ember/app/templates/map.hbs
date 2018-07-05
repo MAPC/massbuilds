@@ -51,22 +51,28 @@
       {{/if}}
 
     <div class="search-wrapper {{if (not (and showingLeftPanel showingMenu)) 'active'}}">
-      <div class="filter-actions">
-        <button onclick={{action toggleFilters}} class="filter-toggler {{if showingFilters 'active'}} {{if filtering 'filtering'}}">
-          <img src="/assets/images/filter.svg">
-        </button>
-        <button onclick={{action clearFilters}} class="clear-filters {{unless filtering 'disabled'}}">
-          X
-        </button>
-      </div>
+      {{#if showingGoto}}
+        {{goto-bar
+          searchQuery=searchQuery
+        }}
+      {{else}}
+        <div class="filter-actions">
+          <button onclick={{action toggleFilters}} class="filter-toggler {{if showingFilters 'active'}} {{if filtering 'filtering'}}">
+            <img src="/assets/images/filter.svg">
+          </button>
+          <button onclick={{action clearFilters}} class="clear-filters {{unless filtering 'disabled'}}">
+            X
+          </button>
+        </div>
 
-      {{search-bar
-        addDiscreteFilter=(action addDiscreteFilter)
-        viewDevelopment=(action viewDevelopment)
-        searchQuery=searchQuery
-        placeholder=searchPlaceholder
-        model=map.stored
-      }}
+        {{search-bar
+          addDiscreteFilter=(action addDiscreteFilter)
+          viewDevelopment=(action viewDevelopment)
+          searchQuery=searchQuery
+          placeholder=searchPlaceholder
+          model=map.stored
+        }}
+      {{/if}}
     </div>
   </div>
 
