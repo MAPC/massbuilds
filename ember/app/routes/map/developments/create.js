@@ -14,6 +14,7 @@ export default class extends Route {
   activate(transition) {
     this.get('map').setSelectionMode(true);
   }
+
   @action
   deactivate(transition) {
     this.get('map').setSelectionMode(false);
