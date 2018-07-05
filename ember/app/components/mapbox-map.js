@@ -51,6 +51,8 @@ export default class extends Component {
       mapService.addObserver('viewing', this, 'jumpTo');
       mapService.addObserver('selectionMode', this, 'draw');
       mapService.addObserver('selectionMode', this, 'drawSelector');
+      // We need to evaluate the width of the left panel after its transition
+      // completes. Otherwise the selector ends up in the wrong place.
       mapService.addObserver('selectionMode', this, () => setTimeout(() => this.updateSelection(true), 500));
       mapService.addObserver('selectedCoordinates', this, 'drawSelectedCoordinates');
       if (mapService.get('stored').length) {
@@ -65,6 +67,9 @@ export default class extends Component {
         this.updateSelection(true);
       }
     });
+    // A Mapbox event having an 'originalEvent' can indicate that it was a user
+    // initiated event instead of one triggered by a Mapbox function like
+    // fitBounds.
     this.mapboxglMap.on('drag', (e) => this.updateSelection(e.originalEvent));
     this.mapboxglMap.on('zoom', (e) => this.updateSelection(e.originalEvent));
     this.mapboxglMap.on('zoomend', () => this.set('focusTargetBounds', null));
@@ -83,6 +88,8 @@ export default class extends Component {
       const southWest = bounds.getSouthWest().toArray();
       const ratio = (() => {
         if (this.get('focusTargetBounds')) {
+          // If we're in the middle of focusing on an area, the ratios will be
+          // taken care of with the padding calculated for fitBounds.
           return 0.5;
         }
         const leftPanel = Ember.$('.left-panel-layer');
