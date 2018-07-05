@@ -4,7 +4,7 @@
   <span class="clear-search {{if searching 'active'}}" onclick={{action clearSearch}}>x</span>
 </div>
 
-{{#if searching}}
+{{#if (and searching (not disabled))}}
   <ul class="search-list">
     {{#each-in searchList as |groupTitle group|}}
       {{#if group}}

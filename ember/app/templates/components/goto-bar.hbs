@@ -4,7 +4,7 @@
   <span class="clear-search {{if searchQuery.length 'active'}}" onclick={{action clearSearch}}>x</span>
 </div>
 
-{{#if searchQuery.length}}
+{{#if (and searchQuery.length (not disabled))}}
   <ul class="search-list">
     {{#each searchList as |item|}}
       <li onclick={{action goto item.geometry}}>

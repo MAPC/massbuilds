@@ -54,6 +54,7 @@
       {{#if showingGoto}}
         {{goto-bar
           searchQuery=searchQuery
+          disabled=(and showingLeftPanel showingMenu)
         }}
       {{else}}
         <div class="filter-actions">
@@ -71,6 +72,7 @@
           searchQuery=searchQuery
           placeholder=searchPlaceholder
           model=map.stored
+          disabled=(and showingLeftPanel showingMenu)
         }}
       {{/if}}
     </div>
