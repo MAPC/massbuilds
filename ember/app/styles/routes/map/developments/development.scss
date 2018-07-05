@@ -1,8 +1,19 @@
 .route.map-developments-development {
 
-  min-width: 860px;
-  max-width: 890px;
-  padding: 0 10px;
+  width: 900px;
+  padding: 10px 20px;
+
+  font-size: 14px;
+
+  .development-panel-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 0 20px 0;
+    align-items: center;
+    h1 {
+      margin: 0;
+    }
+  }
 
   .development-content {
     display: flex;
@@ -34,15 +45,9 @@
     margin-top: 0;
     margin-bottom: 6px;
 
-    font-size: 26px;
+    font-size: 20px;
 
     cursor: pointer;
-    transition: color .15s;
-
-    &:hover {
-      color: $color_brand-primary--active;
-      transition: color .15s;
-    }
   }
 
   h2 {
@@ -50,7 +55,7 @@
 
     margin: 0;
 
-    font-size: 18px;
+    font-size: 14px;
 
     &:not(.project-url) {
       img:hover {
@@ -72,7 +77,6 @@
 
     a {
       color: $color_brand-primary;
-      font-size: 14px;
 
       &:hover { text-decoration: underline; }
     }
@@ -85,7 +89,6 @@
     margin: 0 auto 10px;
 
     color: $color_font-medium;
-    font-weight: 300;
     font-size: 14px;
     text-align: center;
 
@@ -98,9 +101,13 @@
 
       width: 100%;
       height: 1px;
-      margin: 0 15px;
-
       background: $color_bg-medium;
+    }
+    &:after {
+      margin-left: 15px;
+    }
+    &:before {
+      margin-right: 15px;
     }
   }
 
@@ -108,12 +115,12 @@
 
   .metric-groups {
     max-height: 100%;
-    padding-top: 40px;
-    padding-bottom: 50px;
+    padding-top: 30px;
+    padding-bottom: 30px;
   }
 
   article {
-    & + article { margin-top: 40px; }
+    & + article { margin-top: 30px; }
 
     text-align: center;
 
@@ -137,8 +144,6 @@
       label {
         flex: 1 0 40%;
 
-        color: $color_brand-primary--active;
-
         small {
           color: $color_font-medium;
           font-size: .7em;
@@ -156,8 +161,6 @@
 
   .attributes {
     margin-bottom: 0;
-    padding: 0 15px;
-
     text-align: left;
 
     & + .attributes {
@@ -169,28 +172,30 @@
       display: inline-block;
 
       margin-right: 15px;
-
-      color: $color_brand-primary--active;
     }
   }
 
   .table-wrapper {
-    width: 96%;
-    margin: 20px auto 30px;
+    margin: 20px 0 30px 0;
     border: 1px solid $color_bg-light--active;
-
-    h3 {
-      margin: 0;
-      padding: 6px 8px;
-
-      font-size: 15px;
-
+    .table-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       background: $color_bg-light--active;
+      & > * {
+        padding: 6px 8px;
+      }
+      h3 {
+        margin: 0;
+        font-size: 14px;
+        font-weight: normal;
+      }
     }
+
   }
 
   .detail {
-    font-size: 15px;
 
     & + .detail { margin-top: 20px; }
 
@@ -201,9 +206,8 @@
       margin-bottom: 10px;
       padding: 5px 8px;
 
-      color: $color_font-medium;
-      font-size: 12px;
-      font-weight: 300;
+      font-size: 14px;
+      font-weight: normal;
 
       border-bottom: 1px solid $color_bg-medium;
     }
@@ -218,16 +222,14 @@
     margin-top: 10px;
     text-align: right;
 
-    font-size: 13px;
-
     button, .loading-spinner {
       width: 100%;
       margin-left: 0;
       text-align: center;
 
       & + button, .loading-wrapper {
-        margin-top: 10px; 
-      }  
+        margin-top: 10px;
+      }
     }
   }
 }

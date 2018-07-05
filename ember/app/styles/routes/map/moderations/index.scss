@@ -1,5 +1,8 @@
 .route.moderations-index {
 
+  width: 100%;
+  padding: 10px 20px;
+
   .no-records { margin-top: 50px; }
 
   ul.item-list {
@@ -19,7 +22,7 @@
     .actions {
       padding-top: 10px;
 
-      text-align: right; 
+      text-align: right;
 
       button + button { margin-left: 15px; }
     }
@@ -32,7 +35,7 @@
   }
 
   .view-button.disabled {
-    opacity: .5; 
+    opacity: .5;
     cursor: initial !important;
   }
 

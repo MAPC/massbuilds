@@ -1,17 +1,21 @@
 <section class="route map-developments-development-index">
 
-  <div class="left-panel-links">
-    {{#link-to 'map'}}
-      <img src="/assets/images/chevrons-left.svg">
-      Close
-    {{/link-to}}
+  <div class="development-panel-header">
+    <h1>View Development</h1>
 
-    {{#if session.isAuthenticated}}
-      {{#link-to 'map.developments.development.edit' model}}
-        <img src="/assets/images/edit-3.svg">
-        Edit
+    <div class="left-panel-links">
+      {{#link-to 'map'}}
+        <img src="/assets/images/chevrons-left.svg">
+        Close
       {{/link-to}}
-    {{/if}}
+
+      {{#if session.isAuthenticated}}
+        {{#link-to 'map.developments.development.edit' model}}
+          <img src="/assets/images/edit-3.svg">
+          Edit
+        {{/link-to}}
+      {{/if}}
+    </div>
   </div>
 
   <div class="development-content">
@@ -168,16 +172,20 @@
               {{/if}}
 
               <div class="table-wrapper">
-                <h3 class="field">
-                  <label for="hu">
-                    {{defined-term key="HOUSING_UNITS"}}
-                  </label>
-                  {{#if model.hu}}
-                    {{number-format model.hu decimals=0}} Units
-                  {{else}}
-                    No Housing Units
-                  {{/if}}
-                </h3>
+                <div class="table-heading">
+                  <h3 class="field">
+                    <label for="hu">
+                      {{defined-term key="HOUSING_UNITS"}}
+                    </label>
+                  </h3>
+                  <span>
+                    {{#if model.hu}}
+                      {{number-format model.hu decimals=0}} Units
+                    {{else}}
+                      <em>No Housing Units</em>
+                    {{/if}}
+                  </span>
+                </div>
 
                 {{#if model.hu}}
                   <table class="housing-units">
@@ -248,16 +256,20 @@
               </div>
 
               <div class="table-wrapper">
-                <h3 class="field">
-                  <label for="affrdUnit">
-                    {{defined-term key="AFFORDABLE_UNITS"}}
-                  </label>
-                  {{#if (or model.affrdUnit (eq model.affrdUnit 0))}}
-                    {{number-format model.affrdUnit decimals=0}} Units
-                  {{else}}
-                    Unknown
-                  {{/if}}
-                </h3>
+                <div class="table-heading">
+                  <h3 class="field">
+                    <label for="affrdUnit">
+                      {{defined-term key="AFFORDABLE_UNITS"}}
+                    </label>
+                  </h3>
+                  <span>
+                    {{#if (or model.affrdUnit (eq model.affrdUnit 0))}}
+                      {{number-format model.affrdUnit decimals=0}} Units
+                    {{else}}
+                      <em>Unknown</em>
+                    {{/if}}
+                  </span>
+                </div>
 
                 {{#if model.affrdUnit}}
                   <table class="affordable-units">
@@ -338,16 +350,20 @@
               {{/if}}
 
               <div class="table-wrapper">
-                <h3 class="field">
-                  <label for="commsf">
-                    {{defined-term key="COMMERCIAL_AREA"}}
-                  </label>
-                  {{#if model.commsf}}
-                    {{number-format model.commsf decimals=0}} sqft.
-                  {{else}}
-                    No Commercial Usage
-                  {{/if}}
-                </h3>
+                <div class="table-heading">
+                  <h3 class="field">
+                    <label for="commsf">
+                      {{defined-term key="COMMERCIAL_AREA"}}
+                    </label>
+                  </h3>
+                  <span>
+                    {{#if model.commsf}}
+                      {{number-format model.commsf decimals=0}} sqft.
+                    {{else}}
+                      <em>No Commercial Usage</em>
+                    {{/if}}
+                  </span>
+                </div>
 
                 {{#if model.commsf}}
                   <table class="commercial-makeup">
@@ -475,7 +491,7 @@
               <button class="styled" onclick={{action unflagDevelopment}}>Unflag Development</button>
             {{else}}
               <p>This development has been flagged for review</p>
-            {{/if}} 
+            {{/if}}
           {{else}}
             {{#if session.isAuthenticated}}
                 <button class="styled negative" onclick={{action flagDevelopment}}>Report Development for Review</button>

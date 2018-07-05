@@ -17,21 +17,30 @@ export default class extends Component {
     this.previousCoordinatesKey = null;
     this.previousParcel = null;
     this.lastRequest = null;
+    this.focusTargetBounds = null;
   }
 
   didInsertElement() {
     this.mapboxglMap = new mapboxgl.Map({
       container: this.get('element'),
       style: 'mapbox://styles/mapbox/light-v9',
-      maxBounds: [[-74.5, 40], [-68, 44]],
+      // maxBounds: [[-75.5, 39], [-67, 45]],
+      maxBounds: [[-100, 20], [-40, 60]],
       dragRotate: false,
       pitchWithRotate: false,
       touchZoomRotate: false,
+      minZoom: 3,
     });
     this.mapboxglMap.on('load', () => {
       const mapService = this.get('map');
       this.mapboxglMap.on('styledata', () => {
         this.draw(mapService);
+      });
+      this.mapboxglMap.on('zoom', (e) => {
+        // If a user attempts to abort a zoom, stop the animation.
+        if (e.originalEvent) {
+          this.mapboxglMap.stop();
+        }
       });
       mapService.addObserver('stored', this, 'draw');
       mapService.addObserver('filteredData', this, 'draw');
@@ -42,6 +51,10 @@ export default class extends Component {
       mapService.addObserver('viewing', this, 'jumpTo');
       mapService.addObserver('selectionMode', this, 'draw');
       mapService.addObserver('selectionMode', this, 'drawSelector');
+      // We need to evaluate the width of the left panel after its transition
+      // completes. Otherwise the selector ends up in the wrong place.
+      mapService.addObserver('selectionMode', this, () => setTimeout(() => this.updateSelection(true), 500));
+      mapService.addObserver('selectedCoordinates', this, 'drawSelectedCoordinates');
       if (mapService.get('stored').length) {
         this.draw(mapService);
         this.focus(mapService);
@@ -51,26 +64,53 @@ export default class extends Component {
       }
       if (mapService.get('selectionMode')) {
         this.drawSelector(mapService);
+        this.updateSelection(true);
       }
     });
-    this.mapboxglMap.on('render', () => this.updateSelection());
+    // A Mapbox event having an 'originalEvent' can indicate that it was a user
+    // initiated event instead of one triggered by a Mapbox function like
+    // fitBounds.
+    this.mapboxglMap.on('drag', (e) => this.updateSelection(e.originalEvent));
+    this.mapboxglMap.on('zoom', (e) => this.updateSelection(e.originalEvent));
+    this.mapboxglMap.on('zoomend', () => this.set('focusTargetBounds', null));
   }
 
-  updateSelection() {
-    if (this.mapboxglMap
+  updateSelection(notFromFitBounds) {
+    // If the user triggered the drag or zoom...
+    if (notFromFitBounds
+        && this.mapboxglMap
         && this.mapboxglMap.getSource('selector')
         && Ember.$('.left-panel-layer')
         && this.$()) {
-      const bounds = this.mapboxglMap.getBounds();
+      const bounds = this.get('focusTargetBounds')
+          || this.mapboxglMap.getBounds();
       const northEast = bounds.getNorthEast().toArray();
       const southWest = bounds.getSouthWest().toArray();
-      const leftPanelWidth = parseInt(Ember.$('.left-panel-layer').css('width'));
-      const mapWidth = parseInt(this.$().css('width'));
-      const ratio = (((mapWidth - leftPanelWidth) / 2) + leftPanelWidth) / mapWidth;
+      const ratio = (() => {
+        if (this.get('focusTargetBounds')) {
+          // If we're in the middle of focusing on an area, the ratios will be
+          // taken care of with the padding calculated for fitBounds.
+          return 0.5;
+        }
+        const leftPanel = Ember.$('.left-panel-layer');
+        const leftPanelWidth = parseInt(leftPanel.css('width')) +
+            parseInt(leftPanel.css('left'));
+        const mapWidth = parseInt(this.$().css('width'));
+        return (((mapWidth - leftPanelWidth) / 2) + leftPanelWidth) / mapWidth;
+      })()
       const coordinates = [
         (northEast[0] - southWest[0]) * ratio + southWest[0],
         (northEast[1] - southWest[1]) * 0.5 + southWest[1],
       ];
+      this.get('map').set('jumpToSelectedCoordinates', false);
+      this.get('map').set('selectedCoordinates', coordinates);
+    }
+  }
+
+  drawSelectedCoordinates(mapService) {
+    if (this.mapboxglMap
+        && this.mapboxglMap.getSource('selector')) {
+      const coordinates = mapService.get('selectedCoordinates');
       if (this.get('previousCoordinatesKey') != coordinates.toString()) {
         this.mapboxglMap.getSource('selector').setData({
           type: 'FeatureCollection',
@@ -84,7 +124,6 @@ export default class extends Component {
             },
           }],
         });
-        this.get('map').setSelectedCoordinates(coordinates);
         const previousParcel = this.get('previousParcel');
         if ((Date.now() - this.get('lastRequest') > 250)
             && this.mapboxglMap.getLayer('parcel')
@@ -94,8 +133,25 @@ export default class extends Component {
             )) {
           this.getNewParcel(coordinates);
         }
-
         this.set('previousCoordinatesKey', coordinates.toString());
+      }
+      if (mapService.get('jumpToSelectedCoordinates')) {
+        const boundsWidth = 0.01;
+        const leftPanel = Ember.$('.left-panel-layer');
+        const leftPanelWidth = parseInt(leftPanel.css('width')) +
+            parseInt(leftPanel.css('left'));
+        const mapWidth = parseInt(this.$().css('width'));
+        const ratio = (((mapWidth - leftPanelWidth) / 2) + leftPanelWidth) / mapWidth;
+        const northEast = [
+          coordinates[0] + ((1 - ratio) * boundsWidth),
+          coordinates[1],
+        ];
+        const southWest = [
+          coordinates[0] - (ratio * boundsWidth),
+          coordinates[1],
+        ];
+        const bounds = new mapboxgl.LngLatBounds(southWest, northEast);
+        this.mapboxglMap.fitBounds(bounds);
       }
     }
   }
@@ -285,9 +341,10 @@ export default class extends Component {
         new mapboxgl.LngLatBounds()
       );
       const leftPanel = Ember.$('.left-panel-layer');
+      this.set('focusTargetBounds', fitBounds);
       this.mapboxglMap.fitBounds(fitBounds, { padding: {
         top: 40,
-        left: (leftPanel ? parseInt(leftPanel.css('width')) + 40 : 40),
+        left: (this.get('map.showingLeftPanel') ? parseInt(leftPanel.css('width')) + 40 : 40),
         bottom: 40,
         right: 40,
       }});

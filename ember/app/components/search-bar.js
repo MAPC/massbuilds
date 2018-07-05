@@ -9,13 +9,12 @@ export default class extends Component {
 
   @service currentUser
 
-
   constructor() {
     super();
 
     this.classNames = ['component', 'search-bar'];
-
     this.sortOrder = ['municipal', 'nhood', 'devlper', 'name', 'address'];
+    this.appCtrl = Ember.getOwner(this).lookup('controller:application');
   }
 
 
@@ -77,7 +76,6 @@ export default class extends Component {
                             });
       });
     }
-
     return filtered;
   }
 
@@ -90,7 +88,7 @@ export default class extends Component {
   }
 
 
-  @computed('searchList') 
+  @computed('searchList')
   get searching() {
     const searchList = this.get('searchList');
 
@@ -98,7 +96,7 @@ export default class extends Component {
   }
 
 
-  @action 
+  @action
   selectItem(item) {
     if (item) {
       if (item.id) {
@@ -122,7 +120,7 @@ export default class extends Component {
   valuesFor(column) {
     return this.get('developments')
                .map(development => {
-                 return { 
+                 return {
                   id: development.get('id'),
                   value: development.get(column),
                  };

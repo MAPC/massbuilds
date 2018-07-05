@@ -1,11 +1,16 @@
-<section class="route users-index">
+<section class="route table-panel users-index">
 
-  <div class="left-panel-links">
-    {{#link-to 'map'}}
-      <img src="/assets/images/chevrons-left.svg">
-      Close
-    {{/link-to}}
+  <div class="panel-headers">
+    <h1>Manage Users</h1>
+    <div class="left-panel-links">
+      {{#link-to 'map'}}
+        <img src="/assets/images/chevrons-left.svg">
+        Close
+      {{/link-to}}
+    </div>
   </div>
+
+
 
   <div class="user-filters">
     <div class="user-filter">
@@ -46,11 +51,11 @@
             <td>
               {{format-date user.createdAt format='MM/DD/YY'}}
             </td>
-            <td> 
+            <td>
               <select name="{{user.id}}-role" onchange={{action updateUser user}}>
                 {{#each roles as |role|}}
                   <option value={{role}} selected={{if (eq user.role role) 'selected'}}>{{capitalize role}}</option>
-                {{/each}} 
+                {{/each}}
               </select>
             </td>
           </tr>
@@ -58,8 +63,8 @@
       </table>
     {{else}}
       <div class="no-users">
-        No 
-        {{unless (eq roleFilter 'all') roleFilter}} 
+        No
+        {{unless (eq roleFilter 'all') roleFilter}}
         users found
       </div>
     {{/if}}

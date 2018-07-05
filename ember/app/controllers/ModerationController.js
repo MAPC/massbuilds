@@ -17,11 +17,13 @@ export default class extends Controller {
       for (let col in changes) {
         const emberCol = Ember.String.camelize(col);
 
-        changes[emberCol] = {
-          name: filters[emberCol].name,
-          oldValue: record.get(`development.${emberCol}`),
-          newValue: changes[col],
-        };
+        if (filters[emberCol]) {
+          changes[emberCol] = {
+            name: filters[emberCol].name,
+            oldValue: record.get(`development.${emberCol}`),
+            newValue: changes[col],
+          };
+        }
 
         if (emberCol !== col) {
           delete changes[col];

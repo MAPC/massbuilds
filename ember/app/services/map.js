@@ -32,6 +32,8 @@ export default class extends Service {
     this.zoomCommand = null;
     this.selectionMode = false;
     this.selectedCoordinates = [0, 0];
+    this.jumpToSelectedCoordinates = false;
+    this.showingLeftPanel = false;
 
     this.get('store').query('development', { trunc: true }).then(results => {
       this.set('stored', results.toArray());
@@ -41,10 +43,6 @@ export default class extends Service {
 
   setSelectionMode(selectionMode) {
     this.set('selectionMode', selectionMode);
-  }
-
-  setSelectedCoordinates(coordinates) {
-    this.set('selectedCoordinates', coordinates);
   }
 
   setViewing(dev) {

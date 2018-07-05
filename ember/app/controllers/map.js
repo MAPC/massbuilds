@@ -38,8 +38,16 @@ export default class extends Controller {
 
     this.updateChildren = 0;
     this.panel = null;
+    this.leftPanelWidth = 'filter-width';
   }
 
+  @computed('target.currentRouteName')
+  get showingGoto() {
+    return [
+      'map.developments.create',
+      'map.developments.development.edit',
+    ].indexOf(this.get('target.currentRouteName')) !== -1;
+  }
 
   @computed('target.currentRouteName')
   get showingUsers() {
@@ -126,8 +134,21 @@ export default class extends Controller {
     );
 
     this.set('searchQuery', '');
+    this.set('map.showingLeftPanel', showing);
 
     return showing;
+  }
+
+  @computed('showingLeftPanel')
+  get leftPanelClass() {
+    if (this.get('showingLeftPanel')) {
+      const widthClass = this.get('showingFilters')
+          ? 'filter-width'
+          : 'development-width';
+      this.set('leftPanelWidth', widthClass)
+      return widthClass;
+    }
+    return this.get('leftPanelWidth');
   }
 
   @action

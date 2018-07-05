@@ -1,10 +1,10 @@
 <div class="search-input-wrapper {{if searching 'searching'}}">
   <img src="/assets/images/search.svg" class="search-icon">
-  {{input class="search-input" value=searchQuery placeholder=placeholder}}
+  {{input class="search-input" value=searchQuery placeholder=placeholder autocomplete="off"}}
   <span class="clear-search {{if searching 'active'}}" onclick={{action clearSearch}}>x</span>
 </div>
 
-{{#if searching}}
+{{#if (and searching (not disabled))}}
   <ul class="search-list">
     {{#each-in searchList as |groupTitle group|}}
       {{#if group}}
@@ -27,7 +27,7 @@
       </li>
     {{/if}}
 
-    {{#if (and hasPermissions (lt searchListCount 6))}}
+    {{#if (and hasPermissions (lt searchListCount 6) (not (eq appCtrl.currentRouteName 'map.developments.create')))}}
       {{#link-to 'map.developments.create'}}
         <li class="create-new">
           Can't find what you're looking for? <b>Click here</b> to submit

@@ -1,24 +1,6 @@
 <section class='route map'>
   {{click-catcher}}
   <!-- floating components -->
-  <div class="search-wrapper">
-    <div class="filter-actions">
-      <button onclick={{action toggleFilters}} class="filter-toggler {{if showingFilters 'active'}} {{if filtering 'filtering'}}">
-        <img src="/assets/images/filter.svg">
-      </button>
-      <button onclick={{action clearFilters}} class="clear-filters {{unless filtering 'disabled'}}">
-        X
-      </button>
-    </div>
-
-    {{search-bar
-      addDiscreteFilter=(action addDiscreteFilter)
-      viewDevelopment=(action viewDevelopment)
-      searchQuery=searchQuery
-      placeholder=searchPlaceholder
-      model=map.stored
-    }}
-  </div>
 
   <button class="toggler menu-toggler {{if showingMenu 'active'}}" onclick={{action toggleMenu}}>
     <span class="hamburger"></span>
@@ -55,15 +37,45 @@
   {{notifications-popup}}
   <!--/ floating components -->
 
-  <div class="panel-layer left-panel-layer {{if showingLeftPanel 'active'}}">
-    {{#if showingFilters}}
-      {{filter-panel
-        update=(action updateFilter)
-        activeFilters=activeFilters
-      }}
-    {{else}}
-      {{outlet}}
-    {{/if}}
+  <div class="panel-layer left-panel-layer {{leftPanelClass}} {{if showingLeftPanel 'active'}}">
+
+      {{#if showingFilters}}
+        {{filter-panel
+          update=(action updateFilter)
+          activeFilters=activeFilters
+        }}
+      {{else}}
+        <div class="overflow-hidden">
+          {{outlet}}
+        </div>
+      {{/if}}
+
+    <div class="search-wrapper {{if (not (and showingLeftPanel showingMenu)) 'active'}}">
+      {{#if showingGoto}}
+        {{goto-bar
+          searchQuery=searchQuery
+          disabled=(and showingLeftPanel showingMenu)
+        }}
+      {{else}}
+        <div class="filter-actions">
+          <button onclick={{action toggleFilters}} class="filter-toggler {{if showingFilters 'active'}} {{if filtering 'filtering'}}">
+            <img src="/assets/images/filter.svg">
+          </button>
+          <button onclick={{action clearFilters}} class="clear-filters {{unless filtering 'disabled'}}">
+            X
+          </button>
+        </div>
+
+        {{search-bar
+          addDiscreteFilter=(action addDiscreteFilter)
+          viewDevelopment=(action viewDevelopment)
+          searchQuery=searchQuery
+          placeholder=searchPlaceholder
+          model=map.stored
+          disabled=(and showingLeftPanel showingMenu)
+        }}
+      {{/if}}
+    </div>
   </div>
 
   <div class="map-layer">
