@@ -37,6 +37,9 @@ export default class extends Service {
 
     this.get('store').query('development', { trunc: true }).then(results => {
       this.set('stored', results.toArray());
+      // FilteredData must be explicitly set to trigger the map's observer so
+      // that it will display all of the stored data.
+      this.set('filteredData', []);
       this.set('storedBounds', mapboxgl.LngLatBounds.convert(results.map(result => new mapboxgl.LngLat(result.get('longitude'), result.get('latitude')))));
     });
   }
@@ -82,6 +85,7 @@ export default class extends Service {
 
   remove(development) {
     this.get('stored').removeObject(development);
+    this.set('stored', this.get('stored').toArray());
   }
 
   add(development) {
