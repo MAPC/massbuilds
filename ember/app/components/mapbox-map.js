@@ -50,7 +50,6 @@ export default class extends Component {
       });
       mapService.addObserver('stored', this, 'draw');
       mapService.addObserver('filteredData', this, 'draw');
-      mapService.addObserver('stored', this, 'focus');
       mapService.addObserver('filteredData', this, 'focus');
       mapService.addObserver('baseMap', this, 'setStyle');
       mapService.addObserver('zoomCommand', this, 'actOnZoomCommand');
@@ -441,7 +440,7 @@ export default class extends Component {
     // All data
     const allFeatures = this.generateFeatures(mapService.get('filteredData').length
         ? mapService.get('remainder')
-        : mapService.stored);
+        : mapService.get('stored'));
     const highContrast = mapService.get('baseMap') != 'light';
     const isMuted = mapService.get('selectionMode');
 
