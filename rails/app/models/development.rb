@@ -131,7 +131,7 @@ class Development < ApplicationRecord
   end
 
   def update_rpa
-    return if rpa_name.present?
+    return if !saved_change_to_point?
     rpa_query = <<~SQL
       SELECT rpa_name, shape
       FROM rpa_poly
@@ -139,12 +139,11 @@ class Development < ApplicationRecord
     SQL
     sql_result = ActiveRecord::Base.connection.exec_query(rpa_query).to_hash[0]
     return if sql_result.blank?
-    self.rpa_name = sql_result['rpa_name']
-    self.save(validate: false)
+    self.update_columns(rpa_name: sql_result['rpa_name'])
   end
 
   def update_county
-    return if county.present?
+    return if !saved_change_to_point?
     counties_query = <<~SQL
       SELECT county, shape
       FROM counties_polym
@@ -152,12 +151,11 @@ class Development < ApplicationRecord
     SQL
     sql_result = ActiveRecord::Base.connection.exec_query(counties_query).to_hash[0]
     return if sql_result.blank?
-    self.county = sql_result['county']
-    self.save(validate: false)
+    self.update_columns(county: sql_result['county'])
   end
 
   def update_municipality
-    return if municipal.present?
+    return if !saved_change_to_point?
     municipalities_query = <<~SQL
       SELECT municipal, shape
       FROM ma_municipalities
@@ -165,12 +163,11 @@ class Development < ApplicationRecord
     SQL
     sql_result = ActiveRecord::Base.connection.exec_query(municipalities_query).to_hash[0]
     return if sql_result.blank?
-    self.municipal = sql_result['municipal']
-    self.save(validate: false)
+    self.update_columns(municipal: sql_result['municipal'])
   end
 
   def update_n_transit
-    return if n_transit.present?
+    return if !saved_change_to_point?
     n_transit_query = <<~SQL
       SELECT srvc_name, shape
       FROM tod_service_area_poly
@@ -182,12 +179,11 @@ class Development < ApplicationRecord
     sql_result.each do |result|
       transit_stops << result['srvc_name']
     end
-    self.n_transit = transit_stops
-    self.save(validate: false)
+    self.update_columns(n_transit: transit_stops)
   end
 
   def update_neighborhood
-    return if nhood.present?
+    return if !saved_change_to_point?
     nhood_query = <<~SQL
       SELECT nhood_name, shape
       FROM neighborhoods_poly
@@ -195,12 +191,11 @@ class Development < ApplicationRecord
     SQL
     sql_result = ActiveRecord::Base.connection.exec_query(nhood_query).to_hash[0]
     return if sql_result.blank?
-    self.nhood = sql_result['nhood_name']
-    self.save(validate: false)
+    self.update_columns(nhood: sql_result['nhood_name'])
   end
 
   def update_loc_id
-    return if loc_id.present?
+    return if !saved_change_to_point?
     loc_id_query = <<~SQL
       SELECT parloc_id, geom
       FROM parcels
@@ -208,7 +203,6 @@ class Development < ApplicationRecord
     SQL
     sql_result = ActiveRecord::Base.connection.exec_query(loc_id_query).to_hash[0]
     return if sql_result.blank?
-    self.loc_id = sql_result['parloc_id']
-    self.save(validate: false)
+    self.update_columns(loc_id: sql_result['parloc_id'])
   end
 end
