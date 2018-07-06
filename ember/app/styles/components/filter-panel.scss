@@ -1,6 +1,27 @@
 .component.filter-panel {
   $dot-size: 7px;
-  display: flex;
+  font-size: 14px;
+  .filter-panel-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 20px 20px 20px;
+    align-items: center;
+    h1 {
+      margin: 0;
+
+      font-size: 20px;
+
+      cursor: default;
+    }
+    button {
+      border: none;
+    }
+  }
+
+  .filter-panel-content {
+    display: flex;
+    border-top: 1px solid $color_bg-medium;
+  }
 
   .filter-group-list {
     margin: 0;
