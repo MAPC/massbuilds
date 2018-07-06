@@ -94,6 +94,14 @@
       cursor: default;
     }
 
+    &.active-filters {
+      font-size: 13px;
+
+      background: mix($color_brand-primary, $color_bg-light, 25);
+      &:hover { background: mix($color_brand-primary, $color_bg-light, 20); }
+      cursor: pointer;
+    }
+
     &.create-new {
       font-size: 13px;
 
@@ -102,13 +110,13 @@
     }
 
     &.no-results {
-      font-size: 10px;
+      font-size: 13px;
 
       background: $color_bg-medium;
       cursor: default;
     }
 
-    &:not(.group-title):not(.no-results) {
+    &:not(.group-title):not(.no-results):not(.active-filters) {
       &:hover { background: $color_bg-light--active; }
     }
 
