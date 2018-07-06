@@ -4,6 +4,7 @@ class Development < ApplicationRecord
   has_many :edits
   belongs_to :user
   include PgSearch
+  include ActiveModel::Dirty
   pg_search_scope :search_by_name_and_location, against: [:name, :municipal, :address], using: { tsearch: { any_word: true } }
   validates :name, :status, :latitude, :longitude, :year_compl, :hu,
             :commsf, :descr, presence: true
@@ -37,8 +38,10 @@ class Development < ApplicationRecord
 
 
   before_save :geocode
+  after_save :update_point
   after_save :update_rpa
   after_save :update_county
+  after_save :update_municipality
   after_save :update_n_transit
   after_save :update_neighborhood
   after_save :update_loc_id
@@ -92,7 +95,7 @@ class Development < ApplicationRecord
   private
 
   def geocode
-    return if point.present?
+    return if !latitude_changed? and !longitude_changed?
     self.point = "POINT (#{longitude} #{latitude})"
     result = Faraday.get "http://pelias.mapc.org/v1/reverse?point.lat=#{latitude}&point.lon=#{longitude}"
     if result && JSON.parse(result.body)['features'].length > 0
@@ -120,6 +123,11 @@ class Development < ApplicationRecord
 
   def groundbroken?
     status == ('in_construction' || 'completed')
+  end
+
+  def update_point
+    return if !latitude_changed? and !longitude_changed?
+    self.point = "POINT (#{longitude} #{latitude})"
   end
 
   def update_rpa

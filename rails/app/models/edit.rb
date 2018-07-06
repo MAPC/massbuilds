@@ -219,8 +219,8 @@ class Edit < ApplicationRecord
 
   def update_development
     if development
-      # Skip validations since the Edit model does this for us
-      development.update_columns(proposed_changes)
+      # Make sure we call the lifecycle callbacks to update calculated values
+      development.update(proposed_changes)
     else
       merged_changes = proposed_changes.merge(user_id: user.id)
       development = Development.new(merged_changes)
