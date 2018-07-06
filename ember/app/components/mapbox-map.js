@@ -7,6 +7,12 @@ import centerOfMass from 'npm:@turf/center-of-mass';
 
 mapboxgl.accessToken = 'pk.eyJ1IjoiaWhpbGwiLCJhIjoiY2plZzUwMTRzMW45NjJxb2R2Z2thOWF1YiJ9.szIAeMS4c9YTgNsJeG36gg';
 
+
+// CSS transitions make dynamically calculating the width of the left panel
+// difficult because it becomes time sensitive. Since the width and left
+// properties of the panel are set in pixels we can set that here as a constant.
+const LEFT_PANEL_WIDTH_PLUS_LEFT = 915;
+
 export default class extends Component {
 
   @service store
@@ -49,11 +55,12 @@ export default class extends Component {
       mapService.addObserver('baseMap', this, 'setStyle');
       mapService.addObserver('zoomCommand', this, 'actOnZoomCommand');
       mapService.addObserver('viewing', this, 'jumpTo');
-      mapService.addObserver('selectionMode', this, 'draw');
-      mapService.addObserver('selectionMode', this, 'drawSelector');
-      // We need to evaluate the width of the left panel after its transition
-      // completes. Otherwise the selector ends up in the wrong place.
-      mapService.addObserver('selectionMode', this, () => setTimeout(() => this.updateSelection(true), 500));
+      mapService.addObserver('selectionMode', this, (mapService) => {
+        this.draw(mapService);
+        this.drawSelector(mapService);
+        this.updateSelection(true);
+      });
+
       mapService.addObserver('selectedCoordinates', this, 'drawSelectedCoordinates');
       if (mapService.get('stored').length) {
         this.draw(mapService);
@@ -92,9 +99,7 @@ export default class extends Component {
           // taken care of with the padding calculated for fitBounds.
           return 0.5;
         }
-        const leftPanel = Ember.$('.left-panel-layer');
-        const leftPanelWidth = parseInt(leftPanel.css('width')) +
-            parseInt(leftPanel.css('left'));
+        const leftPanelWidth = LEFT_PANEL_WIDTH_PLUS_LEFT;
         const mapWidth = parseInt(this.$().css('width'));
         return (((mapWidth - leftPanelWidth) / 2) + leftPanelWidth) / mapWidth;
       })()
@@ -105,6 +110,22 @@ export default class extends Component {
       this.get('map').set('jumpToSelectedCoordinates', false);
       this.get('map').set('selectedCoordinates', coordinates);
     }
+  }
+
+  getBoundsFromCoordinates(coordinates) {
+    const boundsWidth = 0.01;
+    const leftPanelWidth = LEFT_PANEL_WIDTH_PLUS_LEFT;
+    const mapWidth = parseInt(this.$().css('width'));
+    const ratio = (((mapWidth - leftPanelWidth) / 2) + leftPanelWidth) / mapWidth;
+    const northEast = [
+      coordinates[0] + ((1 - ratio) * boundsWidth),
+      coordinates[1],
+    ];
+    const southWest = [
+      coordinates[0] - (ratio * boundsWidth),
+      coordinates[1],
+    ];
+    return new mapboxgl.LngLatBounds(southWest, northEast);
   }
 
   drawSelectedCoordinates(mapService) {
@@ -136,21 +157,7 @@ export default class extends Component {
         this.set('previousCoordinatesKey', coordinates.toString());
       }
       if (mapService.get('jumpToSelectedCoordinates')) {
-        const boundsWidth = 0.01;
-        const leftPanel = Ember.$('.left-panel-layer');
-        const leftPanelWidth = parseInt(leftPanel.css('width')) +
-            parseInt(leftPanel.css('left'));
-        const mapWidth = parseInt(this.$().css('width'));
-        const ratio = (((mapWidth - leftPanelWidth) / 2) + leftPanelWidth) / mapWidth;
-        const northEast = [
-          coordinates[0] + ((1 - ratio) * boundsWidth),
-          coordinates[1],
-        ];
-        const southWest = [
-          coordinates[0] - (ratio * boundsWidth),
-          coordinates[1],
-        ];
-        const bounds = new mapboxgl.LngLatBounds(southWest, northEast);
+        const bounds = this.getBoundsFromCoordinates(coordinates)
         this.mapboxglMap.fitBounds(bounds);
       }
     }
@@ -325,9 +332,10 @@ export default class extends Component {
   jumpTo(mapService) {
     const dev = mapService.get('viewing');
     if (dev) {
-      const coordinates = [dev.get('longitude') - .00125, dev.get('latitude')];
-      const bounds = new mapboxgl.LngLatBounds([coordinates, coordinates]);
-      this.mapboxglMap.fitBounds(bounds, { padding: 40, maxZoom: 18 });
+      // const coordinates = [dev.get('longitude') - .00125, dev.get('latitude')];
+      // const bounds = new mapboxgl.LngLatBounds([coordinates, coordinates]);
+      const bounds = this.getBoundsFromCoordinates([dev.get('longitude'), dev.get('latitude')])
+      this.mapboxglMap.fitBounds(bounds);
     }
   }
 
@@ -344,7 +352,7 @@ export default class extends Component {
       this.set('focusTargetBounds', fitBounds);
       this.mapboxglMap.fitBounds(fitBounds, { padding: {
         top: 40,
-        left: (this.get('map.showingLeftPanel') ? parseInt(leftPanel.css('width')) + 40 : 40),
+        left: (this.get('map.showingLeftPanel') ? LEFT_PANEL_WIDTH_PLUS_LEFT + 40 : 40),
         bottom: 40,
         right: 40,
       }});
