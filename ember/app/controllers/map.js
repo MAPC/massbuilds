@@ -25,7 +25,7 @@ export default class extends Controller {
       }
     });
 
-    this.searchPlaceholder = 'Search by Town/City, Developer, Address...';
+    this.searchPlaceholder = 'Search developments by city or address';
     this.searchQuery = '';
 
     this.showingFilters = false;
