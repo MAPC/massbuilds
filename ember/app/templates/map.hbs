@@ -2,13 +2,11 @@
   {{click-catcher}}
   <!-- floating components -->
 
-  <button class="toggler menu-toggler {{if showingMenu 'active'}}" onclick={{action toggleMenu}}>
-    <span class="hamburger {{if showingMenu 'active'}}"></span>
-  </button>
-
-  {{#if currentUser.user}}
-    {{share-buttons filterParams=filterParams}}
-  {{/if}}
+  <div class="top-right-buttons {{if showingMenu 'active'}}">
+    <button class="toggler menu-toggler" onclick={{action toggleMenu}}>
+      <span class="hamburger"></span>
+    </button>
+  </div>
 
   <div class="legend-wrapper">
     {{map-legend showing=showingFilters}}

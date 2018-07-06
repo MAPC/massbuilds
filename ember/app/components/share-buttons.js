@@ -11,7 +11,6 @@ export default class extends Component {
     super();
 
     this.classNames = ['component', 'share-buttons'];
-    this.isOpen = false;
 
     this.linkTimer = null;
     this.linkMessage = null;
@@ -21,20 +20,6 @@ export default class extends Component {
       csv: false,
     };
   }
-
-
-  @action
-  toggleOpen() {
-    const timer = this.get('linkTimer');
-
-    this.toggleProperty('isOpen');
-    this.set('linkMessage', null);
-
-    if (timer) {
-      clearTimeout(timer);
-    }
-  }
-
 
   @action
   toLink() {
@@ -53,7 +38,7 @@ export default class extends Component {
     copier.select();
 
     if (document.execCommand('copy')) {
-      this.notify('Copied Link');
+      this.notify('Copied Link', 'link');
     }
 
     body.removeChild(copier);
@@ -88,7 +73,10 @@ export default class extends Component {
       fileLink.download = filename;
 
       this.disable(ext);
-      this.notify('Your download will start in a moment');
+      this.notify(
+        'Your download will start in a moment',
+        ext == 'zip' ? 'shapefile' : 'csv'
+      );
 
       body.appendChild(fileLink);
       fileLink.click();
@@ -106,10 +94,11 @@ export default class extends Component {
   }
 
 
-  notify(message) {
+  notify(message, linkClass) {
     const timer = this.get('linkTimer');
     this.set('linkMessage', message);
-    
+    this.set('linkClass', linkClass);
+
     if (timer)  {
       clearTimeout(timer);
     }
