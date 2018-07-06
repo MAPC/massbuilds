@@ -332,8 +332,6 @@ export default class extends Component {
   jumpTo(mapService) {
     const dev = mapService.get('viewing');
     if (dev) {
-      // const coordinates = [dev.get('longitude') - .00125, dev.get('latitude')];
-      // const bounds = new mapboxgl.LngLatBounds([coordinates, coordinates]);
       const bounds = this.getBoundsFromCoordinates([dev.get('longitude'), dev.get('latitude')])
       this.mapboxglMap.fitBounds(bounds);
     }
