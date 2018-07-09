@@ -223,23 +223,14 @@
       width: 450px;
     }
     &.development-width {
-      left: -900px;
-      width: 900px;
+      left: -700px;
+      width: 700px;
     }
 
     position: absolute;
 
     &.active {
       left: 15px;
-    }
-    @include media('larger') {
-      &.development-width {
-        left: -700px;
-        width: 700px;
-      }
-      &.active {
-        left: 15px;
-      }
     }
     @include media('medium') {
       &.development-width {

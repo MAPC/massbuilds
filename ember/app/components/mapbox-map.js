@@ -10,10 +10,7 @@ import paintProperties from 'massbuilds/utils/paint-properties';
 mapboxgl.accessToken = 'pk.eyJ1IjoiaWhpbGwiLCJhIjoiY2plZzUwMTRzMW45NjJxb2R2Z2thOWF1YiJ9.szIAeMS4c9YTgNsJeG36gg';
 
 
-// CSS transitions make dynamically calculating the width of the left panel
-// difficult because it becomes time sensitive. Since the width and left
-// properties of the panel are set in pixels we can set that here as a constant.
-const LEFT_PANEL_WIDTH_PLUS_LEFT = 915;
+
 
 export default class extends Component {
 
@@ -26,6 +23,17 @@ export default class extends Component {
     this.previousParcel = null;
     this.lastRequest = null;
     this.focusTargetBounds = null;
+  }
+
+  getLeftPanelWidth() {
+    // CSS transitions make dynamically calculating the width of the left panel
+    // difficult because it becomes time sensitive. Since the width and left
+    // properties of the panel are set in pixels we can set that here as a constant.
+    const mapWidth = parseInt(this.$().css('width'));
+    if (mapWidth < 1180) {
+      return 480;
+    }
+    return 700;
   }
 
   didInsertElement() {
@@ -122,7 +130,7 @@ export default class extends Component {
           // taken care of with the padding calculated for fitBounds.
           return 0.5;
         }
-        const leftPanelWidth = LEFT_PANEL_WIDTH_PLUS_LEFT;
+        const leftPanelWidth = this.getLeftPanelWidth();
         const mapWidth = parseInt(this.$().css('width'));
         return (((mapWidth - leftPanelWidth) / 2) + leftPanelWidth) / mapWidth;
       })()
@@ -137,7 +145,7 @@ export default class extends Component {
 
   getBoundsFromCoordinates(coordinates) {
     const boundsWidth = 0.01;
-    const leftPanelWidth = LEFT_PANEL_WIDTH_PLUS_LEFT;
+    const leftPanelWidth = this.getLeftPanelWidth();
     const mapWidth = parseInt(this.$().css('width'));
     const ratio = (((mapWidth - leftPanelWidth) / 2) + leftPanelWidth) / mapWidth;
     const northEast = [
@@ -360,7 +368,7 @@ export default class extends Component {
         this.set('focusTargetBounds', fitBounds);
         this.mapboxglMap.fitBounds(fitBounds, { padding: {
           top: 40,
-          left: (this.get('map.showingLeftPanel') ? LEFT_PANEL_WIDTH_PLUS_LEFT + 40 : 40),
+          left: (this.get('map.showingLeftPanel') ? this.getLeftPanelWidth() + 40 : 40),
           bottom: 40,
           right: 40,
         }});

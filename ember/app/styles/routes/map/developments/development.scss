@@ -1,6 +1,6 @@
 .route.map-developments-development {
 
-  width: 900px;
+  // width: 900px;
   padding: 10px 20px;
 
   font-size: 14px;
@@ -16,25 +16,12 @@
   }
 
   .development-content {
-    display: flex;
-
-    height: 85vh;
-
-    .layout-column {
-      &:first-of-type {
-        display: flex;
-        flex-direction: column;
-        flex: 1 0 73%;
-
-        margin-right: 2%;
-      }
-
-      &:nth-of-type(2) { flex: 1 0 25%; }
+    .overflow-scroll {
+      height: calc(100vh - 180px);
     }
-
-    .with-actions {
+    .actions {
       display: flex;
-      flex-direction: column;
+      justify-content: flex-end;
     }
     .with-actions .overflow-scroll {
       height: calc(100% - 42px);
@@ -113,10 +100,15 @@
 
   .development-header { flex: 1 1 10%; }
 
+  .detail-group {
+    margin-top: 30px;
+    margin-bottom: 30px;
+  }
+
   .metric-groups {
     max-height: 100%;
-    padding-top: 30px;
-    padding-bottom: 30px;
+    margin-top: 30px;
+    margin-bottom: 30px;
   }
 
   article {
@@ -126,18 +118,34 @@
 
     .row {
       display: flex;
-
       .column {
         flex: 1;
         text-align: left;
       }
       .column:not(:last-child) {
-        padding-right: 10px;
+        padding-right: 20px;
+      }
+      @include media('medium') {
+        display: block;
+        .column:not(:last-child) {
+          padding-right: 0;
+        }
       }
     }
 
     .field {
-      display: flex;
+      &.long-form {
+        label {
+          display: block;
+        }
+        p {
+          margin: 5px 0 5px 15px;
+        }
+      }
+      &:not(.long-form) {
+        display: flex;
+      }
+
 
       text-align: left;
 
@@ -195,40 +203,38 @@
 
   }
 
-  .detail {
+  // .detail {
 
-    & + .detail { margin-top: 20px; }
+  //   & + .detail { margin-top: 20px; }
 
-    p { padding: 0 8px; }
+  //   p { padding: 0 8px; }
 
-    h3 {
-      margin: 0;
-      margin-bottom: 10px;
-      padding: 5px 8px;
+  //   h3 {
+  //     margin: 0;
+  //     margin-bottom: 10px;
+  //     padding: 5px 8px;
 
-      font-size: 14px;
-      font-weight: normal;
+  //     font-size: 14px;
+  //     font-weight: normal;
 
-      border-bottom: 1px solid $color_bg-medium;
-    }
+  //     border-bottom: 1px solid $color_bg-medium;
+  //   }
 
-    .loading-message {
-      background: none;
-      border: none;
-    }
-  }
+  //   .loading-message {
+  //     background: none;
+  //     border: none;
+  //   }
+  // }
 
   .actions {
-    margin-top: 10px;
+    margin-top: 15px;
     text-align: right;
 
     button, .loading-spinner {
-      width: 100%;
       margin-left: 0;
       text-align: center;
-
-      & + button, .loading-wrapper {
-        margin-top: 10px;
+      &:not(:last-child) {
+        margin-right: 10px;
       }
     }
   }
