@@ -232,6 +232,24 @@
     &.active {
       left: 15px;
     }
+    @include media('larger') {
+      &.development-width {
+        left: -700px;
+        width: 700px;
+      }
+      &.active {
+        left: 15px;
+      }
+    }
+    @include media('medium') {
+      &.development-width {
+        left: -480px;
+        width: 480px;
+      }
+      &.active {
+        left: 15px;
+      }
+    }
   }
 
   .map-layer {
