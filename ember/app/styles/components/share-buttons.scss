@@ -1,6 +1,9 @@
 .component.share-buttons {
 
-  $drawer_width: 200px;
+  position: absolute;
+  right: calc(100% + 15px);
+  bottom: 0;
+
   $toggle_width: 45px;
   $border_width: 1px;
 
@@ -29,16 +32,25 @@
   }
 
   .share-buttons-wrapper {
-    width: $toggle_width + ($border_width * 2);
+    background-color: $color_brand-primary;
     border: 1px solid $color_brand-primary;
-    overflow: hidden;
     border-radius: 5px;
+  }
+  .share-buttons-header {
+    color: $color_bg-light;
+    font-size: 0.8em;
+    padding: 2px 5px;
+  }
+  .share-buttons-buttons {
+    border-radius: 5px;
+    display: flex;
+    overflow: hidden;
   }
 
   .share-button {
     flex: 1 0 25%;
     font-weight: 200;
-    width: 100%;
+    width: $toggle_width + ($border_width * 2);
     display: block;
   }
 
@@ -46,6 +58,7 @@
     position: absolute;
 
     right: calc(100% + 5px);
+    bottom: 8px;
     width: max-content;
     z-index: 10;
 
@@ -56,14 +69,5 @@
     background: $color_bg-light;
     border: 1px solid $color_brand-primary--active;
     border-radius: 5px;
-    &.shapefile {
-      top: 10px;
-    }
-    &.csv {
-      top: 55px;
-    }
-    &.link {
-      top: 100px;
-    }
   }
 }

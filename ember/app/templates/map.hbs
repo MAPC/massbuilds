@@ -108,6 +108,9 @@
       showLoginPanel=showLoginPanel
       showSignupPanel=showSignupPanel
     }}
+    {{#if currentUser.user}}
+      {{share-buttons filterParams=filterParams}}
+    {{/if}}
   </div>
 
 </section>

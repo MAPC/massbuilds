@@ -205,12 +205,10 @@
 
   .right-panel-layer {
     position: absolute;
-    right: -100%;
+    right: -380px;
     z-index: 100;
 
-    max-width: 460px;
-    min-width: 360px;
-    width: 32%;
+    width: 380px;
 
     &.active { right: 15px; }
   }

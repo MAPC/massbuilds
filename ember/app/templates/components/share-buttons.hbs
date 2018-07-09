@@ -5,9 +5,14 @@
 {{/if}}
 
 <div class="share-buttons-wrapper">
-  <button class="share-button" onclick={{action toShapefile}}>.shp</button>
-  <button class="share-button" onclick={{action toCSV}}>.csv</button>
-  <button class="share-button" onclick={{action toLink}}>
-    <img src="/assets/images/link.svg">
-  </button>
+  <div class="share-buttons-header">
+    <span>Export</span>
+  </div>
+  <div class="share-buttons-buttons">
+    <button class="share-button" onclick={{action toShapefile}}>.shp</button>
+    <button class="share-button" onclick={{action toCSV}}>.csv</button>
+    <button class="share-button" onclick={{action toLink}}>
+      <img src="/assets/images/link.svg">
+    </button>
+  </div>
 </div>
