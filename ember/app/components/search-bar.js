@@ -83,15 +83,12 @@ export default class extends Component {
                                 : false
                               );
                             })
-                            .map(row => ({ ...row , name, col }));
+                            .map(row => ({ ...row, name, col }));
       });
     }
     return filtered;
   }
 
-  filterMatches(record) {
-
-  }
 
   @computed('searchList')
   get searchListCount() {
