@@ -3,7 +3,7 @@
   <!-- floating components -->
 
   <button class="toggler menu-toggler {{if showingMenu 'active'}}" onclick={{action toggleMenu}}>
-    <span class="hamburger"></span>
+    <span class="hamburger {{if showingMenu 'active'}}"></span>
   </button>
 
   {{#if currentUser.user}}
