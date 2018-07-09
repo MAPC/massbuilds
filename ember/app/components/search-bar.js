@@ -66,19 +66,32 @@ export default class extends Component {
     let filtered = {};
 
     if (searchQuery.length >= 2) {
+      const queryWords = searchQuery.toLowerCase().split(' ');
+
       sortOrder.forEach(col => {
-        let name = filters[col].name;
+        var name = filters[col].name;
 
         filtered[name] = this.get(col)
-                            .filter(row => row.value.toLowerCase().startsWith(searchQuery))
-                            .map(row => {
-                              return { ...row , name, col }
-                            });
+                            .filter(record => {
+                              var keywords = record.value.toLowerCase().split(' ');
+
+                              return (
+                                keywords
+                                ? queryWords.every(queryWord => (
+                                  keywords.any(keyword => keyword.startsWith(queryWord))
+                                ))
+                                : false
+                              );
+                            })
+                            .map(row => ({ ...row , name, col }));
       });
     }
     return filtered;
   }
 
+  filterMatches(record) {
+
+  }
 
   @computed('searchList')
   get searchListCount() {
