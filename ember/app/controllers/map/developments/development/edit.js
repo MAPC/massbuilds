@@ -11,7 +11,7 @@ export default class extends Controller {
   @service currentUser
   @service notifications
 
- 
+
   @computed('currentUser.user', 'model')
   get hasPublishPermissions() {
     const user = this.get('currentUser.user') ;
@@ -20,7 +20,7 @@ export default class extends Controller {
     return (
       user.get('role') === 'admin'
       || (
-        user.get('role') === 'municipal' 
+        user.get('role') === 'municipal'
         && user.get('municipality') === model.get('municipal')
       )
     );
@@ -41,7 +41,7 @@ export default class extends Controller {
 
     return hasPermissions ? 'Publishing' : 'Submitting';
   }
- 
+
 
   @action
   createEdit(changes) {
@@ -58,18 +58,12 @@ export default class extends Controller {
 
       newEdit
         .save()
+        .then(() => this.get('store').findRecord('development', development.get('id')))
         .then(() => {
           const action = approved ? 'published edits' : 'submitted edits for review';
           const developmentName = development.get('name');
 
           this.get('notifications').show(`You have ${action} to ${developmentName}.`)
-
-          if (approved) {
-            Object.keys(proposedChanges)
-                  .forEach(attr => 
-                    development.set(Ember.String.camelize(attr), proposedChanges[attr])
-                  );
-          }
 
           this.transitionToRoute('map.developments.development.index', this.get('model'));
         })
