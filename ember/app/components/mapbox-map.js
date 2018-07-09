@@ -5,6 +5,8 @@ import mapboxgl from 'npm:mapbox-gl';
 import pointInPolygon from 'npm:@turf/boolean-point-in-polygon';
 import centerOfMass from 'npm:@turf/center-of-mass';
 
+import paintProperties from 'massbuilds/utils/paint-properties';
+
 mapboxgl.accessToken = 'pk.eyJ1IjoiaWhpbGwiLCJhIjoiY2plZzUwMTRzMW45NjJxb2R2Z2thOWF1YiJ9.szIAeMS4c9YTgNsJeG36gg';
 
 
@@ -35,7 +37,7 @@ export default class extends Component {
       dragRotate: false,
       pitchWithRotate: false,
       touchZoomRotate: false,
-      minZoom: 3,
+      minZoom: 6,
     });
     this.mapboxglMap.on('load', () => {
       const mapService = this.get('map');
@@ -50,6 +52,7 @@ export default class extends Component {
       });
       mapService.addObserver('stored', this, 'draw');
       mapService.addObserver('filteredData', this, 'draw');
+      mapService.addObserver('viewing', this, 'draw');
       mapService.addObserver('filteredData', this, 'focus');
       mapService.addObserver('baseMap', this, 'setStyle');
       mapService.addObserver('zoomCommand', this, 'actOnZoomCommand');
@@ -81,6 +84,7 @@ export default class extends Component {
     const mapService = this.get('map');
     mapService.removeObserver('stored', this, 'draw');
     mapService.removeObserver('filteredData', this, 'draw');
+    mapService.removeObserver('viewing', this, 'draw');
     mapService.removeObserver('filteredData', this, 'focus');
     mapService.removeObserver('baseMap', this, 'setStyle');
     mapService.removeObserver('zoomCommand', this, 'actOnZoomCommand');
@@ -247,7 +251,7 @@ export default class extends Component {
 
   drawSelector(mapService) {
     const selectionMode = mapService.get('selectionMode');
-    const highContrast = mapService.get('baseMap') != 'light';
+    const satelliteMap = mapService.get('baseMap') != 'light';
     if (selectionMode && !this.mapboxglMap.getLayer('selector')) {
       this.mapboxglMap.addLayer({
         id: 'selector',
@@ -259,21 +263,7 @@ export default class extends Component {
             features: [],
           },
         },
-        paint: (mapService.get('baseMap') != 'light' ? {
-          'circle-color': '#FF9800',
-          'circle-radius': 10,
-          'circle-opacity': 0.8,
-          'circle-stroke-width': 1.5,
-          'circle-stroke-color': '#000',
-          'circle-stroke-opacity': 1,
-        } : {
-          'circle-color': '#FF9800',
-          'circle-radius': 10,
-          'circle-opacity': 0.2,
-          'circle-stroke-width': 3,
-          'circle-stroke-color': '#FF9800',
-          'circle-stroke-opacity': 1,
-        }),
+        paint: paintProperties.selector(mapService.get('baseMap') != 'light'),
       });
       this.mapboxglMap.addLayer({
         id: 'parcel',
@@ -286,8 +276,8 @@ export default class extends Component {
           },
         },
         paint: {
-          'line-color': highContrast ? '#fff' : '#7a7a7a',
-          'line-width': highContrast ? 2 : 1,
+          'line-color': satelliteMap ? '#fff' : '#7a7a7a',
+          'line-width': satelliteMap ? 2 : 1,
           'line-dasharray': [4, 2],
         },
       });
@@ -309,9 +299,9 @@ export default class extends Component {
           'text-font': ['Open Sans Bold'],
         },
         paint: {
-          'text-color': highContrast ? '#fff' : '#7a7a7a',
+          'text-color': satelliteMap ? '#fff' : '#7a7a7a',
           'text-halo-color': '#000',
-          'text-halo-width': highContrast ? 1 : 0,
+          'text-halo-width': satelliteMap ? 1 : 0,
         },
       });
     } else if (this.mapboxglMap.getLayer('selector')) {
@@ -371,92 +361,14 @@ export default class extends Component {
     }
   }
 
-  generatePaintProperties(selected, highContrast, isMuted) {
-    if (selected) {
-      if (highContrast) {
-        return {
-          'circle-color': ['get', 'color'],
-          'circle-radius': [
-            'interpolate',
-            ['linear'],
-            ['zoom'],
-            10, 3,
-            16, 8,
-          ],
-          'circle-opacity': isMuted ? 0.3 : 0.8,
-          'circle-stroke-width': [
-            'interpolate',
-            ['linear'],
-            ['zoom'],
-            10, 0.5,
-            16, 1.5,
-          ],
-          'circle-stroke-color': '#000',
-          'circle-stroke-opacity': isMuted ? 0.4 : 1,
-        };
-      } else {
-        return {
-          'circle-color': ['get', 'color'],
-          'circle-radius': [
-            'interpolate',
-            ['linear'],
-            ['zoom'],
-            10, 0,
-            16, 8,
-          ],
-          'circle-opacity': 0.2,
-          'circle-stroke-width': 3,
-          'circle-stroke-color': ['get', 'color'],
-          'circle-stroke-opacity': isMuted ? 0.3 : 1,
-        };
-      }
-    } else {
-      if (highContrast) {
-        return {
-          'circle-color': '#888',
-          'circle-radius': [
-            'interpolate',
-            ['linear'],
-            ['zoom'],
-            10, 3,
-            16, 8,
-          ],
-          'circle-opacity': 0.8,
-          'circle-stroke-width': [
-            'interpolate',
-            ['linear'],
-            ['zoom'],
-            10, 0.5,
-            16, 1.5,
-          ],
-          'circle-stroke-color': '#000',
-          'circle-stroke-opacity': 1,
-        };
-      } else {
-        return  {
-          'circle-color': '#888',
-          'circle-radius': [
-            'interpolate',
-            ['linear'],
-            ['zoom'],
-            10, 0,
-            16, 8,
-          ],
-          'circle-opacity': 0.2,
-          'circle-stroke-width': 3,
-          'circle-stroke-color': '#888',
-          'circle-stroke-opacity': isMuted ? 0.3 : 1,
-        };
-      }
-    }
-  }
+
 
   draw(mapService) {
     // All data
     const allFeatures = this.generateFeatures(mapService.get('filteredData').length
         ? mapService.get('remainder')
         : mapService.get('stored'));
-    const highContrast = mapService.get('baseMap') != 'light';
+    const satelliteMap = mapService.get('baseMap') != 'light';
     const isMuted = mapService.get('selectionMode');
 
     if (this.mapboxglMap.getLayer('all')) {
@@ -464,9 +376,9 @@ export default class extends Component {
         type: 'FeatureCollection',
         features: allFeatures,
       });
-      Object.entries(this.generatePaintProperties(
+      Object.entries(paintProperties.developments(
         mapService.get('filteredData').length == 0,
-        highContrast,
+        satelliteMap,
         isMuted
       )).forEach(([property, value]) => {
         this.mapboxglMap.setPaintProperty('all', property, value);
@@ -482,12 +394,47 @@ export default class extends Component {
             features: allFeatures,
           },
         },
-        paint: this.generatePaintProperties(
+        paint: paintProperties.developments(
           mapService.get('filteredData').length == 0,
-          highContrast,
+          satelliteMap,
           isMuted
         ),
       });
+    }
+
+    if (mapService.get('viewing')) {
+      const dev = mapService.get('viewing');
+      const highlightFeatures = [{
+        type: 'Feature',
+        properties: {},
+        geometry: {
+          type: 'Point',
+          coordinates: [dev.get('longitude'), dev.get('latitude')],
+        },
+      }];
+      console.log(highlightFeatures);
+      if (this.mapboxglMap.getLayer('highlighter')) {
+        this.mapboxglMap.getSource('highlighter').setData({
+          type: 'FeatureCollection',
+          features: highlightFeatures,
+        });
+      } else {
+        this.mapboxglMap.addLayer({
+          id: 'highlighter',
+          type: 'circle',
+          source: {
+            type: 'geojson',
+            data: {
+              type: 'FeatureCollection',
+              features: highlightFeatures,
+            },
+          },
+          paint: paintProperties.highlighter(satelliteMap),
+        });
+      }
+    } else if (this.mapboxglMap.getLayer('highlighter')) {
+      this.mapboxglMap.removeLayer('highlighter');
+      this.mapboxglMap.removeSource('highlighter');
     }
 
     if (mapService.filteredData.length) {
@@ -499,9 +446,9 @@ export default class extends Component {
           type: 'FeatureCollection',
           features: filteredFeatures,
         });
-        Object.entries(this.generatePaintProperties(
+        Object.entries(paintProperties.developments(
           true,
-          highContrast,
+          satelliteMap,
           isMuted
         )).forEach(([property, value]) => {
           this.mapboxglMap.setPaintProperty('filtered', property, value);
@@ -517,7 +464,7 @@ export default class extends Component {
               features: filteredFeatures,
             }
           },
-          paint: this.generatePaintProperties(true, highContrast, isMuted),
+          paint: paintProperties.developments(true, satelliteMap, isMuted),
         });
       }
     } else if (this.mapboxglMap.getLayer('filtered')) {
