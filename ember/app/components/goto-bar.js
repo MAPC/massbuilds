@@ -24,7 +24,7 @@ export default class extends Component {
 
     this.set('loading', true);
     return DS.PromiseArray.create({
-      promise: this.get('ajax').request(`http://pelias.mapc.org/v1/search?text=${searchQuery}`
+      promise: this.get('ajax').request(`https://pelias.mapc.org/v1/search?text=${searchQuery}`
           + `&boundary.country=USA&boundary.rect.min_lon=-73.5081481933594`
           + `&boundary.rect.max_lon=-69.8615341186523`
           + `&boundary.rect.min_lat=41.1863288879395`
