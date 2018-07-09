@@ -54,13 +54,9 @@ export default class extends Component {
       mapService.addObserver('baseMap', this, 'setStyle');
       mapService.addObserver('zoomCommand', this, 'actOnZoomCommand');
       mapService.addObserver('viewing', this, 'jumpTo');
-      mapService.addObserver('selectionMode', this, (mapService) => {
-        this.draw(mapService);
-        this.drawSelector(mapService);
-        this.updateSelection(true);
-      });
-
+      mapService.addObserver('selectionMode', this, 'selectionModeChangeHandler');
       mapService.addObserver('selectedCoordinates', this, 'drawSelectedCoordinates');
+
       if (mapService.get('stored').length) {
         this.draw(mapService);
         this.focus(mapService);
@@ -79,6 +75,25 @@ export default class extends Component {
     this.mapboxglMap.on('drag', (e) => this.updateSelection(e.originalEvent));
     this.mapboxglMap.on('zoom', (e) => this.updateSelection(e.originalEvent));
     this.mapboxglMap.on('zoomend', () => this.set('focusTargetBounds', null));
+  }
+
+  willDestroyElement() {
+    const mapService = this.get('map');
+    mapService.removeObserver('stored', this, 'draw');
+    mapService.removeObserver('filteredData', this, 'draw');
+    mapService.removeObserver('filteredData', this, 'focus');
+    mapService.removeObserver('baseMap', this, 'setStyle');
+    mapService.removeObserver('zoomCommand', this, 'actOnZoomCommand');
+    mapService.removeObserver('viewing', this, 'jumpTo');
+    mapService.removeObserver('selectionMode', this, 'selectionModeChangeHandler');
+    mapService.removeObserver('selectedCoordinates', this, 'drawSelectedCoordinates');
+    this.mapboxglMap.remove();
+  }
+
+  selectionModeChangeHandler(mapService) {
+    this.draw(mapService);
+    this.drawSelector(mapService);
+    this.updateSelection(true);
   }
 
   updateSelection(notFromFitBounds) {
