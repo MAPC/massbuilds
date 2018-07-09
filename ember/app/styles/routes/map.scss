@@ -19,10 +19,14 @@
   }
 
   .legend-wrapper {
-    position: fixed;
+    position: absolute;
+    bottom: 0px;
+    left: calc(100% + 15px);
+
+    // position: fixed;
     display: flex;
-    bottom: 15px;
-    left: 15px;
+    // bottom: 15px;
+    // left: 15px;
     z-index: 2;
     & > *:not(:last-child) {
       margin-right: 5px;
@@ -39,11 +43,11 @@
         text-align: center;
 
         background: $color_bg-light;
-        border: 2px solid $color_bg-medium;
+        border: 1px solid $color_brand-primary;
         border-radius: 5px;
         transition: background .15s;
 
-        &:first-of-type { margin-bottom: 5px; }
+        &:first-of-type { margin-bottom: 6px; }
 
         &:hover {
           background: $color_bg-light--active;
@@ -52,7 +56,7 @@
       }
     }
     .map-button-pair {
-      border: 2px solid $color_bg-medium;
+      border: 1px solid $color_brand-primary;
       border-radius: 5px;
       align-self: flex-end;
       button.selector {
@@ -65,15 +69,15 @@
         font-size: 12px;
         background-color: white;
         &:first-child {
-          border-top-left-radius: 3px;
-          border-top-right-radius: 3px;
+          border-top-left-radius: 5px;
+          border-top-right-radius: 5px;
         }
         &:last-child {
-          border-bottom-left-radius: 3px;
-          border-bottom-right-radius: 3px;
+          border-bottom-left-radius: 5px;
+          border-bottom-right-radius: 5px;
         }
         &:not(:last-child) {
-          border-bottom: 2px solid $color_bg-medium;
+          border-bottom: 1px solid $color_brand-primary;
         }
         &:disabled {
           background-color: #ddd;

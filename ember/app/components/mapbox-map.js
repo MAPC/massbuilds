@@ -29,9 +29,14 @@ export default class extends Component {
   }
 
   didInsertElement() {
+    const mapService = this.get('map');
+    let mapStyle = 'mapbox://styles/mapbox/light-v9';
+    if (mapService.get('baseMap') == 'satellite') {
+      mapStyle = 'mapbox://styles/ihill/cjin8f3kc0ytj2sr0rxw11a90';
+    }
     this.mapboxglMap = new mapboxgl.Map({
       container: this.get('element'),
-      style: 'mapbox://styles/mapbox/light-v9',
+      style: mapStyle,
       // maxBounds: [[-75.5, 39], [-67, 45]],
       maxBounds: [[-100, 20], [-40, 60]],
       dragRotate: false,
@@ -40,7 +45,7 @@ export default class extends Component {
       minZoom: 6,
     });
     this.mapboxglMap.on('load', () => {
-      const mapService = this.get('map');
+
       this.mapboxglMap.on('styledata', () => {
         this.draw(mapService);
       });
