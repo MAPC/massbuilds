@@ -412,7 +412,6 @@ export default class extends Component {
           coordinates: [dev.get('longitude'), dev.get('latitude')],
         },
       }];
-      console.log(highlightFeatures);
       if (this.mapboxglMap.getLayer('highlighter')) {
         this.mapboxglMap.getSource('highlighter').setData({
           type: 'FeatureCollection',

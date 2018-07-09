@@ -82,9 +82,9 @@ const paintProperties = {
     return satelliteMap ? {
       'circle-color': '#FF9800',
       'circle-radius': 10,
-      'circle-opacity': 0.8,
-      'circle-stroke-width': 1.5,
-      'circle-stroke-color': '#000',
+      'circle-opacity': 1,
+      'circle-stroke-width': 3,
+      'circle-stroke-color': '#fff',
       'circle-stroke-opacity': 1,
     } : {
       'circle-color': '#FF9800',
