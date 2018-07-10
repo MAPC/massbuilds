@@ -151,28 +151,34 @@
     }
   }
 
-  .toggler.menu-toggler {
+  .top-right-buttons {
     position: absolute;
     top: 15px;
     right: 15px;
     z-index: 500;
+    transition: top .2s, right .2s;
 
-    width: 47px;
-    height: 47px;
-
-    background: $color_bg-light;
-
-    border: 1px solid $color_brand-primary;
-    border-radius: 5px;
-    transition: border-color .2s, top .2s, right .2s;
+    .toggler.menu-toggler {
+      display: block;
+      width: 47px;
+      height: 47px;
+      margin-bottom: 5px;
+      border: none;
+      border-radius: 5px;
+      background: $color_bg-light;
+      border: 1px solid $color_brand-primary;
+      border-radius: 5px;
+      transition: border-color .2s;
+      &:hover {
+        background: $color_bg-light--active;
+        transition: background .15s;
+        border-color: $color_brand-primary--active;
+      }
+    }
 
     &.active {
       top: 36px;
       right: 30px;
-    }
-
-    &:hover {
-      border-color: $color_brand-primary--active;
     }
 
     .hamburger { @extend ._vertical-center; }
@@ -201,12 +207,10 @@
 
   .right-panel-layer {
     position: absolute;
-    right: -100%;
+    right: -380px;
     z-index: 100;
 
-    max-width: 460px;
-    min-width: 360px;
-    width: 32%;
+    width: 380px;
 
     &.active { right: 15px; }
   }
