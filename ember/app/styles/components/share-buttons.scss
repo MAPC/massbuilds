@@ -52,6 +52,9 @@
     font-weight: 200;
     width: $toggle_width + ($border_width * 2);
     display: block;
+    &:not(:last-child) {
+      border-right: 1px solid $color_bg-medium;
+    }
   }
 
   .link-message {
