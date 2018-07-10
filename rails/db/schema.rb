@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180625194837) do
+ActiveRecord::Schema.define(version: 20180710142821) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -102,6 +102,8 @@ ActiveRecord::Schema.define(version: 20180625194837) do
     t.string "nhood"
     t.text "n_transit", default: [], array: true
     t.boolean "flag"
+    t.datetime "deleted_at"
+    t.index ["deleted_at"], name: "index_developments_on_deleted_at"
   end
 
   create_table "edits", force: :cascade do |t|

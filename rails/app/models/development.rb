@@ -1,6 +1,7 @@
 require 'csv'
 require 'zip'
 class Development < ApplicationRecord
+  acts_as_paranoid
   has_many :edits
   belongs_to :user
   include PgSearch
