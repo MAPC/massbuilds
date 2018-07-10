@@ -3,6 +3,11 @@
   position: absolute;
   right: calc(100% + 15px);
   bottom: 0;
+  transition: bottom 0.3s ease-in 0s;
+  &.hidden {
+    transition: bottom 0.3s ease-out 0s;
+    bottom: -90px;
+  }
 
   $toggle_width: 45px;
   $border_width: 1px;

@@ -108,7 +108,10 @@
       showSignupPanel=showSignupPanel
     }}
     {{#if currentUser.user}}
-      {{share-buttons filterParams=filterParams}}
+      {{share-buttons
+        filterParams=filterParams
+        hidden=(and showingLeftPanel showingMenu)
+      }}
     {{/if}}
   </div>
 

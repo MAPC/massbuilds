@@ -11,7 +11,7 @@ export default class extends Component {
     super();
 
     this.classNames = ['component', 'share-buttons'];
-
+    this.classNameBindings = ['hidden'];
     this.linkTimer = null;
     this.linkMessage = null;
 
