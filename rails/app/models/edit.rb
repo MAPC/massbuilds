@@ -1,5 +1,6 @@
 require 'json-schema'
 class Edit < ApplicationRecord
+  acts_as_paranoid
   belongs_to :user
   belongs_to :development
   before_save :update_development, if: :approved?

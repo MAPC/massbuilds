@@ -1,7 +1,8 @@
 require 'csv'
 require 'zip'
 class Development < ApplicationRecord
-  has_many :edits
+  acts_as_paranoid
+  has_many :edits, dependent: :destroy
   belongs_to :user
   include PgSearch
   include ActiveModel::Dirty
