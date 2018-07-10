@@ -31,3 +31,6 @@ You also may need to set your Postgres development environment database variable
 `POSTGRES_USER`: should be set to the development database postgres username
 `POSTGRES_DEV_HOST`: should be set to the host of the development database
 `POSTGRES_PASSWORD`: should be set to the password of the development database username
+
+### Latitude and Longitude Script
+If you run into an error about a development or edit not containing latitude or longitude as a required property, you might need to run `rake database:populate_long_lat` to populate the latitude and longitude fields from the point field.
