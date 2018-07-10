@@ -21,6 +21,12 @@
       background: mix($color_bg-light--active, $color_brand-primary, 80);
       transition: background .15s;
     }
+    &.invalid {
+      background: mix($color_bg-light--active, $color_highlight, 80);
+    }
+  }
+  select.invalid {
+    background: mix($color_bg-light--active, $color_highlight, 80);
   }
 
   fieldset.primary:hover {
