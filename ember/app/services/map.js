@@ -90,6 +90,7 @@ export default class extends Service {
 
   add(development) {
     this.get('stored').pushObject(development);
+    this.set('stored', this.get('stored').toArray());
   }
 
 }
