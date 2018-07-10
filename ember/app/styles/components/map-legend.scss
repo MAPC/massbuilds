@@ -1,10 +1,9 @@
 .component.map-legend {
-  display: inline-block;
-
+  width: 140px;
   padding: 15px;
 
   background: $color_bg-light;
-  border: 2px solid $color_bg-medium;
+  border: 1px solid $color_brand-primary;
   border-radius: 5px;
 
   &.showing { z-index: 50; }
@@ -30,9 +29,9 @@
           margin-right: $size / 2;
 
           border-radius: 50%;
-        } 
+        }
       }
-    } 
+    }
   }
 
 }

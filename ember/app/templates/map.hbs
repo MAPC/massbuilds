@@ -10,30 +10,6 @@
     {{share-buttons filterParams=filterParams}}
   {{/if}}
 
-  <div class="legend-wrapper">
-    {{map-legend showing=showingFilters}}
-    <div class="map-button-pair map-zoom-buttons">
-      <button class="selector" onclick={{action setZoomCommand 'IN'}}>
-        +
-      </button>
-      <button class="selector" onclick={{action setZoomCommand 'OUT'}}>
-        -
-      </button>
-    </div>
-    <div class="map-button-pair map-basemap-buttons">
-      <button class="selector" disabled={{eq baseMap 'light'}} onclick={{action setBaseMap 'light'}}>
-        Map
-      </button>
-      <button class="selector" disabled={{eq baseMap 'satellite'}} onclick={{action setBaseMap 'satellite'}}>
-        Satellite
-      </button>
-    </div>
-    <div class="info-links">
-      {{link-to 'Glossary' 'glossary'}}
-      {{link-to 'FAQ' 'faq'}}
-    </div>
-  </div>
-
   {{notifications-popup}}
   <!--/ floating components -->
 
@@ -76,6 +52,29 @@
           disabled=(and showingLeftPanel showingMenu)
         }}
       {{/if}}
+    </div>
+    <div class="legend-wrapper">
+      {{map-legend showing=showingFilters}}
+      <div class="map-button-pair map-zoom-buttons">
+        <button class="selector" onclick={{action setZoomCommand 'IN'}}>
+          +
+        </button>
+        <button class="selector" onclick={{action setZoomCommand 'OUT'}}>
+          -
+        </button>
+      </div>
+      <div class="map-button-pair map-basemap-buttons">
+        <button class="selector" disabled={{eq baseMap 'light'}} onclick={{action setBaseMap 'light'}}>
+          Map
+        </button>
+        <button class="selector" disabled={{eq baseMap 'satellite'}} onclick={{action setBaseMap 'satellite'}}>
+          Satellite
+        </button>
+      </div>
+      <div class="info-links">
+        {{link-to 'Glossary' 'glossary'}}
+        {{link-to 'FAQ' 'faq'}}
+      </div>
     </div>
   </div>
 
