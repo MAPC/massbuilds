@@ -10,6 +10,8 @@
     @media (max-width: 1180px) { @content; }
   } @else if $size == 'large' {
     @media (max-width: 1280px) { @content; }
+  } @else if $size == 'larger' {
+    @media (max-width: 1400px) { @content; }
   } @else if $size == 'x-large' {
     @media (max-width: 1600px) { @content; }
   } @else {
