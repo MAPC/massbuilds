@@ -5,7 +5,6 @@ class UsersController < ApplicationController
   # GET /users
   def index
     authorize User
-
     if params[:email]
       @users = User.where(email: params[:email]).first
     elsif params[:request_verified_status]
