@@ -342,22 +342,24 @@ export default class extends Component {
   }
 
   focus(mapService) {
-    const data = mapService.get('filteredData').length
-        ? mapService.get('filteredData')
-        : mapService.get('stored');
-    if (data.toArray().length > 0) {
-      const fitBounds = data.reduce(
-      (bounds, datum) => bounds.extend([datum.get('longitude'), datum.get('latitude')]),
-        new mapboxgl.LngLatBounds()
-      );
-      const leftPanel = Ember.$('.left-panel-layer');
-      this.set('focusTargetBounds', fitBounds);
-      this.mapboxglMap.fitBounds(fitBounds, { padding: {
-        top: 40,
-        left: (this.get('map.showingLeftPanel') ? LEFT_PANEL_WIDTH_PLUS_LEFT + 40 : 40),
-        bottom: 40,
-        right: 40,
-      }});
+    if (!mapService.get('viewing')) {
+      const data = mapService.get('filteredData').length
+          ? mapService.get('filteredData')
+          : mapService.get('stored');
+      if (data.toArray().length > 0) {
+        const fitBounds = data.reduce(
+        (bounds, datum) => bounds.extend([datum.get('longitude'), datum.get('latitude')]),
+          new mapboxgl.LngLatBounds()
+        );
+        const leftPanel = Ember.$('.left-panel-layer');
+        this.set('focusTargetBounds', fitBounds);
+        this.mapboxglMap.fitBounds(fitBounds, { padding: {
+          top: 40,
+          left: (this.get('map.showingLeftPanel') ? LEFT_PANEL_WIDTH_PLUS_LEFT + 40 : 40),
+          bottom: 40,
+          right: 40,
+        }});
+      }
     }
   }
 

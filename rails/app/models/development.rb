@@ -36,9 +36,8 @@ class Development < ApplicationRecord
     groundbroken.validates :hotelrms
   end
 
-
-  before_save :geocode
-  after_save :update_point
+  before_save :update_point
+  after_save :geocode
   after_save :update_rpa
   after_save :update_county
   after_save :update_municipality
@@ -94,15 +93,21 @@ class Development < ApplicationRecord
 
   private
 
-  def geocode
+  def update_point
     return if !latitude_changed? and !longitude_changed?
     self.point = "POINT (#{longitude} #{latitude})"
-    result = Faraday.get "http://pelias.mapc.org/v1/reverse?point.lat=#{latitude}&point.lon=#{longitude}"
+  end
+
+  def geocode
+    return if !saved_change_to_point?
+    result = Faraday.get "https://pelias.mapc.org/v1/reverse?point.lat=#{self.latitude}&point.lon=#{self.longitude}"
     if result && JSON.parse(result.body)['features'].length > 0
       properties = JSON.parse(result.body)['features'][0]['properties']
-      self.municipal = properties['locality']
-      self.address = properties['name']
-      self.zip_code = properties['postalcode']
+      self.update_columns(
+        municipal: properties['locality'],
+        address: properties['name'],
+        zip_code: properties['postalcode']
+      )
     end
   end
 
@@ -123,11 +128,6 @@ class Development < ApplicationRecord
 
   def groundbroken?
     status == ('in_construction' || 'completed')
-  end
-
-  def update_point
-    return if !latitude_changed? and !longitude_changed?
-    self.point = "POINT (#{longitude} #{latitude})"
   end
 
   def update_rpa
