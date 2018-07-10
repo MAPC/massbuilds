@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import statusColors from 'massbuilds/utils/status-colors';
+import { statusOptions } from 'massbuilds/utils/status-colors';
 import Development from 'massbuilds/models/development';
 const { decamelize } = Ember.String;
 
@@ -39,7 +39,7 @@ const filters = {
 
   // Key Info
 
-  'status': { name: 'Status', glossaryKey: 'STATUS', type: 'string', options: Object.keys(statusColors), ...defaultMetric },
+  'status': { name: 'Status', glossaryKey: 'STATUS', type: 'string', options: statusOptions, ...defaultMetric },
   'totalCost': { name: 'Total cost', glossaryKey: 'COST_OF_CONSTRUCTION', type: 'number', ...defaultMetric },
   'parkType': { name: 'Parking type', type: 'string', options: ['garage', 'underground', 'surface', 'other'], ...defaultMetric },
   'descr': { name: 'Description', glossaryKey: 'DESCRIPTION', type: 'string', ...defaultMetric },
