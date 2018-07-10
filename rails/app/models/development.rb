@@ -133,12 +133,9 @@ class Development < ApplicationRecord
   def update_rpa
     return if rpa_name.present?
     rpa_query = <<~SQL
-      SELECT rpa_name
-      FROM
-        (SELECT rpa_name, ST_TRANSFORM(rpa_poly.shape, 4326) as shape FROM rpa_poly) rpa,
-        (SELECT id, name, point FROM developments) development
-        WHERE ST_Intersects(point, rpa.shape)
-        AND id = #{id};
+      SELECT rpa_name, shape
+      FROM rpa_poly
+      WHERE ST_Intersects(ST_TRANSFORM(ST_GeomFromText('#{point}', 4326), 26986), shape);
     SQL
     sql_result = ActiveRecord::Base.connection.exec_query(rpa_query).to_hash[0]
     return if sql_result.blank?
@@ -149,12 +146,9 @@ class Development < ApplicationRecord
   def update_county
     return if county.present?
     counties_query = <<~SQL
-      SELECT county
-      FROM
-        (SELECT county, ST_TRANSFORM(counties_polym.shape, 4326) as shape FROM counties_polym) county,
-        (SELECT id, name, point FROM developments) development
-        WHERE ST_Intersects(point, county.shape)
-        AND id = #{id};
+      SELECT county, shape
+      FROM counties_polym
+      WHERE ST_Intersects(ST_TRANSFORM(ST_GeomFromText('#{point}', 4326), 26986), shape);
     SQL
     sql_result = ActiveRecord::Base.connection.exec_query(counties_query).to_hash[0]
     return if sql_result.blank?
@@ -165,12 +159,9 @@ class Development < ApplicationRecord
   def update_municipality
     return if municipal.present?
     municipalities_query = <<~SQL
-      SELECT municipal
-      FROM
-        (SELECT municipal, ST_TRANSFORM(ma_municipalities.shape, 4326) as shape FROM ma_municipalities) municipality,
-        (SELECT id, name, point FROM developments) development
-        WHERE ST_Intersects(point, municipality.shape)
-        AND id = #{id};
+      SELECT municipal, shape
+      FROM ma_municipalities
+      WHERE ST_Intersects(ST_TRANSFORM(ST_GeomFromText('#{point}', 4326), 26986), shape);
     SQL
     sql_result = ActiveRecord::Base.connection.exec_query(municipalities_query).to_hash[0]
     return if sql_result.blank?
@@ -181,12 +172,9 @@ class Development < ApplicationRecord
   def update_n_transit
     return if n_transit.present?
     n_transit_query = <<~SQL
-      SELECT srvc_name
-      FROM
-        (SELECT srvc_name, ST_TRANSFORM(tod_service_area_poly.shape, 4326) as shape FROM tod_service_area_poly) service_area,
-        (SELECT id, name, point FROM developments) development
-        WHERE ST_Intersects(point, service_area.shape)
-        AND id = #{id};
+      SELECT srvc_name, shape
+      FROM tod_service_area_poly
+      WHERE ST_Intersects(ST_TRANSFORM(ST_GeomFromText('#{point}', 4326), 26986), shape);
     SQL
     sql_result = ActiveRecord::Base.connection.exec_query(n_transit_query).to_hash
     return if sql_result.blank?
@@ -201,12 +189,9 @@ class Development < ApplicationRecord
   def update_neighborhood
     return if nhood.present?
     nhood_query = <<~SQL
-      SELECT nhood_name
-      FROM
-        (SELECT nhood_name, ST_TRANSFORM(neighborhoods_poly.shape, 4326) as shape FROM neighborhoods_poly) nhood,
-        (SELECT id, name, point FROM developments) development
-        WHERE ST_Intersects(point, nhood.shape)
-        AND id = #{id};
+      SELECT nhood_name, shape
+      FROM neighborhoods_poly
+      WHERE ST_Intersects(ST_TRANSFORM(ST_GeomFromText('#{point}', 4326), 26986), shape);
     SQL
     sql_result = ActiveRecord::Base.connection.exec_query(nhood_query).to_hash[0]
     return if sql_result.blank?
@@ -217,12 +202,9 @@ class Development < ApplicationRecord
   def update_loc_id
     return if loc_id.present?
     loc_id_query = <<~SQL
-      SELECT parloc_id
-      FROM
-        (SELECT parloc_id, ST_TRANSFORM(parcels.geom, 4326) as shape FROM parcels) parcel,
-        (SELECT id, name, point FROM developments) development
-        WHERE ST_Intersects(point, parcel.shape)
-        AND id = #{id};
+      SELECT parloc_id, geom
+      FROM parcels
+      WHERE ST_Intersects(ST_GeomFromText('#{point}', 4326), geom);
     SQL
     sql_result = ActiveRecord::Base.connection.exec_query(loc_id_query).to_hash[0]
     return if sql_result.blank?
