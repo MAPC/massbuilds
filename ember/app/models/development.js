@@ -79,8 +79,10 @@ export default class extends DS.Model {
   @computed('address', 'municipal', 'state', 'zipCode')
   get fullAddress() {
     const props = this.getProperties('address', 'municipal', 'state', 'zipCode');
-
-    return `${props.address}, ${props.municipal}, ${props.state} ${props.zipCode}`;
+    const address = props.address ? props.address : 'Unknown Address';
+    const municipal = props.municipal ? props.municipal : 'Unknown City';
+    const zipCode = props.zipCode ? props.zipCode : '';
+    return `${address}, ${municipal}, ${props.state || 'MA'} ${zipCode}`;
   }
 
 }

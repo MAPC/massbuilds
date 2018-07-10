@@ -146,6 +146,7 @@ export default class extends Component {
 
   @action
   updateCommsf(fieldName) {
+    console.log(fieldName);
     this.checkForUpdated(fieldName);
 
     const sum = this.sumProperties(...this.get('commsfFields'), 'editing.unkSqft');
