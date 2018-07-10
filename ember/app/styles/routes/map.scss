@@ -23,10 +23,8 @@
     bottom: 0px;
     left: calc(100% + 15px);
 
-    // position: fixed;
     display: flex;
-    // bottom: 15px;
-    // left: 15px;
+
     z-index: 2;
     & > *:not(:last-child) {
       margin-right: 5px;
