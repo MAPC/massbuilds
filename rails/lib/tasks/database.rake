@@ -25,4 +25,14 @@ namespace :database do
     end
   end
 
+  task populate_long_lat: :environment do
+    Development.all.each do |development|
+      point = development.point
+      development.update_columns(
+        latitude: point.y,
+        longitude: point.x
+      )
+    end
+  end
+
 end
