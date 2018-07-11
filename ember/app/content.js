@@ -93,8 +93,25 @@ const content = {
       label: 'Housing Units',
       definition: [
         'Input the total # of units in each type of housing, ie. If the project includes 20 single family community with 6 townhouses (totaling 12 units) and a building with 10 units, input 20 into Single Family and 12 in Small Multi-family, and 10 into Large Multi-family.',
-        'Small Multi-family means attached single family homes or townhouses and multifamily homes under 6 units.Large Multi-family means structures with 6 or more units.',
-        'If known, input the number of units that are studio/1 Bedroom, 2 Bedroom and 3 Bedroom. If unknown, input 0 for all Bedroom types and input the total number of units in the Unknown field at the end of the section.',
+        'If known, input the number of units that are studio/1 Bedroom, 2 Bedroom and 3 Bedroom.',
+      ],
+    },
+    SINGLE_FAMILY: {
+      label: 'Single Family',
+      definition: [
+        'A standalone house for one family.'
+      ],
+    },
+    SMALL_MULTI_FAMILY: {
+      label: 'Small Multi-family',
+      definition: [
+        'Attached single family homes or townhouses and multifamily homes under 6 units.',
+      ],
+    },
+    LARGE_MULTI_FAMILY: {
+      label: 'Large Multi-family',
+      definition: [
+        'Structures with 6 or more units.',
       ],
     },
     AFFORDABLE_UNITS: {
@@ -209,6 +226,12 @@ const content = {
       unitsShort: 'sq ft',
       unitsLong: 'Square Feet',
       definition: ['The floor area dedicated to nonresidential uses on site (not including parking) that are unknown.'],
+    },
+    UNKNOWN_HOUSING_UNITS: {
+      label: 'Unknown',
+      definition: [
+        'If the unit types are unknown, enter the number of housing units here.',
+      ],
     },
   },
 };

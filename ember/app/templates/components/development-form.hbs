@@ -318,7 +318,9 @@
             </tr>
 
             <tr>
-              <td><label for="singfamhu">Single Family</label></td>
+              <td>
+                <label for="singfamhu">{{defined-term key="SINGLE_FAMILY"}}</label>
+              </td>
               <td>
                 {{input
                   class=(if inValid.singfamhu 'invalid')
@@ -336,7 +338,9 @@
             </tr>
 
             <tr>
-              <td><label for="smmultifam">Small Multi-family</label></td>
+              <td>
+                <label for="smmultifam">{{defined-term key="SMALL_MULTI_FAMILY"}}</label>
+              </td>
               <td>
                 {{input
                   class=(if inValid.smmultifam 'invalid')
@@ -354,7 +358,9 @@
             </tr>
 
             <tr>
-              <td><label for="lgmultifam">Large Multi-family</label></td>
+              <td>
+                <label for="lgmultifam">{{defined-term key="LARGE_MULTI_FAMILY"}}</label>
+              </td>
               <td>
                 {{input
                   class=(if inValid.lgmultifam 'invalid')
@@ -372,7 +378,7 @@
             </tr>
 
             <tr>
-              <td>Unknown</td>
+              <td>{{defined-term key="UNKNOWN_HOUSING_UNITS"}}</td>
               <td>
                 {{input
                   class=(if inValid.unknownhu 'invalid')
@@ -388,9 +394,13 @@
                 {{/if}}
               </td>
             </tr>
-
-            <hr class="delimiter">
-
+          </table>
+          <table class="housing-units">
+            <tr class="table-header">
+              <td>Unit Style</td>
+              <td>Quantity</td>
+              <td>Percentage</td>
+            </tr>
             <tr>
               <td><label for="units1bd">Studio/1 Bedroom</label></td>
               <td>
