@@ -4,8 +4,8 @@ import { computed } from 'ember-decorators/object';
 
 export default class extends Controller {
 
-  
-  @computed('model')
+
+  @computed('model.[]')
   get developments() {
     return this.get('model').sortBy('createdAt').reverse();
   }
