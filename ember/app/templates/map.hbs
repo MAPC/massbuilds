@@ -1,47 +1,82 @@
 <section class='route map'>
-
+  {{click-catcher}}
   <!-- floating components -->
-  <div class="search-wrapper">
-    <div class="filter-actions">
-      <button onclick={{action toggleFilters}} class="filter-toggler {{if showingFilters 'active'}} {{if filtering 'filtering'}}">
-        <img src="/assets/images/filter.svg">
-      </button>
-      <button onclick={{action clearFilters}} class="clear-filters {{unless filtering 'disabled'}}">
-        X
-      </button>
-    </div>
 
-    {{search-bar 
-      addDiscreteFilter=(action addDiscreteFilter)
-      viewDevelopment=(action viewDevelopment)
-      searchQuery=searchQuery
-      placeholder=searchPlaceholder 
-      model=map.stored
-    }}
+  <div class="top-right-buttons {{if showingMenu 'active'}}">
+    <button class="toggler menu-toggler" onclick={{action toggleMenu}}>
+      <span class="hamburger"></span>
+    </button>
   </div>
-
-  <button class="toggler menu-toggler {{if showingRightPanel 'active'}}" onclick={{action toggleMenu}}>
-    <span class="hamburger"></span>
-  </button>
-
-  {{#if currentUser.user}}
-    {{share-buttons filterParams=filterParams}}
-  {{/if}}
-
-  {{map-legend showing=showingFilters}}
 
   {{notifications-popup}}
   <!--/ floating components -->
 
-  <div class="panel-layer left-panel-layer {{if showingLeftPanel 'active'}}">
-    {{#if showingFilters}}
-      {{filter-panel 
-        update=(action updateFilter)
-        activeFilters=activeFilters
-      }}
-    {{else}}
-      {{outlet}}
-    {{/if}}
+  <div class="panel-layer left-panel-layer {{leftPanelClass}} {{if showingLeftPanel 'active'}}">
+
+      {{#if showingFilters}}
+        {{filter-panel
+          update=(action updateFilter)
+          activeFilters=activeFilters
+          toggleFilters=(action toggleFilters)
+        }}
+      {{else}}
+        <div class="overflow-hidden">
+          {{outlet}}
+        </div>
+      {{/if}}
+
+    <div class="search-wrapper {{if (not (and showingLeftPanel showingMenu)) 'active'}}">
+      {{#if showingGoto}}
+        {{goto-bar
+          searchQuery=searchQuery
+          disabled=(and showingLeftPanel showingMenu)
+        }}
+      {{else}}
+        <div class="filter-actions">
+          <button onclick={{action toggleFilters}} class="filter-toggler {{if showingFilters 'active'}} {{if filtering 'filtering'}}">
+            <img src="/assets/images/filter.svg">
+          </button>
+          <button onclick={{action clearFilters}} class="clear-filters {{unless filtering 'disabled'}}">
+            X
+          </button>
+        </div>
+
+        {{search-bar
+          addDiscreteFilter=(action addDiscreteFilter)
+          viewDevelopment=(action viewDevelopment)
+          searchQuery=searchQuery
+          placeholder=searchPlaceholder
+          showFiltersActive=(and activeFilters (not showingFilters))
+          numberOfActiveFilters=activeFilters.length
+          toggleFilters=(action toggleFilters)
+          model=map.stored
+          disabled=(and showingLeftPanel showingMenu)
+        }}
+      {{/if}}
+    </div>
+    <div class="legend-wrapper">
+      {{map-legend showing=showingFilters}}
+      <div class="map-button-pair map-zoom-buttons">
+        <button class="selector" onclick={{action setZoomCommand 'IN'}}>
+          +
+        </button>
+        <button class="selector" onclick={{action setZoomCommand 'OUT'}}>
+          -
+        </button>
+      </div>
+      <div class="map-button-pair map-basemap-buttons">
+        <button class="selector" disabled={{eq baseMap 'light'}} onclick={{action setBaseMap 'light'}}>
+          Map
+        </button>
+        <button class="selector" disabled={{eq baseMap 'satellite'}} onclick={{action setBaseMap 'satellite'}}>
+          Satellite
+        </button>
+      </div>
+      <div class="info-links">
+        {{link-to 'Glossary' 'glossary'}}
+        {{link-to 'FAQ' 'faq'}}
+      </div>
+    </div>
   </div>
 
   <div class="map-layer">
@@ -58,30 +93,13 @@
         </div>
       </div>
     {{/unless}}
-
-    {{#leaflet-map bounds=map.bounds as |layers|}}
-      {{layers.tile url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
-
-      {{#if (gt map.filteredData.length 0)}}
-        {{map-layer 
-          data=map.filteredData
-          radius=60
-          layers=layers
-          viewDevelopment=(action viewDevelopment)
-        }}
-      {{/if}}
-
-      {{map-layer 
-        data=map.stored 
-        radius=10
-        layers=layers
-        faded=activeFilters
-        viewDevelopment=(action viewDevelopment)
-      }}
-    {{/leaflet-map}}
+    {{mapbox-map
+      activeFilters=activeFilters
+      viewDevelopment=(action viewDevelopment)
+    }}
   </div>
 
-  <div class="panel-layer right-panel-layer {{if showingRightPanel 'active'}}">
+  <div class="panel-layer right-panel-layer {{if showingMenu 'active'}}">
     {{user-panel
       panel=panel
       hideFilters=(action hideFilters)
@@ -89,6 +107,12 @@
       showLoginPanel=showLoginPanel
       showSignupPanel=showSignupPanel
     }}
+    {{#if currentUser.user}}
+      {{share-buttons
+        filterParams=filterParams
+        hidden=(and showingLeftPanel showingMenu)
+      }}
+    {{/if}}
   </div>
 
 </section>

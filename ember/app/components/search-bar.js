@@ -9,13 +9,12 @@ export default class extends Component {
 
   @service currentUser
 
-
   constructor() {
     super();
 
     this.classNames = ['component', 'search-bar'];
-
     this.sortOrder = ['municipal', 'nhood', 'devlper', 'name', 'address'];
+    this.appCtrl = Ember.getOwner(this).lookup('controller:application');
   }
 
 
@@ -67,17 +66,26 @@ export default class extends Component {
     let filtered = {};
 
     if (searchQuery.length >= 2) {
+      const queryWords = searchQuery.toLowerCase().split(' ');
+
       sortOrder.forEach(col => {
-        let name = filters[col].name;
+        var name = filters[col].name;
 
         filtered[name] = this.get(col)
-                            .filter(row => row.value.toLowerCase().startsWith(searchQuery))
-                            .map(row => {
-                              return { ...row , name, col }
-                            });
+                            .filter(record => {
+                              var keywords = record.value.toLowerCase().split(' ');
+
+                              return (
+                                keywords
+                                ? queryWords.every(queryWord => (
+                                  keywords.any(keyword => keyword.startsWith(queryWord))
+                                ))
+                                : false
+                              );
+                            })
+                            .map(row => ({ ...row, name, col }));
       });
     }
-
     return filtered;
   }
 
@@ -90,7 +98,7 @@ export default class extends Component {
   }
 
 
-  @computed('searchList') 
+  @computed('searchList')
   get searching() {
     const searchList = this.get('searchList');
 
@@ -98,7 +106,7 @@ export default class extends Component {
   }
 
 
-  @action 
+  @action
   selectItem(item) {
     if (item) {
       if (item.id) {
@@ -122,7 +130,7 @@ export default class extends Component {
   valuesFor(column) {
     return this.get('developments')
                .map(development => {
-                 return { 
+                 return {
                   id: development.get('id'),
                   value: development.get(column),
                  };

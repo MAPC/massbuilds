@@ -21,14 +21,14 @@ export default class extends Route {
 
   @action
   didTransition() {
-    this.set('map.viewing', this.get('data'));
+    this.get('map').setViewing(this.get('data'));
   }
 
 
   @action
   willTransition(transition) {
     if (transition.targetName.indexOf('map.developments.development') === -1) {
-      this.set('map.viewing', null);
+      this.get('map').setViewing(null);
     }
   }
 

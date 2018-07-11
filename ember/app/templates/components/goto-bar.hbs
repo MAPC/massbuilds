@@ -1,0 +1,28 @@
+<div class="search-input-wrapper {{if searchQuery.length 'searching'}}">
+  <img src="/assets/images/search.svg" class="search-icon">
+  {{input class="search-input" value=searchQuery placeholder="Zoom to an address" autocomplete="off"}}
+  <span class="clear-search {{if searchQuery.length 'active'}}" onclick={{action clearSearch}}>x</span>
+</div>
+
+{{#if (and searchQuery.length (not disabled))}}
+  <ul class="search-list">
+    {{#each searchList as |item|}}
+      <li onclick={{action goto item.geometry}}>
+        <h5>{{item.label}}</h5>
+        <p>{{item.type}}</p>
+      </li>
+    {{/each}}
+
+    {{#if loading}}
+      <li class="loading">
+        Loading...
+      </li>
+    {{/if}}
+
+    {{#if (and (eq searchList.length 0) (not loading))}}
+      <li class="no-results">
+        No results
+      </li>
+    {{/if}}
+  </ul>
+{{/if}}

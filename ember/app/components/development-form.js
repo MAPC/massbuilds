@@ -9,7 +9,6 @@ export default class extends Component {
 
   @service map
 
-
   constructor() {
     super();
 
@@ -37,19 +36,25 @@ export default class extends Component {
     ];
 
     this.commsfFields = [
-      'editing.retSqft', 
-      'editing.ofcmdSqft', 
-      'editing.indmfSqft', 
-      'editing.whsSqft', 
-      'editing.rndSqft', 
-      'editing.eiSqft', 
-      'editing.hotelSqft', 
+      'editing.retSqft',
+      'editing.ofcmdSqft',
+      'editing.indmfSqft',
+      'editing.whsSqft',
+      'editing.rndSqft',
+      'editing.eiSqft',
+      'editing.hotelSqft',
       'editing.otherSqft',
     ];
 
     const base = [
-      'name', 'status', 'address', 'yearCompl',
-      'zipCode', 'hu', 'commsf', 'descr',
+      'name',
+      'status',
+      'latitude',
+      'longitude',
+      'yearCompl',
+      'hu',
+      'commsf',
+      'descr',
     ];
 
     const proposed = [
@@ -59,14 +64,29 @@ export default class extends Component {
 
     const groundBroken = [
       ...proposed,
-      'affrdUnit', 'affU30', 'aff3050', 'aff5080', 'aff80p', 'gqpop', 'retSqft', 
+      'affrdUnit', 'affU30', 'aff3050', 'aff5080', 'aff80p', 'gqpop', 'retSqft',
       'ofcmdSqft', 'indmfSqft', 'whsSqft', 'rndSqft', 'eiSqft',
       'otherSqft', 'hotelSqft', 'hotelrms', 'publicsqft',
     ];
 
+    this.lastEdit = Date.now();
+
     this.criteria = { base, proposed, groundBroken };
 
     Ember.run.later(this, () => this.updateFieldRequirements(), 500);
+    this.get('map').addObserver('selectedCoordinates', this, 'updateCoordinates');
+  }
+
+  willDestroyElement() {
+    this.get('map').removeObserver('selectedCoordinates', this, 'updateCoordinates');
+  }
+
+  updateCoordinates(mapService) {
+    const coordinates = mapService.get('selectedCoordinates');
+    this.set('editing.longitude', coordinates[0]);
+    this.set('editing.latitude', coordinates[1]);
+    this.checkForUpdated('latitude');
+    this.checkForUpdated('longitude');
   }
 
 
@@ -85,11 +105,11 @@ export default class extends Component {
 
   @action
   updateFieldRequirements() {
-    const criteria = this.getCriteria(); 
+    const criteria = this.getCriteria();
     const notRequired = this.get('criteria.groundBroken').filter(crit => criteria.indexOf(crit) === -1);
 
     const selectLabel = x => document.querySelector(`label[for="${x}"]`);
-    
+
     criteria.forEach(crit => {
       const elem = selectLabel(crit);
 
@@ -108,7 +128,7 @@ export default class extends Component {
   }
 
 
-  @action 
+  @action
   updateHu(fieldName) {
     this.checkForUpdated(fieldName);
 
@@ -117,7 +137,7 @@ export default class extends Component {
   }
 
 
-  @action 
+  @action
   updateAffrdUnit(fieldName) {
     this.checkForUpdated(fieldName);
 
@@ -126,7 +146,7 @@ export default class extends Component {
   }
 
 
-  @action 
+  @action
   updateCommsf(fieldName) {
     this.checkForUpdated(fieldName);
 
@@ -137,7 +157,7 @@ export default class extends Component {
   }
 
 
-  @action 
+  @action
   findPosition() {
     this.get('map').returnToPoint();
   }
@@ -170,7 +190,7 @@ export default class extends Component {
       return values.reduce((a, b) => parseFloat(a) + (parseFloat(b) || 0));
     }
     else {
-      return null; 
+      return null;
     }
   }
 
@@ -195,7 +215,7 @@ export default class extends Component {
     if (typeof edited === 'boolean') {
       edited = !edited;
     }
-    
+
     if (
       (
         modeled === undefined
@@ -218,7 +238,7 @@ export default class extends Component {
         this.set('changes', false);
       }
     }
-
+    this.set('lastEdit', Date.now());
     this.checkCriteria();
   }
 
@@ -238,22 +258,36 @@ export default class extends Component {
 
     return criteria;
   }
-  
+
 
   checkCriteria() {
     const criteria = this.getCriteria();
 
     const fulfilled = criteria.every(criterion => {
       const val = this.get(`editing.${criterion}`);
-
       return (
-        val !== null 
+        val !== null
         && val !== undefined
         && val !== ''
       );
     });
 
     this.set('fulfilled', fulfilled);
+  }
+
+  @computed('lastEdit')
+  inValid() {
+    const validations = {};
+    const criteria = this.getCriteria();
+    criteria.forEach((criterion) => {
+      const val = this.get(`editing.${criterion}`);
+      validations[criterion] = (
+        val === null
+        || val === undefined
+        || val === ''
+      );
+    });
+    return validations;
   }
 
 

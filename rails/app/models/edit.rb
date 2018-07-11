@@ -1,5 +1,6 @@
 require 'json-schema'
 class Edit < ApplicationRecord
+  acts_as_paranoid
   belongs_to :user
   belongs_to :development
   before_save :update_development, if: :approved?
@@ -24,7 +25,7 @@ class Edit < ApplicationRecord
     {
       "title": "Edit",
       "type": "object",
-      "required": ["name", "status", "address", "year_compl", "zip_code", "hu", "commsf", "descr"],
+      "required": ["name", "status", "latitude", "longitude", "year_compl", "hu", "commsf", "descr"],
       "properties": {
         "name": {
           "type": "string"
@@ -106,9 +107,6 @@ class Edit < ApplicationRecord
           "type": "number"
         },
         "rptdemp": {
-          "type": "number"
-        },
-        "estemp": {
           "type": "number"
         },
         "hotelrms": {
@@ -222,8 +220,8 @@ class Edit < ApplicationRecord
 
   def update_development
     if development
-      # Skip validations since the Edit model does this for us
-      development.update_columns(proposed_changes)
+      # Make sure we call the lifecycle callbacks to update calculated values
+      development.update(proposed_changes)
     else
       merged_changes = proposed_changes.merge(user_id: user.id)
       development = Development.new(merged_changes)

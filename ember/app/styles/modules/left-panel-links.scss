@@ -1,9 +1,9 @@
 .left-panel-links {
-  position: absolute;
-  top: -65px;
-  right: 10px;
-
+  display: flex;
+  align-items: center;
   a {
+    display: flex;
+    align-items: center;
     &:hover { color: $color_brand-primary--active; }
 
     & + a {
@@ -14,7 +14,16 @@
 
       border-left: 1px solid $color_bg-medium;
     }
+    img { top: -1px; }
   }
 
-  img { top: 6px; }
+  button {
+    &:hover {
+      color: $color_brand-primary--active;
+    }
+    display: flex;
+    align-items: center;
+  }
+
+
 }

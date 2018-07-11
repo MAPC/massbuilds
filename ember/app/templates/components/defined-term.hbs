@@ -1,0 +1,8 @@
+<span class="defined-term {{if (eq openTerm key) 'active'}}">
+  <span class="label" onclick={{action 'showDefinition'}}>
+    <span>{{if labelOverride labelOverride label}}</span>
+    {{#if unitsShort}}
+      <span> ({{unitsShort}})</span>
+    {{/if}}
+  </span>
+</span>

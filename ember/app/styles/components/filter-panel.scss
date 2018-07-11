@@ -1,13 +1,31 @@
 .component.filter-panel {
-  display: flex;
+  $dot-size: 7px;
+  font-size: 14px;
+  .filter-panel-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 20px 20px 20px;
+    align-items: center;
+    h1 {
+      margin: 0;
 
-  width: 375px;
+      font-size: 20px;
 
-  border-top: 1px solid $color_brand-primary;
+      cursor: default;
+    }
+    button {
+      border: none;
+    }
+  }
+
+  .filter-panel-content {
+    display: flex;
+    border-top: 1px solid $color_bg-medium;
+  }
 
   .filter-group-list {
     margin: 0;
-    padding: 0; 
+    padding: 0;
 
     li {
       padding: 8px;
@@ -27,19 +45,26 @@
 
       &:last-of-type { border-bottom-width: 0; }
 
-      &.viewing { border-right-width: 0; }
+      &.viewing {
+        border-right: 1px solid transparent;
+        border-left: 2px solid $color_brand-primary;
+        padding-left: 23px;
+        &.active:before {
+          left: $dot-size - 2px;
+        }
+      }
 
       &.active {
         &:before {
           @extend ._vertical-center;
-          $size: 7px;
+
 
           content: '';
-          left: $size;
+          left: $dot-size;
           display: block;
 
-          width: $size;
-          height: $size;
+          width: $dot-size;
+          height: $dot-size;
 
           background: $color_brand-primary;
           border-radius: 50%;
@@ -48,6 +73,9 @@
     }
   }
 
-  .filters { width: 66.66%; }
+  .filters {
+    min-width: 66.66%;
+    flex: 1;
+  }
 
 }

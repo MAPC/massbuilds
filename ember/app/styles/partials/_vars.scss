@@ -19,6 +19,12 @@ $color_font-dark: #091F2F;
 $color_state-negative: #db1e1e;
 $color_state-negative--dark: darken($color_state-negative, 15);
 
+$color_button-disabled: #b3b3b3;
+
+$color_highlight: #FF9800;
+
 $font_family-primary: 'Nunito', Helvetica, sans-serif;
+
+$filter_font_size: 14px;
 
 $transition_border: border-color .25s;

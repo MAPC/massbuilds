@@ -69,7 +69,6 @@ namespace :import do
         yrcomp_est: to_bool(row["yrcomp_est"]),
         gqpop: row["gqpop"],
         rptdemp: row["rptdemp"],
-        estemp: row["estemp"],
         commsf: row["commsf"],
         hotelrms: row["hotelrms"],
         onsitepark: row["onsitepark"],

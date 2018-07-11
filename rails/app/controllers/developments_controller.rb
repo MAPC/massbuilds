@@ -14,11 +14,14 @@ class DevelopmentsController < ApplicationController
                     else
                       Development.where(filtered_params)
                     end
-
     respond_to do |format|
       format.jsonapi do
         scope = 'trunc' if params[:trunc]
-        render jsonapi: @developments, scope: scope
+        if scope == 'trunc'
+          render json: TruncatedDevelopmentSerializer.new(@developments).serialized_json
+        else
+          render json: FullDevelopmentSerializer.new(@developments).serialized_json
+        end
       end
       format.csv { send_data @developments.to_csv, filename: "massbuilds-#{Time.now.strftime("%Y%m%d")}.csv" }
       format.zip do
@@ -38,7 +41,7 @@ class DevelopmentsController < ApplicationController
   def show
     authorize @development
     respond_to do |format|
-      format.jsonapi { render jsonapi: @development }
+      format.jsonapi { render json: FullDevelopmentSerializer.new(@development).serialized_json }
     end
   end
 
@@ -49,19 +52,24 @@ class DevelopmentsController < ApplicationController
     @development.user = current_user
     if @development.save
       respond_to do |format|
-        format.jsonapi { render jsonapi: @development }
+        format.jsonapi { render json: FullDevelopmentSerializer.new(@development).serialized_json }
       end
     else
-      render jsonapi: @development.errors.full_messages, status: :bad_request
+      respond_to do |format|
+        format.jsonapi { render json: @development.errors.full_messages, status: :bad_request }
+      end
     end
   end
 
   # PATCH/PUT /developments/1
   def update
     authorize @development
-    if @development.update(development_params)
+
+    validate = !development_params[:flag]
+    @development.attributes = development_params
+    if @development.save(validate: validate)
       respond_to do |format|
-        format.jsonapi { render jsonapi: @development }
+        format.jsonapi { render json: FullDevelopmentSerializer.new(@development).serialized_json }
       end
     else
       respond_to do |format|
@@ -94,13 +102,13 @@ class DevelopmentsController < ApplicationController
       params.permit(:user_id, :rdv, :asofright, :ovr55, :clusteros, :phased, :stalled, :name, :status,
                     :descr, :prj_url, :address, :state, :zip_code, :height,
                     :stories, :year_compl, :prjarea, :singfamhu, :smmultifam, :lgmultifam, :hu, :gqpop,
-                    :rptdemp, :estemp, :commsf, :hotelrms, :onsitepark, :total_cost,
+                    :rptdemp, :commsf, :hotelrms, :onsitepark, :total_cost,
                     :ret_sqft, :ofcmd_sqft, :indmf_sqft,
                     :whs_sqft, :rnd_sqft, :ei_sqft, :other_sqft, :hotel_sqft, :other_rate, :affordable,
                     :latitude, :longitude, :parcel_id, :mixed_use, :point, :programs, :forty_b, :residential,
                     :commercial, :municipal, :devlper, :yrcomp_est, :units_1bd, :units_2bd, :units_3bd,
                     :affrd_unit, :aff_u30, :aff_30_50, :aff_50_80, :aff_80p, :headqtrs, :park_type, :publicsqft,
-                    :unknownhu, :aff_unknown, :unk_sqft)
+                    :unknownhu, :aff_unknown, :unk_sqft, :flag)
     end
 
     # Only allow a trusted parameter "white list" through.
@@ -110,13 +118,13 @@ class DevelopmentsController < ApplicationController
                          only: %i[user_id rdv asofright ovr55 clusteros phased stalled name status
                                   descr prj_url address state zip_code height
                                   stories year_compl prjarea singfamhu smmultifam lgmultifam hu gqpop
-                                  rptdemp estemp commsf hotelrms onsitepark total_cost
+                                  rptdemp commsf hotelrms onsitepark total_cost
                                   ret_sqft ofcmd_sqft indmf_sqft
                                   whs_sqft rnd_sqft ei_sqft other_sqft hotel_sqft other_rate affordable
                                   latitude longitude parcel_id mixed_use point programs forty_b residential
                                   commercial municipal devlper yrcomp_est units_1bd units_2bd units_3bd
                                   affrd_unit aff_u30 aff_30_50 aff_50_80 aff_80p headqtrs park_type publicsqft
-                                  unknownhu aff_unknown unk_sqft])
+                                  unknownhu aff_unknown unk_sqft flag])
                         }
       end
     end

@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import Service from '@ember/service';
-import L from 'npm:leaflet';
+import mapboxgl from 'npm:mapbox-gl';
 import { computed } from 'ember-decorators/object';
 import { service } from 'ember-decorators/service';
 
@@ -24,59 +24,33 @@ export default class extends Service {
     this.instance = null;
     this.viewing = null;
     this.filteredData = [];
-
-    this.boundsUpdater = 0;
+    this.baseMap = 'light';
 
     this.stored = [];
     this.storedBounds = null;
 
+    this.zoomCommand = null;
+    this.selectionMode = false;
+    this.selectedCoordinates = [0, 0];
+    this.jumpToSelectedCoordinates = false;
+    this.showingLeftPanel = false;
+
     this.get('store').query('development', { trunc: true }).then(results => {
       this.set('stored', results.toArray());
-      this.set('storedBounds', L.latLngBounds(results.map(result => L.latLng([result.get('latitude'), result.get('longitude')]))));
+      // FilteredData must be explicitly set to trigger the map's observer so
+      // that it will display all of the stored data.
+      this.set('filteredData', []);
+      this.set('storedBounds', mapboxgl.LngLatBounds.convert(results.map(result => new mapboxgl.LngLat(result.get('longitude'), result.get('latitude')))));
     });
   }
 
-
-  @computed('stored.length', 'filteredData.length', 'viewing', 'boundsUpdater')
-  get bounds() {
-    const viewing = this.get('viewing');
-    let data = [];
-    let mod = 0;
-
-    if (viewing) {
-      data = [viewing];
-      mod = -.0024;
-    }
-    else {
-      const dataSource = (this.get('filteredData.length') > 0) ? 'filteredData' : 'stored';
-      data = this.get(dataSource);
-    }
-
-    const storedBounds = this.get('storedBounds');
-
-    if (data.get('length') === this.get('stored.length') && storedBounds != null) {
-      return storedBounds;
-    }
-
-    let latLngs = [];
-    if (data.get('length') > 0) {
-      latLngs = data.map(datum => L.latLng([datum.get('latitude'), datum.get('longitude') + mod]));
-    }
-    else {
-      latLngs = [this.get('lower'), this.get('upper')];
-    }
-
-    const bounds = L.latLngBounds(latLngs)
-                    .pad(this.get('pad'));
-
-    return bounds;
+  setSelectionMode(selectionMode) {
+    this.set('selectionMode', selectionMode);
   }
 
-
-  returnToPoint() {
-    this.set('boundsUpdater', Math.random());
+  setViewing(dev) {
+    this.set('viewing', dev);
   }
-
 
   filterByQuery(query) {
     if (Object.keys(query.filter).length === 0) {
@@ -95,12 +69,28 @@ export default class extends Service {
     }
   }
 
-  remove(development) {
-    this.get('stored').removeObject(development);
-  }
-    
-  add(development) {
-    this.get('stored').pushObject(development);
+  setFocusedDevelopment(id) {
+    this.get('store').findRecord('development', id).then((dev) => {
+      this.set('focusedDevelopment', dev);
+    });
   }
 
-} 
+  @computed('stored', 'filteredData')
+  get remainder() {
+    const filtered = this.get('filteredData').reduce((obj, datum) =>
+      Object.assign(obj, { [datum.get('id')]: true })
+    , {});
+    return this.get('stored').filter((datum) => !filtered[datum.get('id')]);
+  }
+
+  remove(development) {
+    this.get('stored').removeObject(development);
+    this.set('stored', this.get('stored').toArray());
+  }
+
+  add(development) {
+    this.get('stored').pushObject(development);
+    this.set('stored', this.get('stored').toArray());
+  }
+
+}

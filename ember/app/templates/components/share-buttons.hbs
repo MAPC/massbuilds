@@ -1,20 +1,18 @@
 {{#if linkMessage}}
-  <div class='link-message'>
+  <div class="link-message {{linkClass}}">
     {{linkMessage}}
   </div>
 {{/if}}
 
-<div class="share-buttons-wrapper {{if isOpen 'active'}}">
-
-  <button class="toggler" onclick={{action toggleOpen}}>
-    <img src="/assets/images/share.svg">
-  </button>
-
-  <div class="share-drawer">
+<div class="share-buttons-wrapper {{if hidden 'hidden'}}">
+  <div class="share-buttons-header">
+    <span>Export</span>
+  </div>
+  <div class="share-buttons-buttons">
+    <button class="share-button" onclick={{action toShapefile}}>.shp</button>
+    <button class="share-button" onclick={{action toCSV}}>.csv</button>
     <button class="share-button" onclick={{action toLink}}>
       <img src="/assets/images/link.svg">
     </button>
-    <button class="share-button" onclick={{action toShapefile}}>.shp</button>
-    <button class="share-button" onclick={{action toCSV}}>.csv</button>
   </div>
 </div>

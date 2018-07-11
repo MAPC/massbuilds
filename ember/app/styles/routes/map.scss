@@ -1,5 +1,4 @@
 .route.map {
-
   height: 100vh;
   width: 100%;
 
@@ -7,51 +6,127 @@
 
   .search-wrapper {
     position: absolute;
-    top: 20px;
-    left: 20px;
+    top: -60px;
+    left: calc(100% + 15px);
+
     z-index: 50;
     display: flex;
+    transition: top 0.3s ease 0.2s;
+    &.active {
+      transition: top 0.3s ease 0s;
+      top: -6px;
+    }
+  }
+
+  .legend-wrapper {
+    position: absolute;
+    bottom: 0px;
+    left: calc(100% + 15px);
+
+    display: flex;
+
+    z-index: 2;
+    & > *:not(:last-child) {
+      margin-right: 5px;
+    }
+    .info-links {
+      align-self: flex-end;
+      & > * {
+        display: block;
+
+        padding: 5px 10px;
+
+        font-weight: 600;
+        font-size: 12px;
+        text-align: center;
+
+        background: $color_bg-light;
+        border: 1px solid $color_brand-primary;
+        border-radius: 5px;
+        transition: background .15s;
+
+        &:first-of-type { margin-bottom: 6px; }
+
+        &:hover {
+          background: $color_bg-light--active;
+          transition: background .15s;
+        }
+      }
+    }
+    .map-button-pair {
+      border: 1px solid $color_brand-primary;
+      border-radius: 5px;
+      align-self: flex-end;
+      button.selector {
+        display: block;
+        padding: 6.75px 10px;
+        width: 100%;
+        border: none;
+
+        font-weight: 600;
+        font-size: 12px;
+        background-color: white;
+        &:first-child {
+          border-top-left-radius: 5px;
+          border-top-right-radius: 5px;
+        }
+        &:last-child {
+          border-bottom-left-radius: 5px;
+          border-bottom-right-radius: 5px;
+        }
+        &:not(:last-child) {
+          border-bottom: 1px solid $color_brand-primary;
+        }
+        &:disabled {
+          background-color: #ddd;
+        }
+        &:hover {
+          background: $color_bg-light--active;
+          transition: background .15s;
+        }
+      }
+    }
   }
 
   .filter-actions {
     display: flex;
     flex-direction: column;
+    height: 38px;
 
-    height: 37px;
-    
     button {
       flex: 1 1 50%;
 
       font-size: 11px;
       text-align: center;
 
-      background: mix($color_brand-primary, $color_bg-light, 15); 
+      background: mix($color_brand-primary, $color_bg-light, 15);
       border-color: $color_brand-primary;
       border-right: 0;
       border-radius: 0;
+      border-style: solid;
+
 
       transition: $transition_border;
 
       &.clear-filters {
-        background: $color_bg-medium; 
+        background-color: $color_bg-medium;
+        border-width: 0px 0px 1px 1px;
+        border-color: $color_brand-primary;
       }
 
       &.filter-toggler {
-        border-bottom: 0;
-
-        &.active { 
+        border-width: 1px 0px 1px 1px;
+        &.active {
           background: mix($color_brand-primary, $color_bg-light, 25);
-          border-color: $color_brand-primary--active;
 
           & + button { border-top-color: $color_brand-primary--active; }
         }
       }
 
       &.disabled {
-        color: $color_bg-medium; 
+        color: $color_bg-medium;
 
-        background: $color_bg-light--active; 
-        border-color: $color_bg-medium;
+        background: $color_bg-light--active;
         border-top-color: $color_brand-primary;
         cursor: initial;
       }
@@ -60,7 +135,7 @@
       &:nth-of-type(2) { border-radius: 0 0 0 5px; }
 
       &:not(.disabled):hover {
-        border-color: $color_brand-primary--active; 
+        border-color: $color_brand-primary--active;
 
         transition: $transition_border;
 
@@ -69,32 +144,41 @@
 
       img {
         @extend ._vertical-center;
-        
-        max-width: 90%; 
-        max-height: 70%;
+
+        height: 70%;
         margin: 0 auto;
       }
-    } 
+    }
   }
 
-  .toggler.menu-toggler {
+  .top-right-buttons {
     position: absolute;
     top: 15px;
     right: 15px;
     z-index: 500;
+    transition: top .2s, right .2s;
 
-    width: 47px;
-    height: 47px;
-
-    background: $color_bg-light;
-    
-    border: 1px solid $color_brand-primary;
-    border-radius: 5px;
-    transition: border-color .2s;
-
-    &:hover {
-      border-color: $color_brand-primary--active;
+    .toggler.menu-toggler {
+      display: block;
+      width: 47px;
+      height: 47px;
+      margin-bottom: 5px;
+      border: none;
+      border-radius: 5px;
+      background: $color_bg-light;
+      border: 1px solid $color_brand-primary;
+      border-radius: 5px;
       transition: border-color .2s;
+      &:hover {
+        background: $color_bg-light--active;
+        transition: background .15s;
+        border-color: $color_brand-primary--active;
+      }
+    }
+
+    &.active {
+      top: 36px;
+      right: 30px;
     }
 
     .hamburger { @extend ._vertical-center; }
@@ -102,44 +186,61 @@
 
   .panel-layer {
     z-index: 25;
-  
-    height: 100vh;
-    padding: 0 20px;
+
+    height: calc(100vh - 30px);
+    top: 15px;
 
     background: $color_bg-light;
-    border: 0px solid $color_brand-primary;
-    border-top-width: 6px;
+    border-style: solid;
+    border-color: $color_brand-primary;
+    border-width: 6px 1px 1px 1px;
+    border-radius: 5px;
 
-    transition: left .5s ease-in, right .5s ease-in;
+    transition: left .3s ease-in, right .3s ease-in, width .5s ease;
     transform: translateZ(0);
 
-    &.active { transition: left .5s, right .5s; }
+    .overflow-hidden {
+      width: 100%;
+      overflow: hidden;
+    }
   }
 
   .right-panel-layer {
     position: absolute;
-    top: 0;
-    right: -100%; 
+    right: -380px;
     z-index: 100;
 
-    max-width: 460px;
-    min-width: 360px;
-    width: 32%;
+    width: 380px;
 
-    border-left-width: 1px;
-
-    &.active { right: 0%; }
+    &.active { right: 15px; }
   }
 
   .left-panel-layer {
-    left: -100%;
+    left: -450px;
+    width: 450px;
+    &.filter-width {
+      left: -450px;
+      width: 450px;
+    }
+    &.development-width {
+      left: -700px;
+      width: 700px;
+    }
 
-    width: max-content;
-    padding-top: 80px;
+    position: absolute;
 
-    border-right-width: 1px;
-
-    &.active { left: 0%; }
+    &.active {
+      left: 15px;
+    }
+    @include media('medium') {
+      &.development-width {
+        left: -480px;
+        width: 480px;
+      }
+      &.active {
+        left: 15px;
+      }
+    }
   }
 
   .map-layer {
@@ -152,7 +253,7 @@
       top: 0;
       left: 0;
       z-index: 999;
-      
+
       width: 100%;
       height: 100%;
 
@@ -160,10 +261,10 @@
 
     }
 
-    &, > .leaflet-container {
+    & {
       width: 100%;
-      height: 100vh;  
+      height: 100vh;
     }
   }
- 
+
 }

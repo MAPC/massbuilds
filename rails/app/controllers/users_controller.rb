@@ -1,11 +1,10 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
-  skip_before_action :authenticate_user!, only: [:index, :create]
+  before_action :authenticate_user!, only: [:index, :create]
 
   # GET /users
   def index
     authorize User
-
     if params[:email]
       @users = User.where(email: params[:email]).first
     elsif params[:request_verified_status]

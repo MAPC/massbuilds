@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   resources :users
   resources :developments, except: [:new, :edit]
   resources :password_resets, only: [:create]
+  resources :parcels, only: [:index]
   root 'developments#index'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

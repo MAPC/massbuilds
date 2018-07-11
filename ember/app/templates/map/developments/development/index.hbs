@@ -1,21 +1,25 @@
 <section class="route map-developments-development-index">
 
-  <div class="left-panel-links">
-    {{#link-to 'map'}}
-      <img src="/assets/images/chevrons-left.svg">
-      Close
-    {{/link-to}}
+  <div class="development-panel-header">
+    <h1>View Development</h1>
 
-    {{#if session.isAuthenticated}}
-      {{#link-to 'map.developments.development.edit' model}}
-        <img src="/assets/images/edit-3.svg">
-        Edit
+    <div class="left-panel-links">
+      {{#link-to 'map'}}
+        <img src="/assets/images/chevrons-left.svg">
+        Close
       {{/link-to}}
-    {{/if}}
+
+      {{#if session.isAuthenticated}}
+        {{#link-to 'map.developments.development.edit' model}}
+          <img src="/assets/images/edit-3.svg">
+          Edit
+        {{/link-to}}
+      {{/if}}
+    </div>
   </div>
 
   <div class="development-content">
-    <div class="layout-column">
+    {{#overflow-scroll}}
       <div class="development-header">
         <h1 onclick={{action findPosition}}>{{model.name}}</h1>
         <h2><img src="/assets/images/map-pin.svg" onclick={{action findPosition}}> {{model.fullAddress}}</h2>
@@ -29,24 +33,60 @@
 
       </div>
 
+      <div class="detail-group">
+        <article>
+          <h4>Meta Data</h4>
+          <div class="row">
+            <div class="column">
+              {{#if model.devlper}}
+                <div class="field">
+                  <label for="devlper">{{defined-term key="DEVELOPER"}}</label>
+                  <span>{{model.devlper}}</span>
+                </div>
+              {{/if}}
+              {{#if model.user}}
+                <div class="field">
+                  <label for="user">Entry Created By</label>
+                  <span>
+                    {{#if (eq model.user.fullName 'undefined undefined')}}
+                      {{loading-spinner message="Loading Creator" isLoading=true}}
+                    {{else}}
+                      {{model.user.fullName}}
+                    {{/if}}
+                  </span>
+                </div>
+              {{/if}}
+              <div class="field">
+                <label for="lastUpdated">Last Updated</label>
+                <span>{{format-date model.updatedAt format='MMM. Do YYYY'}}</span>
+              </div>
+              <div class="field long-form">
+                <label for="description">{{defined-term key="DESCRIPTION"}}</label>
+                <p>{{model.descr}}</p>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+
       <div class="metric-groups-wrapper">
         <div class="metric-groups">
-          <article> 
+          <article>
             <h4>Key Info</h4>
-
             <div class="row">
               <div class="column">
                 <div class="field">
-                  <label for="status">Status:</label>
+                  <label for="status">
+                    {{defined-term key="STATUS"}}
+                  </label>
 
                   <span style="color: {{status-color model.status}}">
                     {{capitalize model.status}}
                   </span>
                 </div>
-
                 <div class="field">
                   <label for="yearCompl">
-                    Year Completed 
+                    {{defined-term key="YEAR_COMPLETE"}}
                     {{#if model.yrcompEst}}
                       <small>(Estimated)</small>
                     {{/if}}
@@ -55,7 +95,9 @@
                 </div>
 
                 <div class="field">
-                  <label for="totalCost">Cost</label>
+                  <label for="totalCost">
+                    {{defined-term key="COST_OF_CONSTRUCTION" labelOverride="Cost"}}
+                  </label>
                   {{#if model.totalCost}}
                     ${{number-format model.totalCost}}
                   {{else}}
@@ -64,7 +106,9 @@
                 </div>
 
                 <div class="field">
-                  <label for="prjarea">Project Area</label>
+                  <label for="prjarea">
+                    {{defined-term key="PROJECT_AREA"}}
+                  </label>
                   {{#if model.prjarea}}
                     {{number-format model.prjarea decimals=0}} sqft.
                   {{else}}
@@ -75,7 +119,9 @@
 
               <div class="column">
                 <div class="field">
-                  <label for="height">Height</label>
+                  <label for="height">
+                    {{defined-term key="HEIGHT"}}
+                  </label>
                   {{#if model.height}}
                     {{number-format model.height decimals=0}} ft.
                   {{else}}
@@ -84,7 +130,9 @@
                 </div>
 
                 <div class="field">
-                  <label for="stories">Stories</label>
+                  <label for="stories">
+                    {{defined-term key="STORIES"}}
+                  </label>
                   {{#if model.stories}}
                     {{model.stories}}
                   {{else}}
@@ -93,7 +141,9 @@
                 </div>
 
                 <div class="field">
-                  <label for="onsitepark">Parking Spaces</label>
+                  <label for="onsitepark">
+                    {{defined-term key="PARKING_SPACES"}}
+                  </label>
                   {{#if model.onsitepark}}
                     {{number-format model.onsitepark decimals=0}}
                   {{else}}
@@ -115,7 +165,7 @@
             <div class="attributes-wrapper">
               {{#if transitOptions}}
                 <p class="attributes">
-                  <label> 
+                  <label>
                     Nearest Public Transit Option{{if (not-eq model.nTransit.length 1) 's'}}:
                   </label>
                   {{transitOptions}}
@@ -138,7 +188,9 @@
               <div class="column">
                 {{#if (gt model.gqpop 0)}}
                   <div class="field">
-                    <label for="gqpop">Group Quarters Pop.</label>
+                    <label for="gqpop">
+                      {{defined-term key="GROUP_QUARTERS_POPULATION"}}
+                    </label>
                     {{number-format model.gqpop decimals=0}}
                   </div>
                 {{/if}}
@@ -155,14 +207,20 @@
             {{/if}}
 
             <div class="table-wrapper">
-              <h3 class="field">
-                <label for="hu">Tot. Housing Units</label>
-                {{#if model.hu}}
-                  {{number-format model.hu decimals=0}} Units
-                {{else}}
-                  No Housing Units
-                {{/if}}
-              </h3>
+              <div class="table-heading">
+                <h3 class="field">
+                  <label for="hu">
+                    {{defined-term key="HOUSING_UNITS"}}
+                  </label>
+                </h3>
+                <span>
+                  {{#if model.hu}}
+                    {{number-format model.hu decimals=0}} Units
+                  {{else}}
+                    <em>No Housing Units</em>
+                  {{/if}}
+                </span>
+              </div>
 
               {{#if model.hu}}
                 <table class="housing-units">
@@ -233,14 +291,20 @@
             </div>
 
             <div class="table-wrapper">
-              <h3 class="field">
-                <label for="affrdUnit">Affordable Units</label>
-                {{#if (or model.affrdUnit (eq model.affrdUnit 0))}}
-                  {{number-format model.affrdUnit decimals=0}} Units
-                {{else}}
-                  Unknown
-                {{/if}}
-              </h3>
+              <div class="table-heading">
+                <h3 class="field">
+                  <label for="affrdUnit">
+                    {{defined-term key="AFFORDABLE_UNITS"}}
+                  </label>
+                </h3>
+                <span>
+                  {{#if (or model.affrdUnit (eq model.affrdUnit 0))}}
+                    {{number-format model.affrdUnit decimals=0}} Units
+                  {{else}}
+                    <em>Unknown</em>
+                  {{/if}}
+                </span>
+              </div>
 
               {{#if model.affrdUnit}}
                 <table class="affordable-units">
@@ -291,16 +355,11 @@
 
             <div class="row">
               <div class="column">
-                {{#if model.estemp}}
-                  <div class="field">
-                    <label for="estemp">Estimated Employment</label>
-                    {{number-format model.estemp decimals=0}}
-                  </div>
-                {{/if}}
-
                 {{#if model.rptdemp}}
                   <div class="field">
-                    <label for="rptdemp">Reported Employment</label>
+                    <label for="rptdemp">
+                      {{defined-term key="REPORTED_EMPLOYMENT"}}
+                    </label>
                     {{number-format model.rptdemp decimals=0}}
                   </div>
                 {{/if}}
@@ -309,7 +368,9 @@
               <div class="column">
                 {{#if model.hotelrms}}
                   <div class="field">
-                    <label for="hotelrms">Hotel Rooms</label>
+                    <label for="hotelrms">
+                      {{defined-term key="HOTEL_ROOMS"}}
+                    </label>
                     {{number-format model.hotelrms decimals=0}}
                   </div>
                 {{/if}}
@@ -324,14 +385,20 @@
             {{/if}}
 
             <div class="table-wrapper">
-              <h3 class="field">
-                <label for="commsf">Commercial Square Footage</label>
-                {{#if model.commsf}}
-                  {{number-format model.commsf decimals=0}} sqft.
-                {{else}}
-                  No Commercial Usage
-                {{/if}}
-              </h3>
+              <div class="table-heading">
+                <h3 class="field">
+                  <label for="commsf">
+                    {{defined-term key="COMMERCIAL_AREA"}}
+                  </label>
+                </h3>
+                <span>
+                  {{#if model.commsf}}
+                    {{number-format model.commsf decimals=0}} sqft.
+                  {{else}}
+                    <em>No Commercial Usage</em>
+                  {{/if}}
+                </span>
+              </div>
 
               {{#if model.commsf}}
                 <table class="commercial-makeup">
@@ -348,7 +415,7 @@
                       <td>{{round (mult 100 (div model.retSqft model.commsf))}}%</td>
                     </tr>
                   {{/if}}
-   
+
                   {{#if model.ofcmdSqft}}
                     <tr>
                       <td>Office/Medical</td>
@@ -410,47 +477,26 @@
           </article>
         </div>
       </div>
-    </div>
+    {{/overflow-scroll}}
 
-    <div class="layout-column">
-      {{#if model.devlper}}
-        <div class="detail">
-          <h3>Developer</h3>
-          <p>{{model.devlper}}</p>
-        </div>
+    <div class="actions">
+      {{#if hasSuperPermissions}}
+        <button class="styled negative" onclick={{action deleteDevelopment}}>Delete Development</button>
       {{/if}}
 
-      {{#if model.user}}
-        <div class="detail">
-          <h3>Entry Created By</h3>
-          <p>
-            {{#if (eq model.user.fullName 'undefined undefined')}}
-              {{loading-spinner message="Loading Creator" isLoading=true}}
-            {{else}}
-              {{model.user.fullName}}
-            {{/if}}
-          </p>
-        </div>
-      {{/if}}
-
-      <div class="detail">
-        <h3>Last Updated</h3>
-        <p>{{format-date model.updatedAt format='MMM. Do YYYY'}}</p>
-      </div>
-
-      <div class="detail">
-        <h3>Description</h3>
-        <p>
-          {{model.descr}}
-        </p>
-      </div>
-
-      {{#if hasDeletePermissions}}
-        <div class="actions">
-          <button class="styled negative" onclick={{action deleteDevelopment}}>Delete Development</button>
-        </div>
-      {{/if}}
+      {{#loading-spinner message=flaggingMessage isLoading=isSettingFlag}}
+        {{#if model.flag}}
+          {{#if hasSuperPermissions}}
+            <button class="styled" onclick={{action unflagDevelopment}}>Unflag Development</button>
+          {{else}}
+            <p>This development has been flagged for review</p>
+          {{/if}}
+        {{else}}
+          {{#if session.isAuthenticated}}
+              <button class="styled negative" onclick={{action flagDevelopment}}>Report Development for Review</button>
+          {{/if}}
+        {{/if}}
+      {{/loading-spinner}}
     </div>
   </div>
-
 </section>

@@ -23,7 +23,6 @@ FactoryBot.define do
     hu 1
     gqpop 1
     rptdemp 1
-    estemp 1
     commsf 1
     hotelrms 1
     onsitepark 1

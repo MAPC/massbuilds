@@ -3,22 +3,21 @@ import Controller from '@ember/controller';
 import { action, computed } from 'ember-decorators/object';
 import { service } from 'ember-decorators/service';
 import filters from 'massbuilds/utils/filters';
-
+import { alias } from 'ember-decorators/object/computed';
 
 export default class extends Controller {
 
   @service map
   @service currentUser
-
+  @alias('map.baseMap') baseMap
 
   constructor() {
     super(...arguments);
-    
+
     const filterParams = Object.keys(filters);
-    const boundingParams = ['minLat', 'minLng', 'maxLat', 'maxLng'];
     const otherParams = ['panel'];
 
-    this.queryParams = [...filterParams, ...boundingParams, ...otherParams];
+    this.queryParams = [...filterParams, ...otherParams];
 
     Object.values(filters).forEach(filter => {
       if (filter.filter === 'discrete') {
@@ -26,16 +25,29 @@ export default class extends Controller {
       }
     });
 
-    this.searchPlaceholder = 'Search by Town/City, Developer, Address...';
+    this.searchPlaceholder = 'Search developments by city or address';
     this.searchQuery = '';
 
     this.showingFilters = false;
     this.showingMenu = false;
+    this.get('currentUser').addObserver('alreadyLoggedIn', this, () => {
+      if (!this.get('currentUser.alreadyLoggedIn')) {
+        this.set('showingMenu', true);
+      }
+    });
 
     this.updateChildren = 0;
     this.panel = null;
+    this.leftPanelWidth = 'filter-width';
   }
 
+  @computed('target.currentRouteName')
+  get showingGoto() {
+    return [
+      'map.developments.create',
+      'map.developments.development.edit',
+    ].indexOf(this.get('target.currentRouteName')) !== -1;
+  }
 
   @computed('target.currentRouteName')
   get showingUsers() {
@@ -77,7 +89,7 @@ export default class extends Controller {
             typeof value !== 'object'  // not object/array
             || value.length > 0        // if array, then make sure it has elements
           ) {
-            found = Ember.copy(filters[col]); 
+            found = Ember.copy(filters[col]);
 
             if (found.filter === 'metric') {
               if (found.type === 'number') {
@@ -94,6 +106,9 @@ export default class extends Controller {
               Ember.set(found, 'value', value);
             }
           }
+        }
+        else {
+          Ember.set(filters[col], 'value', null);
         }
 
         return found;
@@ -112,41 +127,44 @@ export default class extends Controller {
   @computed('showingFilters', 'showingDevelopment', 'showingUsers', 'showingModerations')
   get showingLeftPanel() {
     const showing = (
-      this.get('showingFilters') 
+      this.get('showingFilters')
       || this.get('showingDevelopment')
       || this.get('showingUsers')
       || this.get('showingModerations')
     );
 
     this.set('searchQuery', '');
+    this.set('map.showingLeftPanel', showing);
 
     return showing;
   }
 
-
-  @computed('showingMenu', 'currentUser.user', 'overrideRightPanel')
-  get showingRightPanel() {
-    let loginOverride = this.get('currentUser.user') === undefined;
-
-    if (this.get('overrideRightPanel')) {
-      loginOverride = false;
+  @computed('showingLeftPanel')
+  get leftPanelClass() {
+    if (this.get('showingLeftPanel')) {
+      const widthClass = this.get('showingFilters')
+          ? 'filter-width'
+          : 'development-width';
+      this.set('leftPanelWidth', widthClass)
+      return widthClass;
     }
-
-    return (
-      this.get('showingMenu')
-      || loginOverride
-    );
+    return this.get('leftPanelWidth');
   }
 
+  @action
+  setBaseMap(baseMap) {
+    this.set('map.baseMap', baseMap);
+  }
+
+  @action
+  setZoomCommand(cmd) {
+    // Zoom commands include: ['IN', 'OUT']
+    this.get('map').set('zoomCommand', cmd);
+  }
 
   @action
   toggleMenu() {
-    if (this.get('currentUser.user') === undefined && !this.get('overrideRightPanel')) {
-      this.set('overrideRightPanel', true);
-    } 
-    else {
-      this.toggleProperty('showingMenu');
-    }
+    this.toggleProperty('showingMenu');
   }
 
 
@@ -177,7 +195,7 @@ export default class extends Controller {
     this.get('target').send('refreshModel');
   }
 
- 
+
   @action
   updateFilter(updateValues) {
     Object.keys(updateValues).forEach(col => {
@@ -192,7 +210,7 @@ export default class extends Controller {
           case 'boolean':
             value = (filter.value) ? true : undefined;
             break;
-          default: 
+          default:
             value = filter.value;
         }
       }
@@ -205,7 +223,7 @@ export default class extends Controller {
   }
 
 
-  @action 
+  @action
   addDiscreteFilter(selected) {
     const filter = { [selected.col]: [selected.value] };
 
@@ -223,11 +241,12 @@ export default class extends Controller {
   @action
   viewDevelopment(id) {
     this.set('showingFilters', false);
+    this.get('map').setFocusedDevelopment(id);
     this.transitionToRoute('map.developments.development', id);
   }
 
 
-  @action 
+  @action
   setMapInstance(map) {
     this.set('map.instance', map.target);
   }

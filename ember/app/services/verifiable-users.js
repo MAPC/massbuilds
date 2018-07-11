@@ -9,6 +9,7 @@ export default class extends Service {
 
   @service ajax
   @service currentUser
+  @service store
 
   constructor() {
     super(...arguments);
@@ -20,10 +21,10 @@ export default class extends Service {
   @computed('currentUser.user.role')
   get updater() {
     if (this.get('currentUser.user.role') === 'admin') {
-      const url = config.host + '/users?request_verified_status=true';
 
-      RSVP.resolve(this.get('ajax').request(url))
-          .then(res => this.set('_count', res.data.length));
+      RSVP.resolve(this.get('store')
+          .query('user', { request_verified_status: true }))
+          .then(res => this.set('_count', res.toArray().length));
     }
   }
 

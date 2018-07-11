@@ -1,4 +1,4 @@
-import DS from 'ember-data'; 
+import DS from 'ember-data';
 import { computed } from 'ember-decorators/object';
 import { attr, belongsTo, hasMany } from 'ember-decorators/data';
 
@@ -33,7 +33,6 @@ export default class extends DS.Model {
   @attr('number') hu
   @attr('number') gqpop
   @attr('number') rptdemp
-  @attr('number') estemp
   @attr('number') commsf
   @attr('number') hotelrms
   @attr('number') onsitepark
@@ -69,18 +68,21 @@ export default class extends DS.Model {
   @attr('boolean', { default: false }) headqtrs
   @attr('boolean', { default: false }) mixedUse
   @attr('boolean', { default: false }) yrcompEst
+  @attr('boolean', { default: false }) flag
 
   @attr('date') createdAt
   @attr('date') updatedAt
 
   @attr nTransit // []String
-  
+
 
   @computed('address', 'municipal', 'state', 'zipCode')
   get fullAddress() {
     const props = this.getProperties('address', 'municipal', 'state', 'zipCode');
-
-    return `${props.address}, ${props.municipal}, ${props.state} ${props.zipCode}`;
+    const address = props.address || 'Unknown Address';
+    const municipal = props.municipal || 'Unknown City';
+    const zipCode = props.zipCode || '';
+    return `${address}, ${municipal}, ${props.state || 'MA'} ${zipCode}`;
   }
 
 }

@@ -1,16 +1,19 @@
 .component.share-buttons {
 
-  $drawer_width: 200px;
+  position: absolute;
+  right: calc(100% + 15px);
+  bottom: 0;
+  transition: bottom 0.3s ease-in 0s;
+  &.hidden {
+    transition: bottom 0.3s ease-out 0s;
+    bottom: -90px;
+  }
+
   $toggle_width: 45px;
   $border_width: 1px;
 
-  position: absolute;
-  bottom: 15px;
-  right: 15px;
-  z-index: 50;
-
-  button { 
-    height: $toggle_width; 
+  button {
+    height: $toggle_width;
 
     background: $color_bg-light;
     border: 0;
@@ -19,14 +22,14 @@
     outline: none;
     transition: background .15s;
 
-    &:not(.toggler):hover { 
-      background: $color_bg-light--active; 
+    &:not(.toggler):hover {
+      background: $color_bg-light--active;
 
-      transition: background .15s; 
+      transition: background .15s;
     }
 
-    > img { 
-      @extend ._vertical-center;    
+    > img {
+      @extend ._vertical-center;
 
       margin: 0 auto;
       opacity: .7;
@@ -34,65 +37,44 @@
   }
 
   .share-buttons-wrapper {
-    width: $toggle_width + ($border_width * 2);
-
-    overflow: hidden;
+    background-color: $color_brand-primary;
+    border: 1px solid $color_brand-primary;
     border-radius: 5px;
-
-    border: $border_width solid $color_brand-primary;
-    transition: $transition_border, width .2s;
-
-    &:hover {
-      border-color: $color_brand-primary--active;
-
-      transition: $transition_border, width .2s;
-    }
-
-    &.active {
-      width: $drawer_width + ($border_width * 2.5); 
-
-      transition: width .2s;
-
-      .toggler { background: lighten($color_bg-medium, 5); }
-    }
   }
-
-  .toggler {
-    float: right;
-    z-index: 1; 
-
-    width: $toggle_width;
+  .share-buttons-header {
+    color: $color_bg-light;
+    font-size: 0.8em;
+    padding: 2px 5px;
   }
-
-  .share-drawer {
-    position: absolute;
-    top: 0;
-    left: 0;
+  .share-buttons-buttons {
+    border-radius: 5px;
     display: flex;
-
-    width: $drawer_width - $toggle_width;
-
-    button { border-right: $border_width solid $color_bg-medium; }
+    overflow: hidden;
   }
 
   .share-button {
-    flex: 1 0 25%; 
+    flex: 1 0 25%;
     font-weight: 200;
-
-    > img { width: 40%; }
+    width: $toggle_width + ($border_width * 2);
+    display: block;
+    &:not(:last-child) {
+      border-right: 1px solid $color_bg-medium;
+    }
   }
 
   .link-message {
     position: absolute;
-    top: -40px;
-    left: -15px;
+
+    right: calc(100% + 5px);
+    bottom: 8px;
+    width: max-content;
     z-index: 10;
 
     padding: 6px 8px;
-    
+
     font-size: 12px;
 
-    background: $color_bg-light; 
+    background: $color_bg-light;
     border: 1px solid $color_brand-primary--active;
     border-radius: 5px;
   }

@@ -1,0 +1,13 @@
+<li>
+  <h2>
+    <span>{{label}}</span>
+    {{#if unitsLong}}
+      <span> in {{unitsLong}}</span>
+    {{/if}}
+  </h2>
+  <article>
+    {{#each definition as |paragraph|}}
+      <p>{{paragraph}}</p>
+    {{/each}}
+  </article>
+</li>

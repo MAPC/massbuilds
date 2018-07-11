@@ -1,7 +1,5 @@
 .component.subpanel.metric-filter {
-
   padding: 15px;
-  padding-right: 0px;
 
   &:after {
     content: '';
@@ -26,59 +24,53 @@
 
   .subgroup {
     & + .subgroup { margin-top: 25px; }
+    font-size: $filter_font_size;
 
     h4 {
       margin: 0 0 15px;
 
       color: $color_font-medium;
-      font-size: 14px; 
     }
 
     .metric {
       & + .metric { margin-top: 5px; }
 
-      label { 
+      label {
         display: inline-block;
 
-        width: 53%;
-
-        font-size: 13px; 
+        width: 56%;
       }
 
       input {
-        font-size: 12px;
 
         background: none;
-        border: 0; 
+        border: 0;
         border-bottom: 1px solid $color_bg-medium;
-        outline: none; 
+        outline: none;
 
         &:active, &:focus {
-          border-color: $color_brand-primary--active; 
+          border-color: $color_brand-primary--active;
         }
       }
 
       select {
-        font-size: 12px;
 
-        background: none; 
+        background: none;
         border: 1px solid $color_bg-medium;
         outline: none;
       }
 
       &.number {
         input {
-          width: 16%; 
+          width: 16%;
 
           text-align: right;
-        } 
+        }
 
         .metric-unit {
           position: absolute;
           top: 5px;
           right: 0px;
-
-          font-size: 12px;
         }
       }
     }

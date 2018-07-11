@@ -1,5 +1,10 @@
 .route.moderations-index {
- 
+
+  width: 100%;
+  padding: 10px 20px;
+
+  .no-records { margin-top: 50px; }
+
   ul.item-list {
     li, .list-body > li {
       small { font-size: 10px; }
@@ -17,10 +22,21 @@
     .actions {
       padding-top: 10px;
 
-      text-align: right; 
+      text-align: right;
 
       button + button { margin-left: 15px; }
     }
+  }
+
+  .moderation-block {
+    margin-bottom: 50px;
+
+    &:last-of-type { margin-bottom: 0px; }
+  }
+
+  .view-button.disabled {
+    opacity: .5;
+    cursor: initial !important;
   }
 
 }
