@@ -54,8 +54,7 @@ export default class extends Controller {
       })
       .catch(e => {
         const column = this.findMistake(e);
-
-        if (column !== null) {
+        if (column) {
           const fieldName = filters[column].name;
           this.get('notifications').error(`The ${fieldName} field has invalid data.`);
         }

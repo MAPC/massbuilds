@@ -56,7 +56,7 @@ class DevelopmentsController < ApplicationController
       end
     else
       respond_to do |format|
-        format.jsonapi { head :bad_request }
+        format.jsonapi { render json: @development.errors.full_messages, status: :bad_request }
       end
     end
   end
