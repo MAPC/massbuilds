@@ -69,6 +69,8 @@ export default class extends Component {
       'otherSqft', 'hotelSqft', 'hotelrms', 'publicsqft',
     ];
 
+    this.lastEdit = Date.now();
+
     this.criteria = { base, proposed, groundBroken };
 
     Ember.run.later(this, () => this.updateFieldRequirements(), 500);
@@ -236,7 +238,7 @@ export default class extends Component {
         this.set('changes', false);
       }
     }
-
+    this.set('lastEdit', Date.now());
     this.checkCriteria();
   }
 
@@ -271,6 +273,21 @@ export default class extends Component {
     });
 
     this.set('fulfilled', fulfilled);
+  }
+
+  @computed('lastEdit')
+  inValid() {
+    const validations = {};
+    const criteria = this.getCriteria();
+    criteria.forEach((criterion) => {
+      const val = this.get(`editing.${criterion}`);
+      validations[criterion] = (
+        val === null
+        || val === undefined
+        || val === ''
+      );
+    });
+    return validations;
   }
 
 
