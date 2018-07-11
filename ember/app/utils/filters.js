@@ -64,9 +64,9 @@ const filters = {
   // Residential
 
   'hu': { name: 'Total housing units', glossaryKey: 'HOUSING_UNITS', type: 'number', ...defaultMetric },
-  'singfamhu': { name: 'Single-family units', type: 'number', ...defaultMetric },
-  'smmultifam': { name: 'Small multifamily units', type: 'number', ...defaultMetric },
-  'lgmultifam': { name: 'Large multifamily units', type: 'number', ...defaultMetric },
+  'singfamhu': { name: 'Single-family units', glossaryKey: 'SINGLE_FAMILY', type: 'number', ...defaultMetric },
+  'smmultifam': { name: 'Small multifamily units', glossaryKey: 'SMALL_MULTI_FAMILY', type: 'number', ...defaultMetric },
+  'lgmultifam': { name: 'Large multifamily units', glossaryKey: 'LARGE_MULTI_FAMILY', type: 'number', ...defaultMetric },
   'units1bd': { name: 'Studio/1 bedroom units', type: 'number', ...defaultMetric },
   'units2bd': { name: '2 Bedroom units', type: 'number', ...defaultMetric },
   'units3bd': { name: '3 Bedroom units', type: 'number', ...defaultMetric },
