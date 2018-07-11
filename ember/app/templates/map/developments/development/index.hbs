@@ -232,7 +232,7 @@
 
                   {{#if model.singfamhu}}
                     <tr>
-                      <td>Single Family</td>
+                      <td>{{defined-term key="SINGLE_FAMILY"}}</td>
                       <td>{{number-format model.singfamhu decimals=0}}</td>
                       <td>{{round (mult 100 (div model.singfamhu model.hu))}}%</td>
                     </tr>
@@ -240,7 +240,7 @@
 
                   {{#if model.smmultifam}}
                     <tr>
-                      <td>Small Multi-family</td>
+                      <td>{{defined-term key="SMALL_MULTI_FAMILY"}}</td>
                       <td>{{number-format model.smmultifam decimals=0}}</td>
                       <td>{{round (mult 100 (div model.smmultifam model.hu))}}%</td>
                     </tr>
@@ -248,45 +248,52 @@
 
                   {{#if model.lgmultifam}}
                     <tr>
-                      <td>Large Multi-family</td>
+                      <td>{{defined-term key="LARGE_MULTI_FAMILY"}}</td>
                       <td>{{number-format model.lgmultifam decimals=0}}</td>
                       <td>{{round (mult 100 (div model.lgmultifam model.hu))}}%</td>
                     </tr>
                   {{/if}}
 
-                  {{#if model.units1bd}}
-                    <tr>
-                      <td>Studio/1 Bedroom</td>
-                      <td>{{number-format model.units1bd decimals=0}}</td>
-                      <td>{{round (mult 100 (div model.units1bd model.hu))}}%</td>
-                    </tr>
-                  {{/if}}
-
-                  {{#if model.units2bd}}
-                    <tr>
-                      <td>2 Bedroom</td>
-                      <td>{{number-format model.units2bd decimals=0}}</td>
-                      <td>{{round (mult 100 (div model.units2bd model.hu))}}%</td>
-                    </tr>
-                  {{/if}}
-
-                  {{#if model.units3bd}}
-                    <tr>
-                      <td>3 Bedroom</td>
-                      <td>{{number-format model.units3bd decimals=0}}</td>
-                      <td>{{round (mult 100 (div model.units3bd model.hu))}}%</td>
-                    </tr>
-                  {{/if}}
-
                   {{#if model.unknownhu}}
                     <tr>
-                      <td>Unknown</td>
+                      <td>{{defined-term key="UNKNOWN_HOUSING_UNITS"}}</td>
                       <td>{{number-format model.unknownhu decimals=0}}</td>
                       <td>{{round (mult 100 (div model.unknownhu model.hu))}}%</td>
                     </tr>
                   {{/if}}
-
                 </table>
+                {{#if (or model.units1bd model.units2bd model.units3bd)}}
+                  <table class="housing-units">
+                    <tr class="table-header">
+                      <td>Unit Style</td>
+                      <td>Quantity</td>
+                      <td>Percentage</td>
+                    </tr>
+                    {{#if model.units1bd}}
+                      <tr>
+                        <td>Studio/1 Bedroom</td>
+                        <td>{{number-format model.units1bd decimals=0}}</td>
+                        <td>{{round (mult 100 (div model.units1bd model.hu))}}%</td>
+                      </tr>
+                    {{/if}}
+
+                    {{#if model.units2bd}}
+                      <tr>
+                        <td>2 Bedroom</td>
+                        <td>{{number-format model.units2bd decimals=0}}</td>
+                        <td>{{round (mult 100 (div model.units2bd model.hu))}}%</td>
+                      </tr>
+                    {{/if}}
+
+                    {{#if model.units3bd}}
+                      <tr>
+                        <td>3 Bedroom</td>
+                        <td>{{number-format model.units3bd decimals=0}}</td>
+                        <td>{{round (mult 100 (div model.units3bd model.hu))}}%</td>
+                      </tr>
+                    {{/if}}
+                  </table>
+                {{/if}}
               {{/if}}
             </div>
 
