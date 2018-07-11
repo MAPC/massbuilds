@@ -28,6 +28,7 @@ module.exports = function(defaults) {
   });
 
   app.import('node_modules/mapbox-gl/dist/mapbox-gl.css');
+  app.import('node_modules/mapbox-gl/dist/mapbox-gl-dev.js');
 
   // Use `app.import` to add additional libraries to the generated
   // output files.
