@@ -53,10 +53,6 @@ export default class extends Component {
       minZoom: 6,
     });
     this.mapboxglMap.on('load', () => {
-
-      this.mapboxglMap.on('styledata', () => {
-        this.draw(mapService);
-      });
       this.mapboxglMap.on('zoom', (e) => {
         // If a user attempts to abort a zoom, stop the animation.
         if (e.originalEvent) {
@@ -110,6 +106,8 @@ export default class extends Component {
   selectionModeChangeHandler(mapService) {
     this.draw(mapService);
     this.drawSelector(mapService);
+    this.set('previousCoordinatesKey', null);
+    this.set('previousParcel', null);
     this.updateSelection(true);
   }
 
@@ -245,6 +243,11 @@ export default class extends Component {
 
   setStyle(mapService) {
     const newBaseMap = mapService.get('baseMap');
+    const redrawOnStyleReload = () => {
+      this.selectionModeChangeHandler(mapService);
+      this.mapboxglMap.off('styledata', redrawOnStyleReload);
+    };
+    this.mapboxglMap.on('styledata', redrawOnStyleReload);
     if (newBaseMap == 'light') {
       this.mapboxglMap.setStyle('mapbox://styles/mapbox/light-v9');
     } else if (newBaseMap == 'satellite') {
