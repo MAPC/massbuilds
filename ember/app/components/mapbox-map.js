@@ -52,10 +52,6 @@ export default class extends Component {
       minZoom: 6,
     });
     this.mapboxglMap.on('load', () => {
-
-      this.mapboxglMap.on('styledata', () => {
-        this.draw(mapService);
-      });
       this.mapboxglMap.on('zoom', (e) => {
         // If a user attempts to abort a zoom, stop the animation.
         if (e.originalEvent) {
@@ -67,6 +63,9 @@ export default class extends Component {
       mapService.addObserver('viewing', this, 'draw');
       mapService.addObserver('filteredData', this, 'focus');
       mapService.addObserver('baseMap', this, 'setStyle');
+      this.mapboxglMap.on('style.load', () => {
+        this.selectionModeChangeHandler(mapService);
+      });
       mapService.addObserver('zoomCommand', this, 'actOnZoomCommand');
       mapService.addObserver('viewing', this, 'jumpTo');
       mapService.addObserver('selectionMode', this, 'selectionModeChangeHandler');
@@ -109,6 +108,8 @@ export default class extends Component {
   selectionModeChangeHandler(mapService) {
     this.draw(mapService);
     this.drawSelector(mapService);
+    this.set('previousCoordinatesKey', null);
+    this.set('previousParcel', null);
     this.updateSelection(true);
   }
 
