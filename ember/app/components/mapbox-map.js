@@ -63,9 +63,6 @@ export default class extends Component {
       mapService.addObserver('viewing', this, 'draw');
       mapService.addObserver('filteredData', this, 'focus');
       mapService.addObserver('baseMap', this, 'setStyle');
-      this.mapboxglMap.on('style.load', () => {
-        this.selectionModeChangeHandler(mapService);
-      });
       mapService.addObserver('zoomCommand', this, 'actOnZoomCommand');
       mapService.addObserver('viewing', this, 'jumpTo');
       mapService.addObserver('selectionMode', this, 'selectionModeChangeHandler');
@@ -245,6 +242,11 @@ export default class extends Component {
 
   setStyle(mapService) {
     const newBaseMap = mapService.get('baseMap');
+    const redrawOnStyleReload = () => {
+      this.selectionModeChangeHandler(mapService);
+      this.mapboxglMap.off('styledata', redrawOnStyleReload);
+    };
+    this.mapboxglMap.on('styledata', redrawOnStyleReload);
     if (newBaseMap == 'light') {
       this.mapboxglMap.setStyle('mapbox://styles/mapbox/light-v9');
     } else if (newBaseMap == 'satellite') {
