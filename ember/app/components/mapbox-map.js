@@ -44,7 +44,8 @@ export default class extends Component {
     this.mapboxglMap = new mapboxgl.Map({
       container: this.get('element'),
       style: mapStyle,
-      // maxBounds: [[-75.5, 39], [-67, 45]],
+      center: [-71.061391, 42.355107],
+      zoom: 10,
       maxBounds: [[-100, 20], [-40, 60]],
       dragRotate: false,
       pitchWithRotate: false,
