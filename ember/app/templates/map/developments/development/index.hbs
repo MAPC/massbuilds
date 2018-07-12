@@ -51,7 +51,7 @@
                     {{#if (eq model.user.fullName 'undefined undefined')}}
                       {{loading-spinner message="Loading Creator" isLoading=true}}
                     {{else}}
-                      {{model.user.fullName}}
+                      {{model.user.displayName}}
                     {{/if}}
                   </span>
                 </div>
