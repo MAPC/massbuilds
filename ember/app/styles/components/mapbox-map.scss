@@ -25,6 +25,33 @@
     border-right-color: $color_brand-primary;
   }
 
+  .mapboxgl-ctrl-top-left,
+  .mapboxgl-ctrl-top-right,
+  .mapboxgl-ctrl-bottom-left,
+  .mapboxgl-ctrl-bottom-right {
+    position: absolute;
+  }
+
+  .mapboxgl-control-container {
+    position: static;
+  }
+
+  .mapboxgl-ctrl-bottom-left .mapboxgl-ctrl {
+    margin: 0 0 2px 2px;
+  }
+
+  a.mapboxgl-ctrl-logo {
+    margin: 0;
+  }
+
+  .mapboxgl-ctrl-attrib {
+    border-top-left-radius: 5px;
+    font-family: $font_family-primary;
+    a {
+      color: $color_brand-primary;
+    }
+  }
+
   .massbuilds-tooltip {
     padding: 8px 16px;
 
