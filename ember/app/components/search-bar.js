@@ -8,6 +8,8 @@ import filters from 'massbuilds/utils/filters';
 export default class extends Component {
 
   @service currentUser
+  @service ajax
+  @service map
 
   constructor() {
     super();
@@ -15,6 +17,7 @@ export default class extends Component {
     this.classNames = ['component', 'search-bar'];
     this.sortOrder = ['municipal', 'nhood', 'devlper', 'name', 'address'];
     this.appCtrl = Ember.getOwner(this).lookup('controller:application');
+    this.loading = false;
   }
 
 
@@ -62,31 +65,59 @@ export default class extends Component {
   @computed('searchQuery')
   get searchList() {
     const searchQuery = this.get('searchQuery').toLowerCase().trim();
-    const sortOrder = this.get('sortOrder');
     let filtered = {};
+    if (searchQuery.length < 2) { return filtered; }
+    const sortOrder = this.get('sortOrder');
 
-    if (searchQuery.length >= 2) {
-      const queryWords = searchQuery.toLowerCase().split(' ');
+    const queryWords = searchQuery.toLowerCase().split(' ');
 
-      sortOrder.forEach(col => {
-        var name = filters[col].name;
+    sortOrder.forEach(col => {
+      var name = filters[col].name;
 
-        filtered[name] = this.get(col)
-                            .filter(record => {
-                              var keywords = record.value.toLowerCase().split(' ');
+      filtered[name] = this.get(col)
+        .filter(record => {
+          var keywords = record.value.toLowerCase().split(' ');
 
-                              return (
-                                keywords
-                                ? queryWords.every(queryWord => (
-                                  keywords.any(keyword => keyword.startsWith(queryWord))
-                                ))
-                                : false
-                              );
-                            })
-                            .map(row => ({ ...row, name, col }));
-      });
-    }
+          return (
+            keywords
+            ? queryWords.every(queryWord => (
+              keywords.any(keyword => keyword.startsWith(queryWord))
+            ))
+            : false
+          );
+        })
+        .map(row => ({ ...row, name, col }));
+    });
     return filtered;
+  }
+
+  @computed('searchQuery')
+  get gotoList() {
+    const searchQuery = this.get('searchQuery').toLowerCase().trim();
+    if (searchQuery.length <= 1) { return []; }
+
+    this.set('loading', true);
+    return DS.PromiseArray.create({
+      promise: this.get('ajax').request(`https://pelias.mapc.org/v1/search?text=${searchQuery}`
+          + `&boundary.country=USA&boundary.rect.min_lon=-73.5081481933594`
+          + `&boundary.rect.max_lon=-69.8615341186523`
+          + `&boundary.rect.min_lat=41.1863288879395`
+          + `&boundary.rect.max_lat=42.8867149353027`)
+      .then((resp) => {
+        const items = resp.features.slice(0, 5).map((feature) => {
+          return {
+            label: feature.properties.label,
+            type: feature.properties.layer.capitalize(),
+            geometry: feature.geometry,
+          };
+        });
+        this.set('loading', false);
+        return items;
+      }).catch(() => {
+        this.set('loading', false);
+        return [];
+      })
+    });
   }
 
 
@@ -118,6 +149,14 @@ export default class extends Component {
     }
 
     this.set('searchQuery', '');
+  }
+
+  @action
+  goto(geometry) {
+    this.set('searchQuery', '');
+    this.get('map').set('markerVisible', true);
+    this.get('map').set('jumpToSelectedCoordinates', true);
+    this.get('map').set('selectedCoordinates', geometry.coordinates);
   }
 
 

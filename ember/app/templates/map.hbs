@@ -26,33 +26,32 @@
       {{/if}}
 
     <div class="search-wrapper {{if (not (and showingLeftPanel showingMenu)) 'active'}}">
-      {{#if showingGoto}}
-        {{goto-bar
-          searchQuery=searchQuery
-          disabled=(and showingLeftPanel showingMenu)
-        }}
-      {{else}}
-        <div class="filter-actions">
-          <button onclick={{action toggleFilters}} class="filter-toggler {{if showingFilters 'active'}} {{if filtering 'filtering'}}">
-            <img src="/assets/images/filter.svg">
-          </button>
-          <button onclick={{action clearFilters}} class="clear-filters {{unless filtering 'disabled'}}">
-            X
-          </button>
-        </div>
+      <div class="filter-actions">
+        <button
+          onclick={{action toggleFilters}}
+          class="filter-toggler {{if showingFilters 'active'}} {{if filtering 'filtering'}}"
+          disabled={{showingGoto}}>
+          <img src="/assets/images/filter.svg">
+        </button>
+        <button
+          onclick={{action clearFilters}}
+          class="clear-filters {{unless filtering 'disabled'}}"
+          disabled={{showingGoto}}>
+          X
+        </button>
+      </div>
 
-        {{search-bar
-          addDiscreteFilter=(action addDiscreteFilter)
-          viewDevelopment=(action viewDevelopment)
-          searchQuery=searchQuery
-          placeholder=searchPlaceholder
-          showFiltersActive=(and activeFilters (not showingFilters))
-          numberOfActiveFilters=activeFilters.length
-          toggleFilters=(action toggleFilters)
-          model=map.stored
-          disabled=(and showingLeftPanel showingMenu)
-        }}
-      {{/if}}
+      {{search-bar
+        addDiscreteFilter=(action addDiscreteFilter)
+        viewDevelopment=(action viewDevelopment)
+        searchQuery=searchQuery
+        placeholder=searchPlaceholder
+        showFiltersActive=(and activeFilters (not showingFilters))
+        numberOfActiveFilters=activeFilters.length
+        toggleFilters=(action toggleFilters)
+        model=map.stored
+        disabled=(and showingLeftPanel showingMenu)
+      }}
     </div>
     <div class="legend-wrapper">
       {{map-legend showing=showingFilters}}

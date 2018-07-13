@@ -12,12 +12,15 @@ export default class extends Route {
 
   @action
   activate(transition) {
-    this.get('map').setSelectionMode(true);
+    this.get('map').set('showingLeftPanel', true);
+    this.get('map').set('markerVisible', true);
+    this.get('map').set('followMode', true);
   }
 
   @action
   deactivate(transition) {
-    this.get('map').setSelectionMode(false);
+    this.get('map').set('followMode', false);
+    this.get('map').set('markerVisible', false);
   }
 
 };
