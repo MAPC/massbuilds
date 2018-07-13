@@ -7,6 +7,7 @@ $color_brand-secondary: #3B8267;
 $color_bg-light: #FFFFFF;
 $color_bg-medium: #CCCCCC;
 $color_bg-dark: #091F2F;
+$color_bg-dark--transparent: rgba(9, 31, 47, 0.2);
 $color_bg-brand: mix($color_brand-primary, $color_bg-light, 10);
 
 $color_bg-light--active: mix(black, $color_bg-light, 5);
