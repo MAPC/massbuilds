@@ -30,13 +30,16 @@
       {{/each-in}}
 
       {{#if (eq searchListCount 0)}}
+        <li class="group-title">
+          <h4>Developments</h4>
+        </li>
         <li class="no-results">
-          No developments found
+          No existing developments found
         </li>
       {{/if}}
 
       <li class="group-title">
-        <h4>Go to address</h4>
+        <h4>Zoom to</h4>
       </li>
       {{#each gotoList as |item|}}
         <li onclick={{action goto item.geometry}}>
