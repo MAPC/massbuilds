@@ -148,8 +148,7 @@
   }
 
   &.account-subpanel {
-    height: 98vh;
-
+    height: calc(100vh - 138px);
     .subpanel-content {
       padding-top: 100px;
 
@@ -270,7 +269,7 @@
 
     .logout-button {
       position: absolute;
-      bottom: 35px;
+      bottom: 20px;
       right: 15px;
 
       color: $color_brand-primary--active;
