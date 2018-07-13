@@ -16,7 +16,6 @@ export default class extends Component {
 
     this.changes = false;
     this.proposedChanges = {};
-    this.editing = this.get('model').toJSON();
     this.filters = filters;
     this.fulfilled = false;
 
@@ -83,8 +82,8 @@ export default class extends Component {
 
   updateCoordinates(mapService) {
     const coordinates = mapService.get('selectedCoordinates');
-    this.set('editing.longitude', coordinates[0]);
-    this.set('editing.latitude', coordinates[1]);
+    this.sendAction('updateEditing', { longitude: coordinates[0] });
+    this.sendAction('updateEditing', { latitude: coordinates[1] });
     this.checkForUpdated('latitude');
     this.checkForUpdated('longitude');
   }
@@ -131,8 +130,9 @@ export default class extends Component {
   @action
   updateHu(fieldName) {
     this.checkForUpdated(fieldName);
-
-    this.set('editing.hu', this.sumProperties(...this.get('huFields'), 'editing.unknownhu'));
+    this.sendAction('updateEditing', {
+      hu: this.sumProperties(...this.get('huFields'), 'editing.unknownhu'),
+    });
     this.checkForUpdated('hu');
   }
 
@@ -140,8 +140,9 @@ export default class extends Component {
   @action
   updateAffrdUnit(fieldName) {
     this.checkForUpdated(fieldName);
-
-    this.set('editing.affrdUnit', this.sumProperties(...this.get('affrdUnitFields'), 'editing.affUnknown'));
+    this.sendAction('updateEditing', {
+      affrdUnit: this.sumProperties(...this.get('affrdUnitFields'), 'editing.affUnknown'),
+    });
     this.checkForUpdated('affrdUnit');
   }
 
@@ -152,7 +153,7 @@ export default class extends Component {
 
     const sum = this.sumProperties(...this.get('commsfFields'), 'editing.unkSqft');
 
-    this.set('editing.commsf', sum);
+    this.sendAction('updateEditing', { commsf: sum });
     this.checkForUpdated('commsf');
   }
 
@@ -201,7 +202,7 @@ export default class extends Component {
 
     if (fieldName === 'status') {
       edited = document.querySelector(`select[name="${fieldName}"]`).value;
-      this.set(`editing.${fieldName}`, edited);
+      this.sendAction('updateEditing', { [fieldName]: edited });
     }
     else if (fieldName === 'parkType') {
       edited = Array.from(document.querySelectorAll(`input.field-${fieldName}`))
@@ -209,7 +210,7 @@ export default class extends Component {
                     .map(x => x.name);
 
       this.set('selectedParkTypes', edited);
-      this.set(`editing.${fieldName}`, edited.join(','));
+      this.sendAction('updateEditing', { [fieldName]: edited.join(',') });
     }
 
     if (typeof edited === 'boolean') {
@@ -227,6 +228,7 @@ export default class extends Component {
       )
     ) {
       this.set(`proposedChanges.${fieldName}`, edited);
+      this.sendAction('updateEditing', { [fieldName]: edited });
       this.set('changes', true);
     }
     else {

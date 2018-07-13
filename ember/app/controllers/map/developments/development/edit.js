@@ -12,6 +12,22 @@ export default class extends Controller {
   @service notifications
   @service map
 
+  @computed('model')
+  get editing() {
+    const { _editing, model } = this.getProperties('_editing', 'model');
+    if (_editing) {
+      return _editing
+    } else if (model) {
+      return model.toJSON();
+    }
+    return null;
+  }
+
+  @action
+  updateEditing(partial) {
+    this.set('_editing', Object.assign({}, this.get('_editing'), partial));
+  }
+
   @computed('currentUser.user', 'model')
   get hasPublishPermissions() {
     const user = this.get('currentUser.user') ;
