@@ -1,0 +1,65 @@
+.component.spinning-cube {
+  $_color-side2: #94CCBC;
+  $_color-tb: #132A41;
+  $_color-side1: #3E7E93;
+
+  $_size: 15px;
+  $_speed: 1.4s;
+
+  z-index: 1000;
+  left: -$_size;
+  top: -$_size;
+  display: inline-block;
+
+  .cube {
+    position: relative;
+
+    width: $_size;
+    margin: 0 auto;
+
+    animation: tumble $_speed infinite linear;
+    transform-origin: ($_size / 2) ($_size / 2);
+    transform-style: preserve-3d;
+
+    div {
+      position: absolute;
+
+      width: $_size;
+      height: $_size;
+
+      &[data-side="back"] {
+        background: $_color-side1;
+        transform: translateZ(-#{$_size / 2}) rotateY(180deg);
+      }
+      &[data-side="front"] {
+        background: $_color-side1;
+        transform: translateZ(#{$_size / 2});
+      }
+
+      &[data-side="right"] {
+        background: $_color-side2;
+        transform: rotateY(-270deg) translateX(#{$_size / 2});
+        transform-origin: top right;
+      }
+      &[data-side="left"] {
+        background: $_color-side2;
+        transform: rotateY(270deg) translateX(-#{$_size / 2});
+        transform-origin: center left;
+      }
+
+      &[data-side="top"] {
+        background: $_color-tb;
+        transform: rotateX(-90deg) translateY(-#{$_size / 2});
+        transform-origin: top center;
+      }
+      &[data-side="bottom"] {
+        background: $_color-tb;
+        transform: rotateX(90deg) translateY(#{$_size / 2});
+        transform-origin: bottom center;
+      }
+
+
+    }
+  }
+
+}
