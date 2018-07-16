@@ -27,7 +27,7 @@ export default class extends Component {
     this.munis = [];
     this.isFetching = false;
     this.muniFailure = false;
-    this.requestingMunicipal = false;
+    this.requesting = null;
   }
 
 
@@ -59,15 +59,15 @@ export default class extends Component {
   updateMunicipality(muni) {
     this.set('municipality', muni);
   }
- 
+
 
   @computed('fullName', 'username', 'password', 'confirmPassword')
   get submittable() {
     return [
-      'firstName', 
-      'lastName', 
+      'firstName',
+      'lastName',
       'username',
-      'password', 
+      'password',
       'confirmPassword'
     ].every(field => this.get(field) !== '');
   }
@@ -79,15 +79,15 @@ export default class extends Component {
       return;
     }
 
-    let noErrors = true; 
+    let noErrors = true;
     let errorMessage = 'You must fill in all fields.';
 
     const email = this.get('username');
     const { firstName, lastName } = this.getProperties('firstName', 'lastName');
     const { password, confirmPassword } = this.getProperties('password', 'confirmPassword');
-    const requestingMunicipal = this.get('requestingMunicipal');
-    const municipality = requestingMunicipal ? this.get('municipality') : null;
-    const requestVerifiedStatus = !!municipality;
+    const requesting = this.get('requesting');
+    const municipality = requesting == 'municipal' ? this.get('municipality') : null;
+    const requestVerifiedStatus = !!requesting;
 
 
     /**
@@ -95,19 +95,19 @@ export default class extends Component {
      */
 
     if (!email) {
-      noErrors = false; 
+      noErrors = false;
     }
 
     if (firstName && lastName) {
       const nameRegex = /^[A-Za-z\-']+$/;
 
       if ([firstName,lastName].any(name => !nameRegex.test(name))) {
-        noErrors = false; 
+        noErrors = false;
         errorMessage = 'Name may only contain letters.';
       }
     }
     else {
-      noErrors = false; 
+      noErrors = false;
 
       if (!lastName) {
         errorMessage = 'Must enter both a first and last name.';
@@ -116,12 +116,12 @@ export default class extends Component {
 
     if (password && confirmPassword) {
       if (password !== confirmPassword) {
-        noErrors = false; 
+        noErrors = false;
         errorMessage = 'Passwords do not match.';
       }
     }
     else {
-      noErrors = false; 
+      noErrors = false;
     }
 
 

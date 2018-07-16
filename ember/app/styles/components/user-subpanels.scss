@@ -39,6 +39,10 @@
 
         background: $color_bg-light--accent;
 
+        label {
+          display: block;
+
+        }
         .loading-spinner {
           float: none;
 
@@ -48,14 +52,18 @@
         }
       }
 
-      label {
+      label, span {
         color: $color_font-medium;
         font-size: 11px;
+        margin-bottom: 0.2em;
       }
     }
 
     input {
-      &:not([type="checkbox"]) { width: 100%; }
+      &:not([type="checkbox"]):not([type="radio"]) { width: 100%; }
+      &[type="radio"] {
+        margin-right: 0.5em;
+      }
 
       margin: 5px auto;
       padding: 8px 16px;

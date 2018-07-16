@@ -35,14 +35,34 @@
 
   {{#unless muniFailure}}
     <div class="input-wrapper labeled">
-      <label>Are you a member of city/town, state, or regional government?</label>
-      {{input type="checkbox" checked=requestingMunicipal click=(action fetchMunis)}}
+      <span>Would you like to request verified status?</span>
+      {{#radio-button
+        value=""
+        groupValue=requesting
+      }}
+        <span>No</span>
+      {{/radio-button}}
+
+      {{#radio-button
+        value="state"
+        groupValue=requesting
+      }}
+        <span>Yes, as a member state or regional government</span>
+      {{/radio-button}}
+
+      {{#radio-button
+        value="municipal"
+        groupValue=requesting
+        changed=(action fetchMunis)
+      }}
+        <span>Yes, as a member of city or town government</span>
+      {{/radio-button}}
     </div>
 
-    {{#if requestingMunicipal}}
+    {{#if (eq requesting 'municipal')}}
       <div class="input-wrapper labeled">
         <label>Choose the municipality you are associated with</label>
-        
+
         {{#loading-spinner message="Loading Municipalities" isLoading=isFetching}}
           <select onchange={{action updateMunicipality value="target.value"}}>
             <option disabled selected>Select Municipality</option>
@@ -70,6 +90,6 @@
 </form>
 
 <div class="auth-switch">
-  Already have an account? 
+  Already have an account?
   {{link-to 'Login here' (query-params panel=null)}}
 </div>
