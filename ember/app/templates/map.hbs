@@ -4,7 +4,7 @@
 
   <div class="top-right-buttons {{if showingMenu 'active'}}">
     <button class="toggler menu-toggler" onclick={{action toggleMenu}}>
-      <span class="hamburger"></span>
+      <span class="hamburger {{if showingMenu 'active'}}"></span>
     </button>
   </div>
 
