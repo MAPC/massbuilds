@@ -12,25 +12,26 @@
     </h3>
 
     {{#unless verified}}
-      {{#if currentUser.user.requestVerifiedStatus}}
-        {{currentUser.user.municipality}}
-        {{#if currentUser.user.municipality}}
-          <h4 class="tag">Reviewing request for {{currentUser.user.municipality}} membership</h4>
-        {{else}}
-          <h4 class="tag">Reviewing request for verified status</h4>
-        {{/if}}
-      {{else}}
-        {{#unless removedDenialMessage}}
-          {{#if currentUser.user.municipality}}
-            <h4 class="tag inactive">
-              Request for {{currentUser.user.municipality}} membership denied <span onclick={{action removeDenialMessage}}>X</span>
-            </h4>
+      {{#if currentUser.user.municipality}}
+        {{#if currentUser.user.requestVerifiedStatus}}
+          {{#if (eq currentUser.user.municipality 'STATE')}}
+            <h4 class="tag">Reviewing request for verified status</h4>
           {{else}}
-            <h4 class="tag inactive">
-              Request for verified status denied <span onclick={{action removeDenialMessage}}>X</span>
-            </h4>
+            <h4 class="tag">Reviewing request for {{currentUser.user.municipality}} membership</h4>
           {{/if}}
-        {{/unless}}
+        {{else}}
+          {{#unless removedDenialMessage}}
+            {{#if (eq currentUser.user.municipality 'STATE')}}
+              <h4 class="tag inactive">
+                Request for verified status denied <span onclick={{action removeDenialMessage}}>X</span>
+              </h4>
+            {{else}}
+              <h4 class="tag inactive">
+                Request for {{currentUser.user.municipality}} membership denied <span onclick={{action removeDenialMessage}}>X</span>
+              </h4>
+            {{/if}}
+          {{/unless}}
+        {{/if}}
       {{/if}}
     {{else}}
       {{#if (eq currentUser.user.role 'municipal')}}

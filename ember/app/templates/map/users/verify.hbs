@@ -29,7 +29,7 @@
           <li>
             <div>{{user.fullName}}</div>
             <div>{{user.email}}</div>
-            <div>{{user.municipality}}</div>
+            <div>{{if (eq user.municipality 'STATE') 'State/Regional' user.municipality}}</div>
             <div><button class="styled negative" onclick={{action denyUser user}}>Deny</button></div>
             <div><button class="styled" onclick={{action approveUser user}}>Approve</button></div>
           </li>

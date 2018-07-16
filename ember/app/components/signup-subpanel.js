@@ -86,7 +86,9 @@ export default class extends Component {
     const { firstName, lastName } = this.getProperties('firstName', 'lastName');
     const { password, confirmPassword } = this.getProperties('password', 'confirmPassword');
     const requesting = this.get('requesting');
-    const municipality = requesting == 'municipal' ? this.get('municipality') : null;
+    const municipality = requesting == 'municipal'
+        ? this.get('municipality')
+        : (requesting == 'state' ? 'STATE' : null);
     const requestVerifiedStatus = !!requesting;
 
 
