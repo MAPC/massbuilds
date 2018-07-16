@@ -7,7 +7,7 @@ import { action, computed } from 'ember-decorators/object';
 export default class extends Component {
 
   @service session
-  
+
 
   constructor() {
     super();
@@ -22,7 +22,7 @@ export default class extends Component {
   }
 
 
-  @computed('username', 'password') 
+  @computed('username', 'password')
   get submittable() {
     return ['username','password'].every(field => this.get(field) !== '');
   }
@@ -42,7 +42,6 @@ export default class extends Component {
     session
       .authenticate('authenticator:devise', username, password)
       .catch(e => {
-        console.log(e);
         if (e.message && e.message === 'Disabled user') {
           this.set('errorMessage', `This account was disabled by an admin. Please contact ${config.admin.email} for more information.`);
         }

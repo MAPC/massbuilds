@@ -12,20 +12,20 @@ export default class extends Controller {
   @service notifications
   @service map
 
-  @computed('model')
+  @computed('model', '_editing')
   get editing() {
-    const { _editing, model } = this.getProperties('_editing', 'model');
-    if (_editing) {
-      return _editing
-    } else if (model) {
+    const { _editing, model, _prevModel } =
+        this.getProperties('_editing', 'model', '_prevModel');
+    if (model != _prevModel) {
+      this.set('_prevModel', model);
       return model.toJSON();
     }
-    return null;
+    return _editing;
   }
 
   @action
   updateEditing(partial) {
-    this.set('_editing', Object.assign({}, this.get('_editing'), partial));
+    this.set('_editing', Object.assign({}, this.get('editing'), partial));
   }
 
   @computed('currentUser.user', 'model')
@@ -80,7 +80,6 @@ export default class extends Controller {
           const developmentName = development.get('name');
 
           this.get('notifications').show(`You have ${action} to ${developmentName}.`);
-
           this.transitionToRoute('map.developments.development.index', this.get('model'));
         })
         .finally(() => {

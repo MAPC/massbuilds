@@ -13,22 +13,19 @@ export default class extends Controller {
   @service currentUser
   @service notifications
 
-  @computed('model')
+  @computed('model', '_editing')
   get editing() {
     const { _editing, model } = this.getProperties('_editing', 'model');
     if (_editing) {
-      return _editing
-    } else if (model) {
-      this.set('_editing', model.toJSON())
+      return _editing;
+    } else {
       return model.toJSON();
     }
-    return null;
   }
-
 
   @action
   updateEditing(partial) {
-    this.set('_editing', Object.assign({}, this.get('_editing'), partial));
+    this.set('_editing', Object.assign({}, this.get('editing'), partial));
   }
 
 
@@ -67,6 +64,7 @@ export default class extends Controller {
       .save()
       .then(development => {
         this.get('map').add(development);
+        this.set('_editing', null);
         this.get('notifications').show(`You have created a new development called ${data.name}.`);
         this.transitionToRoute('map.developments.development', development);
       })
@@ -101,6 +99,7 @@ export default class extends Controller {
       newEdit
         .save()
         .then(() => {
+          this.set('_editing', null);
           this.get('notifications').show(`You have created a new development. It may be published after review from a moderator.`);
           this.transitionToRoute('map.moderations.for.user', this.get('currentUser.user.id'));
         })
