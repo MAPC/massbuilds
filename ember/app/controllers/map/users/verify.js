@@ -22,13 +22,21 @@ export default class extends Controller {
     user.set('requestVerifiedStatus', false);
     user.save()
         .then(() => {
-          this.get('notifications').show(`You have denied ${municipality} membership to ${fullName}.`);
+          if (municipality == 'STATE') {
+            this.get('notifications').show(`You have denied verified status to ${fullName}.`);
+          } else {
+            this.get('notifications').show(`You have denied ${municipality} membership to ${fullName}.`);
+          }
+
           this.get('verifiableUsers').decrementCount();
         })
         .catch(() => {
           user.set('requestVerifiedStatus', true);
-
-          this.get('notifications').show(`An error occurred when denying ${municipality} membership to ${fullName}.`, { mode: 'error' });
+          if (municipality == 'STATE') {
+            this.get('notifications').show(`An error occurred when denying verified status to ${fullName}.`, { mode: 'error' });
+          } else {
+            this.get('notifications').show(`An error occurred when denying ${municipality} membership to ${fullName}.`, { mode: 'error' });
+          }
         });
   }
 
@@ -36,19 +44,30 @@ export default class extends Controller {
   @action
   approveUser(user) {
     const { municipality, fullName } = user.getProperties('municipality', 'fullName');
-
-    user.set('role', 'municipal');
+    if (municipality && municipality != 'STATE') {
+      user.set('role', 'municipal');
+    } else {
+      user.set('role', 'verified');
+    }
     user.set('requestVerifiedStatus', false);
     user.save()
         .then(() => {
-          this.get('notifications').show(`You have approved ${municipality} membership to ${fullName}.`);
+          if (municipality == 'STATE') {
+            this.get('notifications').show(`You have approved verified status for ${fullName}.`);
+          } else {
+            this.get('notifications').show(`You have approved ${municipality} membership to ${fullName}.`);
+          }
           this.get('verifiableUsers').decrementCount();
         })
         .catch(() => {
           user.set('role', 'user');
           user.set('requestVerifiedStatus', true);
+          if (municipality == 'STATE') {
+            this.get('notifications').show(`An error occurred when approving verified status for ${fullName}.`, { mode: 'error' });
+          } else {
+            this.get('notifications').show(`An error occurred when approving ${municipality} membership to ${fullName}.`, { mode: 'error' });
+          }
 
-          this.get('notifications').show(`An error occurred when approving ${municipality} membership to ${fullName}.`, { mode: 'error' });
         });
   }
 
