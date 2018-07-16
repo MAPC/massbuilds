@@ -36,8 +36,11 @@ export default class extends Controller {
   @action
   approveUser(user) {
     const { municipality, fullName } = user.getProperties('municipality', 'fullName');
-
-    user.set('role', 'municipal');
+    if (municipality) {
+      user.set('role', 'municipal');
+    } else {
+      user.set('role', 'verified');
+    }
     user.set('requestVerifiedStatus', false);
     user.save()
         .then(() => {

@@ -12,16 +12,25 @@
     </h3>
 
     {{#unless verified}}
-      {{#if currentUser.user.municipality}}
-        {{#if currentUser.user.requestVerifiedStatus}}
+      {{#if currentUser.user.requestVerifiedStatus}}
+        {{currentUser.user.municipality}}
+        {{#if currentUser.user.municipality}}
           <h4 class="tag">Reviewing request for {{currentUser.user.municipality}} membership</h4>
         {{else}}
-          {{#unless removedDenialMessage}}
+          <h4 class="tag">Reviewing request for verified status</h4>
+        {{/if}}
+      {{else}}
+        {{#unless removedDenialMessage}}
+          {{#if currentUser.user.municipality}}
             <h4 class="tag inactive">
               Request for {{currentUser.user.municipality}} membership denied <span onclick={{action removeDenialMessage}}>X</span>
             </h4>
-          {{/unless}}
-        {{/if}}
+          {{else}}
+            <h4 class="tag inactive">
+              Request for verified status denied <span onclick={{action removeDenialMessage}}>X</span>
+            </h4>
+          {{/if}}
+        {{/unless}}
       {{/if}}
     {{else}}
       {{#if (eq currentUser.user.role 'municipal')}}
@@ -31,26 +40,26 @@
   </div>
 
   <div class="user-actions">
-    {{#link-to 'map.developments.create' click=(action closeMenu)}} 
+    {{#link-to 'map.developments.create' click=(action closeMenu)}}
       <div class="icon-wrapper">
-        <img src="/assets/images/plus.svg"> 
+        <img src="/assets/images/plus.svg">
       </div>
 
       Create Development
     {{/link-to}}
 
-    {{#link-to 'map.developments.for.user' currentUser.user.id click=(action closeMenu)}} 
+    {{#link-to 'map.developments.for.user' currentUser.user.id click=(action closeMenu)}}
       <div class="icon-wrapper">
-        <img src="/assets/images/map-pin.svg"> 
+        <img src="/assets/images/map-pin.svg">
       </div>
 
       My Developments
     {{/link-to}}
 
     {{#unless (eq currentUser.user.role 'admin')}}
-      {{#link-to 'map.moderations.for.user' currentUser.user.id click=(action closeMenu)}} 
+      {{#link-to 'map.moderations.for.user' currentUser.user.id click=(action closeMenu)}}
         <div class="icon-wrapper">
-          <img src="/assets/images/edit-3.svg"> 
+          <img src="/assets/images/edit-3.svg">
         </div>
 
         My Edits
@@ -58,17 +67,17 @@
     {{/unless}}
 
     {{#if (eq currentUser.user.role 'admin')}}
-      {{#link-to 'map.moderations.index' click=(action closeMenu)}} 
+      {{#link-to 'map.moderations.index' click=(action closeMenu)}}
         <div class="icon-wrapper">
-          <img src="/assets/images/edit-3.svg"> 
+          <img src="/assets/images/edit-3.svg">
         </div>
 
         Moderations
       {{/link-to}}
 
-      {{#link-to 'map.users.index' click=(action closeMenu)}} 
+      {{#link-to 'map.users.index' click=(action closeMenu)}}
         <div class="icon-wrapper">
-          <img src="/assets/images/user.svg"> 
+          <img src="/assets/images/user.svg">
         </div>
 
         Manage Users
@@ -86,7 +95,7 @@
       {{/if}}
     {{/if}}
   </div>
-  
+
 </div>
 
 <button class="logout-button" onclick={{action logout}}>
