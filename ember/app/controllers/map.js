@@ -92,8 +92,6 @@ export default class extends Controller {
           ) {
             found = Ember.copy(filters[col]);
 
-            console.log(found, value);
-
             if (found.filter === 'metric') {
               if (found.type === 'number') {
                 const metricParts = value.split(';');
@@ -109,8 +107,6 @@ export default class extends Controller {
               if (col === 'municipal') {
                 value = value.map(capitalize);
               }
-
-              console.log(col, value);
 
               Ember.set(found, 'value', value);
             }
