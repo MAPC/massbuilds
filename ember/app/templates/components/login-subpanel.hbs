@@ -1,6 +1,7 @@
 <img src="/assets/images/logo-with-text.png" class="logo-image">
 
 <form {{action login on="submit"}}>
+  <center><p>A visual database for detailed information on real-estate developments in Massachusetts. {{link-to 'Learn more' 'faq'}}</p></center>
 
   <h2>Login</h2>
 
@@ -23,7 +24,7 @@
   <div class="form-footer">
     {{#loading-spinner message="Logging In" isLoading=isLoggingIn}}
       <button class="submit {{unless submittable 'disabled'}}" type="submit">Login</button>
-    {{/loading-spinner}} 
+    {{/loading-spinner}}
 
     {{link-to 'Forgot password?' (query-params panel='reset-password')}}
   </div>
@@ -31,6 +32,6 @@
 </form>
 
 <div class="auth-switch">
-  Don't have an account? 
+  Don't have an account?
   {{link-to 'Signup here' (query-params panel='signup')}}
 </div>

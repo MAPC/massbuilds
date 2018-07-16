@@ -1,0 +1,57 @@
+.component.welcome-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: $color_bg-dark--transparent;
+  z-index: 1000;
+  display: none;
+  &.active {
+    display: block;
+  }
+
+  article {
+    background-color: $color_bg-light;
+    width: calc(100% - 30px);
+    max-width: 600px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 5px;
+    border-color: $color_brand-primary;
+    border-style: solid;
+    border-width: 6px 1px 1px 1px;
+    padding: 25px;
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      h1 {
+        margin: 0;
+      }
+      button.close {
+        border: none;
+        outline: none;
+        font-size: 1.6em;
+        color: mix($color_font-medium, $color_font-light, 70);
+        &:hover {
+          color: $color_font-medium;
+        }
+      }
+    }
+
+    .button-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      a {
+        display: inline-block;
+        color: $color_brand-primary--active;
+        cursor: pointer;
+        &:hover { color: $color_brand-primary; }
+      }
+    }
+  }
+}

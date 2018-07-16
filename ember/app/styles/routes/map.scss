@@ -267,4 +267,38 @@
     }
   }
 
+  footer {
+    position: absolute;
+    bottom: 0;
+    display: flex;
+    height: 108px;
+    padding: 15px;
+    font-size: 0.8em;
+    color: $color_brand-primary;
+    background-color: $color_bg-light--accent;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    & > *:not(:last-child) {
+      margin-right: 15px;
+    }
+    .mapc-details {
+      a {
+        color: $color_brand-primary;
+        &:hover {
+          color: $color_brand-primary--active;
+        }
+      }
+      & > * {
+        display: block;
+        &:not(:last-child) {
+          margin-bottom: 2px;
+        }
+      }
+    }
+    img {
+      width: 20%;
+      margin: 0 20px;
+    }
+  }
+
 }
