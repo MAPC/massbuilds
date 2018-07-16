@@ -30,7 +30,7 @@ server "prep.mapc.org", user: "massbuilds", roles: %w{app db web}
 # For available Capistrano configuration variables see the documentation page.
 # http://capistranorb.com/documentation/getting-started/configuration/
 # Feel free to add new variables to customise your setup.
-set :branch, 'develop'
+set :branch, 'igmh/tmp'
 set :passenger_restart_command, 'passenger-config restart-app'
 set :rvm_custom_path, '/usr/share/rvm'
 set :rvm_ruby_version, '2.4.2'
