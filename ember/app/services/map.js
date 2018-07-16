@@ -30,7 +30,8 @@ export default class extends Service {
     this.storedBounds = null;
 
     this.zoomCommand = null;
-    this.selectionMode = false;
+    this.markerVisible = false;
+    this.followMode = false;
     this.selectedCoordinates = [0, 0];
     this.jumpToSelectedCoordinates = false;
     this.showingLeftPanel = false;
@@ -39,10 +40,6 @@ export default class extends Service {
       this.set('stored', results.toArray());
       this.set('storedBounds', mapboxgl.LngLatBounds.convert(results.map(result => new mapboxgl.LngLat(result.get('longitude'), result.get('latitude')))));
     });
-  }
-
-  setSelectionMode(selectionMode) {
-    this.set('selectionMode', selectionMode);
   }
 
   setViewing(dev) {

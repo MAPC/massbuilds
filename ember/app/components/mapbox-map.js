@@ -28,11 +28,14 @@ export default class extends Component {
     // CSS transitions make dynamically calculating the width of the left panel
     // difficult because it becomes time sensitive. Since the width and left
     // properties of the panel are set in pixels we can set that here as a constant.
-    const mapWidth = parseInt(this.$().css('width'));
-    if (mapWidth < 1180) {
-      return 480;
+    if (this.get('map.showingLeftPanel')) {
+      const mapWidth = parseInt(this.$().css('width'));
+      if (mapWidth < 1180) {
+        return 480;
+      }
+      return 700;
     }
-    return 700;
+    return 0;
   }
 
   didInsertElement() {
@@ -66,7 +69,8 @@ export default class extends Component {
       mapService.addObserver('baseMap', this, 'setStyle');
       mapService.addObserver('zoomCommand', this, 'actOnZoomCommand');
       mapService.addObserver('viewing', this, 'jumpTo');
-      mapService.addObserver('selectionMode', this, 'selectionModeChangeHandler');
+      mapService.addObserver('markerVisible', this, 'markerVisibleChangeHandler')
+      mapService.addObserver('followMode', this, 'followModeChangeHandler');
       mapService.addObserver('selectedCoordinates', this, 'drawSelectedCoordinates');
 
       if (mapService.get('stored').length) {
@@ -76,8 +80,10 @@ export default class extends Component {
       if (mapService.get('viewing')) {
         this.jumpTo(mapService);
       }
-      if (mapService.get('selectionMode')) {
+      if (mapService.get('markerVisible')) {
         this.drawSelector(mapService);
+      }
+      if (mapService.get('followMode')) {
         this.updateSelection(true);
       }
     });
@@ -98,14 +104,19 @@ export default class extends Component {
     mapService.removeObserver('baseMap', this, 'setStyle');
     mapService.removeObserver('zoomCommand', this, 'actOnZoomCommand');
     mapService.removeObserver('viewing', this, 'jumpTo');
-    mapService.removeObserver('selectionMode', this, 'selectionModeChangeHandler');
+    mapService.removeObserver('markerVisible', this, 'markerVisibleChangeHandler');
+    mapService.removeObserver('followMode', this, 'followModeChangeHandler');
     mapService.removeObserver('selectedCoordinates', this, 'drawSelectedCoordinates');
     this.mapboxglMap.remove();
   }
 
-  selectionModeChangeHandler(mapService) {
+  markerVisibleChangeHandler(mapService) {
     this.draw(mapService);
     this.drawSelector(mapService);
+  }
+
+  followModeChangeHandler(mapService) {
+    this.draw(mapService);
     this.set('previousCoordinatesKey', null);
     this.set('previousParcel', null);
     this.updateSelection(true);
@@ -114,6 +125,7 @@ export default class extends Component {
   updateSelection(notFromFitBounds) {
     // If the user triggered the drag or zoom...
     if (notFromFitBounds
+        && this.get('map.followMode')
         && this.mapboxglMap
         && this.mapboxglMap.getSource('selector')
         && Ember.$('.left-panel-layer')
@@ -158,6 +170,7 @@ export default class extends Component {
   }
 
   drawSelectedCoordinates(mapService) {
+
     if (this.mapboxglMap
         && this.mapboxglMap.getSource('selector')) {
       const coordinates = mapService.get('selectedCoordinates');
@@ -196,7 +209,7 @@ export default class extends Component {
     this.set('lastRequest', Date.now());
     this.get('store').query('parcel', { lng: coordinates[0], lat: coordinates[1] }).then((results) => {
       const parcels = results.toArray();
-      const newCoordinates = this.get('map').get('selectedCoordinates');
+      const newCoordinates = this.get('map.selectedCoordinates');
       if (parcels.length) {
         const parcel = parcels[0];
         if (pointInPolygon.default({ type: 'Point', coordinates: newCoordinates }, parcel.get('geojson'))
@@ -244,7 +257,8 @@ export default class extends Component {
   setStyle(mapService) {
     const newBaseMap = mapService.get('baseMap');
     const redrawOnStyleReload = () => {
-      this.selectionModeChangeHandler(mapService);
+      this.markerVisibleChangeHandler(mapService);
+      this.followModeChangeHandler(mapService);
       this.mapboxglMap.off('styledata', redrawOnStyleReload);
     };
     this.mapboxglMap.on('styledata', redrawOnStyleReload);
@@ -266,9 +280,9 @@ export default class extends Component {
   }
 
   drawSelector(mapService) {
-    const selectionMode = mapService.get('selectionMode');
+    const markerVisible = mapService.get('markerVisible');
     const satelliteMap = mapService.get('baseMap') != 'light';
-    if (selectionMode && !this.mapboxglMap.getLayer('selector')) {
+    if (markerVisible && !this.mapboxglMap.getLayer('selector')) {
       this.mapboxglMap.addLayer({
         id: 'selector',
         type: 'circle',
@@ -387,7 +401,7 @@ export default class extends Component {
         ? mapService.get('remainder')
         : mapService.get('stored'));
     const satelliteMap = mapService.get('baseMap') != 'light';
-    const isMuted = mapService.get('selectionMode');
+    const isMuted = mapService.get('followMode');
 
     if (this.mapboxglMap.getLayer('all')) {
       this.mapboxglMap.getSource('all').setData({

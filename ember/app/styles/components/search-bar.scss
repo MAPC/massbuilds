@@ -117,6 +117,11 @@
       cursor: default;
     }
 
+    &.loading {
+      font-size: 13px;
+      cursor: default;
+    }
+
     &:not(.group-title):not(.no-results):not(.active-filters) {
       &:hover { background: $color_bg-light--active; }
     }
