@@ -42,6 +42,7 @@
         {{input
           id="development_latitude"
           value=(to-fixed editing.latitude 6)
+          class=(if inValid.latitude 'invalid')
           placeholder="Latitude"
           readonly="readonly"
         }}
@@ -49,6 +50,7 @@
         {{input
           id="development_longitude"
           value=(to-fixed editing.longitude 6)
+          class=(if inValid.longitude 'invalid')
           placeholder="Longitude"
           readonly="readonly"
         }}
@@ -378,7 +380,9 @@
             </tr>
 
             <tr>
-              <td>{{defined-term key="UNKNOWN_HOUSING_UNITS"}}</td>
+              <td>
+                <label for="unknownhu">{{defined-term key="UNKNOWN_HOUSING_UNITS"}}</label>
+              </td>
               <td>
                 {{input
                   class=(if inValid.unknownhu 'invalid')
@@ -825,7 +829,9 @@
 
             <tr>
               <td>
-                {{defined-term key='UNKNOWN_AREA'}}
+                <label for="unkSqft">
+                  {{defined-term key='UNKNOWN_AREA'}}
+                </label>
               </td>
               <td>
                 {{input
