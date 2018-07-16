@@ -252,11 +252,7 @@ const fromQueryParams = params => {
       newParams[key].value = parseInt(num);
     }
     else {
-      if (_key === 'municipal') {
-        value = value.map(capitalize);
-      }
-
-      newParams[key].value = value;
+      newParams[key].value = value.map(capitalize);
     }
   });
 
