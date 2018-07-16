@@ -6,7 +6,7 @@
   transition: bottom 0.3s ease-in 0s;
   &.hidden {
     transition: bottom 0.3s ease-out 0s;
-    bottom: -90px;
+    bottom: -95px;
   }
 
   $toggle_width: 45px;

@@ -28,13 +28,39 @@
           {{/each}}
         {{/if}}
       {{/each-in}}
+
+      {{#if (eq searchListCount 0)}}
+        <li class="group-title">
+          <h4>Developments</h4>
+        </li>
+        <li class="no-results">
+          No existing developments found
+        </li>
+      {{/if}}
+
+      <li class="group-title">
+        <h4>Zoom to</h4>
+      </li>
+      {{#each gotoList as |item|}}
+        <li onclick={{action goto item.geometry}}>
+          <h5>{{item.label}}</h5>
+          <p>{{item.type}}</p>
+        </li>
+      {{/each}}
+      {{#if loading}}
+        <li class="loading">
+          Loading...
+        </li>
+      {{/if}}
+
+      {{#if (and (eq gotoList.length 0) (not loading))}}
+        <li class="no-results">
+          No addresses found
+        </li>
+      {{/if}}
     {{/if}}
 
-    {{#if (and searching (eq searchListCount 0))}}
-      <li class="no-results">
-        No results
-      </li>
-    {{/if}}
+
 
     {{#if (and searching (and hasPermissions (lt searchListCount 6) (not (eq appCtrl.currentRouteName 'map.developments.create'))))}}
       {{#link-to 'map.developments.create'}}

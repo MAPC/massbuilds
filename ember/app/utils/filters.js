@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import { statusOptions } from 'massbuilds/utils/status-colors';
+import { capitalize } from 'massbuilds/helpers/capitalize';
 import Development from 'massbuilds/models/development';
 const { decamelize } = Ember.String;
 
@@ -251,6 +252,10 @@ const fromQueryParams = params => {
       newParams[key].value = parseInt(num);
     }
     else {
+      if (_key === 'municipal') {
+        value = value.map(capitalize);
+      }
+
       newParams[key].value = value;
     }
   });

@@ -28,7 +28,7 @@ export default class extends Component {
 
     copier.class = 'copy-area';
     copier.innerHTML = window.location.href
-                                      .split('&municipality[]=').join(',')
+                                      .split('&municipal[]=').join(',')
                                       .split('&devlper[]=').join(',')
                                       .split('&nhood[]=').join(',')
                                       .split('[]=').join('=')
