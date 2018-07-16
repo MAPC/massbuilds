@@ -3,6 +3,7 @@ import Controller from '@ember/controller';
 import { action, computed } from 'ember-decorators/object';
 import { service } from 'ember-decorators/service';
 import filters from 'massbuilds/utils/filters';
+import { capitalize } from 'massbuilds/helpers/capitalize';
 import { alias } from 'ember-decorators/object/computed';
 
 export default class extends Controller {
@@ -103,6 +104,10 @@ export default class extends Controller {
               }
             }
             else {
+              if (col === 'municipal') {
+                value = value.map(capitalize);
+              }
+
               Ember.set(found, 'value', value);
             }
           }
