@@ -1,12 +1,24 @@
 <article>
   <header>
-    <h1>Welcome to MassBuilds</h1>
+    <h1>Welcome to MassBuilds!</h1>
     <button class="close" onclick={{action 'dismissWelcome'}}>x</button>
   </header>
-  <p>MassBuilds is a database with information on recent, current, and future developments in the Greater Boston region. The mapping feature on MassBuilds.com allows users to view developments spatially within the region. Both spatial (.shp) and tabular (.csv) versions of the development data are available for download on our site.</p>
-  <p>MassBuilds does not merely track the existence of developments in the Greater Boston region, but has detailed information on these developments including but not limited to: project status, estimated year of completion, commercial square footage, number of housing units, number of parking spots, total stories and/or height, and a brief description for each development.</p>
+  <p>
+    Massbuilds is the Metropolitan Area Planning Council’s collaborative inventory of past, present and future real estate development projects. This tool provides governments, data analysts, urban planners, community advocates, and real estate developers with comprehensive data for thousands of projects across Massachusetts.
+  </p>
+  <ul>
+    <li>
+      <b>Filter and find development projects:</b> Find the development data you need, filtering by neighborhood, municipality, construction status, affordable housing, units, square footage, project status, year of completion, developer name, and more!
+    </li>
+    <li>
+      <b>Contribute new data:</b> Sign up to add new and existing real estate developments in your area. Entries are all verified by MAPC’s data team to ensure accurate, up to date information.
+    </li>
+    <li>
+      <b>Export data:</b> Export comprehensive raw development data into a spreadsheet or shapefile for further analysis.
+    </li>
+  </ul>
   <div class="button-row">
-    {{link-to 'Learn more' 'faq'}}
+    {{link-to 'Learn more' 'about'}}
     <button class="styled" onclick={{action 'dismissWelcome'}}>
       Continue to MassBuilds
     </button>
