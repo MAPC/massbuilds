@@ -2,7 +2,7 @@
   $width: 300px;
 
   position: fixed;
-  bottom: -15px;
+  bottom: 0px;
   right: $width / 2;
   z-index: 999;
 
@@ -15,20 +15,20 @@
 
     color: $color_brand-primary;
     font-size: 14px;
-    
+
     background: $color_bg-light;
     border-radius: 5px;
     border: 1px solid $color_brand-primary--active;
     opacity: 0;
     transition: top .2s, opacity .2s;
 
-    &.error { 
+    &.error {
       color: $color_state-negative--dark;
-      border-color: $color_state-negative; 
+      border-color: $color_state-negative;
     }
 
     &.active {
-      top: -30px; 
+      top: -26px;
 
       opacity: 1;
       transition: top .2s, opacity .2s;
