@@ -169,9 +169,38 @@ export default class extends Component {
     const devType = this.get('developmentType');
     this.sendAction('updateDevelopmentType', devType);
     if (devType == 'residential') {
-      this.sendAction('updateEditing', { [fieldName]: edited });
+      const setCommercial = {
+        commsf: 0,
+        hotelrms: 0,
+        retSqft: 0,
+        ofcmdSqft: 0,
+        indmfSqft: 0,
+        whsSqft: 0,
+        rndSqft: 0,
+        eiSqft: 0,
+        otherSqft: 0,
+        hotelSqft: 0,
+        publicsqft: 0,
+      };
+      this.sendAction('updateEditing', setCommercial);
+      this.set('proposedChanges',
+          Object.assign({}, this.get('proposedChanges'), setCommercial));
     } else if (devType == 'commercial') {
-      this.sendAction('updateEditing', { [fieldName]: edited });
+      const setResidential = {
+        hu: 0,
+        singfamhu: 0,
+        smmultifam: 0,
+        lgmultifam: 0,
+        affrdUnit: 0,
+        affU30: 0,
+        aff3050: 0,
+        aff5080: 0,
+        aff80p: 0,
+        gqpop: 0,
+      };
+      this.sendAction('updateEditing', setResidential);
+      this.set('proposedChanges',
+          Object.assign({}, this.get('proposedChanges'), setResidential));
     }
 
   }
@@ -320,7 +349,7 @@ export default class extends Component {
     const fulfilled = criteria.every(criterion => {
       if (Array.isArray(criterion)) {
         return criterion.some(subcriterion => {
-          this.valueExists(this.get(`editing.${subcriterion}`));
+          return this.valueExists(this.get(`editing.${subcriterion}`));
         });
       }
       return this.valueExists(this.get(`editing.${criterion}`));
