@@ -28,6 +28,11 @@ export default class extends Controller {
     this.set('_editing', Object.assign({}, this.get('editing'), partial));
   }
 
+  @action
+  updateDevelopmentType(devType) {
+    this.set('developmentType', devType);
+  }
+
 
   @computed('currentUser.user.role')
   get hasPublishPermissions() {
@@ -65,6 +70,7 @@ export default class extends Controller {
       .then(development => {
         this.get('map').add(development);
         this.set('_editing', null);
+        this.set('developmentType', null);
         this.get('notifications').show(`You have created a new development called ${data.name}.`);
         this.transitionToRoute('map.developments.development', development);
       })
@@ -100,6 +106,7 @@ export default class extends Controller {
         .save()
         .then(() => {
           this.set('_editing', null);
+          this.set('developmentType', null);
           this.get('notifications').show(`You have created a new development. It may be published after review from a moderator.`);
           this.transitionToRoute('map.moderations.for.user', this.get('currentUser.user.id'));
         })
