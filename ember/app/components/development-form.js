@@ -54,23 +54,36 @@ export default class extends Component {
       'hu',
       'commsf',
       'descr',
-    ];
-
-    const proposed = [
-      ...base,
-      'singfamhu', 'smmultifam', 'lgmultifam',
+      'singfamhu',
+      'smmultifam',
+      'lgmultifam',
+      'unknownhu',
+      'retSqft',
+      'ofcmdSqft',
+      'indmfSqft',
+      'whsSqft',
+      'rndSqft',
+      'eiSqft',
+      'otherSqft',
+      'hotelSqft',
+      'unkSqft',
     ];
 
     const groundBroken = [
-      ...proposed,
-      'affrdUnit', 'affU30', 'aff3050', 'aff5080', 'aff80p', 'gqpop', 'retSqft',
-      'ofcmdSqft', 'indmfSqft', 'whsSqft', 'rndSqft', 'eiSqft',
-      'otherSqft', 'hotelSqft', 'hotelrms', 'publicsqft',
+      ...base,
+      'affrdUnit',
+      'affU30',
+      'aff3050',
+      'aff5080',
+      'aff80p',
+      'gqpop',
+      'hotelrms',
+      'publicsqft',
     ];
 
     this.lastEdit = Date.now();
 
-    this.criteria = { base, proposed, groundBroken };
+    this.criteria = { base, groundBroken };
 
     Ember.run.later(this, () => this.updateFieldRequirements(), 500);
     const lng = this.get('editing.longitude');
@@ -169,13 +182,6 @@ export default class extends Component {
     );
   }
 
-
-  @computed('editing.status')
-  get isProposed() {
-    return this.get('editing.status') === 'planning';
-  }
-
-
   sumProperties() {
     const properties = this.getProperties(...arguments);
 
@@ -246,9 +252,6 @@ export default class extends Component {
 
     if (this.get('isGroundBroken')) {
       criteria = this.get('criteria.groundBroken');
-    }
-    else if (this.get('isProposed')) {
-      criteria = this.get('criteria.proposed');
     }
     else {
       criteria = this.get('criteria.base');
