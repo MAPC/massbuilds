@@ -28,6 +28,11 @@ export default class extends Controller {
     this.set('_editing', Object.assign({}, this.get('editing'), partial));
   }
 
+  @action
+  updateDevelopmentType(devType) {
+    this.set('developmentType', devType);
+  }
+
 
   @computed('currentUser.user.role')
   get hasPublishPermissions() {

@@ -56,21 +56,80 @@ export default class extends Component {
       'descr',
     ];
 
+    const projected = [
+      ...base,
+      // One of housing unit types
+      [
+        'singfamhu',
+        'smmultifam',
+        'lgmultifam',
+        'unknownhu',
+      ],
+      // One of commercial unit types
+      [
+        'retSqft',
+        'ofcmdSqft',
+        'indmfSqft',
+        'whsSqft',
+        'rndSqft',
+        'eiSqft',
+        'otherSqft',
+        'hotelSqft',
+        'unkSqft',
+      ],
+    ];
+
     const proposed = [
       ...base,
-      'singfamhu', 'smmultifam', 'lgmultifam',
+      // Housing unit types
+      'singfamhu',
+      'smmultifam',
+      'lgmultifam',
+      // One of commercial unit types
+      [
+        'retSqft',
+        'ofcmdSqft',
+        'indmfSqft',
+        'whsSqft',
+        'rndSqft',
+        'eiSqft',
+        'otherSqft',
+        'hotelSqft',
+        'unkSqft',
+      ],
     ];
 
     const groundBroken = [
-      ...proposed,
-      'affrdUnit', 'affU30', 'aff3050', 'aff5080', 'aff80p', 'gqpop', 'retSqft',
-      'ofcmdSqft', 'indmfSqft', 'whsSqft', 'rndSqft', 'eiSqft',
-      'otherSqft', 'hotelSqft', 'hotelrms', 'publicsqft',
+      ...base,
+      // Housing unit types
+      'singfamhu',
+      'smmultifam',
+      'lgmultifam',
+      // Affordable units
+      'affrdUnit',
+      'affU30',
+      'aff3050',
+      'aff5080',
+      'aff80p',
+      // Counts
+      'gqpop',
+      'hotelrms',
+      // Commercial area
+      'retSqft',
+      'ofcmdSqft',
+      'indmfSqft',
+      'whsSqft',
+      'rndSqft',
+      'eiSqft',
+      'otherSqft',
+      'hotelSqft',
+      // Other area
+      'publicsqft',
     ];
 
     this.lastEdit = Date.now();
 
-    this.criteria = { base, proposed, groundBroken };
+    this.criteria = { base, projected, proposed, groundBroken };
 
     Ember.run.later(this, () => this.updateFieldRequirements(), 500);
     const lng = this.get('editing.longitude');
@@ -105,27 +164,37 @@ export default class extends Component {
     this.updateFieldRequirements();
   }
 
+  @action
+  handleDevTypeChange() {
+    const devType = this.get('developmentType');
+    this.sendAction('updateDevelopmentType', devType);
+
+  }
+
 
   @action
   updateFieldRequirements() {
     const criteria = this.getCriteria();
-    const notRequired = this.get('criteria.groundBroken').filter(crit => criteria.indexOf(crit) === -1);
 
     const selectLabel = x => document.querySelector(`label[for="${x}"]`);
 
-    criteria.forEach(crit => {
-      const elem = selectLabel(crit);
+    const allCriteria = this.get('criteria.groundBroken');
 
-      if (elem) {
-        elem.classList.add('required');
-      }
-    });
-
-    notRequired.forEach(field => {
+    allCriteria.forEach(field => {
       const elem = selectLabel(field);
 
       if (elem) {
         elem.classList.remove('required');
+      }
+    });
+
+    criteria.forEach(crit => {
+      if (!Array.isArray(crit)) {
+        const elem = selectLabel(crit);
+
+        if (elem) {
+          elem.classList.add('required');
+        }
       }
     });
   }
@@ -157,24 +226,6 @@ export default class extends Component {
   findPosition() {
     this.get('map').returnToPoint();
   }
-
-
-  @computed('editing.status')
-  get isGroundBroken() {
-    const status = this.get('editing.status');
-
-    return (
-      status === 'completed'
-      || status === 'in_construction'
-    );
-  }
-
-
-  @computed('editing.status')
-  get isProposed() {
-    return this.get('editing.status') === 'planning';
-  }
-
 
   sumProperties() {
     const properties = this.getProperties(...arguments);
@@ -215,6 +266,7 @@ export default class extends Component {
 
     // Send updates to controller state
     this.sendAction('updateEditing', { [fieldName]: edited });
+    this.set(`editing.${fieldName}`, edited);
 
     // If value changed, set proposedChanges
     if ((
@@ -240,50 +292,53 @@ export default class extends Component {
     this.checkCriteria();
   }
 
-
   getCriteria() {
-    let criteria = null;
-
-    if (this.get('isGroundBroken')) {
-      criteria = this.get('criteria.groundBroken');
+    const status = this.get('editing.status');
+    if (status === 'completed' || status === 'in_construction') {
+      return this.get('criteria.groundBroken');
+    } else if (status == 'planning') {
+      return this.get('criteria.proposed');
+    } else if (status == 'projected') {
+      return this.get('criteria.projected');
+    } else {
+      return this.get('criteria.base');
     }
-    else if (this.get('isProposed')) {
-      criteria = this.get('criteria.proposed');
-    }
-    else {
-      criteria = this.get('criteria.base');
-    }
-
-    return criteria;
   }
 
+  valueExists(val) {
+    return (val !== null && val !== undefined && val !== '');
+  }
 
   checkCriteria() {
     const criteria = this.getCriteria();
 
     const fulfilled = criteria.every(criterion => {
-      const val = this.get(`editing.${criterion}`);
-      return (
-        val !== null
-        && val !== undefined
-        && val !== ''
-      );
+      if (Array.isArray(criterion)) {
+        return criterion.some(subcriterion => {
+          this.valueExists(this.get(`editing.${subcriterion}`));
+        });
+      }
+      return this.valueExists(this.get(`editing.${criterion}`));
     });
 
     this.set('fulfilled', fulfilled);
   }
 
   @computed('lastEdit')
-  inValid() {
+  get inValid() {
     const validations = {};
     const criteria = this.getCriteria();
     criteria.forEach((criterion) => {
-      const val = this.get(`editing.${criterion}`);
-      validations[criterion] = (
-        val === null
-        || val === undefined
-        || val === ''
-      );
+      if (Array.isArray(criterion)) {
+        const atLeastOne = criterion.some(subcriterion =>
+          this.valueExists(this.get(`editing.${subcriterion}`))
+        );
+        criterion.forEach(subcriterion => {
+          validations[subcriterion] = !atLeastOne;
+        });
+      } else {
+        validations[criterion] = !this.valueExists(this.get(`editing.${criterion}`));
+      }
     });
     return validations;
   }

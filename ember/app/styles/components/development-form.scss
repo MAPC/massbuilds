@@ -157,4 +157,27 @@
     color: $color_state-negative;
     text-align: right;
   }
+
+  .decision-row {
+    padding: 15px;
+    margin: 25px 0;
+    display: flex;
+    background: mix($color_bg-light--active, $color_brand-primary, 90);
+    label {
+      margin-right: 15px;
+    }
+    .options {
+      & > * {
+        display: block;
+      }
+    }
+    &.invalid {
+      background: mix($color_bg-light--active, $color_highlight, 80);
+    }
+  }
+  .res-comm-placeholder {
+    padding: 40px 15px;
+    background-color: $color_bg-light--active;
+    text-align: center;
+  }
 }
