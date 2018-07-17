@@ -28,9 +28,8 @@ module Massbuilds
     known_hosts = [
       'http://localhost:4200',
       'https://staging.massbuilds.com',
-      'http://launch.ericyoungberg.com',
-      'https://launch.ericyoungberg.com',
-      'https://massbuilds.com'
+      'https://massbuilds.com',
+      'https://www.massbuilds.com',
     ]
 
     config.middleware.insert_before 0, Rack::Cors do
