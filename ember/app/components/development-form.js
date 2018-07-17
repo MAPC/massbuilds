@@ -16,7 +16,6 @@ export default class extends Component {
 
     this.changes = false;
     this.proposedChanges = {};
-    this.editing = this.get('model').toJSON();
     this.filters = filters;
     this.fulfilled = false;
 
@@ -74,6 +73,12 @@ export default class extends Component {
     this.criteria = { base, proposed, groundBroken };
 
     Ember.run.later(this, () => this.updateFieldRequirements(), 500);
+    const lng = this.get('editing.longitude');
+    const lat = this.get('editing.latitude');
+    if (lng && lat && lng != 0 && lat != 0) {
+      this.set('map.jumpToSelectedCoordinates', true);
+      this.set('map.selectedCoordinates', [lng, lat])
+    }
     this.get('map').addObserver('selectedCoordinates', this, 'updateCoordinates');
   }
 
@@ -83,10 +88,8 @@ export default class extends Component {
 
   updateCoordinates(mapService) {
     const coordinates = mapService.get('selectedCoordinates');
-    this.set('editing.longitude', coordinates[0]);
-    this.set('editing.latitude', coordinates[1]);
-    this.checkForUpdated('latitude');
-    this.checkForUpdated('longitude');
+    this.handleUpdate('latitude', coordinates[1]);
+    this.handleUpdate('longitude', coordinates[0]);
   }
 
 
@@ -98,7 +101,7 @@ export default class extends Component {
 
   @action
   updateStatus() {
-    this.checkForUpdated('status');
+    this.handleUpdate('status');
     this.updateFieldRequirements();
   }
 
@@ -130,30 +133,23 @@ export default class extends Component {
 
   @action
   updateHu(fieldName) {
-    this.checkForUpdated(fieldName);
-
-    this.set('editing.hu', this.sumProperties(...this.get('huFields'), 'editing.unknownhu'));
-    this.checkForUpdated('hu');
+    this.handleUpdate(fieldName);
+    this.handleUpdate('hu', this.sumProperties(...this.get('huFields'), 'editing.unknownhu'));
   }
 
 
   @action
   updateAffrdUnit(fieldName) {
-    this.checkForUpdated(fieldName);
-
-    this.set('editing.affrdUnit', this.sumProperties(...this.get('affrdUnitFields'), 'editing.affUnknown'));
-    this.checkForUpdated('affrdUnit');
+    this.handleUpdate(fieldName);
+    this.handleUpdate('affrdUnit', this.sumProperties(...this.get('affrdUnitFields'), 'editing.affUnknown'));
   }
 
 
   @action
   updateCommsf(fieldName) {
-    this.checkForUpdated(fieldName);
-
+    this.handleUpdate(fieldName);
     const sum = this.sumProperties(...this.get('commsfFields'), 'editing.unkSqft');
-
-    this.set('editing.commsf', sum);
-    this.checkForUpdated('commsf');
+    this.handleUpdate('commsf', sum);
   }
 
 
@@ -194,38 +190,40 @@ export default class extends Component {
     }
   }
 
-
+  @action
   checkForUpdated(fieldName) {
-    const modeled = this.get(`model.${fieldName}`);
-    let edited = this.get(`editing.${fieldName}`);
+    this.handleUpdate(fieldName)
+  }
 
+  handleUpdate(fieldName, calculatedValue) {
+    const modeled = this.get(`model.${fieldName}`);
+    let edited = calculatedValue || this.get(`editing.${fieldName}`);
+
+    // Adjust values if nonstandard
     if (fieldName === 'status') {
       edited = document.querySelector(`select[name="${fieldName}"]`).value;
-      this.set(`editing.${fieldName}`, edited);
     }
     else if (fieldName === 'parkType') {
       edited = Array.from(document.querySelectorAll(`input.field-${fieldName}`))
                     .filter(x => x.checked)
                     .map(x => x.name);
-
       this.set('selectedParkTypes', edited);
-      this.set(`editing.${fieldName}`, edited.join(','));
     }
-
     if (typeof edited === 'boolean') {
       edited = !edited;
     }
 
-    if (
-      (
-        modeled === undefined
-        && (edited !== '' && edited !== null && edited !== undefined)
-      )
-      || (
-        modeled !== undefined
-        && String(modeled) !== String(edited)
-      )
-    ) {
+    // Send updates to controller state
+    this.sendAction('updateEditing', { [fieldName]: edited });
+
+    // If value changed, set proposedChanges
+    if ((
+      modeled === undefined
+      && (edited !== '' && edited !== null && edited !== undefined)
+    ) || (
+      modeled !== undefined
+      && String(modeled) !== String(edited)
+    )) {
       this.set(`proposedChanges.${fieldName}`, edited);
       this.set('changes', true);
     }

@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import { statusOptions } from 'massbuilds/utils/status-colors';
+import { capitalize } from 'massbuilds/helpers/capitalize';
 import Development from 'massbuilds/models/development';
 const { decamelize } = Ember.String;
 
@@ -64,9 +65,9 @@ const filters = {
   // Residential
 
   'hu': { name: 'Total housing units', glossaryKey: 'HOUSING_UNITS', type: 'number', ...defaultMetric },
-  'singfamhu': { name: 'Single-family units', type: 'number', ...defaultMetric },
-  'smmultifam': { name: 'Small multifamily units', type: 'number', ...defaultMetric },
-  'lgmultifam': { name: 'Large multifamily units', type: 'number', ...defaultMetric },
+  'singfamhu': { name: 'Single-family units', glossaryKey: 'SINGLE_FAMILY', type: 'number', ...defaultMetric },
+  'smmultifam': { name: 'Small multifamily units', glossaryKey: 'SMALL_MULTI_FAMILY', type: 'number', ...defaultMetric },
+  'lgmultifam': { name: 'Large multifamily units', glossaryKey: 'LARGE_MULTI_FAMILY', type: 'number', ...defaultMetric },
   'units1bd': { name: 'Studio/1 bedroom units', type: 'number', ...defaultMetric },
   'units2bd': { name: '2 Bedroom units', type: 'number', ...defaultMetric },
   'units3bd': { name: '3 Bedroom units', type: 'number', ...defaultMetric },
@@ -251,6 +252,10 @@ const fromQueryParams = params => {
       newParams[key].value = parseInt(num);
     }
     else {
+      if (_key === 'municipal') {
+        value = value.map(capitalize);
+      }
+
       newParams[key].value = value;
     }
   });

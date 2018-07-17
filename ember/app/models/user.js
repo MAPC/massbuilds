@@ -25,4 +25,10 @@ export default class extends DS.Model {
     return `${firstName} ${lastName}`;
   }
 
+  @computed('firstName', 'lastName', 'email')
+  get displayName() {
+    const { fullName, email } = this.getProperties('fullName', 'email');
+    return email.endsWith('mapc.org') ? 'MAPC Staff' : fullName;
+  }
+
 }

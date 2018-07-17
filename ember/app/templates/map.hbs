@@ -1,10 +1,11 @@
 <section class='route map'>
+  {{welcome-modal}}
   {{click-catcher}}
   <!-- floating components -->
 
   <div class="top-right-buttons {{if showingMenu 'active'}}">
     <button class="toggler menu-toggler" onclick={{action toggleMenu}}>
-      <span class="hamburger"></span>
+      <span class="hamburger {{if showingMenu 'active'}}"></span>
     </button>
   </div>
 
@@ -26,33 +27,32 @@
       {{/if}}
 
     <div class="search-wrapper {{if (not (and showingLeftPanel showingMenu)) 'active'}}">
-      {{#if showingGoto}}
-        {{goto-bar
-          searchQuery=searchQuery
-          disabled=(and showingLeftPanel showingMenu)
-        }}
-      {{else}}
-        <div class="filter-actions">
-          <button onclick={{action toggleFilters}} class="filter-toggler {{if showingFilters 'active'}} {{if filtering 'filtering'}}">
-            <img src="/assets/images/filter.svg">
-          </button>
-          <button onclick={{action clearFilters}} class="clear-filters {{unless filtering 'disabled'}}">
-            X
-          </button>
-        </div>
+      <div class="filter-actions">
+        <button
+          onclick={{action toggleFilters}}
+          class="filter-toggler {{if showingFilters 'active'}} {{if filtering 'filtering'}}"
+          disabled={{showingGoto}}>
+          <img src="/assets/images/filter.svg">
+        </button>
+        <button
+          onclick={{action clearFilters}}
+          class="clear-filters {{unless filtering 'disabled'}}"
+          disabled={{showingGoto}}>
+          X
+        </button>
+      </div>
 
-        {{search-bar
-          addDiscreteFilter=(action addDiscreteFilter)
-          viewDevelopment=(action viewDevelopment)
-          searchQuery=searchQuery
-          placeholder=searchPlaceholder
-          showFiltersActive=(and activeFilters (not showingFilters))
-          numberOfActiveFilters=activeFilters.length
-          toggleFilters=(action toggleFilters)
-          model=map.stored
-          disabled=(and showingLeftPanel showingMenu)
-        }}
-      {{/if}}
+      {{search-bar
+        addDiscreteFilter=(action addDiscreteFilter)
+        viewDevelopment=(action viewDevelopment)
+        searchQuery=searchQuery
+        placeholder=searchPlaceholder
+        showFiltersActive=(and activeFilters (not showingFilters))
+        numberOfActiveFilters=activeFilters.length
+        toggleFilters=(action toggleFilters)
+        model=map.stored
+        disabled=(and showingLeftPanel showingMenu)
+      }}
     </div>
     <div class="legend-wrapper">
       {{map-legend showing=showingFilters}}
@@ -113,6 +113,15 @@
         hidden=(and showingLeftPanel showingMenu)
       }}
     {{/if}}
+    <footer>
+      <img src="/assets/images/mapc-logo-blue.svg">
+      <div class="mapc-details">
+        <span><b>Metropolitan Area Planning Council</b></span>
+        <span>60 Temple Pl., Boston, MA 02111</span>
+        <a href="tel:6174512770">617-451-2770</a>
+        <a href="mailto:massbuilds@mapc.org">massbuilds@mapc.org</a>
+      </div>
+    </footer>
   </div>
 
 </section>

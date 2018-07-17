@@ -1,5 +1,9 @@
 .component.search-bar {
-
+  width: 354px;
+  @include media('larger') { width: 320px; }
+  @include media('large') { width: 320px; }
+  @include media('medium') { width: 300px; }
+  @include media('medium-small') { width: 260px; }
   .search-icon {
     @extend ._vertical-center;
     top: 48%;
@@ -12,11 +16,7 @@
   }
 
   input.search-input {
-    width: 354px;
-    @include media('larger') { width: 320px; }
-    @include media('large') { width: 320px; }
-    @include media('medium') { width: 300px; }
-    @include media('medium-small') { width: 260px; }
+    width: 100%;
     padding: 8px 12px;
     padding-left: 32px;
 
@@ -114,6 +114,11 @@
       font-size: 13px;
 
       background: $color_bg-medium;
+      cursor: default;
+    }
+
+    &.loading {
+      font-size: 13px;
       cursor: default;
     }
 

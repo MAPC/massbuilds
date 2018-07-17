@@ -1,21 +1,25 @@
 .route.users-verify {
 
-  width: 860px;
+  width: 100%;
+  padding: 10px 20px;
 
   ul.item-list {
     li {
       & > div {
-        &:first-of-type { 
-          flex: 1 0 30%; 
+        &:not(:last-child) {
+          margin-right: 5px;
+        }
+        &:first-of-type {
+          flex: 0 0 calc(30% - 25px);
 
           font-weight: 600;
-        } 
-        &:nth-of-type(2) { flex: 1 0 30%; } 
-        &:nth-of-type(3) { flex: 1 0 20%; } 
-        &:nth-of-type(4) { flex: 1 0 10%; } 
-        &:nth-of-type(5) { flex: 1 0 10%; } 
+        }
+        &:nth-of-type(2) { flex: 0 0 30%; }
+        &:nth-of-type(3) { flex: 0 0 20%; }
+        &:nth-of-type(4) { flex: 0 0 10%; }
+        &:nth-of-type(5) { flex: 0 0 10%; }
       }
-    }  
+    }
   }
 
 }

@@ -8,10 +8,13 @@ export default class extends Route.extend(AuthenticatedRouteMixin) {
   @service map
 
   activate(transition) {
-    this.get('map').setSelectionMode(true);
+    this.get('map').set('showingLeftPanel', true);
+    this.get('map').set('markerVisible', true);
+    this.get('map').set('followMode', true);
   }
 
   deactivate(transition) {
-    this.get('map').setSelectionMode(false);
+    this.get('map').set('followMode', false);
+    this.get('map').set('markerVisible', false);
   }
 }
