@@ -168,6 +168,11 @@ export default class extends Component {
   handleDevTypeChange() {
     const devType = this.get('developmentType');
     this.sendAction('updateDevelopmentType', devType);
+    if (devType == 'residential') {
+      this.sendAction('updateEditing', { [fieldName]: edited });
+    } else if (devType == 'commercial') {
+      this.sendAction('updateEditing', { [fieldName]: edited });
+    }
 
   }
 
