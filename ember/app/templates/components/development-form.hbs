@@ -10,7 +10,7 @@
     {{else}}
       {{#link-to 'map'}}
         <img src="/assets/images/chevrons-left.svg">
-        Cancel
+        Close and save
       {{/link-to}}
     {{/if}}
 
@@ -42,6 +42,7 @@
         {{input
           id="development_latitude"
           value=(to-fixed editing.latitude 6)
+          class=(if inValid.latitude 'invalid')
           placeholder="Latitude"
           readonly="readonly"
         }}
@@ -49,6 +50,7 @@
         {{input
           id="development_longitude"
           value=(to-fixed editing.longitude 6)
+          class=(if inValid.longitude 'invalid')
           placeholder="Longitude"
           readonly="readonly"
         }}
@@ -264,587 +266,635 @@
         </p>
       </article>
 
-      <article>
-        <h4>Residential</h4>
-
-        <div class="row">
-          <div class="column">
-            <div class="field">
-              <label for="gqpop">
-                {{defined-term key='GROUP_QUARTERS_POPULATION'}}
-              </label>
-              {{input
-                class=(if inValid.gqpop 'invalid')
-                value=editing.gqpop
-                placeholder="Enter here"
-                input=(action checkForUpdated 'gqpop')}}
-            </div>
-          </div>
-          <div class="column">
+      {{#if developmentTypeEnabled}}
+        <div class={{if developmentType 'decision-row' 'decision-row invalid'}}>
+          <label>
+            Development Type
+          </label>
+          <div class="options">
+            {{#radio-button
+              value="residential"
+              groupValue=developmentType
+              changed=(action handleDevTypeChange)
+            }}
+              <span>Residential</span>
+            {{/radio-button}}
+            {{#radio-button
+              value="commercial"
+              groupValue=developmentType
+              changed=(action handleDevTypeChange)
+            }}
+              <span>Commercial</span>
+            {{/radio-button}}
+            {{#radio-button
+              value="both"
+              groupValue=developmentType
+              changed=(action handleDevTypeChange)
+            }}
+              <span>Both Residential and Commercial</span>
+            {{/radio-button}}
           </div>
         </div>
+      {{/if}}
 
-        <p class="attributes">
-          <label>Attributes:</label>
+      {{#if (and developmentTypeEnabled (not developmentType))}}
+        <div class="res-comm-placeholder">
+          <span>Please select a development type to continue</span>
+        </div>
+      {{/if}}
 
-          <span>
-            <label for="ovr55">
-              {{defined-term key='AGE_RESTRICTED'}}
-            </label>
-            {{input type='checkbox' checked=editing.ovr55 click=(action checkForUpdated 'ovr55')}}
-          </span>
-        </p>
+      {{#if (or (not developmentTypeEnabled) (or (eq developmentType 'residential') (eq developmentType 'both')))}}
+        <article>
+          <h4>Residential</h4>
 
-        <div class="table-wrapper">
-          <div class="table-heading">
-            <h3 class="field">
-              <label for="hu" class="required">
-                {{defined-term key='HOUSING_UNITS'}}
-              </label>
-            </h3>
+          <div class="row">
+            <div class="column">
+              <div class="field">
+                <label for="gqpop">
+                  {{defined-term key='GROUP_QUARTERS_POPULATION'}}
+                </label>
+                {{input
+                  class=(if inValid.gqpop 'invalid')
+                  value=editing.gqpop
+                  placeholder="Enter here"
+                  input=(action checkForUpdated 'gqpop')}}
+              </div>
+            </div>
+            <div class="column">
+            </div>
+          </div>
+
+          <p class="attributes">
+            <label>Attributes:</label>
+
             <span>
-              {{#if (and (not-eq editing.hu null) (gte editing.hu 0))}}
-                <em>{{editing.hu}} Unit{{unless (eq editing.hu 1) 's'}}</em>
-              {{else}}
-                <em>Enter quantity of each unit type below</em>
-              {{/if}}
-            </span>
-          </div>
-          <table class="housing-units">
-            <tr class="table-header">
-              <td>Unit Type</td>
-              <td>Quantity</td>
-              <td>Percentage</td>
-            </tr>
-
-            <tr>
-              <td>
-                <label for="singfamhu">{{defined-term key="SINGLE_FAMILY"}}</label>
-              </td>
-              <td>
-                {{input
-                  class=(if inValid.singfamhu 'invalid')
-                  value=editing.singfamhu
-                  placeholder='-'
-                  input=(action updateHu 'singfamhu')}}
-              </td>
-              <td>
-                {{#if (gt editing.hu 0)}}
-                  {{round (mult 100 (div editing.singfamhu editing.hu))}}%
-                {{else}}
-                  0%
-                {{/if}}
-              </td>
-            </tr>
-
-            <tr>
-              <td>
-                <label for="smmultifam">{{defined-term key="SMALL_MULTI_FAMILY"}}</label>
-              </td>
-              <td>
-                {{input
-                  class=(if inValid.smmultifam 'invalid')
-                  value=editing.smmultifam
-                  placeholder='-'
-                  input=(action updateHu 'smmultifam')}}
-              </td>
-              <td>
-                {{#if (gt editing.hu 0)}}
-                  {{round (mult 100 (div editing.smmultifam editing.hu))}}%
-                {{else}}
-                  0%
-                {{/if}}
-              </td>
-            </tr>
-
-            <tr>
-              <td>
-                <label for="lgmultifam">{{defined-term key="LARGE_MULTI_FAMILY"}}</label>
-              </td>
-              <td>
-                {{input
-                  class=(if inValid.lgmultifam 'invalid')
-                  value=editing.lgmultifam
-                  placeholder='-'
-                  input=(action updateHu 'lgmultifam')}}
-              </td>
-              <td>
-                {{#if (gt editing.hu 0)}}
-                  {{round (mult 100 (div editing.lgmultifam editing.hu))}}%
-                {{else}}
-                  0%
-                {{/if}}
-              </td>
-            </tr>
-
-            <tr>
-              <td>{{defined-term key="UNKNOWN_HOUSING_UNITS"}}</td>
-              <td>
-                {{input
-                  class=(if inValid.unknownhu 'invalid')
-                  value=editing.unknownhu
-                  placeholder='-'
-                  input=(action updateHu 'unknownhu')}}
-              </td>
-              <td>
-                {{#if (gt editing.hu 0)}}
-                  {{round (mult 100 (div editing.unknownhu editing.hu))}}%
-                {{else}}
-                  0%
-                {{/if}}
-              </td>
-            </tr>
-          </table>
-          <table class="housing-units">
-            <tr class="table-header">
-              <td>Unit Style</td>
-              <td>Quantity</td>
-              <td>Percentage</td>
-            </tr>
-            <tr>
-              <td><label for="units1bd">Studio/1 Bedroom</label></td>
-              <td>
-                {{input
-                  class=(if inValid.units1bd 'invalid')
-                  value=editing.units1bd
-                  placeholder='-'
-                  input=(action updateHu 'units1bd')}}
-              </td>
-              <td>
-                {{#if (gt editing.hu 0)}}
-                  {{round (mult 100 (div editing.units1bd editing.hu))}}%
-                {{else}}
-                  0%
-                {{/if}}
-              </td>
-            </tr>
-
-            <tr>
-              <td><label for="units2bd">2 Bedroom</label></td>
-              <td>
-                {{input
-                  class=(if inValid.units2bd 'invalid')
-                  value=editing.units2bd
-                  placeholder='-'
-                  input=(action updateHu 'units2bd')}}
-              </td>
-              <td>
-                {{#if (gt editing.hu 0)}}
-                  {{round (mult 100 (div editing.units2bd editing.hu))}}%
-                {{else}}
-                  0%
-                {{/if}}
-              </td>
-            </tr>
-
-            <tr>
-              <td><label for="units3bd">3 Bedroom</label></td>
-              <td>
-                {{input
-                  class=(if inValid.units3bd 'invalid')
-                  value=editing.units3bd
-                  placeholder='-'
-                  input=(action updateHu 'units3bd')}}
-              </td>
-              <td>
-                {{#if (gt editing.hu 0)}}
-                  {{round (mult 100 (div editing.units3bd editing.hu))}}%
-                {{else}}
-                  0%
-                {{/if}}
-              </td>
-            </tr>
-          </table>
-        </div>
-
-        <div class="table-wrapper">
-          <div class="table-heading">
-            <h3 class="field">
-              <label for="affrdUnit">
-                {{defined-term key='AFFORDABLE_UNITS'}}
+              <label for="ovr55">
+                {{defined-term key='AGE_RESTRICTED'}}
               </label>
-            </h3>
+              {{input type='checkbox' checked=editing.ovr55 click=(action checkForUpdated 'ovr55')}}
+            </span>
+          </p>
+
+          <div class="table-wrapper">
+            <div class="table-heading">
+              <h3 class="field">
+                <label for="hu" class="required">
+                  {{defined-term key='HOUSING_UNITS'}}
+                </label>
+              </h3>
+              <span>
+                {{#if (and (not-eq editing.hu null) (gte editing.hu 0))}}
+                  <em>{{editing.hu}} Unit{{unless (eq editing.hu 1) 's'}}</em>
+                {{else}}
+                  <em>Enter quantity of each unit type below</em>
+                {{/if}}
+              </span>
+            </div>
+            <table class="housing-units">
+              <tr class="table-header">
+                <td>Unit Type</td>
+                <td>Quantity</td>
+                <td>Percentage</td>
+              </tr>
+
+              <tr>
+                <td>
+                  <label for="singfamhu">{{defined-term key="SINGLE_FAMILY"}}</label>
+                </td>
+                <td>
+                  {{input
+                    class=(if inValid.singfamhu 'invalid')
+                    value=editing.singfamhu
+                    placeholder='-'
+                    input=(action updateHu 'singfamhu')}}
+                </td>
+                <td>
+                  {{#if (gt editing.hu 0)}}
+                    {{round (mult 100 (div editing.singfamhu editing.hu))}}%
+                  {{else}}
+                    0%
+                  {{/if}}
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <label for="smmultifam">{{defined-term key="SMALL_MULTI_FAMILY"}}</label>
+                </td>
+                <td>
+                  {{input
+                    class=(if inValid.smmultifam 'invalid')
+                    value=editing.smmultifam
+                    placeholder='-'
+                    input=(action updateHu 'smmultifam')}}
+                </td>
+                <td>
+                  {{#if (gt editing.hu 0)}}
+                    {{round (mult 100 (div editing.smmultifam editing.hu))}}%
+                  {{else}}
+                    0%
+                  {{/if}}
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <label for="lgmultifam">{{defined-term key="LARGE_MULTI_FAMILY"}}</label>
+                </td>
+                <td>
+                  {{input
+                    class=(if inValid.lgmultifam 'invalid')
+                    value=editing.lgmultifam
+                    placeholder='-'
+                    input=(action updateHu 'lgmultifam')}}
+                </td>
+                <td>
+                  {{#if (gt editing.hu 0)}}
+                    {{round (mult 100 (div editing.lgmultifam editing.hu))}}%
+                  {{else}}
+                    0%
+                  {{/if}}
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <label for="unknownhu">
+                    {{defined-term key="UNKNOWN_HOUSING_UNITS"}}
+                  </label>
+                </td>
+                <td>
+                  {{input
+                    class=(if inValid.unknownhu 'invalid')
+                    value=editing.unknownhu
+                    placeholder='-'
+                    input=(action updateHu 'unknownhu')}}
+                </td>
+                <td>
+                  {{#if (gt editing.hu 0)}}
+                    {{round (mult 100 (div editing.unknownhu editing.hu))}}%
+                  {{else}}
+                    0%
+                  {{/if}}
+                </td>
+              </tr>
+            </table>
+            <table class="housing-units">
+              <tr class="table-header">
+                <td>Unit Style</td>
+                <td>Quantity</td>
+                <td>Percentage</td>
+              </tr>
+              <tr>
+                <td><label for="units1bd">Studio/1 Bedroom</label></td>
+                <td>
+                  {{input
+                    class=(if inValid.units1bd 'invalid')
+                    value=editing.units1bd
+                    placeholder='-'
+                    input=(action updateHu 'units1bd')}}
+                </td>
+                <td>
+                  {{#if (gt editing.hu 0)}}
+                    {{round (mult 100 (div editing.units1bd editing.hu))}}%
+                  {{else}}
+                    0%
+                  {{/if}}
+                </td>
+              </tr>
+
+              <tr>
+                <td><label for="units2bd">2 Bedroom</label></td>
+                <td>
+                  {{input
+                    class=(if inValid.units2bd 'invalid')
+                    value=editing.units2bd
+                    placeholder='-'
+                    input=(action updateHu 'units2bd')}}
+                </td>
+                <td>
+                  {{#if (gt editing.hu 0)}}
+                    {{round (mult 100 (div editing.units2bd editing.hu))}}%
+                  {{else}}
+                    0%
+                  {{/if}}
+                </td>
+              </tr>
+
+              <tr>
+                <td><label for="units3bd">3 Bedroom</label></td>
+                <td>
+                  {{input
+                    class=(if inValid.units3bd 'invalid')
+                    value=editing.units3bd
+                    placeholder='-'
+                    input=(action updateHu 'units3bd')}}
+                </td>
+                <td>
+                  {{#if (gt editing.hu 0)}}
+                    {{round (mult 100 (div editing.units3bd editing.hu))}}%
+                  {{else}}
+                    0%
+                  {{/if}}
+                </td>
+              </tr>
+            </table>
+          </div>
+
+          <div class="table-wrapper">
+            <div class="table-heading">
+              <h3 class="field">
+                <label for="affrdUnit">
+                  {{defined-term key='AFFORDABLE_UNITS'}}
+                </label>
+              </h3>
+              <span>
+                {{#if (and (not-eq editing.affrdUnit null) (gte editing.affrdUnit 0))}}
+                  <em>{{editing.affrdUnit}} Unit{{unless (eq editing.affrdUnit 1) 's'}}</em>
+                {{else}}
+                  <em>Enter quantity of each unit type below</em>
+                {{/if}}
+              </span>
+            </div>
+
+            <table class="affordable-units">
+              <tr class="table-header">
+                <td>Unit Type</td>
+                <td>Quantity</td>
+                <td>Percentage</td>
+              </tr>
+
+              <tr>
+                <td><label for="affU30">Units &lt;30% AMI</label></td>
+                <td>
+                  {{input
+                    class=(if inValid.affU30 'invalid')
+                    value=editing.affU30
+                    placeholder='-'
+                    input=(action updateAffrdUnit 'affU30')}}
+                </td>
+                <td>
+                  {{#if (gt editing.affrdUnit 0)}}
+                    {{round (mult 100 (div editing.affU30 editing.affrdUnit))}}%
+                  {{else}}
+                    0%
+                  {{/if}}
+                </td>
+              </tr>
+
+              <tr>
+                <td><label for="aff3050">Units 30-50% AMI</label></td>
+                <td>
+                  {{input
+                    class=(if inValid.aff3050 'invalid')
+                    value=editing.aff3050
+                    placeholder='-'
+                    input=(action updateAffrdUnit 'aff3050')}}
+                </td>
+                <td>
+                  {{#if (gt editing.affrdUnit 0)}}
+                    {{round (mult 100 (div editing.aff3050 editing.affrdUnit))}}%
+                  {{else}}
+                    0%
+                  {{/if}}
+                </td>
+              </tr>
+
+              <tr>
+                <td><label for="aff5080">Units 50-80% AMI</label></td>
+                <td>
+                  {{input
+                    class=(if inValid.aff5080 'invalid')
+                    value=editing.aff5080
+                    placeholder='-'
+                    input=(action updateAffrdUnit 'aff5080')}}
+                </td>
+                <td>
+                  {{#if (gt editing.affrdUnit 0)}}
+                    {{round (mult 100 (div editing.aff5080 editing.affrdUnit))}}%
+                  {{else}}
+                    0%
+                  {{/if}}
+                </td>
+              </tr>
+
+              <tr>
+                <td><label for="aff80p">Units 80-100% AMI</label></td>
+                <td>
+                  {{input
+                    class=(if inValid.aff80p 'invalid')
+                    value=editing.aff80p
+                    placeholder='-'
+                    input=(action updateAffrdUnit 'aff80p')}}
+                </td>
+                <td>
+                  {{#if (gt editing.affrdUnit 0)}}
+                    {{round (mult 100 (div editing.aff80p editing.affrdUnit))}}%
+                  {{else}}
+                    0%
+                  {{/if}}
+                </td>
+              </tr>
+
+              <tr>
+                <td>Unknown</td>
+                <td>
+                  {{input
+                    class=(if inValid.affUnknown 'invalid')
+                    value=editing.affUnknown
+                    placeholder='-'
+                    input=(action updateAffrdUnit 'affUnknown')}}
+                </td>
+                <td>
+                  {{#if (gt editing.affrdUnit 0)}}
+                    {{round (mult 100 (div editing.affUnknown editing.affrdUnit))}}%
+                  {{else}}
+                    0%
+                  {{/if}}
+                </td>
+              </tr>
+            </table>
+          </div>
+        </article>
+      {{/if}}
+
+
+      {{#if (or (not developmentTypeEnabled) (or (eq developmentType 'commercial') (eq developmentType 'both')))}}
+        <article>
+          <h4>Commercial</h4>
+
+          <div class="row">
+            <div class="column">
+              <div class="field">
+                <label for="rptdemp">
+                  {{defined-term key='REPORTED_EMPLOYMENT'}}
+                </label>
+                {{input
+                  class=(if inValid.rptdemp 'invalid')
+                  value=editing.rptdemp
+                  placeholder="Enter here"
+                  input=(action checkForUpdated 'rptdemp')}}
+              </div>
+            </div>
+
+            <div class="column">
+              <div class="field">
+                <label for="hotelrms">
+                  {{defined-term key='HOTEL_ROOMS'}}
+                </label>
+                {{input
+                  class=(if inValid.hotelrms 'invalid')
+                  value=editing.hotelrms
+                  placeholder="Enter here"
+                  input=(action checkForUpdated 'hotelrms')}}
+              </div>
+
+              <div class="field">
+                <label for="publicsqft">
+                  {{defined-term key='PUBLIC_AREA'}}
+                </label>
+                {{input
+                  class=(if inValid.publicsqft 'invalid')
+                  value=editing.publicsqft
+                  placeholder="Enter here"
+                  input=(action checkForUpdated 'publicsqft')}}
+              </div>
+            </div>
+          </div>
+
+          <p class="attributes">
+            <label>Attributes:</label>
+
             <span>
-              {{#if (and (not-eq editing.affrdUnit null) (gte editing.affrdUnit 0))}}
-                <em>{{editing.affrdUnit}} Unit{{unless (eq editing.affrdUnit 1) 's'}}</em>
-              {{else}}
-                <em>Enter quantity of each unit type below</em>
-              {{/if}}
+              <label for="headqtrs">
+                {{defined-term key='COMPANY_HEADQUARTERS'}}
+              </label>
+              {{input type='checkbox' checked=editing.headqtrs click=(action checkForUpdated 'headqtrs')}}
             </span>
-          </div>
+          </p>
 
-          <table class="affordable-units">
-            <tr class="table-header">
-              <td>Unit Type</td>
-              <td>Quantity</td>
-              <td>Percentage</td>
-            </tr>
-
-            <tr>
-              <td><label for="affU30">Units &lt;30% AMI</label></td>
-              <td>
-                {{input
-                  class=(if inValid.affU30 'invalid')
-                  value=editing.affU30
-                  placeholder='-'
-                  input=(action updateAffrdUnit 'affU30')}}
-              </td>
-              <td>
-                {{#if (gt editing.affrdUnit 0)}}
-                  {{round (mult 100 (div editing.affU30 editing.affrdUnit))}}%
+          <div class="table-wrapper">
+            <div class="table-heading">
+              <h3 class="field">
+                <label for="commsf" class="required">
+                  {{defined-term key='COMMERCIAL_AREA'}}
+                </label>
+              </h3>
+              <span>
+                {{#if (and (not-eq editing.commsf null) (gte editing.commsf 0))}}
+                  <em>{{editing.commsf}} sqft.</em>
                 {{else}}
-                  0%
+                  <em>Enter the floor area for each use type below</em>
                 {{/if}}
-              </td>
-            </tr>
-
-            <tr>
-              <td><label for="aff3050">Units 30-50% AMI</label></td>
-              <td>
-                {{input
-                  class=(if inValid.aff3050 'invalid')
-                  value=editing.aff3050
-                  placeholder='-'
-                  input=(action updateAffrdUnit 'aff3050')}}
-              </td>
-              <td>
-                {{#if (gt editing.affrdUnit 0)}}
-                  {{round (mult 100 (div editing.aff3050 editing.affrdUnit))}}%
-                {{else}}
-                  0%
-                {{/if}}
-              </td>
-            </tr>
-
-            <tr>
-              <td><label for="aff5080">Units 50-80% AMI</label></td>
-              <td>
-                {{input
-                  class=(if inValid.aff5080 'invalid')
-                  value=editing.aff5080
-                  placeholder='-'
-                  input=(action updateAffrdUnit 'aff5080')}}
-              </td>
-              <td>
-                {{#if (gt editing.affrdUnit 0)}}
-                  {{round (mult 100 (div editing.aff5080 editing.affrdUnit))}}%
-                {{else}}
-                  0%
-                {{/if}}
-              </td>
-            </tr>
-
-            <tr>
-              <td><label for="aff80p">Units 80-100% AMI</label></td>
-              <td>
-                {{input
-                  class=(if inValid.aff80p 'invalid')
-                  value=editing.aff80p
-                  placeholder='-'
-                  input=(action updateAffrdUnit 'aff80p')}}
-              </td>
-              <td>
-                {{#if (gt editing.affrdUnit 0)}}
-                  {{round (mult 100 (div editing.aff80p editing.affrdUnit))}}%
-                {{else}}
-                  0%
-                {{/if}}
-              </td>
-            </tr>
-
-            <tr>
-              <td>Unknown</td>
-              <td>
-                {{input
-                  class=(if inValid.affUnknown 'invalid')
-                  value=editing.affUnknown
-                  placeholder='-'
-                  input=(action updateAffrdUnit 'affUnknown')}}
-              </td>
-              <td>
-                {{#if (gt editing.affrdUnit 0)}}
-                  {{round (mult 100 (div editing.affUnknown editing.affrdUnit))}}%
-                {{else}}
-                  0%
-                {{/if}}
-              </td>
-            </tr>
-          </table>
-        </div>
-      </article>
-
-      <article>
-        <h4>Commercial</h4>
-
-        <div class="row">
-          <div class="column">
-            <div class="field">
-              <label for="rptdemp">
-                {{defined-term key='REPORTED_EMPLOYMENT'}}
-              </label>
-              {{input
-                class=(if inValid.rptdemp 'invalid')
-                value=editing.rptdemp
-                placeholder="Enter here"
-                input=(action checkForUpdated 'rptdemp')}}
-            </div>
-          </div>
-
-          <div class="column">
-            <div class="field">
-              <label for="hotelrms">
-                {{defined-term key='HOTEL_ROOMS'}}
-              </label>
-              {{input
-                class=(if inValid.hotelrms 'invalid')
-                value=editing.hotelrms
-                placeholder="Enter here"
-                input=(action checkForUpdated 'hotelrms')}}
+              </span>
             </div>
 
-            <div class="field">
-              <label for="publicsqft">
-                {{defined-term key='PUBLIC_AREA'}}
-              </label>
-              {{input
-                class=(if inValid.publicsqft 'invalid')
-                value=editing.publicsqft
-                placeholder="Enter here"
-                input=(action checkForUpdated 'publicsqft')}}
-            </div>
+            <table class="commercial-makeup">
+              <tr class="table-header">
+                <td>Use Type</td>
+                <td>Floor Area (sqft.)</td>
+                <td>Percentage</td>
+              </tr>
+
+              <tr>
+                <td>
+                  <label for="retSqft">
+                    {{defined-term key='RETAIL_AREA'}}
+                  </label>
+                </td>
+                <td>
+                  {{input
+                    class=(if inValid.retSqft 'invalid')
+                    value=editing.retSqft
+                    placeholder='-'
+                    input=(action updateCommsf 'retSqft')}}
+                </td>
+                <td>
+                  {{#if (gt editing.commsf 0)}}
+                    {{round (mult 100 (div editing.retSqft editing.commsf))}}%
+                  {{else}}
+                    0%
+                  {{/if}}
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <label for="ofcmdSqft">
+                    {{defined-term key='OFFICE_MEDICAL_AREA'}}
+                  </label>
+                </td>
+                <td>
+                  {{input
+                    class=(if inValid.ofcmdSqft 'invalid')
+                    value=editing.ofcmdSqft
+                    placeholder='-'
+                    input=(action updateCommsf 'ofcmdSqft')}}
+                </td>
+                <td>
+                  {{#if (gt editing.commsf 0)}}
+                    {{round (mult 100 (div editing.ofcmdSqft editing.commsf))}}%
+                  {{else}}
+                    0%
+                  {{/if}}
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <label for="indmfSqft">
+                    {{defined-term key='INDUSTRIAL_MANUFACTURING_AREA'}}
+                  </label>
+                </td>
+                <td>
+                  {{input
+                    class=(if inValid.indmfSqft 'invalid')
+                    value=editing.indmfSqft
+                    placeholder='-'
+                    input=(action updateCommsf 'indmfSqft')}}
+                </td>
+                <td>
+                  {{#if (gt editing.commsf 0)}}
+                    {{round (mult 100 (div editing.indmfSqft editing.commsf))}}%
+                  {{else}}
+                    0%
+                  {{/if}}
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <label for="whsSqft">
+                    {{defined-term key='WAREHOUSE_SHIPPING_AREA'}}
+                  </label>
+                </td>
+                <td>
+                  {{input
+                    class=(if inValid.whsSqft 'invalid')
+                    value=editing.whsSqft
+                    placeholder='-'
+                    input=(action updateCommsf 'whsSqft')}}
+                </td>
+                <td>
+                  {{#if (gt editing.commsf 0)}}
+                    {{round (mult 100 (div editing.whsSqft editing.commsf))}}%
+                  {{else}}
+                    0%
+                  {{/if}}
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <label for="rndSqft">
+                    {{defined-term key='RESEARCH_DEVELOPMENT_AREA'}}
+                  </label>
+                </td>
+                <td>
+                  {{input
+                    class=(if inValid.rndSqft 'invalid')
+                    value=editing.rndSqft
+                    placeholder='-'
+                    input=(action updateCommsf 'rndSqft')}}
+                </td>
+                <td>
+                  {{#if (gt editing.commsf 0)}}
+                    {{round (mult 100 (div editing.rndSqft editing.commsf))}}%
+                  {{else}}
+                    0%
+                  {{/if}}
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <label for="eiSqft">
+                    {{defined-term key='EDUCATIONAL_INSTITUTIONAL_AREA'}}
+                  </label>
+                </td>
+                <td>
+                  {{input
+                    class=(if inValid.eiSqft 'invalid')
+                    value=editing.eiSqft placeholder='-'
+                    input=(action updateCommsf 'eiSqft')}}
+                </td>
+                <td>
+                  {{#if (gt editing.commsf 0)}}
+                    {{round (mult 100 (div editing.eiSqft editing.commsf))}}%
+                  {{else}}
+                    0%
+                  {{/if}}
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <label for="hotelSqft">
+                    {{defined-term key='HOTEL_ROOM_AREA'}}
+                  </label>
+                </td>
+                <td>
+                  {{input
+                    class=(if inValid.hotelSqft 'invalid')
+                    value=editing.hotelSqft placeholder='-'
+                    input=(action updateCommsf 'hotelSqft')}}
+                </td>
+                <td>
+                  {{#if (gt editing.commsf 0)}}
+                    {{round (mult 100 (div editing.hotelSqft editing.commsf))}}%
+                  {{else}}
+                    0%
+                  {{/if}}
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <label for="otherSqft">
+                    {{defined-term key='OTHER_AREA'}}
+                  </label>
+                </td>
+                <td>
+                  {{input
+                    class=(if inValid.otherSqft 'invalid')
+                    value=editing.otherSqft
+                    placeholder='-'
+                    input=(action updateCommsf 'otherSqft')}}
+                </td>
+                <td>
+                  {{#if (gt editing.commsf 0)}}
+                    {{round (mult 100 (div editing.otherSqft editing.commsf))}}%
+                  {{else}}
+                    0%
+                  {{/if}}
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <label for="unkSqft">
+                    {{defined-term key='UNKNOWN_AREA'}}
+                  </label>
+                </td>
+                <td>
+                  {{input
+                    class=(if inValid.unkSqft 'invalid')
+                    value=editing.unkSqft
+                    placeholder='-'
+                    input=(action updateCommsf 'unkSqft')}}
+                </td>
+                <td>
+                  {{#if (gt editing.commsf 0)}}
+                    {{round (mult 100 (div editing.unkSqft editing.commsf))}}%
+                  {{else}}
+                    0%
+                  {{/if}}
+                </td>
+              </tr>
+            </table>
           </div>
-        </div>
-
-        <p class="attributes">
-          <label>Attributes:</label>
-
-          <span>
-            <label for="headqtrs">
-              {{defined-term key='COMPANY_HEADQUARTERS'}}
-            </label>
-            {{input type='checkbox' checked=editing.headqtrs click=(action checkForUpdated 'headqtrs')}}
-          </span>
-        </p>
-
-        <div class="table-wrapper">
-          <div class="table-heading">
-            <h3 class="field">
-              <label for="commsf" class="required">
-                {{defined-term key='COMMERCIAL_AREA'}}
-              </label>
-            </h3>
-            <span>
-              {{#if (and (not-eq editing.commsf null) (gte editing.commsf 0))}}
-                <em>{{editing.commsf}} sqft.</em>
-              {{else}}
-                <em>Enter the floor area for each use type below</em>
-              {{/if}}
-            </span>
-          </div>
-
-          <table class="commercial-makeup">
-            <tr class="table-header">
-              <td>Use Type</td>
-              <td>Floor Area (sqft.)</td>
-              <td>Percentage</td>
-            </tr>
-
-            <tr>
-              <td>
-                <label for="retSqft">
-                  {{defined-term key='RETAIL_AREA'}}
-                </label>
-              </td>
-              <td>
-                {{input
-                  class=(if inValid.retSqft 'invalid')
-                  value=editing.retSqft
-                  placeholder='-'
-                  input=(action updateCommsf 'retSqft')}}
-              </td>
-              <td>
-                {{#if (gt editing.commsf 0)}}
-                  {{round (mult 100 (div editing.retSqft editing.commsf))}}%
-                {{else}}
-                  0%
-                {{/if}}
-              </td>
-            </tr>
-
-            <tr>
-              <td>
-                <label for="ofcmdSqft">
-                  {{defined-term key='OFFICE_MEDICAL_AREA'}}
-                </label>
-              </td>
-              <td>
-                {{input
-                  class=(if inValid.ofcmdSqft 'invalid')
-                  value=editing.ofcmdSqft
-                  placeholder='-'
-                  input=(action updateCommsf 'ofcmdSqft')}}
-              </td>
-              <td>
-                {{#if (gt editing.commsf 0)}}
-                  {{round (mult 100 (div editing.ofcmdSqft editing.commsf))}}%
-                {{else}}
-                  0%
-                {{/if}}
-              </td>
-            </tr>
-
-            <tr>
-              <td>
-                <label for="indmfSqft">
-                  {{defined-term key='INDUSTRIAL_MANUFACTURING_AREA'}}
-                </label>
-              </td>
-              <td>
-                {{input
-                  class=(if inValid.indmfSqft 'invalid')
-                  value=editing.indmfSqft
-                  placeholder='-'
-                  input=(action updateCommsf 'indmfSqft')}}
-              </td>
-              <td>
-                {{#if (gt editing.commsf 0)}}
-                  {{round (mult 100 (div editing.indmfSqft editing.commsf))}}%
-                {{else}}
-                  0%
-                {{/if}}
-              </td>
-            </tr>
-
-            <tr>
-              <td>
-                <label for="whsSqft">
-                  {{defined-term key='WAREHOUSE_SHIPPING_AREA'}}
-                </label>
-              </td>
-              <td>
-                {{input
-                  class=(if inValid.whsSqft 'invalid')
-                  value=editing.whsSqft
-                  placeholder='-'
-                  input=(action updateCommsf 'whsSqft')}}
-              </td>
-              <td>
-                {{#if (gt editing.commsf 0)}}
-                  {{round (mult 100 (div editing.whsSqft editing.commsf))}}%
-                {{else}}
-                  0%
-                {{/if}}
-              </td>
-            </tr>
-
-            <tr>
-              <td>
-                <label for="rndSqft">
-                  {{defined-term key='RESEARCH_DEVELOPMENT_AREA'}}
-                </label>
-              </td>
-              <td>
-                {{input
-                  class=(if inValid.rndSqft 'invalid')
-                  value=editing.rndSqft
-                  placeholder='-'
-                  input=(action updateCommsf 'rndSqft')}}
-              </td>
-              <td>
-                {{#if (gt editing.commsf 0)}}
-                  {{round (mult 100 (div editing.rndSqft editing.commsf))}}%
-                {{else}}
-                  0%
-                {{/if}}
-              </td>
-            </tr>
-
-            <tr>
-              <td>
-                <label for="eiSqft">
-                  {{defined-term key='EDUCATIONAL_INSTITUTIONAL_AREA'}}
-                </label>
-              </td>
-              <td>
-                {{input
-                  class=(if inValid.eiSqft 'invalid')
-                  value=editing.eiSqft placeholder='-'
-                  input=(action updateCommsf 'eiSqft')}}
-              </td>
-              <td>
-                {{#if (gt editing.commsf 0)}}
-                  {{round (mult 100 (div editing.eiSqft editing.commsf))}}%
-                {{else}}
-                  0%
-                {{/if}}
-              </td>
-            </tr>
-
-            <tr>
-              <td>
-                <label for="hotelSqft">
-                  {{defined-term key='HOTEL_ROOM_AREA'}}
-                </label>
-              </td>
-              <td>
-                {{input
-                  class=(if inValid.hotelSqft 'invalid')
-                  value=editing.hotelSqft placeholder='-'
-                  input=(action updateCommsf 'hotelSqft')}}
-              </td>
-              <td>
-                {{#if (gt editing.commsf 0)}}
-                  {{round (mult 100 (div editing.hotelSqft editing.commsf))}}%
-                {{else}}
-                  0%
-                {{/if}}
-              </td>
-            </tr>
-
-            <tr>
-              <td>
-                <label for="otherSqft">
-                  {{defined-term key='OTHER_AREA'}}
-                </label>
-              </td>
-              <td>
-                {{input
-                  class=(if inValid.otherSqft 'invalid')
-                  value=editing.otherSqft
-                  placeholder='-'
-                  input=(action updateCommsf 'otherSqft')}}
-              </td>
-              <td>
-                {{#if (gt editing.commsf 0)}}
-                  {{round (mult 100 (div editing.otherSqft editing.commsf))}}%
-                {{else}}
-                  0%
-                {{/if}}
-              </td>
-            </tr>
-
-            <tr>
-              <td>
-                {{defined-term key='UNKNOWN_AREA'}}
-              </td>
-              <td>
-                {{input
-                  class=(if inValid.unkSqft 'invalid')
-                  value=editing.unkSqft
-                  placeholder='-'
-                  input=(action updateCommsf 'unkSqft')}}
-              </td>
-              <td>
-                {{#if (gt editing.commsf 0)}}
-                  {{round (mult 100 (div editing.unkSqft editing.commsf))}}%
-                {{else}}
-                  0%
-                {{/if}}
-              </td>
-            </tr>
-          </table>
-        </div>
-      </article>
+        </article>
+      {{/if}}
     </div>
   {{/overflow-scroll}}
   <div class="required-note">
