@@ -29,7 +29,7 @@ Router.map(function() {
     });
   });
   this.route('glossary');
-  this.route('faq');
+  this.route('about');
 });
 
 export default Router;
