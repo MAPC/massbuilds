@@ -83,6 +83,7 @@ class Development < ApplicationRecord
     arguments = []
     arguments << "-f #{Rails.root.join('public', file_name)}"
     arguments << "-h #{database['host']}" if database['host']
+    arguments << "-p #{database['port']}" if database['port']
     arguments << "-u #{database['username']}" if database['username']
     arguments << "-P #{database['password']}" if database['password']
     arguments << database['database']
