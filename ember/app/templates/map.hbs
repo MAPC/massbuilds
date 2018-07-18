@@ -36,8 +36,8 @@
         </button>
         <button
           onclick={{action clearFilters}}
-          class="clear-filters {{unless filtering 'disabled'}}"
-          disabled={{showingGoto}}>
+          class="clear-filters"
+          disabled={{or showingGoto (not filtering)}}>
           X
         </button>
       </div>

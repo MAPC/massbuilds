@@ -21,100 +21,30 @@ export default class extends Component {
 
     this.selectedParkTypes = (this.editing.parkType || '').split(',').filter(x => x);
 
-    this.huFields = [
-      'editing.singfamhu',
-      'editing.smmultifam',
-      'editing.lgmultifam',
-    ];
-
-    this.affrdUnitFields = [
-      'editing.affU30',
-      'editing.aff3050',
-      'editing.aff5080',
-      'editing.aff80p',
-    ];
-
-    this.commsfFields = [
-      'editing.retSqft',
-      'editing.ofcmdSqft',
-      'editing.indmfSqft',
-      'editing.whsSqft',
-      'editing.rndSqft',
-      'editing.eiSqft',
-      'editing.hotelSqft',
-      'editing.otherSqft',
-    ];
-
-    const base = [
-      'name',
-      'status',
-      'latitude',
-      'longitude',
-      'yearCompl',
-      'hu',
-      'commsf',
-      'descr',
-    ];
-
-    const projected = [
-      ...base,
-      // One of housing unit types
-      [
-        'singfamhu',
-        'smmultifam',
-        'lgmultifam',
-        'unknownhu',
-      ],
-      // One of commercial unit types
-      [
-        'retSqft',
-        'ofcmdSqft',
-        'indmfSqft',
-        'whsSqft',
-        'rndSqft',
-        'eiSqft',
-        'otherSqft',
-        'hotelSqft',
-        'unkSqft',
-      ],
-    ];
-
-    const proposed = [
-      ...base,
-      // Housing unit types
-      'singfamhu',
-      'smmultifam',
-      'lgmultifam',
-      // One of commercial unit types
-      [
-        'retSqft',
-        'ofcmdSqft',
-        'indmfSqft',
-        'whsSqft',
-        'rndSqft',
-        'eiSqft',
-        'otherSqft',
-        'hotelSqft',
-        'unkSqft',
-      ],
-    ];
-
-    const groundBroken = [
-      ...base,
-      // Housing unit types
-      'singfamhu',
-      'smmultifam',
-      'lgmultifam',
-      // Affordable units
-      'affrdUnit',
+    this.knownAffordableFields = [
       'affU30',
       'aff3050',
       'aff5080',
       'aff80p',
-      // Counts
-      'gqpop',
-      'hotelrms',
-      // Commercial area
+    ];
+
+    this.allAffordableFields = [
+      ...this.knownAffordableFields,
+      'affrdUnit',
+    ];
+
+    this.knownHousingFields = [
+      'singfamhu',
+      'smmultifam',
+      'lgmultifam',
+    ];
+
+    this.allHousingFields = [
+      ...this.knownHousingFields,
+      'unknownhu',
+    ];
+
+    this.knownCommercialFields = [
       'retSqft',
       'ofcmdSqft',
       'indmfSqft',
@@ -123,13 +53,88 @@ export default class extends Component {
       'eiSqft',
       'otherSqft',
       'hotelSqft',
-      // Other area
+    ];
+
+    this.allCommercialAreaFields = [
+      ...this.knownCommercialFields,
+      'unkSqft',
+    ];
+
+    this.baseResidentialFields = [
+      'hu',
+    ];
+
+    this.baseCommercialFields = [
+      'commsf',
+    ];
+
+    this.miscCommercialFields = [
+      'hotelrms',
       'publicsqft',
+    ];
+
+    this.miscResidentialFields = [
+      'gqpop',
+    ];
+
+    this.allCommercialFields = [
+      ...this.baseCommercialFields,
+      ...this.allCommercialAreaFields,
+      ...this.miscCommercialFields,
+    ];
+
+    this.allResidentialFields = [
+      ...this.baseResidentialFields,
+      ...this.knownHousingFields,
+      ...this.allAffordableFields,
+      ...this.miscResidentialFields,
+    ];
+
+    const base = [
+      'name',
+      'status',
+      'latitude',
+      'longitude',
+      'yearCompl',
+      'descr',
+      ...this.baseResidentialFields,
+      ...this.baseCommercialFields,
+    ];
+
+    const projected = [
+      ...base,
+      // One of housing unit types
+      [...this.allHousingFields],
+      // One of commercial unit types
+      [...this.allCommercialAreaFields],
+    ];
+
+    const proposed = [
+      ...base,
+      // Housing unit types
+      ...this.knownHousingFields,
+      // One of commercial unit types
+      [...this.allCommercialAreaFields],
+    ];
+
+    const groundBroken = [
+      ...base,
+      ...this.knownHousingFields,
+      ...this.allAffordableFields,
+      ...this.miscResidentialFields,
+      ...this.knownCommercialFields,
+      ...this.miscCommercialFields,
     ];
 
     this.lastEdit = Date.now();
 
-    this.criteria = { base, projected, proposed, groundBroken };
+    this.criteria = {
+      base,
+      completed: groundBroken,
+      in_construction: groundBroken,
+      planning: proposed,
+      projected: projected,
+    };
 
     Ember.run.later(this, () => this.updateFieldRequirements(), 500);
     const lng = this.get('editing.longitude');
@@ -169,35 +174,14 @@ export default class extends Component {
     const devType = this.get('developmentType');
     this.sendAction('updateDevelopmentType', devType);
     if (devType == 'residential') {
-      const setCommercial = {
-        commsf: 0,
-        hotelrms: 0,
-        retSqft: 0,
-        ofcmdSqft: 0,
-        indmfSqft: 0,
-        whsSqft: 0,
-        rndSqft: 0,
-        eiSqft: 0,
-        otherSqft: 0,
-        hotelSqft: 0,
-        publicsqft: 0,
-      };
+      const setCommercial = this.get('allCommercialFields')
+          .reduce((obj, field) => Object.assign(obj, { [field]: 0 }), {});
       this.sendAction('updateEditing', setCommercial);
       this.set('proposedChanges',
           Object.assign({}, this.get('proposedChanges'), setCommercial));
     } else if (devType == 'commercial') {
-      const setResidential = {
-        hu: 0,
-        singfamhu: 0,
-        smmultifam: 0,
-        lgmultifam: 0,
-        affrdUnit: 0,
-        affU30: 0,
-        aff3050: 0,
-        aff5080: 0,
-        aff80p: 0,
-        gqpop: 0,
-      };
+      const setResidential = this.get('allResidentialFields')
+          .reduce((obj, field) => Object.assign(obj, { [field]: 0 }), {});
       this.sendAction('updateEditing', setResidential);
       this.set('proposedChanges',
           Object.assign({}, this.get('proposedChanges'), setResidential));
@@ -212,7 +196,7 @@ export default class extends Component {
 
     const selectLabel = x => document.querySelector(`label[for="${x}"]`);
 
-    const allCriteria = this.get('criteria.groundBroken');
+    const allCriteria = this.get('criteria.completed');
 
     allCriteria.forEach(field => {
       const elem = selectLabel(field);
@@ -237,22 +221,24 @@ export default class extends Component {
   @action
   updateHu(fieldName) {
     this.handleUpdate(fieldName);
-    this.handleUpdate('hu', this.sumProperties(...this.get('huFields'), 'editing.unknownhu'));
+    this.handleUpdate('hu', this.sumProperties(
+        this.get('allHousingFields').map(field => `editing.${field}`)));
   }
 
 
   @action
   updateAffrdUnit(fieldName) {
     this.handleUpdate(fieldName);
-    this.handleUpdate('affrdUnit', this.sumProperties(...this.get('affrdUnitFields'), 'editing.affUnknown'));
+    this.handleUpdate('affrdUnit', this.sumProperties(
+        this.get('knownAffordableFields').map(field => `editing.${field}`)));
   }
 
 
   @action
   updateCommsf(fieldName) {
     this.handleUpdate(fieldName);
-    const sum = this.sumProperties(...this.get('commsfFields'), 'editing.unkSqft');
-    this.handleUpdate('commsf', sum);
+    this.handleUpdate('commsf', this.sumProperties(
+        this.get('allCommercialAreaFields').map(field => `editing.${field}`)));
   }
 
 
@@ -327,16 +313,8 @@ export default class extends Component {
   }
 
   getCriteria() {
-    const status = this.get('editing.status');
-    if (status === 'completed' || status === 'in_construction') {
-      return this.get('criteria.groundBroken');
-    } else if (status == 'planning') {
-      return this.get('criteria.proposed');
-    } else if (status == 'projected') {
-      return this.get('criteria.projected');
-    } else {
-      return this.get('criteria.base');
-    }
+    return this.get(`criteria.${this.get('editing.status')}`)
+        || this.get('criteria.base');
   }
 
   valueExists(val) {
