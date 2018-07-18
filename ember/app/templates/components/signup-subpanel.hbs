@@ -1,95 +1,98 @@
 <img src="/assets/images/logo.png" class="logo-image sign-up">
-<form {{action signup on="submit"}}>
 
-  <h2>Signup</h2>
+{{#overflow-scroll}}
+  <form {{action signup on="submit"}}>
 
-  <div class="input-wrapper">
-    <img src="/assets/images/user.svg">
-    {{input placeholder="First Name" type="text" value=firstName}}
-  </div>
+    <h2>Signup</h2>
 
-  <div class="input-wrapper">
-    <img src="/assets/images/user.svg">
-    {{input placeholder="Last Name" type="text" value=lastName}}
-  </div>
-
-  <div class="input-wrapper">
-    <img src="/assets/images/mail.svg">
-    {{input placeholder="Email" type="email" value=username}}
-  </div>
-
-  <hr>
-
-  <div class="input-wrapper">
-    <img src="/assets/images/lock.svg">
-    {{input placeholder="Password" type="password" value=password}}
-  </div>
-
-  <div class="input-wrapper">
-    <img src="/assets/images/check-square.svg">
-    {{input placeholder="Confirm Password" type="password" value=confirmPassword}}
-  </div>
-
-  <hr>
-
-  {{#unless muniFailure}}
-    <div class="input-wrapper labeled">
-      <span>Would you like to request verified status?</span>
-      {{#radio-button
-        value=""
-        groupValue=requesting
-      }}
-        <span>No</span>
-      {{/radio-button}}
-
-      {{#radio-button
-        value="state"
-        groupValue=requesting
-      }}
-        <span>Yes, as a member state or regional government</span>
-      {{/radio-button}}
-
-      {{#radio-button
-        value="municipal"
-        groupValue=requesting
-        changed=(action fetchMunis)
-      }}
-        <span>Yes, as a member of city or town government</span>
-      {{/radio-button}}
+    <div class="input-wrapper">
+      <img src="/assets/images/user.svg">
+      {{input placeholder="First Name" type="text" value=firstName}}
     </div>
 
-    {{#if (eq requesting 'municipal')}}
-      <div class="input-wrapper labeled">
-        <label>Choose the municipality you are associated with</label>
+    <div class="input-wrapper">
+      <img src="/assets/images/user.svg">
+      {{input placeholder="Last Name" type="text" value=lastName}}
+    </div>
 
-        {{#loading-spinner message="Loading Municipalities" isLoading=isFetching}}
-          <select onchange={{action updateMunicipality value="target.value"}}>
-            <option disabled selected>Select Municipality</option>
-            {{#each munis as |muni|}}
-              <option value={{muni}}>{{muni}}</option>
-            {{/each}}
-          </select>
-        {{/loading-spinner}}
+    <div class="input-wrapper">
+      <img src="/assets/images/mail.svg">
+      {{input placeholder="Email" type="email" value=username}}
+    </div>
+
+    <hr>
+
+    <div class="input-wrapper">
+      <img src="/assets/images/lock.svg">
+      {{input placeholder="Password" type="password" value=password}}
+    </div>
+
+    <div class="input-wrapper">
+      <img src="/assets/images/check-square.svg">
+      {{input placeholder="Confirm Password" type="password" value=confirmPassword}}
+    </div>
+
+    <hr>
+
+    {{#unless muniFailure}}
+      <div class="input-wrapper labeled">
+        <span>Would you like to request verified status?</span>
+        {{#radio-button
+          value=""
+          groupValue=requesting
+        }}
+          <span>No</span>
+        {{/radio-button}}
+
+        {{#radio-button
+          value="state"
+          groupValue=requesting
+        }}
+          <span>Yes, as a member state or regional government</span>
+        {{/radio-button}}
+
+        {{#radio-button
+          value="municipal"
+          groupValue=requesting
+          changed=(action fetchMunis)
+        }}
+          <span>Yes, as a member of city or town government</span>
+        {{/radio-button}}
+      </div>
+
+      {{#if (eq requesting 'municipal')}}
+        <div class="input-wrapper labeled">
+          <label>Choose the municipality you are associated with</label>
+
+          {{#loading-spinner message="Loading Municipalities" isLoading=isFetching}}
+            <select onchange={{action updateMunicipality value="target.value"}}>
+              <option disabled selected>Select Municipality</option>
+              {{#each munis as |muni|}}
+                <option value={{muni}}>{{muni}}</option>
+              {{/each}}
+            </select>
+          {{/loading-spinner}}
+        </div>
+      {{/if}}
+    {{/unless}}
+
+    {{#if errorMessage}}
+      <div class="error-message">
+        {{errorMessage}}
       </div>
     {{/if}}
-  {{/unless}}
 
-  {{#if errorMessage}}
-    <div class="error-message">
-      {{errorMessage}}
+    <div class="form-footer">
+      {{#loading-spinner message=loadingText isLoading=isCreating}}
+        <button class='submit {{unless submittable 'disabled'}}' type="submit">Signup</button>
+      {{/loading-spinner}}
     </div>
-  {{/if}}
 
-  <div class="form-footer">
-    {{#loading-spinner message=loadingText isLoading=isCreating}}
-      <button class='submit {{unless submittable 'disabled'}}' type="submit">Signup</button>
-    {{/loading-spinner}}
+  </form>
+
+  <div class="auth-switch">
+    Already have an account?
+    {{link-to 'Login here' (query-params panel=null)}}
   </div>
-
-</form>
-
-<div class="auth-switch">
-  Already have an account?
-  {{link-to 'Login here' (query-params panel=null)}}
-</div>
+{{/overflow-scroll}}
 

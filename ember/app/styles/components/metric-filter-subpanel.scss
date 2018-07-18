@@ -1,20 +1,6 @@
 .component.subpanel.metric-filter {
   padding: 15px;
 
-  &:after {
-    content: '';
-    position: absolute;
-    bottom: -2px;
-    display: block;
-    z-index: 1;
-
-    height: 1px;
-    width: 66.66%;
-
-    box-shadow: 0px 0px 50px 40px $color_bg-light;
-    overflow: hidden;
-  }
-
   .subgroup-wrapper {
     height: 70vh;
     padding-bottom: 40px;
@@ -54,7 +40,7 @@
       }
 
       select {
-
+        max-width: 40%;
         background: none;
         border: 1px solid $color_bg-medium;
         outline: none;

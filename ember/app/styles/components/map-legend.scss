@@ -1,5 +1,6 @@
 .component.map-legend {
   width: 140px;
+  flex: 1 0 108px; // Width minus border and padding for IE compatibility
   padding: 15px;
 
   background: $color_bg-light;

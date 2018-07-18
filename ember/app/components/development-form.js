@@ -175,13 +175,13 @@ export default class extends Component {
     this.sendAction('updateDevelopmentType', devType);
     if (devType == 'residential') {
       const setCommercial = this.get('allCommercialFields')
-          .reduce((obj, field) => Object.assign(obj, { [field]: 0 }));
+          .reduce((obj, field) => Object.assign(obj, { [field]: 0 }), {});
       this.sendAction('updateEditing', setCommercial);
       this.set('proposedChanges',
           Object.assign({}, this.get('proposedChanges'), setCommercial));
     } else if (devType == 'commercial') {
       const setResidential = this.get('allResidentialFields')
-          .reduce((obj, field) => Object.assign(obj, { [field]: 0 }));
+          .reduce((obj, field) => Object.assign(obj, { [field]: 0 }), {});
       this.sendAction('updateEditing', setResidential);
       this.set('proposedChanges',
           Object.assign({}, this.get('proposedChanges'), setResidential));
