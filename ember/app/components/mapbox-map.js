@@ -53,12 +53,13 @@ export default class extends Component {
       dragRotate: false,
       pitchWithRotate: false,
       touchZoomRotate: false,
+      doubleClickZoom: true,
       minZoom: 6,
     });
     this.mapboxglMap.on('load', () => {
       this.mapboxglMap.on('zoom', (e) => {
         // If a user attempts to abort a zoom, stop the animation.
-        if (e.originalEvent) {
+        if (e.originalEvent && e.originalEvent.type != 'dblclick') {
           this.mapboxglMap.stop();
         }
       });

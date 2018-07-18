@@ -64,6 +64,6 @@
     "@turf/center-of-mass": "^6.0.1",
     "babel-polyfill": "^6.26.0",
     "ember-radio-button": "^1.2.4",
-    "mapbox-gl": "^0.45.0"
+    "mapbox-gl": "^0.46.0"
   }
 }
