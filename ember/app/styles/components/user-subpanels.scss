@@ -2,11 +2,44 @@
   &.form-subpanel {
 
     height: 95vh;
-    padding-top: 100px;
+    padding-top: 90px;
+
+    header {
+      margin-bottom: 10px;
+      p {
+        margin: 15px 25px 0 25px;
+      }
+      @media screen and (max-height: 750px) {
+        p {
+          display: none;
+        }
+        .logo-image {
+          width: 28%;
+        }
+      }
+      @media screen and (max-height: 620px) {
+        .logo-image {
+          width: 20%;
+        }
+      }
+    }
+
+    h2 {
+      margin-top: 0;
+    }
 
     text-align: center;
     &.signup-subpanel {
-      padding-top: 65px;
+      form {
+        padding: 0;
+      }
+      .overflow-scroll {
+        margin: 0 25px;
+        height: calc(100% - 125px);
+        .scroll-wrapper {
+          padding-bottom: 20px;
+        }
+      }
     }
     .logo-image {
       width: 40%;
