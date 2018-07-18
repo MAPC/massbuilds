@@ -174,14 +174,16 @@ export default class extends Component {
     const devType = this.get('developmentType');
     this.sendAction('updateDevelopmentType', devType);
     if (devType == 'residential') {
+      console.log(this.get('allCommercialFields'));
       const setCommercial = this.get('allCommercialFields')
-          .reduce((obj, field) => Object.assign(obj, { [field]: 0 }));
+          .reduce((obj, field) => Object.assign(obj, { [field]: 0 }), {});
+      console.log(setCommercial);
       this.sendAction('updateEditing', setCommercial);
       this.set('proposedChanges',
           Object.assign({}, this.get('proposedChanges'), setCommercial));
     } else if (devType == 'commercial') {
       const setResidential = this.get('allResidentialFields')
-          .reduce((obj, field) => Object.assign(obj, { [field]: 0 }));
+          .reduce((obj, field) => Object.assign(obj, { [field]: 0 }), {});
       this.sendAction('updateEditing', setResidential);
       this.set('proposedChanges',
           Object.assign({}, this.get('proposedChanges'), setResidential));
@@ -352,6 +354,8 @@ export default class extends Component {
         validations[criterion] = !this.valueExists(this.get(`editing.${criterion}`));
       }
     });
+    console.log(this.get('editing'));
+    console.log(validations);
     return validations;
   }
 

@@ -99,7 +99,7 @@
       font-size: 11px;
       text-align: center;
 
-      background: mix($color_brand-primary, $color_bg-light, 15);
+      background: mix($color_brand-primary, $color_bg-light, 25);
       border-color: $color_brand-primary;
       border-right: 0;
       border-radius: 0;
@@ -123,10 +123,10 @@
         }
       }
 
-      &.disabled {
-        color: $color_bg-medium;
+      &:disabled {
+        color: $color_bg-dark;
 
-        background: $color_bg-light--active;
+        background: $color_bg-dark--disabled;
         border-top-color: $color_brand-primary;
         cursor: initial;
       }
@@ -134,7 +134,7 @@
       &:first-of-type { border-radius: 5px 0 0 0; }
       &:nth-of-type(2) { border-radius: 0 0 0 5px; }
 
-      &:not(.disabled):hover {
+      &:not(:disabled):hover {
         border-color: $color_brand-primary--active;
 
         transition: $transition_border;
@@ -297,6 +297,7 @@
     }
     img {
       width: 20%;
+      height: 100%;
       margin: 0 20px;
     }
   }
