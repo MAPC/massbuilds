@@ -154,7 +154,7 @@ class DevelopmentsController < ApplicationController
             (['=', '<', '>'].include?(inflector)) &&
             (
              (type == 'string') ||
-             (type == 'number' && (/\A[-+]?\d+\z/ === value)) ||
+             (type == 'number' && (/\A[-+]?\d+\z/.match(value.to_s))) ||
              (type == 'boolean' && (value == 'true' || value == 'false'))
             )
           )
