@@ -46,24 +46,21 @@ class Development < ApplicationRecord
   after_save :update_neighborhood
   after_save :update_loc_id
 
+  @@excluded_attrs_from_export = [
+    'other_rate',
+    'affordable',
+    'parcel_id',
+    'programs',
+    'forty_b',
+    'residential',
+    'commercial',
+    'd_n_trnsit',
+    'flag',
+    'deleted_at'
+  ]
+
   def self.to_csv
-
-    excluded_attrs = [
-      'other_rate',
-      'affordable',
-      'latitude',
-      'longitude',
-      'parcel_id',
-      'programs',
-      'forty_b',
-      'residential',
-      'commercial',
-      'd_n_trnsit',
-      'deleted_at'
-    ]
-
-    attributes = self.column_names
-    attributes = attributes.select{ |attr| !(excluded_attrs.include? attr) }
+    attributes = self.column_names.select { |attr| !(@@excluded_attrs_from_export.include? attr) }
 
     CSV.generate(headers: true) do |csv|
       csv << attributes
@@ -76,7 +73,13 @@ class Development < ApplicationRecord
     end
   end
 
-  def self.to_shp(sql)
+  def self.to_shp
+    excluded_attrs = @@excluded_attrs_from_export + [
+      'point', # point must also be excluded here so it can be replaced with the reprojected point
+    ]
+    attributes = self.column_names.select { |attr| !(excluded_attrs.include? attr) }
+    sql = all.select(attributes.join(", ") + ", ST_Transform(point, 26986) as point").to_sql
+
     database = Rails.configuration.database_configuration[Rails.env]
     hash = Digest::SHA1.hexdigest("#{Time.now.to_i}#{rand}")[0,6]
     file_name = "massbuilds-shp-#{Time.now.strftime("%Y%m%d")}-#{hash}"
@@ -116,7 +119,7 @@ class Development < ApplicationRecord
 
   def self.zip(file_name)
     Zip::File.open(Rails.root.join('public', "#{file_name}.zip").to_s, Zip::File::CREATE) do |zipfile|
-      zipfile.add("#{file_name}.prj", Rails.root.join('public', 'ma_municipalities_wgs84.prj'))
+      zipfile.add("#{file_name}.prj", Rails.root.join('public', 'ma_municipalities_NAD83_MassStatePlane.prj'))
       zipfile.add("#{file_name}.shp", Rails.root.join('public', "#{file_name}.shp"))
       zipfile.add("#{file_name}.shx", Rails.root.join('public', "#{file_name}.shx"))
       zipfile.add("#{file_name}.dbf", Rails.root.join('public', "#{file_name}.dbf"))
