@@ -56,7 +56,8 @@ class Development < ApplicationRecord
     'commercial',
     'd_n_trnsit',
     'flag',
-    'deleted_at'
+    'deleted_at',
+    'point' # point must also be excluded here so it can be replaced with the reprojected point in the shapefile
   ]
 
   def self.to_csv
@@ -74,10 +75,7 @@ class Development < ApplicationRecord
   end
 
   def self.to_shp
-    excluded_attrs = @@excluded_attrs_from_export + [
-      'point', # point must also be excluded here so it can be replaced with the reprojected point
-    ]
-    attributes = self.column_names.select { |attr| !(excluded_attrs.include? attr) }
+    attributes = self.column_names.select { |attr| !(@@excluded_attrs_from_export.include? attr) }
     sql = all.select(attributes.join(", ") + ", ST_Transform(point, 26986) as point").to_sql
 
     database = Rails.configuration.database_configuration[Rails.env]
