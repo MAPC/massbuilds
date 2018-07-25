@@ -25,7 +25,7 @@ class DevelopmentsController < ApplicationController
       end
       format.csv { send_data @developments.to_csv, filename: "massbuilds-#{Time.now.strftime("%Y%m%d")}.csv" }
       format.zip do
-        file_name = @developments.to_shp(@developments.to_sql)
+        file_name = @developments.to_shp
         send_file Rails.root.join('public', "#{file_name}.zip")
         # FileUtils.rm Rails.root.join('public', "#{file_name}.zip")
         FileUtils.rm Rails.root.join('public', "#{file_name}.shp")
