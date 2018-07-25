@@ -44,7 +44,7 @@ Rails.application.configure do
 
   # Use the lowest log level to ensure availability of diagnostic information
   # when problems arise.
-  config.log_level = :debug
+  config.log_level = :info
 
   # Prepend all log lines with the following tags.
   config.log_tags = [ :request_id ]
@@ -80,6 +80,7 @@ Rails.application.configure do
     api_key: Rails.application.secrets.mailgun_api_key,
     domain: 'mailgun2.mapc.org'
   }
+  config.action_mailer.default_url_options = { host: 'www.massbuilds.com' }
 
   if ENV["RAILS_LOG_TO_STDOUT"].present?
     logger           = ActiveSupport::Logger.new(STDOUT)
