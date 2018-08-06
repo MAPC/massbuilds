@@ -268,7 +268,9 @@ export default class extends Component {
 
   handleUpdate(fieldName, calculatedValue) {
     const modeled = this.get(`model.${fieldName}`);
-    let edited = calculatedValue || this.get(`editing.${fieldName}`);
+    let edited = calculatedValue == undefined
+        ? this.get(`editing.${fieldName}`)
+        : calculatedValue;
 
     // Adjust values if nonstandard
     if (fieldName === 'status') {
@@ -287,7 +289,6 @@ export default class extends Component {
     // Send updates to controller state
     this.sendAction('updateEditing', { [fieldName]: edited });
     this.set(`editing.${fieldName}`, edited);
-
     // If value changed, set proposedChanges
     if ((
       modeled === undefined
