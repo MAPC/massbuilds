@@ -126,13 +126,13 @@ export default class extends Component {
   updateSelection(notFromFitBounds) {
     // If the user triggered the drag or zoom...
     if (notFromFitBounds
-        && this.get('map.followMode')
-        && this.mapboxglMap
-        && this.mapboxglMap.getSource('selector')
-        && Ember.$('.left-panel-layer')
-        && this.$()) {
+      && this.get('map.followMode')
+      && this.mapboxglMap
+      && this.mapboxglMap.getSource('selector')
+      && Ember.$('.left-panel-layer')
+      && this.$()) {
       const bounds = this.get('focusTargetBounds')
-          || this.mapboxglMap.getBounds();
+        || this.mapboxglMap.getBounds();
       const northEast = bounds.getNorthEast().toArray();
       const southWest = bounds.getSouthWest().toArray();
       const ratio = (() => {
@@ -155,6 +155,8 @@ export default class extends Component {
   }
 
   getBoundsFromCoordinates(coordinates) {
+    console.log('[mapbox-map.js] coordinates: ', coordinates);
+
     const boundsWidth = 0.01;
     const leftPanelWidth = this.getLeftPanelWidth();
     const mapWidth = parseInt(this.$().css('width'));
@@ -173,7 +175,7 @@ export default class extends Component {
   drawSelectedCoordinates(mapService) {
 
     if (this.mapboxglMap
-        && this.mapboxglMap.getSource('selector')) {
+      && this.mapboxglMap.getSource('selector')) {
       const coordinates = mapService.get('selectedCoordinates');
       if (this.get('previousCoordinatesKey') != coordinates.toString()) {
         this.mapboxglMap.getSource('selector').setData({
@@ -190,11 +192,11 @@ export default class extends Component {
         });
         const previousParcel = this.get('previousParcel');
         if ((Date.now() - this.get('lastRequest') > 250)
-            && this.mapboxglMap.getLayer('parcel')
-            && (
-              !previousParcel
-              || !pointInPolygon.default({ type: 'Point', coordinates: coordinates }, previousParcel.get('geojson'))
-            )) {
+          && this.mapboxglMap.getLayer('parcel')
+          && (
+            !previousParcel
+            || !pointInPolygon.default({ type: 'Point', coordinates: coordinates }, previousParcel.get('geojson'))
+          )) {
           this.getNewParcel(coordinates);
         }
         this.set('previousCoordinatesKey', coordinates.toString());
@@ -214,8 +216,8 @@ export default class extends Component {
       if (parcels.length) {
         const parcel = parcels[0];
         if (pointInPolygon.default({ type: 'Point', coordinates: newCoordinates }, parcel.get('geojson'))
-            && this.mapboxglMap.getSource('parcel')
-            && this.mapboxglMap.getSource('parcel_label')) {
+          && this.mapboxglMap.getSource('parcel')
+          && this.mapboxglMap.getSource('parcel_label')) {
           this.mapboxglMap.getSource('parcel').setData({
             type: 'FeatureCollection',
             features: [{
@@ -375,21 +377,24 @@ export default class extends Component {
   focus(mapService) {
     if (!mapService.get('viewing')) {
       const data = mapService.get('filteredData').length
-          ? mapService.get('filteredData')
-          : mapService.get('stored');
+
+        ? mapService.get('filteredData')
+        : mapService.get('stored');
       if (data.toArray().length > 0) {
         const fitBounds = data.reduce(
-        (bounds, datum) => bounds.extend([datum.get('longitude'), datum.get('latitude')]),
+          (bounds, datum) => bounds.extend([datum.get('longitude'), datum.get('latitude')]),
           new mapboxgl.LngLatBounds()
         );
         const leftPanel = Ember.$('.left-panel-layer');
         this.set('focusTargetBounds', fitBounds);
-        this.mapboxglMap.fitBounds(fitBounds, { padding: {
-          top: 40,
-          left: (this.get('map.showingLeftPanel') ? this.getLeftPanelWidth() + 40 : 40),
-          bottom: 40,
-          right: 40,
-        }});
+        this.mapboxglMap.fitBounds(fitBounds, {
+          padding: {
+            top: 40,
+            left: (this.get('map.showingLeftPanel') ? this.getLeftPanelWidth() + 40 : 40),
+            bottom: 40,
+            right: 40,
+          }
+        });
       }
     }
   }
@@ -399,8 +404,8 @@ export default class extends Component {
   draw(mapService) {
     // All data
     const allFeatures = this.generateFeatures(mapService.get('filteredData').length
-        ? mapService.get('remainder')
-        : mapService.get('stored'));
+      ? mapService.get('remainder')
+      : mapService.get('stored'));
     const satelliteMap = mapService.get('baseMap') != 'light';
     const isMuted = mapService.get('followMode');
 
@@ -536,9 +541,9 @@ export default class extends Component {
       const properties = e.features[0].properties;
       popupId = properties.id;
       const formattedStatus = properties.status
-          .split('_')
-          .map(w => w.capitalize())
-          .join(' ');
+        .split('_')
+        .map(w => w.capitalize())
+        .join(' ');
       const content = Ember.String.htmlSafe(`
         <div class='massbuilds-tooltip'</div>
           <h4>${properties.name}</h4>
@@ -556,14 +561,14 @@ export default class extends Component {
       // copies of the feature are visible, the popup appears
       // over the copy being pointed to.
       while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-          coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+        coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
       }
 
       // Populate the popup and set its coordinates
       // based on the feature found.
       popup.setLngLat(coordinates)
-          .setHTML(content)
-          .addTo(this.mapboxglMap);
+        .setHTML(content)
+        .addTo(this.mapboxglMap);
     };
 
     const closePopup = () => {
