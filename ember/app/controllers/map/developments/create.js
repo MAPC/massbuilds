@@ -54,7 +54,6 @@ export default class extends Controller {
 
   @action
   createDevelopment(data) {
-    console.log('[controllers][map][developments][create.js] createDevelopment(data): ', data)
     const model = this.get('model');
     data = castToModel(Development, data);
 
@@ -93,9 +92,7 @@ export default class extends Controller {
 
   @action
   createEdit(data) {
-    console.log('[controllers][map][developments][create.js] createEdit(data): ', data)
     data['state'] = 'MA';
-
     const newEdit = this.get('store').createRecord('edit', {
       user: this.get('currentUser.user'),
       approved: false,
@@ -137,9 +134,9 @@ export default class extends Controller {
 
     if (errorIndex !== -1) {
       const columnName = error.message.slice(errorIndex)
-        .split(' ')[0]
-        .replace(errorDelim, '')
-        .replace("'", '');
+                          .split(' ')[0]
+                          .replace(errorDelim, '')
+                          .replace("'", '');
 
       return Ember.String.camelize(columnName);
     }
