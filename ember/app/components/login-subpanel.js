@@ -46,7 +46,7 @@ export default class extends Component {
           this.set('errorMessage', `This account was disabled by an admin. Please contact ${config.admin.email} for more information.`);
         }
         else {
-          this.set('errorMessage', 'Cannot login at this time.');
+          this.set('errorMessage', 'Invalid email or password, please try again.');
         }
       })
       .finally(() => {
