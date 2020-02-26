@@ -30,6 +30,8 @@ module Massbuilds
       'https://staging.massbuilds.com',
       'https://massbuilds.com',
       'https://www.massbuilds.com',
+      'https://datacommon.mapc.org',
+      'https://staging.datacommon.mapc.org'
     ]
 
     config.middleware.insert_before 0, Rack::Cors do
