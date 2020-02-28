@@ -6,6 +6,7 @@
   bottom: 0;
   .mapboxgl-popup-content {
     padding: 0;
+    font-family: $font_family-primary;
   }
 
   .mapboxgl-popup-anchor-bottom .mapboxgl-popup-tip,
