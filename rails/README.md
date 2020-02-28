@@ -6,13 +6,6 @@ Before running `bin/setup` you need to set two environment variables: `FOREIGN_D
 
 You will need a mapquest api key set `MAPQUEST_API_KEY` in your .env for the geocoder to work.
 
-Before running the test suite you need to enable the foreign data wrapper in the test database:
-
-  RAILS_ENV=test rake db:add_foreign_data_wrapper_interface
-  RAILS_ENV=test rake db:add_rpa_fdw
-  RAILS_ENV=test rake db:add_counties_fdw
-  RAILS_ENV=test rake db:add_municipalities_fdw
-
 ### Postgres Security Challenges
 
 In order to implement foreign data wrappers your postgres user defined in `database.yml` needs to have super user privileges or it will fail. You can do this with: `ALTER ROLE massbuilds WITH SUPERUSER;`

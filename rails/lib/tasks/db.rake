@@ -47,12 +47,3 @@ namespace :db do
     ActiveRecord::Base.connection.execute "IMPORT FOREIGN SCHEMA editor LIMIT TO (tod_service_area_poly) FROM SERVER dblive95 INTO public;"
   end
 end
-
-Rake::Task["db:create"].enhance do
-  Rake::Task["db:add_foreign_data_wrapper_interface"].invoke
-  Rake::Task["db:add_rpa_fdw"].invoke
-  Rake::Task["db:add_counties_fdw"].invoke
-  Rake::Task["db:add_municipalities_fdw"].invoke
-  Rake::Task["db:add_tod_service_area_poly"].invoke
-  Rake::Task["db:add_neighborhoods_poly"].invoke
-end
