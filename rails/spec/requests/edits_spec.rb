@@ -51,7 +51,7 @@ RSpec.describe "Edits", type: :request do
     it "works as an admin" do
       edit = FactoryBot.create(:edit)
       put "/edits/#{edit.id}", params: valid_jsonapi_params, headers: admin_user_session
-      expect(response).to have_http_status(:no_content)
+      expect(response).to have_http_status(:success)
     end
 
     it "does not work as a guest user" do
