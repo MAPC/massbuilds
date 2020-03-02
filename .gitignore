@@ -1,2 +1,3 @@
 volumes/db/*
 .DS_store
+rails/spec/examples.txt
