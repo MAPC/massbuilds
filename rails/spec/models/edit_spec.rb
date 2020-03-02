@@ -21,7 +21,7 @@ RSpec.describe Edit, type: :model do
     edit1.update(user: user)
     edit1.update(approved: true)
     development = Development.last
-    expect(development.desc).to eq('A sample edited development')
+    expect(development.descr).to eq('A sample edited development')
   end
 
   it "does not update the development when not approved" do
@@ -29,6 +29,6 @@ RSpec.describe Edit, type: :model do
     edit = FactoryBot.create(:edit, development: development)
     edit.update(approved: false)
     development.reload
-    expect(development.desc).to eq('A sample development')
+    expect(development.descr).to eq('A sample development')
   end
 end

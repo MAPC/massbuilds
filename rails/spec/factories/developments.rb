@@ -39,9 +39,9 @@ FactoryBot.define do
     affordable 1.5
     parcel_id "MyString"
     mixed_use false
-    point "POINT(-71.3940804 42.1845218)"
-    latitude -71.3940804
-    longitude 42.1845218
+    point "POINT(-71.0589 42.3601)"
+    latitude 42.3601
+    longitude -71.0589
     programs "MyString"
     forty_b false
     residential false

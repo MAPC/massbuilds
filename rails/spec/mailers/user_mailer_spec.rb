@@ -8,7 +8,7 @@ RSpec.describe "UserMailer", type: :mailer do
     it "renders the headers" do
       expect(mail.subject).to eq("Your Massbuilds Password")
       expect(mail.to).to eq([user.email])
-      expect(mail.from).to eq(["admin@massbuilds.com"])
+      expect(mail.from).to eq(["admin@mailgun2.mapc.org"])
     end
 
     it "renders the body" do
@@ -23,7 +23,7 @@ RSpec.describe "UserMailer", type: :mailer do
     it "renders the headers" do
       expect(mail.subject).to eq("Welcome to MassBuilds")
       expect(mail.to).to eq([user.email])
-      expect(mail.from).to eq(["admin@massbuilds.com"])
+      expect(mail.from).to eq(["admin@mailgun2.mapc.org"])
     end
 
     it "renders the body" do
@@ -38,7 +38,7 @@ RSpec.describe "UserMailer", type: :mailer do
     it "renders the headers" do
       expect(mail.subject).to eq("Your Edit in MassBuilds Was Approved")
       expect(mail.to).to eq([edit.user.email])
-      expect(mail.from).to eq(["admin@massbuilds.com"])
+      expect(mail.from).to eq(["admin@mailgun2.mapc.org"])
     end
 
     it "renders the body" do

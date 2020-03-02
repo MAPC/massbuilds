@@ -7,8 +7,7 @@ RSpec.describe "PasswordResets", type: :request do
 
   let(:valid_jsonapi_params) {
     hash = Hash.new {|h,k| h[k] = Hash.new(&h.default_proc) }
-    hash["data"]["type"] = "user"
-    hash["data"]["attributes"]["id"] = User.last.id
+    hash["email"] = User.last.email
     hash.to_json
   }
 

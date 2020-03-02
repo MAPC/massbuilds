@@ -5,8 +5,6 @@ RSpec.describe "Edits", type: :request do
     hash = Hash.new {|h,k| h[k] = Hash.new(&h.default_proc) }
     hash["data"]["type"] = "edit"
     hash["data"]["attributes"] = FactoryBot.attributes_for(:edit)
-    # hash["data"]["relationships"]["development"]["data"]["type"] = 'developments'
-    # hash["data"]["relationships"]["development"]["data"]["id"] = 1
     hash.to_json
   }
 
@@ -72,7 +70,7 @@ RSpec.describe "Edits", type: :request do
                         'Accept': 'application/vnd.api+json'
                       }
       put "/edits/#{edit.id}", params: valid_jsonapi_params, headers: user_session
-      expect(response).to have_http_status(:no_content)
+      expect(response).to have_http_status(:success)
     end
 
     it "fails on edits outside the covered geography for municipal users" do

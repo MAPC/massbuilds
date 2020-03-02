@@ -47,8 +47,8 @@ RSpec.describe "Developments", type: :request do
       parsed_body = JSON.parse(response.body)
       expect(parsed_body['data'][0]['attributes']['name']).to eq('Seaport')
       expect(parsed_body['data'][0]['attributes']['status']).to eq('MyString')
-      expect(parsed_body['data'][0]['attributes']['longitude']).to eq(-71.3940804)
-      expect(parsed_body['data'][0]['attributes']['latitude']).to eq(42.1845218)
+      expect(parsed_body['data'][0]['attributes']['longitude']).to eq(-71.0589)
+      expect(parsed_body['data'][0]['attributes']['latitude']).to eq(42.3601)
       expect(parsed_body['data'][0]['attributes']['devlper']).to eq('Gilbane')
     end
 
@@ -133,7 +133,7 @@ RSpec.describe "Developments", type: :request do
       post developments_path, params: valid_jsonapi_params, headers: verified_user_session
       aggregate_failures "testing response" do
         expect(response).to have_http_status(:success)
-        expect(response.body).to be_empty
+        expect(response.body).not_to be_empty
       end
     end
 
@@ -174,7 +174,7 @@ RSpec.describe "Developments", type: :request do
     end
 
     it "works for verified users on developments they created" do
-      user = FactoryBot.create(:user, role: 'municipal')
+      user = FactoryBot.create(:user, role: 'verified')
       development = FactoryBot.create(:development, user: user)
       user_session = {
                         Authorization: "Token token=#{user.authentication_token}, email=#{user.email}",
@@ -186,7 +186,8 @@ RSpec.describe "Developments", type: :request do
     end
 
     it "does not work for a municipal user on developments they did not create" do
-      development = FactoryBot.create(:development)
+      user = FactoryBot.create(:user, role: 'municipal')
+      development = FactoryBot.create(:development, user: user)
       put "/developments/#{development.id}", params: valid_jsonapi_params, headers: municipal_user_session
       expect(response).to have_http_status(:unauthorized)
     end
