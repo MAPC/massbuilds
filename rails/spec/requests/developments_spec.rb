@@ -164,7 +164,7 @@ RSpec.describe "Developments", type: :request do
                         'Accept': 'application/vnd.api+json'
                       }
       put "/developments/#{development.id}", params: valid_jsonapi_params, headers: user_session
-      expect(response).to have_http_status(:found)
+      expect(response).to have_http_status(:success)
     end
 
     it "does not work for verified users on developments they did not create" do
@@ -182,7 +182,7 @@ RSpec.describe "Developments", type: :request do
                         'Accept': 'application/vnd.api+json'
                       }
       put "/developments/#{development.id}", params: valid_jsonapi_params, headers: user_session
-      expect(response).to have_http_status(:found)
+      expect(response).to have_http_status(:success)
     end
 
     it "does not work for a municipal user on developments they did not create" do
