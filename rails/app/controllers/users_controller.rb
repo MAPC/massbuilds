@@ -34,7 +34,7 @@ class UsersController < ApplicationController
 
     if @user.save
       respond_to do |format|
-        format.jsonapi { render jsonapi: @user }
+        format.jsonapi { render(status: :created, jsonapi: @user) }
       end
     else
       head :bad_request
