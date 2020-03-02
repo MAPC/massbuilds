@@ -152,7 +152,7 @@ RSpec.describe "Developments", type: :request do
     it "works as an admin" do
       development = FactoryBot.create(:development)
       put "/developments/#{development.id}", params: valid_jsonapi_params, headers: admin_user_session
-      expect(response).to have_http_status(:found)
+      expect(response).to have_http_status(:success)
     end
 
     it "works for verified users on developments they created" do
