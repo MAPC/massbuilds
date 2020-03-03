@@ -11,7 +11,18 @@ RSpec.describe "Developments", type: :request do
   let(:valid_jsonapi_params_worcester) {
     hash = Hash.new {|h,k| h[k] = Hash.new(&h.default_proc) }
     hash["data"]["type"] = "development"
-    hash["data"]["attributes"] = FactoryBot.attributes_for(:development, municipal: 'Worcester')
+    hash["data"]["attributes"] = FactoryBot.attributes_for(:development,
+                                                            municipal: 'Worcester',
+                                                            latitude: 42.2626,
+                                                            longitude: -71.8023,
+                                                            point: nil)
+    hash.to_json
+  }
+
+  let(:valid_jsonapi_params_flag) {
+    hash = Hash.new {|h,k| h[k] = Hash.new(&h.default_proc) }
+    hash["data"]["type"] = "development"
+    hash["data"]["attributes"] = { flag: true }
     hash.to_json
   }
 
@@ -167,6 +178,12 @@ RSpec.describe "Developments", type: :request do
       expect(response).to have_http_status(:success)
     end
 
+    it "lets anyone update a flag" do
+      development = FactoryBot.create(:development)
+      put "/developments/#{development.id}", params: valid_jsonapi_params_flag, headers: registered_user_session
+      expect(response).to have_http_status(:success)
+    end
+
     it "does not work for verified users on developments they did not create" do
       development = FactoryBot.create(:development)
       put "/developments/#{development.id}", params: valid_jsonapi_params, headers: verified_user_session
@@ -219,7 +236,10 @@ RSpec.describe "Developments", type: :request do
     end
 
     it "does not work as a municipal user outside their own municipality" do
-      development = FactoryBot.create(:development, municipal: 'Worcester')
+      development = FactoryBot.create(:development, municipal: 'Worcester',
+                                                    latitude: 42.2626,
+                                                    longitude: -71.8023,
+                                                    point: nil)
       delete "/developments/#{development.id}", headers: municipal_user_session
       expect(response).to have_http_status(:unauthorized)
     end

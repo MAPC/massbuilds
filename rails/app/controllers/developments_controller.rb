@@ -63,7 +63,7 @@ class DevelopmentsController < ApplicationController
 
   # PATCH/PUT /developments/1
   def update
-    authorize @development
+    (development_params.count === 1 && development_params[:flag]) ? authorize(@development, :flag?) : authorize(@development)
 
     @development.attributes = development_params
     if @development.save(validate: !development_params[:flag])
