@@ -108,9 +108,9 @@ class Development < ApplicationRecord
     if result && JSON.parse(result.body)['features'].length > 0
       properties = JSON.parse(result.body)['features'][0]['properties']
       self.update_columns(
-        municipal: (properties['locality'] || properties['localadmin']),
-        address: properties['name'],
-        zip_code: properties['postalcode']
+        municipal: (properties['locality'] || properties['localadmin'] || self.municipal),
+        address: (properties['street'] || self.address),
+        zip_code: (properties['postalcode'] || self.zip_code)
       )
     end
   end
