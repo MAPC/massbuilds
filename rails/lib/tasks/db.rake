@@ -42,8 +42,4 @@ namespace :db do
   task delete_municipalities_fdw: :environment do
     ActiveRecord::Base.connection.execute "DROP FOREIGN TABLE IF EXISTS ma_municipalities"
   end
-
-  task add_tod_service_area: :environment do
-    ActiveRecord::Base.connection.execute "IMPORT FOREIGN SCHEMA editor LIMIT TO (tod_service_area_poly) FROM SERVER dblive95 INTO public;"
-  end
 end
