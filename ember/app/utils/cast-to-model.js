@@ -1,11 +1,12 @@
-import Ember from 'ember';
+import { get } from '@ember/object';
+import { camelize, underscore } from '@ember/string';
 import serializeKeys from 'massbuilds/utils/serialize-keys';
 import developmentSerialHash from 'massbuilds/utils/development-serial-hash';
 
 
 export default function castToModel(model, data) {
-  const serialized = serializeKeys(data, Ember.String.camelize);
-  const attributes = Ember.get(model, 'attributes._values');
+  const serialized = serializeKeys(data, camelize);
+  const attributes = get(model, 'attributes._values');
 
   const typeMap = Object.values(attributes)
                         .reduce((a,b) => {
@@ -20,7 +21,7 @@ export default function castToModel(model, data) {
   };
 
   Object.keys(serialized).forEach(key => {
-    const newKey = (developmentSerialHash[key] || Ember.String.underscore(key));
+    const newKey = (developmentSerialHash[key] || underscore(key));
 
     serialized[newKey] = typeCaster[typeMap[key]](serialized[key]);
     

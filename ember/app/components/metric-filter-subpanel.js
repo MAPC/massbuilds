@@ -1,4 +1,4 @@
-import Ember from 'ember';
+import { set } from '@ember/object';
 import Component from '@ember/component';
 import { computed, action } from 'ember-decorators/object';
 import filters, { metricGroups } from 'massbuilds/utils/filters';
@@ -37,7 +37,7 @@ export default class extends Component {
   @action
   toggleCheckbox(metric) {
     const value = !(metric.value == true);
-    Ember.set(metric, 'value', value);
+    set(metric, 'value', value);
 
     this.updateFilter(metric);
   }

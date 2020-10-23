@@ -1,8 +1,7 @@
-import Ember from 'ember';
+import RSVP from 'rsvp';
+import { isEmpty } from '@ember/utils';
 import Service from '@ember/service';
 import { service } from 'ember-decorators/service';
-
-const { RSVP, isEmpty } = Ember;
 
 
 export default class extends Service {

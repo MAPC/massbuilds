@@ -1,11 +1,11 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
 import RSVP from 'rsvp';
 import Route from '@ember/routing/route';
 
 
 export default Route.extend({
 
-  currentUser: Ember.inject.service(),
+  currentUser: service(),
 
 
   beforeModel() {

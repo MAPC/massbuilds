@@ -1,4 +1,5 @@
-import Ember from 'ember';
+import { camelize } from '@ember/string';
+import { copy } from '@ember/object/internals';
 import Controller from '@ember/controller';
 import { filters } from 'massbuilds/utils/filters';
 import { action, computed } from 'ember-decorators/object';
@@ -12,10 +13,10 @@ export default class extends Controller {
     const moderations = [];
 
     model.forEach(record => {
-      const changes = Ember.copy(record.get('proposedChanges'));
+      const changes = copy(record.get('proposedChanges'));
 
       for (let col in changes) {
-        const emberCol = Ember.String.camelize(col);
+        const emberCol = camelize(col);
 
         if (filters[emberCol]) {
           changes[emberCol] = {

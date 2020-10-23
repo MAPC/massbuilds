@@ -1,3 +1,4 @@
+import { getOwner } from '@ember/application';
 import Component from '@ember/component';
 import { action, computed } from 'ember-decorators/object';
 import { reads } from 'ember-decorators/object/computed';
@@ -16,7 +17,7 @@ export default class extends Component {
 
     this.classNames = ['component', 'search-bar'];
     this.sortOrder = ['municipal', 'nhood', 'devlper', 'name', 'address'];
-    this.appCtrl = Ember.getOwner(this).lookup('controller:application');
+    this.appCtrl = getOwner(this).lookup('controller:application');
     this.loading = false;
   }
 

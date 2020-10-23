@@ -1,4 +1,4 @@
-import Ember from 'ember';
+import { camelize } from '@ember/string';
 import Controller from '@ember/controller';
 import { service } from 'ember-decorators/service';
 import { filters } from 'massbuilds/utils/filters';
@@ -57,7 +57,7 @@ export default class extends Controller {
     const model = this.get('model');
     data = castToModel(Development, data);
 
-    Object.keys(data).forEach(attr => model.set(Ember.String.camelize(attr), data[attr]));
+    Object.keys(data).forEach(attr => model.set(camelize(attr), data[attr]));
 
     model.set('state', 'MA');
     model.set('user', this.get('currentUser.user'));
@@ -138,7 +138,7 @@ export default class extends Controller {
                           .replace(errorDelim, '')
                           .replace("'", '');
 
-      return Ember.String.camelize(columnName);
+      return camelize(columnName);
     }
   }
 

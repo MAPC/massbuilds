@@ -1,4 +1,3 @@
-import Ember from 'ember';
 import Controller from '@ember/controller';
 import { service } from 'ember-decorators/service';
 import Development from 'massbuilds/models/development';
