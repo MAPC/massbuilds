@@ -3,13 +3,15 @@ module.exports = {
   parser: 'babel-eslint',
   parserOptions: {
     ecmaVersion: 2017,
-    sourceType: 'module'
+    sourceType: 'module',
+    ecmaFeatures: {
+      legacyDecorators: true,
+    },
   },
   extends: 'eslint:recommended',
   env: {
     browser: true,
     es6: true,
   },
-  rules: {
-  }
+  rules: {},
 };

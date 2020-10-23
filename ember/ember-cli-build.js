@@ -3,7 +3,7 @@
 
 const EmberApp = require('ember-cli/lib/broccoli/ember-app');
 
-module.exports = function(defaults) {
+module.exports = function (defaults) {
   let app = new EmberApp(defaults, {
     // Add options here
     fingerprint: {
@@ -20,11 +20,12 @@ module.exports = function(defaults) {
       loose: true,
       plugins: [
         'transform-object-rest-spread',
+        ['@babel/plugin-proposal-decorators', { legacy: true }],
       ],
     },
     'ember-cli-babel': {
       includePolyfill: true,
-    }
+    },
   });
 
   app.import('node_modules/mapbox-gl/dist/mapbox-gl.css');
