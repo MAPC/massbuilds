@@ -1,4 +1,4 @@
-import Ember from 'ember';
+import { later } from '@ember/runloop';
 import Component from '@ember/component';
 import filters from 'massbuilds/utils/filters';
 import { service } from 'ember-decorators/service';
@@ -136,7 +136,7 @@ export default class extends Component {
       projected: projected,
     };
 
-    Ember.run.later(this, () => this.updateFieldRequirements(), 500);
+    later(this, () => this.updateFieldRequirements(), 500);
     const lng = this.get('editing.longitude');
     const lat = this.get('editing.latitude');
     if (lng && lat && lng != 0 && lat != 0) {

@@ -1,4 +1,3 @@
-import Ember from 'ember';
 import Service from '@ember/service';
 import mapboxgl from 'npm:mapbox-gl';
 import { computed } from 'ember-decorators/object';

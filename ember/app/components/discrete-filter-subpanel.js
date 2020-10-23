@@ -1,4 +1,4 @@
-import Ember from 'ember';
+import { copy } from '@ember/object/internals';
 import Component from '@ember/component';
 import { action, computed } from 'ember-decorators/object';
 import { service } from 'ember-decorators/service';
@@ -21,7 +21,7 @@ export default class extends Component {
 
   @computed('selectedValues')
   get valueUpdater() {
-    this.set('selected', Ember.copy(this.get('selectedValues')));
+    this.set('selected', copy(this.get('selectedValues')));
   }
 
 
@@ -43,7 +43,7 @@ export default class extends Component {
     const selected = this.get('selected');
     const searchQuery = this.get('searchQuery');
 
-    let filtered = Ember.copy(values);
+    let filtered = copy(values);
 
     if (searchQuery.length >= 1) {
       let query = searchQuery.toLowerCase();
@@ -103,7 +103,7 @@ export default class extends Component {
 
   @action
   updateFilter() {
-    this.sendAction('update', { [this.get('viewing.col')]: Ember.copy(this.get('selected')) });
+    this.sendAction('update', { [this.get('viewing.col')]: copy(this.get('selected')) });
   }
 
 

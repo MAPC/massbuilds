@@ -1,3 +1,4 @@
+import $ from 'jquery';
 import Component from '@ember/component';
 import { action, computed } from 'ember-decorators/object';
 import { service } from 'ember-decorators/service';
@@ -18,11 +19,11 @@ export default class extends Component.extend({
   }
 
   didInsertElement() {
-    this.set('windowWidth', Ember.$(window).width());
-    this.set('windowHeight', Ember.$(window).height());
-    Ember.$(window).resize(() => {
-      this.set('windowWidth', Ember.$(window).width());
-      this.set('windowHeight', Ember.$(window).height());
+    this.set('windowWidth', $(window).width());
+    this.set('windowHeight', $(window).height());
+    $(window).resize(() => {
+      this.set('windowWidth', $(window).width());
+      this.set('windowHeight', $(window).height());
     });
   }
 
@@ -108,4 +109,4 @@ export default class extends Component.extend({
   catchClick() {
     this.set('term.openTerm', null);
   }
-};
+}

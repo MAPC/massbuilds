@@ -1,4 +1,4 @@
-import Ember from 'ember';
+import { copy } from '@ember/object/internals';
 import Controller from '@ember/controller';
 import { action, computed } from 'ember-decorators/object';
 
@@ -27,7 +27,7 @@ export default class extends Controller {
     const searchQuery = this.get('searchQuery').toLowerCase();
 
     const searchable = ['lastName', 'firstName', 'email', 'fullName', 'municipality'];
-    let filteredUsers = Ember.copy(sortedUsers);
+    let filteredUsers = copy(sortedUsers);
 
     if (roleFilter !== 'all') {
       filteredUsers = filteredUsers.filter(user => user.get('role') === roleFilter);

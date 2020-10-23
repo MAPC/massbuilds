@@ -1,4 +1,5 @@
-import Ember from 'ember';
+import { set } from '@ember/object';
+import { copy } from '@ember/object/internals';
 import Controller from '@ember/controller';
 import { action, computed } from 'ember-decorators/object';
 import { service } from 'ember-decorators/service';
@@ -90,17 +91,17 @@ export default class extends Controller {
             typeof value !== 'object'  // not object/array
             || value.length > 0        // if array, then make sure it has elements
           ) {
-            found = Ember.copy(filters[col]);
+            found = copy(filters[col]);
 
             if (found.filter === 'metric') {
               if (found.type === 'number') {
                 const metricParts = value.split(';');
 
-                Ember.set(found, 'inflector', metricParts[0]);
-                Ember.set(found, 'value', metricParts[1]);
+                set(found, 'inflector', metricParts[0]);
+                set(found, 'value', metricParts[1]);
               }
               else if (found.type === 'boolean') {
-                Ember.set(found, 'value', value == 'true');
+                set(found, 'value', value == 'true');
               }
             }
             else {
@@ -108,12 +109,12 @@ export default class extends Controller {
                 value = value.map(capitalize);
               }
 
-              Ember.set(found, 'value', value);
+              set(found, 'value', value);
             }
           }
         }
         else {
-          Ember.set(filters[col], 'value', null);
+          set(filters[col], 'value', null);
         }
 
         return found;

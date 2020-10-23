@@ -1,4 +1,4 @@
-import Ember from 'ember';
+import { cancel, later } from '@ember/runloop';
 import Service from '@ember/service';
 import { action } from 'ember-decorators/object';
 
@@ -19,8 +19,8 @@ export default class extends Service {
     this.set('message', message);
     this.set('mode', opts.mode || null);
 
-    Ember.run.cancel(this.get('timer'));
-    this.timer = Ember.run.later(this, () => this.set('message', null), opts.duration || 5000);
+    cancel(this.get('timer'));
+    this.timer = later(this, () => this.set('message', null), opts.duration || 5000);
   }
 
   error(message) {

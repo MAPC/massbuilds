@@ -1,3 +1,5 @@
+import { htmlSafe } from '@ember/template';
+import $ from 'jquery';
 import Component from '@ember/component';
 import { service } from 'ember-decorators/service';
 import statusColors from 'massbuilds/utils/status-colors';
@@ -129,7 +131,7 @@ export default class extends Component {
         && this.get('map.followMode')
         && this.mapboxglMap
         && this.mapboxglMap.getSource('selector')
-        && Ember.$('.left-panel-layer')
+        && $('.left-panel-layer')
         && this.$()) {
       const bounds = this.get('focusTargetBounds')
           || this.mapboxglMap.getBounds();
@@ -382,7 +384,7 @@ export default class extends Component {
         (bounds, datum) => bounds.extend([datum.get('longitude'), datum.get('latitude')]),
           new mapboxgl.LngLatBounds()
         );
-        const leftPanel = Ember.$('.left-panel-layer');
+        const leftPanel = $('.left-panel-layer');
         this.set('focusTargetBounds', fitBounds);
         this.mapboxglMap.fitBounds(fitBounds, { padding: {
           top: 40,
@@ -539,7 +541,7 @@ export default class extends Component {
           .split('_')
           .map(w => w.capitalize())
           .join(' ');
-      const content = Ember.String.htmlSafe(`
+      const content = htmlSafe(`
         <div class='massbuilds-tooltip'</div>
           <h4>${properties.name}</h4>
           <h5 style="color: ${properties.color}">
@@ -587,4 +589,4 @@ export default class extends Component {
     this.mapboxglMap.on('mouseleave', 'filtered', closePopup);
   }
 
-};
+}

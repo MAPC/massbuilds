@@ -1,8 +1,9 @@
-import Ember from 'ember';
+import { copy } from '@ember/object/internals';
+import { get } from '@ember/object';
+import { decamelize } from '@ember/string';
 import { statusOptions } from 'massbuilds/utils/status-colors';
 import { capitalize } from 'massbuilds/helpers/capitalize';
 import Development from 'massbuilds/models/development';
-const { decamelize } = Ember.String;
 
 
 /**
@@ -216,7 +217,7 @@ const inflectorMap = {
 
 // Add any remaining undefined filters based upon model
 // Assume they are 'metric' filters
-Object.values(Ember.get(Development, 'attributes')._values)
+Object.values(get(Development, 'attributes')._values)
       .forEach(attr => {
         let type = attr.type;
         let name = decamelize(attr.name)
@@ -242,7 +243,7 @@ const fromQueryParams = params => {
     let value = params[_key];
     let key = decamelize(_key);
 
-    newParams[key] = Ember.copy(filters[_key]);
+    newParams[key] = copy(filters[_key]);
     newParams[key].col = key;
 
     if (newParams[key].type === 'number') {
