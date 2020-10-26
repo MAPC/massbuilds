@@ -5,18 +5,16 @@ import { service } from 'ember-decorators/service';
 import statusColors from 'massbuilds/utils/status-colors';
 import pointInPolygon from 'npm:@turf/boolean-point-in-polygon';
 import centerOfMass from 'npm:@turf/center-of-mass';
+import mapboxgl from 'mapbox-gl';
 
 import paintProperties from 'massbuilds/utils/paint-properties';
 
-mapboxgl.accessToken = 'pk.eyJ1IjoiaWhpbGwiLCJhIjoiY2plZzUwMTRzMW45NjJxb2R2Z2thOWF1YiJ9.szIAeMS4c9YTgNsJeG36gg';
-
-
-
+mapboxgl.accessToken =
+  'pk.eyJ1IjoiaWhpbGwiLCJhIjoiY2plZzUwMTRzMW45NjJxb2R2Z2thOWF1YiJ9.szIAeMS4c9YTgNsJeG36gg';
 
 export default class extends Component {
-
-  @service store
-  @service map
+  @service store;
+  @service map;
 
   constructor() {
     super();
@@ -51,7 +49,10 @@ export default class extends Component {
       style: mapStyle,
       center: [-71.061391, 42.355107],
       zoom: 10,
-      maxBounds: [[-100, 20], [-40, 60]],
+      maxBounds: [
+        [-100, 20],
+        [-40, 60],
+      ],
       dragRotate: false,
       pitchWithRotate: false,
       touchZoomRotate: false,
@@ -72,9 +73,17 @@ export default class extends Component {
       mapService.addObserver('baseMap', this, 'setStyle');
       mapService.addObserver('zoomCommand', this, 'actOnZoomCommand');
       mapService.addObserver('viewing', this, 'jumpTo');
-      mapService.addObserver('markerVisible', this, 'markerVisibleChangeHandler')
+      mapService.addObserver(
+        'markerVisible',
+        this,
+        'markerVisibleChangeHandler'
+      );
       mapService.addObserver('followMode', this, 'followModeChangeHandler');
-      mapService.addObserver('selectedCoordinates', this, 'drawSelectedCoordinates');
+      mapService.addObserver(
+        'selectedCoordinates',
+        this,
+        'drawSelectedCoordinates'
+      );
 
       if (mapService.get('stored').length) {
         this.draw(mapService);
@@ -107,9 +116,17 @@ export default class extends Component {
     mapService.removeObserver('baseMap', this, 'setStyle');
     mapService.removeObserver('zoomCommand', this, 'actOnZoomCommand');
     mapService.removeObserver('viewing', this, 'jumpTo');
-    mapService.removeObserver('markerVisible', this, 'markerVisibleChangeHandler');
+    mapService.removeObserver(
+      'markerVisible',
+      this,
+      'markerVisibleChangeHandler'
+    );
     mapService.removeObserver('followMode', this, 'followModeChangeHandler');
-    mapService.removeObserver('selectedCoordinates', this, 'drawSelectedCoordinates');
+    mapService.removeObserver(
+      'selectedCoordinates',
+      this,
+      'drawSelectedCoordinates'
+    );
     this.mapboxglMap.remove();
   }
 
@@ -127,14 +144,16 @@ export default class extends Component {
 
   updateSelection(notFromFitBounds) {
     // If the user triggered the drag or zoom...
-    if (notFromFitBounds
-        && this.get('map.followMode')
-        && this.mapboxglMap
-        && this.mapboxglMap.getSource('selector')
-        && $('.left-panel-layer')
-        && this.$()) {
-      const bounds = this.get('focusTargetBounds')
-          || this.mapboxglMap.getBounds();
+    if (
+      notFromFitBounds &&
+      this.get('map.followMode') &&
+      this.mapboxglMap &&
+      this.mapboxglMap.getSource('selector') &&
+      $('.left-panel-layer') &&
+      this.$()
+    ) {
+      const bounds =
+        this.get('focusTargetBounds') || this.mapboxglMap.getBounds();
       const northEast = bounds.getNorthEast().toArray();
       const southWest = bounds.getSouthWest().toArray();
       const ratio = (() => {
@@ -145,8 +164,8 @@ export default class extends Component {
         }
         const leftPanelWidth = this.getLeftPanelWidth();
         const mapWidth = parseInt(this.$().css('width'));
-        return (((mapWidth - leftPanelWidth) / 2) + leftPanelWidth) / mapWidth;
-      })()
+        return ((mapWidth - leftPanelWidth) / 2 + leftPanelWidth) / mapWidth;
+      })();
       const coordinates = [
         (northEast[0] - southWest[0]) * ratio + southWest[0],
         (northEast[1] - southWest[1]) * 0.5 + southWest[1],
@@ -160,49 +179,48 @@ export default class extends Component {
     const boundsWidth = 0.01;
     const leftPanelWidth = this.getLeftPanelWidth();
     const mapWidth = parseInt(this.$().css('width'));
-    const ratio = (((mapWidth - leftPanelWidth) / 2) + leftPanelWidth) / mapWidth;
+    const ratio = ((mapWidth - leftPanelWidth) / 2 + leftPanelWidth) / mapWidth;
     const northEast = [
-      coordinates[0] + ((1 - ratio) * boundsWidth),
+      coordinates[0] + (1 - ratio) * boundsWidth,
       coordinates[1],
     ];
-    const southWest = [
-      coordinates[0] - (ratio * boundsWidth),
-      coordinates[1],
-    ];
+    const southWest = [coordinates[0] - ratio * boundsWidth, coordinates[1]];
     return new mapboxgl.LngLatBounds(southWest, northEast);
   }
 
   drawSelectedCoordinates(mapService) {
-
-    if (this.mapboxglMap
-        && this.mapboxglMap.getSource('selector')) {
+    if (this.mapboxglMap && this.mapboxglMap.getSource('selector')) {
       const coordinates = mapService.get('selectedCoordinates');
       if (this.get('previousCoordinatesKey') != coordinates.toString()) {
         this.mapboxglMap.getSource('selector').setData({
           type: 'FeatureCollection',
-          features: [{
-            type: 'Feature',
-            properties: {
+          features: [
+            {
+              type: 'Feature',
+              properties: {},
+              geometry: {
+                type: 'Point',
+                coordinates: coordinates,
+              },
             },
-            geometry: {
-              type: 'Point',
-              coordinates: coordinates,
-            },
-          }],
+          ],
         });
         const previousParcel = this.get('previousParcel');
-        if ((Date.now() - this.get('lastRequest') > 250)
-            && this.mapboxglMap.getLayer('parcel')
-            && (
-              !previousParcel
-              || !pointInPolygon.default({ type: 'Point', coordinates: coordinates }, previousParcel.get('geojson'))
-            )) {
+        if (
+          Date.now() - this.get('lastRequest') > 250 &&
+          this.mapboxglMap.getLayer('parcel') &&
+          (!previousParcel ||
+            !pointInPolygon.default(
+              { type: 'Point', coordinates: coordinates },
+              previousParcel.get('geojson')
+            ))
+        ) {
           this.getNewParcel(coordinates);
         }
         this.set('previousCoordinatesKey', coordinates.toString());
       }
       if (mapService.get('jumpToSelectedCoordinates')) {
-        const bounds = this.getBoundsFromCoordinates(coordinates)
+        const bounds = this.getBoundsFromCoordinates(coordinates);
         this.mapboxglMap.fitBounds(bounds);
       }
     }
@@ -210,51 +228,65 @@ export default class extends Component {
 
   getNewParcel(coordinates) {
     this.set('lastRequest', Date.now());
-    this.get('store').query('parcel', { lng: coordinates[0], lat: coordinates[1] }).then((results) => {
-      const parcels = results.toArray();
-      const newCoordinates = this.get('map.selectedCoordinates');
-      if (parcels.length) {
-        const parcel = parcels[0];
-        if (pointInPolygon.default({ type: 'Point', coordinates: newCoordinates }, parcel.get('geojson'))
-            && this.mapboxglMap.getSource('parcel')
-            && this.mapboxglMap.getSource('parcel_label')) {
+    this.get('store')
+      .query('parcel', { lng: coordinates[0], lat: coordinates[1] })
+      .then((results) => {
+        const parcels = results.toArray();
+        const newCoordinates = this.get('map.selectedCoordinates');
+        if (parcels.length) {
+          const parcel = parcels[0];
+          if (
+            pointInPolygon.default(
+              { type: 'Point', coordinates: newCoordinates },
+              parcel.get('geojson')
+            ) &&
+            this.mapboxglMap.getSource('parcel') &&
+            this.mapboxglMap.getSource('parcel_label')
+          ) {
+            this.mapboxglMap.getSource('parcel').setData({
+              type: 'FeatureCollection',
+              features: [
+                {
+                  type: 'Feature',
+                  properties: {},
+                  geometry: parcel.get('geojson'),
+                },
+              ],
+            });
+            const center = centerOfMass.default(parcel.get('geojson'));
+            this.mapboxglMap.getSource('parcel_label').setData({
+              type: 'FeatureCollection',
+              features: [
+                {
+                  type: 'Feature',
+                  properties: {
+                    site_addr: parcel.get('site_addr')
+                      ? parcel.get('site_addr')
+                      : '[ADDRESS UNKNOWN]',
+                    muni: parcel.get('muni')
+                      ? parcel.get('muni').toUpperCase()
+                      : '',
+                  },
+                  geometry: center.geometry,
+                },
+              ],
+            });
+            this.set('previousParcel', parcel);
+          } else {
+            this.getNewParcel(newCoordinates);
+          }
+        } else {
+          this.set('previousParcel', null);
           this.mapboxglMap.getSource('parcel').setData({
             type: 'FeatureCollection',
-            features: [{
-              type: 'Feature',
-              properties: {
-              },
-              geometry: parcel.get('geojson'),
-            }],
+            features: [],
           });
-          const center = centerOfMass.default(parcel.get('geojson'));
           this.mapboxglMap.getSource('parcel_label').setData({
             type: 'FeatureCollection',
-            features: [{
-              type: 'Feature',
-              properties: {
-                site_addr: parcel.get('site_addr') ? parcel.get('site_addr') : '[ADDRESS UNKNOWN]',
-                muni: parcel.get('muni') ? parcel.get('muni').toUpperCase() : '',
-              },
-              geometry: center.geometry,
-            }],
+            features: [],
           });
-          this.set('previousParcel', parcel);
-        } else {
-          this.getNewParcel(newCoordinates);
         }
-      } else {
-        this.set('previousParcel', null);
-        this.mapboxglMap.getSource('parcel').setData({
-          type: 'FeatureCollection',
-          features: [],
-        });
-        this.mapboxglMap.getSource('parcel_label').setData({
-          type: 'FeatureCollection',
-          features: [],
-        });
-      }
-    });
+      });
   }
 
   setStyle(mapService) {
@@ -268,7 +300,9 @@ export default class extends Component {
     if (newBaseMap == 'light') {
       this.mapboxglMap.setStyle('mapbox://styles/mapbox/light-v9');
     } else if (newBaseMap == 'satellite') {
-      this.mapboxglMap.setStyle('mapbox://styles/ihill/cjin8f3kc0ytj2sr0rxw11a90');
+      this.mapboxglMap.setStyle(
+        'mapbox://styles/ihill/cjin8f3kc0ytj2sr0rxw11a90'
+      );
     }
   }
 
@@ -369,7 +403,10 @@ export default class extends Component {
   jumpTo(mapService) {
     const dev = mapService.get('viewing');
     if (dev) {
-      const bounds = this.getBoundsFromCoordinates([dev.get('longitude'), dev.get('latitude')])
+      const bounds = this.getBoundsFromCoordinates([
+        dev.get('longitude'),
+        dev.get('latitude'),
+      ]);
       this.mapboxglMap.fitBounds(bounds);
     }
   }
@@ -377,32 +414,37 @@ export default class extends Component {
   focus(mapService) {
     if (!mapService.get('viewing')) {
       const data = mapService.get('filteredData').length
-          ? mapService.get('filteredData')
-          : mapService.get('stored');
+        ? mapService.get('filteredData')
+        : mapService.get('stored');
       if (data.toArray().length > 0) {
         const fitBounds = data.reduce(
-        (bounds, datum) => bounds.extend([datum.get('longitude'), datum.get('latitude')]),
+          (bounds, datum) =>
+            bounds.extend([datum.get('longitude'), datum.get('latitude')]),
           new mapboxgl.LngLatBounds()
         );
         const leftPanel = $('.left-panel-layer');
         this.set('focusTargetBounds', fitBounds);
-        this.mapboxglMap.fitBounds(fitBounds, { padding: {
-          top: 40,
-          left: (this.get('map.showingLeftPanel') ? this.getLeftPanelWidth() + 40 : 40),
-          bottom: 40,
-          right: 40,
-        }});
+        this.mapboxglMap.fitBounds(fitBounds, {
+          padding: {
+            top: 40,
+            left: this.get('map.showingLeftPanel')
+              ? this.getLeftPanelWidth() + 40
+              : 40,
+            bottom: 40,
+            right: 40,
+          },
+        });
       }
     }
   }
 
-
-
   draw(mapService) {
     // All data
-    const allFeatures = this.generateFeatures(mapService.get('filteredData').length
+    const allFeatures = this.generateFeatures(
+      mapService.get('filteredData').length
         ? mapService.get('remainder')
-        : mapService.get('stored'));
+        : mapService.get('stored')
+    );
     const satelliteMap = mapService.get('baseMap') != 'light';
     const isMuted = mapService.get('followMode');
 
@@ -411,11 +453,13 @@ export default class extends Component {
         type: 'FeatureCollection',
         features: allFeatures,
       });
-      Object.entries(paintProperties.developments(
-        mapService.get('filteredData').length == 0,
-        satelliteMap,
-        isMuted
-      )).forEach(([property, value]) => {
+      Object.entries(
+        paintProperties.developments(
+          mapService.get('filteredData').length == 0,
+          satelliteMap,
+          isMuted
+        )
+      ).forEach(([property, value]) => {
         this.mapboxglMap.setPaintProperty('all', property, value);
       });
     } else {
@@ -439,14 +483,16 @@ export default class extends Component {
 
     if (mapService.get('viewing')) {
       const dev = mapService.get('viewing');
-      const highlightFeatures = [{
-        type: 'Feature',
-        properties: {},
-        geometry: {
-          type: 'Point',
-          coordinates: [dev.get('longitude'), dev.get('latitude')],
+      const highlightFeatures = [
+        {
+          type: 'Feature',
+          properties: {},
+          geometry: {
+            type: 'Point',
+            coordinates: [dev.get('longitude'), dev.get('latitude')],
+          },
         },
-      }];
+      ];
       if (this.mapboxglMap.getLayer('highlighter')) {
         this.mapboxglMap.getSource('highlighter').setData({
           type: 'FeatureCollection',
@@ -480,11 +526,9 @@ export default class extends Component {
           type: 'FeatureCollection',
           features: filteredFeatures,
         });
-        Object.entries(paintProperties.developments(
-          true,
-          satelliteMap,
-          isMuted
-        )).forEach(([property, value]) => {
+        Object.entries(
+          paintProperties.developments(true, satelliteMap, isMuted)
+        ).forEach(([property, value]) => {
           this.mapboxglMap.setPaintProperty('filtered', property, value);
         });
       } else {
@@ -496,7 +540,7 @@ export default class extends Component {
             data: {
               type: 'FeatureCollection',
               features: filteredFeatures,
-            }
+            },
           },
           paint: paintProperties.developments(true, satelliteMap, isMuted),
         });
@@ -538,9 +582,9 @@ export default class extends Component {
       const properties = e.features[0].properties;
       popupId = properties.id;
       const formattedStatus = properties.status
-          .split('_')
-          .map(w => w.capitalize())
-          .join(' ');
+        .split('_')
+        .map((w) => w.capitalize())
+        .join(' ');
       const content = htmlSafe(`
         <div class='massbuilds-tooltip'</div>
           <h4>${properties.name}</h4>
@@ -548,7 +592,9 @@ export default class extends Component {
             ${formattedStatus}
           </h5>
           <h5>
-            <span>${properties.yrcompEst ? 'Estimated' : ''} Year of Completion: </span>
+            <span>${
+              properties.yrcompEst ? 'Estimated' : ''
+            } Year of Completion: </span>
             ${properties.yearCompl}
           </h5>
         </div>
@@ -558,14 +604,12 @@ export default class extends Component {
       // copies of the feature are visible, the popup appears
       // over the copy being pointed to.
       while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-          coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+        coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
       }
 
       // Populate the popup and set its coordinates
       // based on the feature found.
-      popup.setLngLat(coordinates)
-          .setHTML(content)
-          .addTo(this.mapboxglMap);
+      popup.setLngLat(coordinates).setHTML(content).addTo(this.mapboxglMap);
     };
 
     const closePopup = () => {
@@ -588,5 +632,4 @@ export default class extends Component {
     this.mapboxglMap.on('mouseleave', 'all', closePopup);
     this.mapboxglMap.on('mouseleave', 'filtered', closePopup);
   }
-
 }
