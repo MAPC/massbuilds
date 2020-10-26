@@ -28,7 +28,7 @@ module.exports = function (defaults) {
     babel: {
       loose: true,
       plugins: [
-        'transform-object-rest-spread',
+        '@babel/plugin-proposal-object-rest-spread',
         ['@babel/plugin-proposal-decorators', { legacy: true }],
         [require.resolve('ember-auto-import/babel-plugin')],
       ],
