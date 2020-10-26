@@ -3,8 +3,8 @@ import $ from 'jquery';
 import Component from '@ember/component';
 import { service } from 'ember-decorators/service';
 import statusColors from 'massbuilds/utils/status-colors';
-import pointInPolygon from 'npm:@turf/boolean-point-in-polygon';
-import centerOfMass from 'npm:@turf/center-of-mass';
+import pointInPolygon from '@turf/boolean-point-in-polygon';
+import centerOfMass from '@turf/center-of-mass';
 import mapboxgl from 'mapbox-gl';
 
 import paintProperties from 'massbuilds/utils/paint-properties';
