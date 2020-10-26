@@ -1,23 +1,20 @@
 import Service from '@ember/service';
-import mapboxgl from 'npm:mapbox-gl';
+import mapboxgl from 'mapbox-gl';
 import { computed } from 'ember-decorators/object';
 import { service } from 'ember-decorators/service';
 
 export const massLng = -71.525258;
 export const massLat = 42.177117;
 
-
 export default class extends Service {
-
-  @service store
-  @service notifications
-
+  @service store;
+  @service notifications;
 
   constructor() {
     super();
 
-    this.lower = {lat: 41.258856, lng: -72.7496044};
-    this.upper = {lat: 42.869699, lng: -70.0528674};
+    this.lower = { lat: 41.258856, lng: -72.7496044 };
+    this.upper = { lat: 42.869699, lng: -70.0528674 };
     this.pad = 0;
 
     this.instance = null;
@@ -35,10 +32,23 @@ export default class extends Service {
     this.jumpToSelectedCoordinates = false;
     this.showingLeftPanel = false;
 
-    this.get('store').query('development', { trunc: true }).then(results => {
-      this.set('stored', results.toArray());
-      this.set('storedBounds', mapboxgl.LngLatBounds.convert(results.map(result => new mapboxgl.LngLat(result.get('longitude'), result.get('latitude')))));
-    });
+    this.get('store')
+      .query('development', { trunc: true })
+      .then((results) => {
+        this.set('stored', results.toArray());
+        this.set(
+          'storedBounds',
+          mapboxgl.LngLatBounds.convert(
+            results.map(
+              (result) =>
+                new mapboxgl.LngLat(
+                  result.get('longitude'),
+                  result.get('latitude')
+                )
+            )
+          )
+        );
+      });
   }
 
   setViewing(dev) {
@@ -49,29 +59,31 @@ export default class extends Service {
     if (Object.keys(query.filter).length === 0) {
       this.set('pad', 0);
       this.set('filteredData', []);
-    }
-    else {
+    } else {
       this.get('notifications').show('Updating map', { duration: 2000 });
-      this.set('pad', .1);
+      this.set('pad', 0.1);
       this.get('store')
-          .query('development', query)
-          .then(result => {
-            this.set('filteredData', result);
-          });
+        .query('development', query)
+        .then((result) => {
+          this.set('filteredData', result);
+        });
     }
   }
 
   setFocusedDevelopment(id) {
-    this.get('store').findRecord('development', id).then((dev) => {
-      this.set('focusedDevelopment', dev);
-    });
+    this.get('store')
+      .findRecord('development', id)
+      .then((dev) => {
+        this.set('focusedDevelopment', dev);
+      });
   }
 
   @computed('stored', 'filteredData')
   get remainder() {
-    const filtered = this.get('filteredData').reduce((obj, datum) =>
-      Object.assign(obj, { [datum.get('id')]: true })
-    , {});
+    const filtered = this.get('filteredData').reduce(
+      (obj, datum) => Object.assign(obj, { [datum.get('id')]: true }),
+      {}
+    );
     return this.get('stored').filter((datum) => !filtered[datum.get('id')]);
   }
 
@@ -84,5 +96,4 @@ export default class extends Service {
     this.get('stored').pushObject(development);
     this.set('stored', this.get('stored').toArray());
   }
-
 }

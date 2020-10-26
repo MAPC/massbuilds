@@ -16,11 +16,21 @@ module.exports = function (defaults) {
       ],
     },
 
+    autoImport: {
+      skipBabel: [
+        {
+          package: 'mapbox-gl',
+          semverRange: '*',
+        },
+      ],
+    },
+
     babel: {
       loose: true,
       plugins: [
         'transform-object-rest-spread',
         ['@babel/plugin-proposal-decorators', { legacy: true }],
+        [require.resolve('ember-auto-import/babel-plugin')],
       ],
     },
     'ember-cli-babel': {
@@ -28,8 +38,7 @@ module.exports = function (defaults) {
     },
   });
 
-  app.import('node_modules/mapbox-gl/dist/mapbox-gl.css');
-  app.import('node_modules/mapbox-gl/dist/mapbox-gl-dev.js');
+  // require('resolve').sync(something, { basedir: project.root });
 
   // Use `app.import` to add additional libraries to the generated
   // output files.
