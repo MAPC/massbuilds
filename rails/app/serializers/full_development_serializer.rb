@@ -24,4 +24,8 @@ class FullDevelopmentSerializer
     object.point.try :x
   end
 
+  attribute :updated_at do |object|
+    object.updated_at.iso8601
+  end
+
 end
