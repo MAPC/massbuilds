@@ -1,12 +1,9 @@
 import Component from '@ember/component';
 import { action } from 'ember-decorators/object';
 import config from 'massbuilds/config/environment';
-import url from 'npm:url';
-
+import url from 'url';
 
 export default class extends Component {
-
-
   constructor() {
     super();
 
@@ -28,11 +25,16 @@ export default class extends Component {
 
     copier.class = 'copy-area';
     copier.innerHTML = window.location.href
-                                      .split('&municipal[]=').join(',')
-                                      .split('&devlper[]=').join(',')
-                                      .split('&nhood[]=').join(',')
-                                      .split('[]=').join('=')
-                                      .split('%3B').join(';');
+      .split('&municipal[]=')
+      .join(',')
+      .split('&devlper[]=')
+      .join(',')
+      .split('&nhood[]=')
+      .join(',')
+      .split('[]=')
+      .join('=')
+      .split('%3B')
+      .join(';');
 
     body.appendChild(copier);
     copier.select();
@@ -44,18 +46,15 @@ export default class extends Component {
     body.removeChild(copier);
   }
 
-
   @action
   toShapefile() {
     this.download('zip', 'massbuilds.shp.zip');
   }
 
-
   @action
   toCSV() {
     this.download('csv', 'massbuilds.csv');
   }
-
 
   download(ext, filename) {
     if (!this.get(`downloading.${ext}`)) {
@@ -66,7 +65,7 @@ export default class extends Component {
       let endpoint = encodeURI(url.resolve(config.host, `developments.${ext}`));
 
       if (Object.keys(filter).length > 0) {
-        endpoint += ('?filter=' + JSON.stringify(filter));
+        endpoint += '?filter=' + JSON.stringify(filter);
       }
 
       fileLink.href = endpoint;
@@ -84,7 +83,6 @@ export default class extends Component {
     }
   }
 
-
   disable(fileType) {
     this.set(`downloading.${fileType}`, true);
 
@@ -93,18 +91,20 @@ export default class extends Component {
     }, 2000);
   }
 
-
   notify(message, linkClass) {
     const timer = this.get('linkTimer');
     this.set('linkMessage', message);
     this.set('linkClass', linkClass);
 
-    if (timer)  {
+    if (timer) {
       clearTimeout(timer);
     }
 
-    this.set('linkTimer', setTimeout(() => {
-      this.set('linkMessage', null);
-    }, 3000));
+    this.set(
+      'linkTimer',
+      setTimeout(() => {
+        this.set('linkMessage', null);
+      }, 3000)
+    );
   }
 }
