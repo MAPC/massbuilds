@@ -66,6 +66,7 @@
     "bufferutil": "^4.0.1",
     "ember-radio-button": "^1.2.4",
     "mapbox-gl": "^0.46.0",
+    "url": "^0.11.0",
     "utf-8-validate": "^5.0.2"
   }
 }

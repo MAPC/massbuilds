@@ -4,7 +4,7 @@ class UserSerializer < ActiveModel::Serializer
   has_many :developments
   has_many :edits
 
-  attribute :created_at do |object|
-    object.created_at.iso8601
-  end
+  # attribute :created_at do |object|
+  #   object.created_at.iso8601
+  # end
 end
