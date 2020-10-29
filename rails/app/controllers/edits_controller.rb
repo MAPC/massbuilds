@@ -4,8 +4,11 @@ class EditsController < ApplicationController
   # GET /edits
   def index
     authorize Edit
-    @edits = Edit.all
-
+    @edits = if params[:filter]
+               Edit.where(approved: params[:filter][:approved])
+             else
+               Edit.all
+             end
     respond_to do |format|
       format.jsonapi { render jsonapi: @edits }
     end
@@ -82,6 +85,8 @@ class EditsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def edit_params
+      # TODO: Figure out how to permit filter params when calling index.
+      # Typical rails approach: params.permit(filter: [:approved])
       respond_to do |format|
         format.jsonapi { ActiveModelSerializers::Deserialization.jsonapi_parse(params) }
       end

@@ -8,10 +8,32 @@ RSpec.describe "Edits", type: :request do
     hash.to_json
   }
 
+  let(:valid_filter_not_approved_params) do
+    { filter: { approved: false } }
+  end
+
+  let(:valid_filter_approved_params) do
+   { filter: { approved: true } }
+  end
+
   describe "listing all the edits" do
     it "works as an admin" do
       get edits_path, headers: admin_user_session
       expect(response).to have_http_status(:success)
+    end
+
+    it 'lets me filter by not approved' do
+      create(:edit)
+      get edits_path, params: valid_filter_not_approved_params, headers: admin_user_session
+      expect(response).to have_http_status(:success)
+      expect(JSON.parse(response.body)['data'].count).to eq(1)
+    end
+
+    it 'lets me filter by approved' do
+      create(:edit)
+      get edits_path, params: valid_filter_approved_params, headers: admin_user_session
+      expect(response).to have_http_status(:success)
+      expect(JSON.parse(response.body)['data'].count).to eq(0)
     end
 
     it "does not work as a user" do
