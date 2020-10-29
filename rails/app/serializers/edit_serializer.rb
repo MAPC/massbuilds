@@ -1,5 +1,5 @@
 class EditSerializer < ActiveModel::Serializer
-  attributes :id, :proposed_changes, :approved, :created_at
+  [:id, :proposed_changes, :approved].each { |attr| attribute attr }
 
   belongs_to :user
   belongs_to :development
@@ -7,5 +7,4 @@ class EditSerializer < ActiveModel::Serializer
   attribute :created_at do |object|
     object.created_at.iso8601
   end
-
 end
