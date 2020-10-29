@@ -18,7 +18,13 @@ export default Route.extend({
 
 
   model() {
-    return RSVP.resolve(this.get('store').findAll('edit')).then(edits => {
+    return RSVP.resolve(this.get('store')
+                            .query('edit', {
+                              filter: {
+                                approved: false
+                              }
+                            }))
+              .then(edits => {
       return RSVP.hash({
         edits,
         developments: RSVP.all(edits.map(edit => edit.belongsTo('development').reload())),

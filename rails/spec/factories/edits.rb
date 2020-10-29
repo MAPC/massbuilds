@@ -24,5 +24,6 @@ FactoryBot.define do
         headqtrs: false,
         ovr55: false }
     end
+    approved false
   end
 end
