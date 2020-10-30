@@ -210,7 +210,7 @@ export default class extends Component {
           Date.now() - this.get('lastRequest') > 250 &&
           this.mapboxglMap.getLayer('parcel') &&
           (!previousParcel ||
-            !pointInPolygon.default(
+            !pointInPolygon(
               { type: 'Point', coordinates: coordinates },
               previousParcel.get('geojson')
             ))
@@ -236,7 +236,7 @@ export default class extends Component {
         if (parcels.length) {
           const parcel = parcels[0];
           if (
-            pointInPolygon.default(
+            pointInPolygon(
               { type: 'Point', coordinates: newCoordinates },
               parcel.get('geojson')
             ) &&
@@ -253,7 +253,7 @@ export default class extends Component {
                 },
               ],
             });
-            const center = centerOfMass.default(parcel.get('geojson'));
+            const center = centerOfMass(parcel.get('geojson'));
             this.mapboxglMap.getSource('parcel_label').setData({
               type: 'FeatureCollection',
               features: [
