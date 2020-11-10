@@ -21,7 +21,11 @@
     }
     .actions {
       display: flex;
-      justify-content: flex-end;
+      justify-content: space-between;
+
+      &__input {
+        width: 250px;
+      }
     }
     .with-actions .overflow-scroll {
       height: calc(100% - 42px);

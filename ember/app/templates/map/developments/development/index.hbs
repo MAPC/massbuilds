@@ -487,10 +487,6 @@
     {{/overflow-scroll}}
 
     <div class="actions">
-      {{#if hasSuperPermissions}}
-        <button class="styled negative" onclick={{action deleteDevelopment}}>Delete Development</button>
-      {{/if}}
-
       {{#loading-spinner message=flaggingMessage isLoading=isSettingFlag}}
         {{#if model.flag}}
           {{#if hasSuperPermissions}}
@@ -500,10 +496,14 @@
           {{/if}}
         {{else}}
           {{#if session.isAuthenticated}}
+              <input type="text" required placeholder="Please describe the reason for flagging" class="styled actions__input" />
               <button class="styled negative" onclick={{action flagDevelopment}}>Report Development for Review</button>
           {{/if}}
         {{/if}}
       {{/loading-spinner}}
+      {{#if hasSuperPermissions}}
+        <button class="styled negative" onclick={{action deleteDevelopment}}>Delete Development</button>
+      {{/if}}
     </div>
   </div>
 </section>
