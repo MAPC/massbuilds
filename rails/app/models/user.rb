@@ -7,6 +7,7 @@ class User < ApplicationRecord
   before_save :ensure_authentication_token
   has_many :edits
   has_many :developments
+  has_many :flags
   after_initialize :set_default_role, if: :new_record?
   after_create :new_user_email
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180710164947) do
+ActiveRecord::Schema.define(version: 20201111185949) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -119,6 +119,19 @@ ActiveRecord::Schema.define(version: 20180710164947) do
     t.index ["user_id"], name: "index_edits_on_user_id"
   end
 
+  create_table "flags", force: :cascade do |t|
+    t.string "reason"
+    t.boolean "is_resolved"
+    t.bigint "development_id"
+    t.bigint "user_id"
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["deleted_at"], name: "index_flags_on_deleted_at"
+    t.index ["development_id"], name: "index_flags_on_development_id"
+    t.index ["user_id"], name: "index_flags_on_user_id"
+  end
+
   create_table "parcels", primary_key: "gid", id: :serial, force: :cascade do |t|
     t.decimal "objectid", precision: 10
     t.decimal "mapc_id", precision: 10
@@ -202,4 +215,6 @@ ActiveRecord::Schema.define(version: 20180710164947) do
   add_foreign_key "developments", "users"
   add_foreign_key "edits", "developments"
   add_foreign_key "edits", "users"
+  add_foreign_key "flags", "developments"
+  add_foreign_key "flags", "users"
 end

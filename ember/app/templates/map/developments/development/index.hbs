@@ -496,8 +496,10 @@
           {{/if}}
         {{else}}
           {{#if session.isAuthenticated}}
-              <input type="text" required placeholder="Please describe the reason for flagging" class="styled actions__input" />
-              <button class="styled negative" onclick={{action flagDevelopment}}>Report Development for Review</button>
+            <form {{ action 'flagDevelopment' on="submit" }}>
+              {{ input value=reason placeholder="Describe the reason for reporting" required=true class="styled actions__input" }}
+              <button type="submit" class="styled negative">Report Development for Review</button>
+            </form>
           {{/if}}
         {{/if}}
       {{/loading-spinner}}

@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   resources :developments, except: [:new, :edit]
   resources :password_resets, only: [:create]
   resources :parcels, only: [:index]
+  resources :flags, only: [:create]
   root 'developments#index'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

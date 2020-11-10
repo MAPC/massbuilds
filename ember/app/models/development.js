@@ -5,6 +5,7 @@ import { attr, belongsTo, hasMany } from 'ember-decorators/data';
 export default class extends DS.Model {
   @belongsTo('user', { async: true }) user;
   @hasMany('edit', { async: true }) edits;
+  @hasMany('flag', { async: true }) flags;
 
   @attr('string') name;
   @attr('string') status;
@@ -67,6 +68,7 @@ export default class extends DS.Model {
   @attr('boolean', { default: false }) mixedUse;
   @attr('boolean', { default: false }) yrcompEst;
   @attr('boolean', { default: false }) flag;
+
 
   @attr('date') createdAt;
   @attr('date') updatedAt;

@@ -100,18 +100,19 @@ export default class extends Controller {
 
   @action
   flagDevelopment() {
-    const model = this.get('model');
-    model.set('flag', true);
-
+    const development = this.get('model');
+    const flag = this.store.createRecord('flag', {
+      development: development,
+      reason: 'Temporary text', // Need to get description from the .actions__input field
+      isResolved: false,
+    })
     this.set('isSettingFlag', true);
-
-    model.save()
-      .then(() => {
-        this.get('notifications').show('This development has been flagged for review by our team.');
-      })
-      .finally(() => {
-        this.set('isSettingFlag', false);
-      });
+    flag.save().then(() => {
+      this.get('notifications').show('This development has been flagged for review by our team.');
+    })
+    .finally(() => {
+      this.set('isSettingFlag', false);
+    });
   }
 
 
