@@ -488,19 +488,11 @@
 
     <div class="actions">
       {{#loading-spinner message=flaggingMessage isLoading=isSettingFlag}}
-        {{#if model.flag}}
-          {{#if hasSuperPermissions}}
-            <button class="styled" onclick={{action unflagDevelopment}}>Unflag Development</button>
-          {{else}}
-            <p>This development has been flagged for review</p>
-          {{/if}}
-        {{else}}
-          {{#if session.isAuthenticated}}
-            <form {{ action 'flagDevelopment' on="submit" }}>
-              {{ input value=reason placeholder="Describe the reason for reporting" required=true class="styled actions__input" }}
-              <button type="submit" class="styled negative">Report Development for Review</button>
-            </form>
-          {{/if}}
+        {{#if session.isAuthenticated}}
+          <form {{ action 'flagDevelopment' on="submit" }}>
+            {{ input value=reason placeholder="Describe the reason for reporting" required=true class="styled actions__input" }}
+            <button type="submit" class="styled negative">Report Development for Review</button>
+          </form>
         {{/if}}
       {{/loading-spinner}}
       {{#if hasSuperPermissions}}
