@@ -9,6 +9,13 @@ RSpec.describe 'Flags', type: :request do
     hash.to_json
   end
 
+  let(:valid_jsonapi_params_flag_update) do
+    hash = Hash.new { |h, k| h[k] = Hash.new(&h.default_proc) }
+    hash['data']['type'] = 'development'
+    hash['data']['attributes'] = { is_resolved: true }
+    hash.to_json
+  end
+
   describe 'creating flags' do
     it 'works as a verified user' do
       post flags_path, params: valid_jsonapi_params, headers: verified_user_session
@@ -49,6 +56,14 @@ RSpec.describe 'Flags', type: :request do
 
       get flags_path, params: { filter: { is_resolved: false } }, headers: admin_user_session
       expect(JSON.parse(response.body)['data'].count).to eq(1)
+    end
+  end
+
+  describe 'editing/patching flag' do
+    it 'updates a flag property (is_resolved)' do
+      flag = create(:flag)
+      put flag_path(flag.id), params: valid_jsonapi_params_flag_update, headers: admin_user_session
+      expect(response).to have_http_status(:success)
     end
   end
 end

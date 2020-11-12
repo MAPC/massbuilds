@@ -59,21 +59,22 @@ export default class extends ModerationController {
   }
 
   @action
-  unflag(development) {
-    const id = development.get('id');
-    this.set('unflagging', id);
+  unflag(flag) {
+    const id = flag.get('id');
+    // this.set('unflagging', id);
 
-    development.set('flag', false);
-    development
+    flag.set('isResolved', true);
+    flag
       .save()
       .then(() => {
-        this.get('notifications').show('This development has been unflagged.');
+        this.get('notifications').show('This flag has been resolved.');
 
         const elem = document.querySelector(`li[data-flag-id="${id}"]`);
         elem.parentNode.removeChild(elem);
       })
-      .catch(() => {
-        development.set('flag', true);
+      .catch((error) => {
+        console.log(error)
+        flag.set('isResolved', false)
         this.get('notifications').error(
           'This development must pass validations before being unflagged.'
         );
