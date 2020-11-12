@@ -106,19 +106,20 @@
           </div>
         </li>
         <div class='list-body'>
-          {{#each filteredFlags as |development|}}
-            <li data-flag-id={{development.id}}>
+          {{#each filteredFlags as |flag|}}
+            <li data-flag-id={{flag.id}}>
               <div class="row">
                 <div>
-                  {{#link-to 'map.developments.development' development}}{{development.name}}{{/link-to}}
+                  {{#link-to 'map.developments.development' flag.development.id}}{{flag.development.name}}{{/link-to}}
                 </div>
-                <div></div>
+                <div>{{ flag.reason}}</div>
                 <div></div>
                 <div>
-                  {{#loading-spinner message='Unflagging' isLoading=(eq unflagging development.id)}}
+                  {{#loading-spinner message='Unflagging' isLoading=(eq unflagging flag.id)}}
                     <button
-                      class="view-button {{if (and unflagging (not (eq unflagging development.id))) 'disabled'}}"
-                      onclick={{unless (and unflagging (not (eq unflagging development.id))) (action unflag development)}}
+                      class="view-button {{if (and unflagging (not (eq unflagging flag.id))) 'disabled'}}"
+                      onclick={{unless (and unflagging (not (eq unflagging flag.id))) (action unflag flag)}}
+                      {{!-- Above: need to handle changing is_resolved to True instead of "unflagging" the development --}}
                     >
                       Unflag
                     </button>

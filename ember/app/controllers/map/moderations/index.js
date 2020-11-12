@@ -2,34 +2,24 @@ import ModerationController from 'massbuilds/controllers/ModerationController';
 import { service } from 'ember-decorators/service';
 import { action, computed } from 'ember-decorators/object';
 
-
 export default class extends ModerationController {
-
-  @service notifications
-
+  @service notifications;
 
   @computed('moderations.[]', 'moderations.@each.approved', 'tick')
   get filteredModerations() {
-    return this.get('moderations')
-               .filter(moderation => !moderation.get('approved'));
+    return this.get('moderations').filter(
+      (moderation) => !moderation.get('approved')
+    );
   }
-
 
   @computed('developments.[]')
   get filteredFlags() {
-    return this.store.query('development', {
-        trunc: true,
-        filter: {
-            flag: {
-                filter: 'metric',
-                type: 'boolean',
-                col: 'flag',
-                value: true,
-            },
-        },
+    return this.store.query('flag', {
+      filter: {
+        is_resolved: false,
+      },
     });
   }
-
 
   @action
   approve(moderation) {
@@ -43,14 +33,15 @@ export default class extends ModerationController {
     moderation.set('approved', true);
     moderation
       .save()
-      .then(development => {
-        this.get('notifications').show(`You have approved an edit from ${user} for ${development}`);
+      .then((development) => {
+        this.get('notifications').show(
+          `You have approved an edit from ${user} for ${development}`
+        );
       })
       .catch(() => {
         this.get('notifications').error("Couldn't approve edit at this time.");
       });
   }
-
 
   @action
   deny(moderation) {
@@ -59,12 +50,13 @@ export default class extends ModerationController {
     const user = moderation.get('user.fullName');
     const development = moderation.get('development.name');
 
-    this.get('notifications').error(`You have denied an edit from ${user} for ${development}`);
+    this.get('notifications').error(
+      `You have denied an edit from ${user} for ${development}`
+    );
 
     moderation.destroyRecord();
     elem.parentNode.removeChild(elem);
   }
-
 
   @action
   unflag(development) {
@@ -72,20 +64,22 @@ export default class extends ModerationController {
     this.set('unflagging', id);
 
     development.set('flag', false);
-    development.save()
-    .then(() => {
-      this.get('notifications').show('This development has been unflagged.');
+    development
+      .save()
+      .then(() => {
+        this.get('notifications').show('This development has been unflagged.');
 
-      const elem = document.querySelector(`li[data-flag-id="${id}"]`);
-      elem.parentNode.removeChild(elem);
-    })
-    .catch(() => {
-      development.set('flag', true);
-      this.get('notifications').error('This development must pass validations before being unflagged.');
-    })
-    .finally(() => {
-      this.set('unflagging', null);
-    });
+        const elem = document.querySelector(`li[data-flag-id="${id}"]`);
+        elem.parentNode.removeChild(elem);
+      })
+      .catch(() => {
+        development.set('flag', true);
+        this.get('notifications').error(
+          'This development must pass validations before being unflagged.'
+        );
+      })
+      .finally(() => {
+        this.set('unflagging', null);
+      });
   }
-
 }
