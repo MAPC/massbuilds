@@ -42,5 +42,13 @@ RSpec.describe 'Flags', type: :request do
       get flags_path, headers: admin_user_session
       expect(response).to have_http_status(:success)
     end
+
+    it 'lets us filter to see only unresolved flags' do
+      create(:flag)
+      create(:flag, is_resolved: true)
+
+      get flags_path, params: { filter: { is_resolved: false } }, headers: admin_user_session
+      expect(JSON.parse(response.body)['data'].count).to eq(1)
+    end
   end
 end

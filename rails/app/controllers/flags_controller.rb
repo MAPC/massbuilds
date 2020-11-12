@@ -1,10 +1,15 @@
 # frozen_string_literal: true
+
 class FlagsController < ApplicationController
   skip_before_action :authenticate_user!, only: %i[index show]
 
   def index
     authorize Flag
-    @flags = Flag.all
+    @flags = if params[:filter]
+               Flag.where(is_resolved: params[:filter][:is_resolved])
+             else
+               Flag.all
+             end
     respond_to do |format|
       format.jsonapi { render jsonapi: @flags }
     end
