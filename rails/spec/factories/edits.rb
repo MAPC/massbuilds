@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 FactoryBot.define do
   factory :edit do
     user
@@ -24,6 +25,6 @@ FactoryBot.define do
         headqtrs: false,
         ovr55: false }
     end
-    approved false
+    approved { false }
   end
 end
