@@ -35,4 +35,12 @@ RSpec.describe 'Flags', type: :request do
       expect(response).to have_http_status(:unauthorized)
     end
   end
+
+  describe 'listings flags' do
+    it 'works as an admin' do
+      create_list(:flag, 3)
+      get flags_path, headers: admin_user_session
+      expect(response).to have_http_status(:success)
+    end
+  end
 end

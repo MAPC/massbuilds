@@ -1,6 +1,14 @@
+# frozen_string_literal: true
 class FlagsController < ApplicationController
-  skip_before_action :authenticate_user!, only: [:index, :show]
+  skip_before_action :authenticate_user!, only: %i[index show]
 
+  def index
+    authorize Flag
+    @flags = Flag.all
+    respond_to do |format|
+      format.jsonapi { render jsonapi: @flags }
+    end
+  end
 
   def create
     @flag = Flag.new(flag_params)
@@ -17,8 +25,9 @@ class FlagsController < ApplicationController
       end
     end
   end
-  
+
   private
+
   def flag_params
     # TODO: Figure out how to permit filter params when calling index.
     # Typical rails approach: params.permit(filter: [:approved])
