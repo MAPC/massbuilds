@@ -60,10 +60,22 @@ RSpec.describe 'Flags', type: :request do
   end
 
   describe 'editing/patching flag' do
-    it 'updates a flag property (is_resolved)' do
+    it 'updates a flag property (is_resolved) for admins' do
       flag = create(:flag)
       put flag_path(flag.id), params: valid_jsonapi_params_flag_update, headers: admin_user_session
       expect(response).to have_http_status(:success)
+    end
+
+    it 'does not update for guests' do
+      flag = create(:flag)
+      put flag_path(flag.id), params: valid_jsonapi_params_flag_update, headers: guest_user_session
+      expect(response).to have_http_status(:unauthorized)
+    end
+
+    it 'does not update for non-admin-level users' do
+      flag = create(:flag)
+      put flag_path(flag.id), params: valid_jsonapi_params_flag_update, headers: registered_user_session
+      expect(response).to have_http_status(:unauthorized)
     end
   end
 end
