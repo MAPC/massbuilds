@@ -1,5 +1,4 @@
 <section class="route map-developments-development-index">
-
   <div class="development-panel-header">
     <h1>View Development</h1>
 
@@ -19,7 +18,6 @@
   </div>
 
   <div class="development-content">
-    {{#overflow-scroll}}
       <div class="development-header">
         <h1 onclick={{action findPosition}}>{{model.name}}</h1>
         <h2><img src="/assets/images/map-pin.svg" onclick={{action findPosition}}> {{model.fullAddress}}</h2>
@@ -484,7 +482,6 @@
           </article>
         </div>
       </div>
-    {{/overflow-scroll}}
 
     <div class="actions">
       {{#loading-spinner message=flaggingMessage isLoading=isSettingFlag}}
