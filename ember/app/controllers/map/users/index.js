@@ -1,6 +1,7 @@
 import { copy } from '@ember/object/internals';
 import Controller from '@ember/controller';
 import { action, computed } from 'ember-decorators/object';
+import munis from '../../../utils/municipalities';
 
 export default class extends Controller {
 
@@ -53,10 +54,22 @@ export default class extends Controller {
     }
   }
 
+  @computed
+  fetchMunis() {
+    const munisList = munis.map(row => row.text)
+    munisList.push('STATE')
+    return munisList.sort();
+  }
+
 
   @action
   filterRole() {
     this.set('roleFilter', document.querySelector('select[name="role-filter"]').value);
   }
 
+  @action
+  updateMunicipality(user, muni) {
+    user.set('municipality', muni);
+    user.save();
+  }
 }

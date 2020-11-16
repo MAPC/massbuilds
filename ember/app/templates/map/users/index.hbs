@@ -43,7 +43,13 @@
             <td>{{user.email}}</td>
             <td>
               {{#if (and user.municipality (eq user.role 'municipal'))}}
-                {{user.municipality}}
+                <select onchange={{action (action updateMunicipality user) value="target.value"}}>
+                {{#each fetchMunis as |muni|}}
+                  <option value={{muni}} selected={{if (eq user.municipality muni) 'selected'}}>
+                    {{muni}}
+                  </option>
+                {{/each}}
+                </select>
               {{else}}
                 -
               {{/if}}
