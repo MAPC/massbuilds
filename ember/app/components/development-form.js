@@ -26,6 +26,7 @@ export default class extends Component {
       'aff3050',
       'aff5080',
       'aff80p',
+      'affUnknown'
     ];
 
     this.allAffordableFields = [
@@ -249,7 +250,6 @@ export default class extends Component {
 
   sumProperties() {
     const properties = this.getProperties(...arguments);
-
     const values = Object.values(properties)
                          .filter(prop => prop !== null && prop !== undefined && prop !== "");
 
