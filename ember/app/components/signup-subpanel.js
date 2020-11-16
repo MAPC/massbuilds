@@ -1,6 +1,7 @@
 import Component from '@ember/component';
 import { action, computed } from 'ember-decorators/object';
 import { service } from 'ember-decorators/service';
+import munis from '../utils/municipalities';
 
 
 export default class extends Component {
@@ -33,25 +34,7 @@ export default class extends Component {
 
   @action
   fetchMunis() {
-    const carto = "https://mapc-admin.carto.com/api/v2/sql?q=";
-    const query = "SELECT DISTINCT(municipal) FROM table_datakeys_bg10";
-
-    if (this.get('munis.length') === 0) {
-      this.set('isFetching', true);
-
-      this.get('ajax')
-          .request(carto + query)
-          .then(result => {
-            this.set('munis', result.rows.map(row => row.municipal).sort());
-          })
-          .catch(() => {
-            this.set('muniFailure', true);
-            this.set('errorMessage', "Unable to select a municipality at this time.");
-          })
-          .finally(() => {
-            this.set('isFetching', false);
-          });
-    }
+    this.set('munis', munis.map(row => row.text).sort());
   }
 
 
