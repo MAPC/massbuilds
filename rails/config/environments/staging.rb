@@ -77,6 +77,8 @@ Rails.application.configure do
     domain: 'mailgun2.mapc.org'
   }
 
+  config.action_mailer.default_url_options = { host: 'staging.massbuilds.com' }
+
   # Use a different logger for distributed setups.
   # require 'syslog/logger'
   # config.logger = ActiveSupport::TaggedLogging.new(Syslog::Logger.new 'app-name')

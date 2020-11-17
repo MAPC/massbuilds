@@ -1,13 +1,10 @@
 class PasswordResetsController < ApplicationController
-  skip_after_action :verify_authorized
   skip_before_action :authenticate_user!
   before_action :set_default_request_format
 
   def create
-    password = Devise.friendly_token.first(8)
     user = User.find_by_email(password_reset_params[:email])
-    if user.try(:reset_password, password, password)
-      email_password_to(user, password)
+    if user.try(:send_reset_password_instructions)
       respond_to do |format|
         format.json { render json: {}, status: :created }
       end
@@ -22,10 +19,6 @@ class PasswordResetsController < ApplicationController
 
   def password_reset_params
     params.permit(:email)
-  end
-
-  def email_password_to(user, password)
-    UserMailer.password_reset_email(user, password).deliver_later
   end
 
   def set_default_request_format
