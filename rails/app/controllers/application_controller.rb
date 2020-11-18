@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
   include Pundit
   before_action :authenticate_user_from_token!
   before_action :authenticate_user!
+  protect_from_forgery with: :null_session
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
   private
