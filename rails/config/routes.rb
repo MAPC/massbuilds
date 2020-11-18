@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   resources :edits, except: [:new, :edit]
-  devise_for :users, controllers: { sessions: 'sessions' }, path_prefix: 'my'
+  devise_for :users, controllers: { sessions: 'sessions', passwords: 'passwords' }, path_prefix: 'my'
   resources :users
   resources :developments, except: [:new, :edit]
   resources :password_resets, only: [:create]
