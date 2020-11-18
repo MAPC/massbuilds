@@ -48,7 +48,7 @@ export default class extends Component {
   }
 
   @action
-  resetPassword() {
+  requestResetPassword() {
     if (this.get('submittable') && !this.get('isResetting')) {
       this.set('isResetting', true);
       this.set('errorMessage', null);
@@ -63,7 +63,7 @@ export default class extends Component {
         })
         .then(() => {
           this.get('notifications').show(
-            `You have successfully reset your password for ${email}! Please check your email.`
+            `You have successfully requested to reset your password for ${email}! Please check your email.`
           );
           this.sendAction('redirect');
         })
@@ -106,7 +106,7 @@ export default class extends Component {
         })
         .then(() => {
           this.get('notifications').show(
-            `You have successfully reset your password for ${email}! Please check your email.`
+            'You have successfully reset your password! Please log in.'
           );
           this.sendAction('redirect');
         })
