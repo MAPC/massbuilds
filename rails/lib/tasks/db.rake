@@ -22,6 +22,14 @@ namespace :db do
   task add_neighborhoods_poly: :environment do
     ActiveRecord::Base.connection.execute "IMPORT FOREIGN SCHEMA editor LIMIT TO (neighborhoods_poly) FROM SERVER dblive95 INTO public;"
   end
+  
+  task delete_neighborhoods_poly: :environment do
+    ActiveRecord::Base.connection.execute "DROP FOREIGN TABLE IF EXISTS neighborhoods_poly;"
+  end
+  
+  task delete_tod_service_area_poly: :environment do
+    ActiveRecord::Base.connection.execute "DROP FOREIGN TABLE IF EXISTS tod_service_area_poly;"
+  end
 
   task delete_rpa_fdw: :environment do
     ActiveRecord::Base.connection.execute "DROP FOREIGN TABLE IF EXISTS rpa_poly"
