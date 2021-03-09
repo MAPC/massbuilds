@@ -106,6 +106,22 @@
                   input=(action checkForUpdated 'descr')}}
               </p>
             </div>
+            <div class="field">
+              <label>{{defined-term key='MEPAID'}}</label>
+              {{input
+                value=editing.mepaId
+                class=(if inValid.mepaId 'invalid')
+                placeholder="Enter MEPA ID"
+                input=(action checkForUpdated 'mepaId')}}
+            </div>
+            <div class="field">
+              <label>{{defined-term key='TRAFFIC_COUNT_DATA'}}</label>
+              {{input
+                value=editing.trafficCountData
+                class=(if inValid.trafficCountData 'invalid')
+                placeholder="Enter URL for Traffic Count Data"
+                input=(action checkForUpdated 'trafficCountData')}}
+            </div>
           </div>
         </div>
       </article>

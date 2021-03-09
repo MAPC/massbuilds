@@ -39,6 +39,8 @@ class Development < ApplicationRecord
   end
 
   before_save :update_point
+  before_save :set_traffic_count_data_present
+  before_save :set_mepa_id_present
   after_save :geocode
   after_save :update_rpa
   after_save :update_county
@@ -209,5 +211,13 @@ class Development < ApplicationRecord
     sql_result = ActiveRecord::Base.connection.exec_query(loc_id_query).to_hash[0]
     return if sql_result.blank?
     self.update_columns(loc_id: sql_result['parloc_id'])
+  end
+  
+  def set_mepa_id_present
+    self.mepa_id_present = mepa_id.present?
+  end
+  
+  def set_traffic_count_data_present
+    self.traffic_count_data_present = traffic_count_data.present?
   end
 end

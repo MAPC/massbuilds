@@ -162,6 +162,14 @@ const content = {
       label: 'Parcel Fiscal Year',
       definition: ['Fiscal Year of the assessor\'s data from which the parcel\'s information was extracted.'],
     },
+    MEPAID: {
+      label: 'MEPA ID',
+      definition: ['five-digit integer corresponding to the "EEA No." in the MEPA Project Database at http://eeaonline.eea.state.ma.us/eea/emepa/searcharchive.aspx']
+    },
+    TRAFFIC_COUNT_DATA: {
+      label: 'Traffic Count URL',
+      definition: ['A URL linking to the MassDOT Transportation Impact Assessment Monitoring Report database or another source of data about traffic monitoring/traffic counts.']
+    },
   }, // End of Glossary
 
   OTHER_TERMS: {
@@ -233,7 +241,7 @@ const content = {
         'If the unit types are unknown, enter the number of housing units here.',
       ],
     },
-  },
+  }
 };
 
 content['TERMS'] = Object.assign({}, content.GLOSSARY, content.OTHER_TERMS);

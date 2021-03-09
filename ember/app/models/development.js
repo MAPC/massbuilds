@@ -20,6 +20,7 @@ export default class extends DS.Model {
   @attr('string') parcelId;
   @attr('string') municipal;
   @attr('string') devlper;
+  @attr('string') trafficCountData;
 
   @attr('number') height;
   @attr('number') stories;
@@ -57,6 +58,7 @@ export default class extends DS.Model {
   @attr('number') aff80p;
   @attr('number') affUnknown;
   @attr('number') publicsqft;
+  @attr('number') mepaId;
 
   @attr('boolean', { default: false }) rdv;
   @attr('boolean', { default: false }) asofright;
