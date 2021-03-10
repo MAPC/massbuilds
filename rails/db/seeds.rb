@@ -6,8 +6,8 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 #
-scp massbuilds@prep.mapc.org:/home/massbuilds/massbuilds.dump tmp/massbuilds.dump
-pg_restore -a -d massbuilds_development -O -t users -t developments -t parcels -t edits tmp/massbuilds.dump
+# scp massbuilds@prep.mapc.org:/home/massbuilds/massbuilds.dump tmp/massbuilds.dump
+# pg_restore -a -d massbuilds_development -O -t users -t developments -t parcels -t edits tmp/massbuilds.dump
 
 Rake::Task["db:add_foreign_data_wrapper_interface"].invoke
 Rake::Task["db:add_rpa_fdw"].invoke

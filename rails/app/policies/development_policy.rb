@@ -29,7 +29,7 @@ class DevelopmentPolicy < ApplicationPolicy
     result = Faraday.get "https://pelias.mapc.org/v1/reverse?point.lat=#{record.latitude}&point.lon=#{record.longitude}"
     if result && JSON.parse(result.body)['features'].length > 0
       properties = JSON.parse(result.body)['features'][0]['properties']
-      return (properties['locality'] || properties['localadmin'])
+      return (properties['locality'] || properties['localadmin']).upcase
     end
   end
 
