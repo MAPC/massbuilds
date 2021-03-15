@@ -16,7 +16,7 @@ class DevelopmentPolicy < ApplicationPolicy
   end
 
   def destroy?
-    !user&.disabled? && (user&.admin? || (user&.municipal? && (record.municipal == user.municipality)))
+    !user&.disabled? && (user&.admin? || (user&.municipal? && (record.municipal == user.municipality || get_municipality(record) == user.municipality)))
   end
 
   def flag?
