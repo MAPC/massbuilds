@@ -164,7 +164,7 @@ const content = {
     },
     MEPAID: {
       label: 'MEPA ID',
-      definition: ['five-digit integer corresponding to the "EEA No." in the MEPA Project Database at http://eeaonline.eea.state.ma.us/eea/emepa/searcharchive.aspx']
+      definition: ['Five-digit integer corresponding to the "EEA No." in the MEPA Project Database at http://eeaonline.eea.state.ma.us/eea/emepa/searcharchive.aspx']
     },
     TRAFFIC_COUNT_DATA: {
       label: 'Traffic Count URL',
