@@ -45,7 +45,10 @@ const filters = {
   'totalCost': { name: 'Total cost', glossaryKey: 'COST_OF_CONSTRUCTION', type: 'number', ...defaultMetric },
   'parkType': { name: 'Parking type', type: 'string', options: ['garage', 'underground', 'surface', 'other'], ...defaultMetric },
   'descr': { name: 'Description', glossaryKey: 'DESCRIPTION', type: 'string', ...defaultMetric },
-
+  'mepaId': { name: 'MEPA ID', glossaryKey: 'MEPAID', type: 'number', ...defaultMetric },
+  'mepaIdPresent': { name: 'MEPA ID Present', glossaryKey: 'MEPAID_PRESENT', type: 'boolean', ...defaultMetric },
+  'trafficCountData': { name: 'Traffic Count Data', glossaryKey: 'TRAFFIC_COUNT_DATA', type: 'string', ...defaultMetric },
+  'trafficCountDataPresent': { name: 'Traffic Count Data Present', glossaryKey: 'TRAFFIC_COUNT_DATA_PRESENT', type: 'boolean', ...defaultMetric },
   'phased': { name: 'Phased', glossaryKey: 'PHASED', type: 'boolean', ...defaultMetric },
   'stalled': { name: 'Stalled', glossaryKey: 'STALLED', type: 'boolean', ...defaultMetric },
   'stories': { name: 'Stories', glossaryKey: 'STORIES', type: 'number', ...defaultMetric },
@@ -113,6 +116,10 @@ const metricGroups = {
         'rdv',
         'phased',
         'stalled',
+        'mepaId',
+        'mepaIdPresent',
+        'trafficCountData',
+        'trafficCountDataPresent'
       ]
     },
     {

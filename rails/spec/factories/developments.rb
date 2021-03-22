@@ -61,5 +61,7 @@ FactoryBot.define do
     park_type { 'parking' }
     publicsqft { 1 }
     yrcomp_est { '2010' }
+    mepa_id { 12345 }
+    traffic_count_data { 'https://mobility-massdot.hub.arcgis.com' }
   end
 end
