@@ -10,12 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20201130212232) do
+ActiveRecord::Schema.define(version: 20210319190347) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "postgis"
   enable_extension "postgres_fdw"
+
+  create_table "allpoints_final2", primary_key: "gid", id: :integer, default: nil, force: :cascade do |t|
+    t.decimal "id"
+    t.integer "muni_id"
+    t.string "muni", limit: 18
+    t.string "parloc_id", limit: 20
+    t.decimal "fy", precision: 10
+    t.geometry "geom", limit: {:srid=>26986, :type=>"st_point"}
+    t.index ["geom"], name: "allpoints_final2_geom_idx", using: :gist
+  end
 
   create_table "developments", force: :cascade do |t|
     t.integer "user_id"
@@ -91,8 +101,12 @@ ActiveRecord::Schema.define(version: 20201130212232) do
     t.string "county"
     t.string "nhood"
     t.text "n_transit", default: [], array: true
-    t.boolean "flag"
+    t.boolean "flag", default: false, null: false
     t.datetime "deleted_at"
+    t.integer "mepa_id"
+    t.string "traffic_count_data"
+    t.boolean "mepa_id_present"
+    t.boolean "traffic_count_data_present"
     t.index ["deleted_at"], name: "index_developments_on_deleted_at"
   end
 
