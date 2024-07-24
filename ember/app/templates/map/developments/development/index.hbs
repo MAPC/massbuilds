@@ -341,27 +341,27 @@
                     </tr>
                   {{/if}}
 
-                  {{#if model.affU3050}}
+                  {{#if model.aff3050}}
                     <tr>
                       <td>Units 30-50% AMI</td>
-                      <td>{{number-format model.affU3050 decimals=0}}</td>
-                      <td>{{round (mult 100 (div model.affU3050 model.affrdUnit))}}%</td>
+                      <td>{{number-format model.aff3050 decimals=0}}</td>
+                      <td>{{round (mult 100 (div model.aff3050 model.affrdUnit))}}%</td>
                     </tr>
                   {{/if}}
 
-                  {{#if model.affU5080}}
+                  {{#if model.aff5080}}
                     <tr>
                       <td>Units 50-80% AMI</td>
-                      <td>{{number-format model.affU5080 decimals=0}}</td>
-                      <td>{{round (mult 100 (div model.affU5080 model.affrdUnit))}}%</td>
+                      <td>{{number-format model.aff5080 decimals=0}}</td>
+                      <td>{{round (mult 100 (div model.aff5080 model.affrdUnit))}}%</td>
                     </tr>
                   {{/if}}
 
-                  {{#if model.affU80p}}
+                  {{#if model.aff80p}}
                     <tr>
                       <td>Units 80-100% AMI</td>
-                      <td>{{number-format model.affU80p decimals=0}}</td>
-                      <td>{{round (mult 100 (div model.affU80p model.affrdUnit))}}%</td>
+                      <td>{{number-format model.aff80p decimals=0}}</td>
+                      <td>{{round (mult 100 (div model.aff80p model.affrdUnit))}}%</td>
                     </tr>
                   {{/if}}
                 </table>
