@@ -1,5 +1,6 @@
 import { helper } from '@ember/component/helper';
 
+// eslint-disable-next-line
 export function formatDate(dateString, format) {
   // How is the date arriving into the function? (what format)
   // format-date model.updatedAt format='MMM. Do YYYY'
