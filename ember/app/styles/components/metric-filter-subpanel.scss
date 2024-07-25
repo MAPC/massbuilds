@@ -10,7 +10,7 @@
 
   .subgroup {
     & + .subgroup { margin-top: 25px; }
-    font-size: $filter_font_size;
+    & { font-size: $filter_font_size; }
 
     h4 {
       margin: 0 0 15px;

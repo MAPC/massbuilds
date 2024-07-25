@@ -125,7 +125,7 @@
       margin-top: 30px;
     }
 
-    text-align: center;
+    & { text-align: center; }
 
     .row {
       display: flex;
@@ -157,7 +157,7 @@
         display: flex;
       }
 
-      text-align: left;
+      & { text-align: left; }
 
       label {
         flex: 1 0 40%;

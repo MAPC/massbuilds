@@ -12,21 +12,21 @@
     padding: 2px 8px;
     margin: 2px 0;
 
-    background: mix($color_bg-light--active, $color_brand-primary, 90);
+    background: mix($color_bg-light--active, $color_brand-primary, 90%);
     border: none;
     outline: none;
     transition: background .15s;
 
     &:focus, &:active {
-      background: mix($color_bg-light--active, $color_brand-primary, 80);
+      background: mix($color_bg-light--active, $color_brand-primary, 80%);
       transition: background .15s;
     }
     &.invalid {
-      background: mix($color_bg-light--active, $color_highlight, 80);
+      background: mix($color_bg-light--active, $color_highlight, 80%);
     }
   }
   select.invalid {
-    background: mix($color_bg-light--active, $color_highlight, 80);
+    background: mix($color_bg-light--active, $color_highlight, 80%);
   }
 
   fieldset.primary:hover {
@@ -162,7 +162,7 @@
     padding: 15px;
     margin: 25px 0;
     display: flex;
-    background: mix($color_bg-light--active, $color_brand-primary, 90);
+    background: mix($color_bg-light--active, $color_brand-primary, 90%);
     label {
       margin-right: 15px;
     }
@@ -172,7 +172,7 @@
       }
     }
     &.invalid {
-      background: mix($color_bg-light--active, $color_highlight, 80);
+      background: mix($color_bg-light--active, $color_highlight, 80%);
     }
   }
   .res-comm-placeholder {
