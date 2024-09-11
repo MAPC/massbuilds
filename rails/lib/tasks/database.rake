@@ -52,25 +52,25 @@ namespace :database do
 
     timer = Time.now
 
-    rpa_result = ActiveRecord::Base.connection.exec_query(rpa_query).to_hash
+    rpa_result = ActiveRecord::Base.connection.exec_query(rpa_query)
     rpa_mapping = Hash.new
     rpa_result.each { |record| rpa_mapping[record['id']] = record['rpa_name'] }
     puts "Fetched RPA mapping in #{Time.now - timer} seconds"
     timer = Time.now
 
-    county_result = ActiveRecord::Base.connection.exec_query(county_query).to_hash
+    county_result = ActiveRecord::Base.connection.exec_query(county_query)
     county_mapping = Hash.new
     county_result.each { |record| county_mapping[record['id']] = record['county'] }
     puts "Fetched county mapping in #{Time.now - timer} seconds"
     timer = Time.now
 
-    municipality_result = ActiveRecord::Base.connection.exec_query(municipality_query).to_hash
+    municipality_result = ActiveRecord::Base.connection.exec_query(municipality_query)
     municipality_mapping = Hash.new
     municipality_result.each { |record| municipality_mapping[record['id']] = record['municipal'] }
     puts "Fetched municipality mapping in #{Time.now - timer} seconds"
     timer = Time.now
 
-    n_transit_result = ActiveRecord::Base.connection.exec_query(n_transit_query).to_hash
+    n_transit_result = ActiveRecord::Base.connection.exec_query(n_transit_query)
     n_transit_mapping = Hash.new
     n_transit_result.each do |record|
       if n_transit_mapping[record['id']]
@@ -82,13 +82,13 @@ namespace :database do
     puts "Fetched nearest transit mapping in #{Time.now - timer} seconds"
     timer = Time.now
 
-    nhood_result = ActiveRecord::Base.connection.exec_query(nhood_query).to_hash
+    nhood_result = ActiveRecord::Base.connection.exec_query(nhood_query)
     nhood_mapping = Hash.new
     nhood_result.each { |record| nhood_mapping[record['id']] = record['nhood_name'] }
     puts "Fetched neighborhood mapping in #{Time.now - timer} seconds"
     timer = Time.now
 
-    loc_id_result = ActiveRecord::Base.connection.exec_query(loc_id_query).to_hash
+    loc_id_result = ActiveRecord::Base.connection.exec_query(loc_id_query)
     loc_id_mapping = Hash.new
     loc_id_result.each { |record| loc_id_mapping[record['id']] = record['parloc_id'] }
     puts "Fetched parcel mapping in #{Time.now - timer} seconds"

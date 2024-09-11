@@ -25,6 +25,9 @@ gem 'mailgun-ruby'
 gem 'fast_jsonapi'
 gem 'parallel'
 gem 'paranoia'
+gem 'csv'
+gem 'bigdecimal'
+gem 'mutex_m'
 
 group :development, :test do
   gem 'pry-byebug'
