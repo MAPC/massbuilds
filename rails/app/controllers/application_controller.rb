@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  include Pundit
+  include Pundit::Authorization
   before_action :authenticate_user_from_token!
   before_action :authenticate_user!
   # protect_from_forgery with: :null_session
