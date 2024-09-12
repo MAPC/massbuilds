@@ -41,7 +41,7 @@ After installing dependencies (`bundle install`) and getting the DB set up, you 
 ## Deployment
 1. In one terminal window, ssh into either the staging (prep) or production (live) server
 
-2. In another terminal window, run either cap staging deploy or cap production deploy from either the develop or master branch, depending on whether you want to push to live or to staging. *Note: staging deploys from Github's develop branch and production deploys from the master branch. Make sure your work is up-to-date!*
+2. In another terminal window, run either cap staging deploy or cap production deploy from either the develop or main branch, depending on whether you want to push to live or to staging. *Note: staging deploys from Github's develop branch and production deploys from the main branch. Make sure your work is up-to-date!*
 
 ## Troubleshooting
 
