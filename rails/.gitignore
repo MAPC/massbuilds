@@ -25,3 +25,6 @@
 config/secrets.yml.key
 
 spec/examples.txt
+
+# Staging dump for local development/testing
+massbuilds.dump

@@ -5,7 +5,7 @@ class Development < ApplicationRecord
   has_many :edits, dependent: :destroy
   has_many :flags, dependent: :destroy
   belongs_to :user
-  include PgSearch
+  include PgSearch::Model
   include ActiveModel::Dirty
   pg_search_scope :search_by_name_and_location, against: [:name, :municipal, :address], using: { tsearch: { any_word: true } }
   validates :name, :status, :latitude, :longitude, :year_compl, :hu,

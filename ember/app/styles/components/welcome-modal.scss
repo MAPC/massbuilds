@@ -35,7 +35,7 @@
         border: none;
         outline: none;
         font-size: 1.6em;
-        color: mix($color_font-medium, $color_font-light, 70);
+        color: mix($color_font-medium, $color_font-light, 70%);
         background-color: transparent;
         &:hover {
           color: $color_font-medium;

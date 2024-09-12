@@ -73,7 +73,7 @@ export default class extends ModerationController {
         elem.parentNode.removeChild(elem);
       })
       .catch((error) => {
-        console.log(error)
+        console.log(error) // eslint-disable-line
         flag.set('isResolved', false)
         this.get('notifications').error(
           'This development must pass validations before being unflagged.'

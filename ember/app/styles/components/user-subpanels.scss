@@ -28,7 +28,7 @@
       margin-top: 0;
     }
 
-    text-align: center;
+    & { text-align: center; }
     &.signup-subpanel {
       form {
         padding: 0;
@@ -107,14 +107,16 @@
         margin-right: 0.5em;
       }
 
-      margin: 5px auto;
-      padding: 8px 16px;
-      padding-left: 40px;
+      & {
+        margin: 5px auto;
+        padding: 8px 16px;
+        padding-left: 40px;
 
-      border-radius: 5px;
-      border: 1px solid $color_brand-primary;
-      outline: none;
-      transition: border-color .2s;
+        border-radius: 5px;
+        border: 1px solid $color_brand-primary;
+        outline: none;
+        transition: border-color .2s;
+      }
 
       &:active, &:focus {
         border-color: $color_brand-primary--active;

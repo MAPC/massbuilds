@@ -112,9 +112,9 @@
     &.active-filters {
       font-size: 13px;
 
-      background: mix($color_brand-primary, $color_bg-light, 25);
-      &:hover { background: mix($color_brand-primary, $color_bg-light, 20); }
-      cursor: pointer;
+      background: mix($color_brand-primary, $color_bg-light, 25%);
+      &:hover { background: mix($color_brand-primary, $color_bg-light, 20%); }
+      & { cursor: pointer; }
     }
 
     &.create-new {

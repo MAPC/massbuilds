@@ -6,4 +6,4 @@ export default class extends Route {
     super();
     this.glossaryTerms = Object.values(content.GLOSSARY);
   }
-};
+}

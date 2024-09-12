@@ -101,7 +101,7 @@
       font-size: 11px;
       text-align: center;
 
-      background: mix($color_brand-primary, $color_bg-light, 25);
+      background: mix($color_brand-primary, $color_bg-light, 25%);
       border-color: $color_brand-primary;
       border-right: 0;
       border-radius: 0;
@@ -118,7 +118,7 @@
       &.filter-toggler {
         border-width: 1px 0px 1px 1px;
         &.active {
-          background: mix($color_brand-primary, $color_bg-light, 25);
+          background: mix($color_brand-primary, $color_bg-light, 25%);
 
           & + button {
             border-top-color: $color_brand-primary--active;
@@ -240,7 +240,7 @@
       width: 700px;
     }
 
-    position: absolute;
+    & { position: absolute; }
 
     &.active {
       left: 15px;

@@ -7,6 +7,7 @@ const Router = EmberRouter.extend({
   didTransition: function() {
     this._super(...arguments);
 
+    // eslint-disable-next-line
     return ga('send', 'pageview', {
       'page': this.get('url'),
       'title': this.get('url')

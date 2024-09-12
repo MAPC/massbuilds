@@ -5,7 +5,7 @@ export default class extends Route {
 
   @service map
 
-  activate(transition) {
+  activate(transition) { // eslint-disable-line
     this.get('map').set('showingLeftPanel', true);
   }
 }

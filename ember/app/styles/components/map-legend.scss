@@ -17,7 +17,7 @@
       li {
         & + li { margin-top: 4px; }
 
-        font-size: 12px;
+        & { font-size: 12px; }
 
         span {
           $size: 10px;
@@ -27,7 +27,7 @@
 
           width: $size;
           height: $size;
-          margin-right: $size / 2;
+          margin-right: $size * 0.5;
 
           border-radius: 50%;
         }
