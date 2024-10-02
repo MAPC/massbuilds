@@ -1,3 +1,5 @@
+@use "sass:color";
+
 .route.moderations-for-user {
 
   ul.item-list {
@@ -66,7 +68,7 @@
       padding: 30px 0;
       padding-left: 40px;
 
-      background: mix($color_brand-primary, darken($color_bg-light, 2), 7%);
+      background: mix($color_brand-primary, color.adjust($color_bg-light, $lightness: -2%), 7%);
 
       li {
         display: list-item;

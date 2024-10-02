@@ -1,3 +1,5 @@
+@use "sass:color";
+
 table {
   width: 100%;
 
@@ -12,7 +14,7 @@ table {
     }
 
     &:nth-of-type(2n+1):not(.table-header,.delimiting-row) {
-      background: lighten($color_bg-light--active, 3);
+      background: color.adjust($color_bg-light--active, $lightness: 3%);
     }
 
     td {

@@ -36,6 +36,9 @@ module.exports = function (defaults) {
     'ember-cli-babel': {
       includePolyfill: true,
     },
+    'ember-fetch': {
+      preferNative: true
+    }
   });
 
   // require('resolve').sync(something, { basedir: project.root });

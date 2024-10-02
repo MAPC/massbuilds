@@ -1,3 +1,5 @@
+@use "sass:color";
+
 .tag {
   display: inline-block;
 
@@ -25,7 +27,7 @@
       
       cursor: pointer;
 
-      &:hover { color: darken($color_state-negative--dark, 10); }
+      &:hover { color: color.adjust($color_state-negative--dark, $lightness: -10%) }
     }
   }
 }
