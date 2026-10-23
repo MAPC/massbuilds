@@ -144,7 +144,7 @@ class Development < ApplicationRecord
       FROM rpa_poly
       WHERE ST_Intersects(ST_TRANSFORM(ST_GeomFromText('#{point}', 4326), 26986), shape);
     SQL
-    sql_result = ActiveRecord::Base.connection.exec_query(rpa_query).to_hash[0]
+    sql_result = ActiveRecord::Base.connection.exec_query(rpa_query).to_a[0]
     return if sql_result.blank?
     self.update_columns(rpa_name: sql_result['rpa_name'])
   end
@@ -156,7 +156,7 @@ class Development < ApplicationRecord
       FROM counties_polym
       WHERE ST_Intersects(ST_TRANSFORM(ST_GeomFromText('#{point}', 4326), 26986), shape);
     SQL
-    sql_result = ActiveRecord::Base.connection.exec_query(counties_query).to_hash[0]
+    sql_result = ActiveRecord::Base.connection.exec_query(counties_query).to_a[0]
     return if sql_result.blank?
     self.update_columns(county: sql_result['county'])
   end
@@ -168,7 +168,7 @@ class Development < ApplicationRecord
       FROM ma_municipalities
       WHERE ST_Intersects(ST_TRANSFORM(ST_GeomFromText('#{point}', 4326), 26986), shape);
     SQL
-    sql_result = ActiveRecord::Base.connection.exec_query(municipalities_query).to_hash[0]
+    sql_result = ActiveRecord::Base.connection.exec_query(municipalities_query).to_a[0]
     return if sql_result.blank?
     self.update_columns(municipal: sql_result['municipal'])
   end
@@ -180,7 +180,7 @@ class Development < ApplicationRecord
       FROM tod_service_area_poly
       WHERE ST_Intersects(ST_TRANSFORM(ST_GeomFromText('#{point}', 4326), 26986), shape);
     SQL
-    sql_result = ActiveRecord::Base.connection.exec_query(n_transit_query).to_hash
+    sql_result = ActiveRecord::Base.connection.exec_query(n_transit_query).to_a
     return if sql_result.blank?
     transit_stops = []
     sql_result.each do |result|
@@ -196,7 +196,7 @@ class Development < ApplicationRecord
       FROM neighborhoods_poly
       WHERE ST_Intersects(ST_TRANSFORM(ST_GeomFromText('#{point}', 4326), 26986), shape);
     SQL
-    sql_result = ActiveRecord::Base.connection.exec_query(nhood_query).to_hash[0]
+    sql_result = ActiveRecord::Base.connection.exec_query(nhood_query).to_a[0]
     return if sql_result.blank?
     self.update_columns(nhood: sql_result['nhood_name'])
   end
@@ -208,7 +208,7 @@ class Development < ApplicationRecord
       FROM parcels
       WHERE ST_Intersects(ST_GeomFromText('#{point}', 4326), geom);
     SQL
-    sql_result = ActiveRecord::Base.connection.exec_query(loc_id_query).to_hash[0]
+    sql_result = ActiveRecord::Base.connection.exec_query(loc_id_query).to_a[0]
     return if sql_result.blank?
     self.update_columns(loc_id: sql_result['parloc_id'])
   end
